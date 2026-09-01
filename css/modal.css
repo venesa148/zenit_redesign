@@ -1,0 +1,542 @@
+/* ==========================================================================
+   ZENITH AI - LARGE MODALS (MANAGE & AGENT STUDIO)
+   ========================================================================== */
+
+/* Modal Backdrop Overlay */
+.zenith-modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(15, 23, 42, 0.55);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity var(--transition-base), visibility var(--transition-base);
+}
+
+.zenith-modal-backdrop.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Modal Window Container (Nearly Full-screen Wide) */
+.zenith-modal-window {
+  width: 100%;
+  max-width: 1100px;
+  height: 90vh;
+  max-height: 820px;
+  background-color: #ffffff;
+  border-radius: var(--radius-xl);
+  box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transform: scale(0.96) translateY(10px);
+  transition: transform var(--transition-smooth);
+}
+
+.zenith-modal-backdrop.active .zenith-modal-window {
+  transform: scale(1) translateY(0);
+}
+
+/* Modal Header */
+.modal-header-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.15rem 1.75rem;
+  border-bottom: 1px solid #eef2f6;
+  background-color: #ffffff;
+}
+
+.modal-header-left {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.modal-header-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #0f172a;
+  letter-spacing: -0.01em;
+}
+
+.modal-close-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-sm);
+  color: #64748b;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.modal-close-btn:hover {
+  background-color: #f1f5f9;
+  color: #0f172a;
+}
+
+.modal-close-btn svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* Modal Body Layout (Split into Inner Sidebar & View) */
+.modal-body-layout {
+  display: flex;
+  flex: 1;
+  height: calc(100% - 60px);
+  overflow: hidden;
+}
+
+/* --------------------------------------------------------------------------
+   MODAL INNER SIDEBAR
+   -------------------------------------------------------------------------- */
+.modal-inner-sidebar {
+  width: 210px;
+  min-width: 210px;
+  border-right: 1px solid #eef2f6;
+  background-color: #ffffff;
+  padding: 1.25rem 0.85rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  overflow-y: auto;
+}
+
+.modal-nav-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.65rem 0.85rem;
+  border-radius: var(--radius-md);
+  color: #475569;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  border: none;
+  background: none;
+  width: 100%;
+  text-align: left;
+}
+
+.modal-nav-item:hover {
+  background-color: #f1f5f9;
+  color: #0f172a;
+}
+
+.modal-nav-item.active {
+  background-color: #eff4ff;
+  color: #1e3a8a;
+  font-weight: 600;
+}
+
+/* Solid Dark Blue Active Style (as in Agent Studio) */
+.modal-inner-sidebar.solid-blue-active .modal-nav-item.active {
+  background-color: #1e3a8a;
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.modal-nav-item svg {
+  width: 18px;
+  height: 18px;
+  color: #64748b;
+  flex-shrink: 0;
+}
+
+.modal-nav-item.active svg {
+  color: #1e3a8a;
+}
+
+.modal-inner-sidebar.solid-blue-active .modal-nav-item.active svg {
+  color: #ffffff;
+}
+
+/* --------------------------------------------------------------------------
+   MODAL CONTENT VIEWPORT
+   -------------------------------------------------------------------------- */
+.modal-content-pane {
+  flex: 1;
+  padding: 2.25rem 2.75rem;
+  overflow-y: auto;
+  background-color: #ffffff;
+}
+
+.modal-pane-section {
+  display: none;
+}
+
+.modal-pane-section.active {
+  display: block;
+  animation: fadeIn 200ms ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Section Heading */
+.section-main-heading {
+  font-size: 1.85rem;
+  font-weight: 800;
+  color: #0f172a;
+  letter-spacing: -0.02em;
+  margin-bottom: 0.4rem;
+}
+
+.section-sub-desc {
+  font-size: 0.9rem;
+  color: #64748b;
+  margin-bottom: 1.75rem;
+  line-height: 1.5;
+}
+
+/* Header Flex Row with CTA (Agent Studio) */
+.section-header-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1.5rem;
+  margin-bottom: 1.75rem;
+}
+
+.btn-modal-dark-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  background-color: #1e293b;
+  color: #ffffff;
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 0.55rem 1rem;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  white-space: nowrap;
+  border: none;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.btn-modal-dark-cta:hover {
+  background-color: #0f172a;
+  transform: translateY(-1px);
+}
+
+/* --------------------------------------------------------------------------
+   AGENT STUDIO CARDS GRID
+   -------------------------------------------------------------------------- */
+.agents-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.25rem;
+}
+
+.agent-card-item {
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 1.25rem;
+  transition: all var(--transition-fast);
+  cursor: pointer;
+}
+
+.agent-card-item:hover {
+  border-color: #cbd5e1;
+  box-shadow: var(--shadow-sm);
+  transform: translateY(-2px);
+}
+
+.agent-card-top {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.agent-card-title-row {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.agent-radio-indicator {
+  width: 9px;
+  height: 9px;
+  border: 1.5px solid #94a3b8;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.agent-card-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #0f172a;
+  letter-spacing: -0.01em;
+}
+
+.agent-card-description {
+  font-size: 0.875rem;
+  color: #475569;
+  line-height: 1.5;
+}
+
+.agent-card-bottom {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  border-top: 1px solid #f8fafc;
+  padding-top: 0.75rem;
+}
+
+.agent-meta-text {
+  font-size: 0.775rem;
+  color: #64748b;
+  line-height: 1.4;
+}
+
+.agent-tags-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.agent-tag-pill {
+  display: inline-block;
+  font-size: 0.725rem;
+  font-weight: 500;
+  color: #475569;
+  background-color: #f1f5f9;
+  padding: 0.15rem 0.55rem;
+  border-radius: var(--radius-full);
+}
+
+/* --------------------------------------------------------------------------
+   MANAGE METRICS & CHARTS
+   -------------------------------------------------------------------------- */
+.manage-metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.metric-stat-card {
+  background-color: #ffffff;
+  border: 1px solid #eef2f6;
+  border-radius: var(--radius-lg);
+  padding: 1.25rem 1.25rem 1.15rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+}
+
+.metric-card-label {
+  font-size: 0.725rem;
+  font-weight: 700;
+  color: #64748b;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin-bottom: 0.65rem;
+}
+
+.metric-card-value {
+  font-size: 1.65rem;
+  font-weight: 800;
+  color: #0f172a;
+  letter-spacing: -0.02em;
+  display: flex;
+  align-items: baseline;
+  gap: 0.35rem;
+}
+
+.metric-value-unit {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #64748b;
+}
+
+.metric-card-subinfo {
+  font-size: 0.775rem;
+  color: #64748b;
+  margin-top: 0.25rem;
+}
+
+.credit-notice-text {
+  font-size: 0.85rem;
+  color: #475569;
+  margin-bottom: 1.5rem;
+  line-height: 1.45;
+}
+
+.token-chart-card {
+  border: 1px solid #eef2f6;
+  border-radius: var(--radius-lg);
+  padding: 1.5rem 1.75rem 1.25rem;
+  background-color: #ffffff;
+  margin-bottom: 2rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+}
+
+.chart-card-title {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #334155;
+  margin-bottom: 1.5rem;
+}
+
+.bars-graph-container {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 8px;
+  height: 140px;
+  padding: 0 0.5rem;
+  border-bottom: 1px solid #eef2f6;
+  padding-bottom: 0.5rem;
+}
+
+.chart-bar-item {
+  flex: 1;
+  background-color: #dbeafe;
+  border-radius: 4px 4px 0 0;
+  min-height: 12px;
+  transition: all var(--transition-base);
+  position: relative;
+  cursor: pointer;
+}
+
+.chart-bar-item:hover {
+  background-color: #93c5fd;
+  transform: scaleY(1.04);
+}
+
+.chart-bar-item.peak {
+  background-color: #2563eb;
+}
+
+.chart-bar-item.peak:hover {
+  background-color: #1d4ed8;
+}
+
+.chart-axis-labels {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 0.65rem;
+  font-size: 0.75rem;
+  color: #94a3b8;
+  font-weight: 500;
+}
+
+.modal-projects-section {
+  margin-top: 1rem;
+}
+
+.modal-section-subtitle {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #0f172a;
+  letter-spacing: -0.01em;
+  margin-bottom: 1rem;
+}
+
+.modal-mini-table-card {
+  border: 1px solid #eef2f6;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.modal-mini-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.modal-mini-table th {
+  background-color: #f8fafc;
+  padding: 0.85rem 1.25rem;
+  font-size: 0.775rem;
+  font-weight: 600;
+  color: #64748b;
+  border-bottom: 1px solid #eef2f6;
+}
+
+.modal-mini-table td {
+  padding: 1rem 1.25rem;
+  font-size: 0.875rem;
+  color: #1e293b;
+  border-bottom: 1px solid #f8fafc;
+  vertical-align: middle;
+}
+
+.modal-mini-table tr:last-child td {
+  border-bottom: none;
+}
+
+.status-pill-active {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #15803d;
+  background-color: #dcfce7;
+  padding: 0.2rem 0.6rem;
+  border-radius: var(--radius-full);
+}
+
+.status-dot-green {
+  width: 6px;
+  height: 6px;
+  border-radius: var(--radius-full);
+  background-color: #16a34a;
+}
+
+/* Responsive Modal */
+@media (max-width: 900px) {
+  .zenith-modal-window {
+    height: 95vh;
+  }
+
+  .agents-cards-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .manage-metrics-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .modal-body-layout {
+    flex-direction: column;
+  }
+
+  .modal-inner-sidebar {
+    width: 100%;
+    min-width: 100%;
+    border-right: none;
+    border-bottom: 1px solid #eef2f6;
+    flex-direction: row;
+    overflow-x: auto;
+  }
+
+  .modal-content-pane {
+    padding: 1.5rem;
+  }
+}

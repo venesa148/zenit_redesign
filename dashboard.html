@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Zenith — What are we creating today?</title>
+  <meta name="description"
+    content="Zenith AI Workspace - Choose a starting point and turn your next idea into something real." />
+
+  <!-- CSS Stylesheets -->
+  <link rel="stylesheet" href="css/tokens.css" />
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/sidebar.css" />
+  <link rel="stylesheet" href="css/dashboard.css" />
+  <link rel="stylesheet" href="css/modal.css" />
+</head>
+
+<body>
+  <div class="app-container">
+    <!-- ==========================================
+         UNIFIED ROYAL BLUE GLOBAL SIDEBAR
+         ========================================== -->
+    <aside class="global-sidebar-root" id="globalSidebarRoot" aria-label="Global Navigation">
+      <div class="global-sb-top">
+        <!-- Brand Header & Top Collapse Toggle -->
+        <div class="global-sb-header">
+          <a href="dashboard.html" class="global-sb-brand" id="brandHeader" title="Zenith Home">
+            <div class="global-sb-avatar">z</div>
+            <span class="global-sb-title">Zenith</span>
+          </a>
+
+          <!-- Top Collapse Toggle Button -->
+          <button type="button" class="global-sb-collapse-btn" id="btnToggleGlobalTop" title="Collapse Global Sidebar">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="11 17 6 12 11 7" />
+              <polyline points="18 17 13 12 18 7" />
+            </svg>
+          </button>
+        </div>
+
+        <!-- + New Project Button -->
+        <a href="dashboard.html" class="global-sb-new-btn" id="btnNewProject" title="New project">
+          <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="12" y1="5" x2="12" y2="19" />
+            <line x1="5" y1="12" x2="19" y2="12" />
+          </svg>
+          <span>New project</span>
+        </a>
+
+        <!-- Main Navigation Links -->
+        <nav class="global-sb-nav" aria-label="Global menus">
+          <!-- All Projects -->
+          <a href="all-projects.html" class="global-sb-nav-item" id="navAllProjects" title="All projects">
+            <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path
+                d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13c0 1.1.9 2 2 2Z" />
+            </svg>
+            <span>All projects</span>
+          </a>
+
+          <!-- Manage -->
+          <a href="#manage" class="global-sb-nav-item" id="navManage" title="Manage">
+            <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="4" x2="4" y1="21" y2="14" />
+              <line x1="4" x2="4" y1="10" y2="3" />
+              <line x1="12" x2="12" y1="21" y2="12" />
+              <line x1="12" x2="12" y1="8" y2="3" />
+              <line x1="20" x2="20" y1="21" y2="16" />
+              <line x1="20" x2="20" y1="12" y2="3" />
+              <line x1="1" x2="7" y1="14" y2="14" />
+              <line x1="9" x2="15" y1="8" y2="8" />
+              <line x1="17" x2="23" y1="16" y2="16" />
+            </svg>
+            <span>Manage</span>
+          </a>
+
+          <!-- Agent Studio -->
+          <a href="#agent-studio" class="global-sb-nav-item" id="navAgentStudio" title="Agent Studio">
+            <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
+            </svg>
+            <span>Agent Studio</span>
+          </a>
+        </nav>
+
+        <!-- Recent Projects/Prototypes Section -->
+        <div class="global-sb-recent-section">
+          <div class="global-sb-section-title">RECENT</div>
+          <div class="global-sb-nav">
+            <a href="workspace.html" class="global-sb-recent-item" id="recentItem1" title="E-commerce Redesign">
+              <span class="global-sb-recent-name">E-commerce Redesign</span>
+              <span class="global-sb-recent-badge sb-badge-project">Project</span>
+            </a>
+            <a href="workspace.html" class="global-sb-recent-item" id="recentItem2" title="Mobile App Prototype">
+              <span class="global-sb-recent-name">Mobile App Prototy...</span>
+              <span class="global-sb-recent-badge sb-badge-prototype">Prototype</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bottom Sidebar Items -->
+      <div class="global-sb-bottom">
+        <a href="#help" class="global-sb-feedback-link" id="feedbackLink" title="Feedback & help">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10" />
+            <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" />
+            <path d="M12 17h.01" />
+          </svg>
+          <span>Feedback &amp; help</span>
+        </a>
+
+        <div class="global-sb-profile-row">
+          <a href="login.html" class="global-sb-profile-info" title="User Profile: Johanes">
+            <div class="global-sb-user-avatar">J</div>
+            <span class="global-sb-user-name">Johanes</span>
+          </a>
+          <a href="login.html" class="global-sb-logout-btn" id="logoutBtn" aria-label="Log out" title="Log out">
+            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+              <polyline points="16 17 21 12 16 7"/>
+              <line x1="21" y1="12" x2="9" y2="12"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </aside>
+
+    <!-- ==========================================
+         MAIN VIEWPORT AREA (CENTER)
+         ========================================== -->
+    <main class="main-viewport">
+      <!-- Top Navbar with Workspace Selector -->
+      <header class="top-navbar">
+        <button type="button" class="workspace-dropdown-btn" id="workspaceDropdownBtn">
+          <span>Workspace</span>
+          <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="m6 9 6 6 6-6" />
+          </svg>
+        </button>
+      </header>
+
+      <!-- Center Creation Wizard Card -->
+      <div class="center-content-container">
+        <!-- Sparkle Star Icon Hero Badge -->
+        <div class="sparkle-hero-badge" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M12 2C12.3 6.8 16.2 10.7 21 11C16.2 11.3 12.3 15.2 12 20C11.7 15.2 7.8 11.3 3 11C7.8 10.7 11.7 6.8 12 2Z"
+              fill="currentColor" />
+          </svg>
+        </div>
+
+        <p class="hero-greeting">Good morning, Johanes</p>
+        <h1 class="hero-main-title">What are we creating today?</h1>
+        <p class="hero-subtitle">Choose a starting point and turn your next idea into something real.</p>
+
+        <!-- Selection Card Box -->
+        <div class="creation-card-wrapper">
+          <div class="options-grid" role="radiogroup" aria-label="Creation options">
+            <!-- Option 1: Prototype (Active by default) -->
+            <div class="option-card active" id="optionPrototype" role="radio" aria-checked="true" tabindex="0">
+              <div class="option-icon-badge">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect width="18" height="18" x="3" y="3" rx="2" />
+                  <path d="M3 9h18" />
+                  <path d="M9 21V9" />
+                </svg>
+              </div>
+              <h2 class="option-title">Prototype</h2>
+              <p class="option-desc">Quick wireframes &amp; flows</p>
+            </div>
+
+            <!-- Option 2: Project -->
+            <div class="option-card" id="optionProject" role="radio" aria-checked="false" tabindex="0">
+              <div class="option-icon-badge">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path
+                    d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13c0 1.1.9 2 2 2Z" />
+                </svg>
+              </div>
+              <h2 class="option-title">Project</h2>
+              <p class="option-desc">Full workspace &amp; files</p>
+            </div>
+          </div>
+
+          <!-- Indicator Pagination Bar -->
+          <div class="options-dots-indicator" aria-hidden="true">
+            <span class="indicator-item active" id="indicator1"></span>
+            <span class="indicator-item" id="indicator2"></span>
+          </div>
+
+          <!-- Main CTA Continue Button -->
+          <button type="button" class="btn-continue-cta" id="btnContinue">
+            Continue with Prototype
+          </button>
+        </div>
+
+        <!-- Footnote hint -->
+        <div class="change-anytime-hint">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
+            <circle cx="12" cy="7" r="4" />
+          </svg>
+          <span>You can change this anytime</span>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- ==========================================
+       MANAGE LARGE POP-UP MODAL
+       ========================================== -->
+  <div class="zenith-modal-backdrop" id="manageModalBackdrop" role="dialog" aria-modal="true"
+    aria-labelledby="manageModalTitle">
+    <div class="zenith-modal-window">
+      <!-- Modal Header Bar -->
+      <div class="modal-header-bar">
+        <h2 class="modal-header-title" id="manageModalTitle">Manage</h2>
+        <button type="button" class="modal-close-btn" id="btnManageModalClose" aria-label="Close modal">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18" />
+            <line x1="6" y1="6" x2="18" y2="18" />
+          </svg>
+        </button>
+      </div>
+
+      <!-- Modal Body Layout -->
+      <div class="modal-body-layout">
+        <!-- Inner Sidebar -->
+        <aside class="modal-inner-sidebar" aria-label="Manage sections">
+          <button type="button" class="modal-nav-item active" data-tab="monitoring">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 3v18h18" />
+              <path d="m19 9-5 5-4-4-3 3" />
+            </svg>
+            <span>Monitoring</span>
+          </button>
+
+          <button type="button" class="modal-nav-item" data-tab="sessions">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10" />
+              <polyline points="12 6 12 12 16 14" />
+            </svg>
+            <span>Sessions</span>
+          </button>
+
+          <button type="button" class="modal-nav-item" data-tab="people">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+              <circle cx="9" cy="7" r="4" />
+              <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
+              <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+            </svg>
+            <span>People</span>
+          </button>
+
+          <button type="button" class="modal-nav-item" data-tab="system">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path
+                d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z" />
+              <circle cx="12" cy="12" r="3" />
+            </svg>
+            <span>System</span>
+          </button>
+
+          <button type="button" class="modal-nav-item" data-tab="myfiles">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path
+                d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13c0 1.1.9 2 2 2Z" />
+            </svg>
+            <span>My Files</span>
+          </button>
+        </aside>
+
+        <!-- Content Panes -->
+        <main class="modal-content-pane">
+          <!-- Pane 1: Monitoring -->
+          <div class="modal-pane-section active" id="pane-monitoring">
+            <h1 class="section-main-heading">Monitoring</h1>
+            <p class="section-sub-desc">Every project on this install, across all accounts.</p>
+
+            <!-- Metrics Grid -->
+            <div class="manage-metrics-grid">
+              <div class="metric-stat-card">
+                <span class="metric-card-label">PROJECTS</span>
+                <div class="metric-card-value">
+                  <span>9</span>
+                  <span class="metric-value-unit">active</span>
+                </div>
+              </div>
+
+              <div class="metric-stat-card">
+                <span class="metric-card-label">SESSIONS</span>
+                <div class="metric-card-value">
+                  <span>24</span>
+                </div>
+                <span class="metric-card-subinfo">23,880 messages</span>
+              </div>
+
+              <div class="metric-stat-card">
+                <span class="metric-card-label">TOKENS</span>
+                <div class="metric-card-value">
+                  <span>45.4M</span>
+                </div>
+              </div>
+
+              <div class="metric-stat-card">
+                <span class="metric-card-label">COMMITS</span>
+                <div class="metric-card-value">
+                  <span>218</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Credits Notice -->
+            <p class="credit-notice-text">
+              You have used 100% of your free credits. Add payment method to continue.
+            </p>
+
+            <!-- Token Spend Bar Chart Card -->
+            <div class="token-chart-card">
+              <h3 class="chart-card-title">Token spend — last 30 days</h3>
+              <div class="bars-graph-container">
+                <div class="chart-bar-item" style="height: 25%;" title="Oct 1: 1.2M"></div>
+                <div class="chart-bar-item" style="height: 42%;" title="Oct 3: 2.1M"></div>
+                <div class="chart-bar-item" style="height: 18%;" title="Oct 6: 0.9M"></div>
+                <div class="chart-bar-item" style="height: 55%;" title="Oct 9: 2.8M"></div>
+                <div class="chart-bar-item" style="height: 48%;" title="Oct 12: 2.4M"></div>
+                <div class="chart-bar-item" style="height: 75%;" title="Oct 15: 3.8M"></div>
+                <div class="chart-bar-item" style="height: 38%;" title="Oct 18: 1.9M"></div>
+                <div class="chart-bar-item" style="height: 60%;" title="Oct 20: 3.1M"></div>
+                <div class="chart-bar-item" style="height: 28%;" title="Oct 22: 1.4M"></div>
+                <div class="chart-bar-item" style="height: 85%;" title="Oct 24: 4.4M"></div>
+                <div class="chart-bar-item peak" style="height: 98%;" title="Oct 26: 5.2M (Peak)"></div>
+                <div class="chart-bar-item" style="height: 44%;" title="Oct 27: 2.2M"></div>
+                <div class="chart-bar-item" style="height: 72%;" title="Oct 28: 3.6M"></div>
+                <div class="chart-bar-item" style="height: 58%;" title="Oct 29: 2.9M"></div>
+                <div class="chart-bar-item" style="height: 80%;" title="Oct 30: 4.1M"></div>
+              </div>
+              <div class="chart-axis-labels">
+                <span>Oct 1</span>
+                <span>Oct 30</span>
+              </div>
+            </div>
+
+            <!-- Projects Table -->
+            <div class="modal-projects-section">
+              <h2 class="modal-section-subtitle">Projects</h2>
+              <div class="modal-mini-table-card">
+                <table class="modal-mini-table">
+                  <thead>
+                    <tr>
+                      <th scope="col">Project</th>
+                      <th scope="col">Status</th>
+                      <th scope="col">Last Active</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><strong>Zenith Redesign</strong></td>
+                      <td>
+                        <span class="status-pill-active">
+                          <span class="status-dot-green"></span>
+                          Active
+                        </span>
+                      </td>
+                      <td style="color: #64748b;">2 mins ago</td>
+                    </tr>
+                    <tr>
+                      <td><strong>Mobile App Prototype</strong></td>
+                      <td>
+                        <span class="status-pill-active">
+                          <span class="status-dot-green"></span>
+                          Active
+                        </span>
+                      </td>
+                      <td style="color: #64748b;">Yesterday</td>
+                    </tr>
+                    <tr>
+                      <td><strong>Dashboard v2</strong></td>
+                      <td>
+                        <span class="status-pill-active">
+                          <span class="status-dot-green"></span>
+                          Active
+                        </span>
+                      </td>
+                      <td style="color: #64748b;">3 days ago</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- Pane 2: Sessions -->
+          <div class="modal-pane-section" id="pane-sessions">
+            <h1 class="section-main-heading">Sessions</h1>
+            <p class="section-sub-desc">Active and archived AI developer sessions.</p>
+            <div class="modal-mini-table-card">
+              <table class="modal-mini-table">
+                <thead>
+                  <tr>
+                    <th>Session ID</th>
+                    <th>Agent Mode</th>
+                    <th>Messages</th>
+                    <th>Started</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>#sess-9824</td>
+                    <td>Claude 3.7 Sonnet</td>
+                    <td>142 messages</td>
+                    <td>Today, 10:15 AM</td>
+                  </tr>
+                  <tr>
+                    <td>#sess-9810</td>
+                    <td>Autonomous Coder</td>
+                    <td>88 messages</td>
+                    <td>Yesterday</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Pane 3: People -->
+          <div class="modal-pane-section" id="pane-people">
+            <h1 class="section-main-heading">People</h1>
+            <p class="section-sub-desc">Team members and workspace roles.</p>
+            <div class="modal-mini-table-card">
+              <table class="modal-mini-table">
+                <thead>
+                  <tr>
+                    <th>Member</th>
+                    <th>Role</th>
+                    <th>Access</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>Johanes (You)</strong></td>
+                    <td>Owner</td>
+                    <td>Full Admin</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Engineering Team</strong></td>
+                    <td>Developer</td>
+                    <td>Read &amp; Write</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Pane 4: System -->
+          <div class="modal-pane-section" id="pane-system">
+            <h1 class="section-main-heading">System</h1>
+            <p class="section-sub-desc">Platform telemetry, container nodes, and environment specs.</p>
+            <div class="manage-metrics-grid">
+              <div class="metric-stat-card"><span class="metric-card-label">CPU USAGE</span>
+                <div class="metric-card-value">18%</div>
+              </div>
+              <div class="metric-stat-card"><span class="metric-card-label">MEMORY</span>
+                <div class="metric-card-value">2.4 / 8GB</div>
+              </div>
+              <div class="metric-stat-card"><span class="metric-card-label">STORAGE</span>
+                <div class="metric-card-value">12.1GB</div>
+              </div>
+              <div class="metric-stat-card"><span class="metric-card-label">UPTIME</span>
+                <div class="metric-card-value">99.98%</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Pane 5: My Files -->
+          <div class="modal-pane-section" id="pane-myfiles">
+            <h1 class="section-main-heading">My Files</h1>
+            <p class="section-sub-desc">Assets, schemas, and documents stored in this workspace.</p>
+            <div class="modal-mini-table-card">
+              <table class="modal-mini-table">
+                <thead>
+                  <tr>
+                    <th>Filename</th>
+                    <th>Size</th>
+                    <th>Uploaded</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>design_system_tokens.json</td>
+                    <td>24 KB</td>
+                    <td>Oct 28, 2023</td>
+                  </tr>
+                  <tr>
+                    <td>api_specs_v2.yaml</td>
+                    <td>110 KB</td>
+                    <td>Oct 25, 2023</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================
+       AGENT STUDIO LARGE POP-UP MODAL
+       ========================================== -->
+  <div class="zenith-modal-backdrop" id="agentStudioModalBackdrop" role="dialog" aria-modal="true"
+    aria-labelledby="agentStudioModalTitle">
+    <div class="zenith-modal-window">
+      <!-- Modal Header Bar -->
+      <div class="modal-header-bar">
+        <div class="modal-header-left">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+            style="color: #0f172a;">
+            <rect width="18" height="12" x="3" y="6" rx="2" />
+            <line x1="9" x2="9" y1="12" y2="12" />
+            <line x1="15" x2="15" y1="12" y2="12" />
+            <path d="M12 2v4" />
+            <path d="M2 10h1" />
+            <path d="M21 10h1" />
+          </svg>
+          <h2 class="modal-header-title" id="agentStudioModalTitle">Agent Studio</h2>
+        </div>
+        <button type="button" class="modal-close-btn" id="btnAgentStudioClose" aria-label="Close modal">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18" />
+            <line x1="6" y1="6" x2="18" y2="18" />
+          </svg>
+        </button>
+      </div>
+
+      <!-- Modal Body Layout -->
+      <div class="modal-body-layout">
+        <!-- Inner Sidebar -->
+        <aside class="modal-inner-sidebar solid-blue-active" aria-label="Agent Studio sections">
+          <button type="button" class="modal-nav-item active" data-tab="agents">
+            <span>Agents</span>
+          </button>
+
+          <button type="button" class="modal-nav-item" data-tab="tools">
+            <span>Tools</span>
+          </button>
+
+          <button type="button" class="modal-nav-item" data-tab="deployments">
+            <span>Deployments</span>
+          </button>
+
+          <button type="button" class="modal-nav-item" data-tab="recent">
+            <span>Recent</span>
+          </button>
+
+          <button type="button" class="modal-nav-item" data-tab="workflows">
+            <span>Workflows</span>
+          </button>
+        </aside>
+
+        <!-- Content Panes -->
+        <main class="modal-content-pane">
+          <!-- Pane 1: Agents -->
+          <div class="modal-pane-section active" id="agent-pane-agents">
+            <!-- Header Row with + New agent Button -->
+            <div class="section-header-row">
+              <div>
+                <h1 class="section-main-heading">Agents (6)</h1>
+                <p class="section-sub-desc">
+                  Declarative, versioned agents — YAML files in the Studio workspace, deployed behind the run API.
+                </p>
+              </div>
+              <button type="button" class="btn-modal-dark-cta" id="btnNewAgent">
+                <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="12" y1="5" x2="12" y2="19" />
+                  <line x1="5" y1="12" x2="19" y2="12" />
+                </svg>
+                <span>New agent</span>
+              </button>
+            </div>
+
+            <!-- Agents Cards Grid -->
+            <div class="agents-cards-grid">
+              <!-- Card 1: Attendance Analyst -->
+              <div class="agent-card-item">
+                <div class="agent-card-top">
+                  <div class="agent-card-title-row">
+                    <span class="agent-radio-indicator"></span>
+                    <h3 class="agent-card-title">Attendance Analyst</h3>
+                  </div>
+                  <p class="agent-card-description">No description yet.</p>
+                </div>
+                <div class="agent-card-bottom">
+                  <div class="agent-meta-text">never deployed · xai/grok-4.3</div>
+                  <div class="agent-meta-text">no runs last 7 days</div>
+                </div>
+              </div>
+
+              <!-- Card 2: claim analyzer -->
+              <div class="agent-card-item">
+                <div class="agent-card-top">
+                  <div class="agent-card-title-row">
+                    <span class="agent-radio-indicator"></span>
+                    <h3 class="agent-card-title">claim analyzer</h3>
+                  </div>
+                  <p class="agent-card-description">
+                    Produces a structured, renderable report (sections + chart specs) from supplied data.
+                  </p>
+                </div>
+                <div class="agent-card-bottom">
+                  <div class="agent-meta-text">never deployed · xai/grok-4.3</div>
+                  <div class="agent-meta-text">no runs last 7 days</div>
+                  <div class="agent-tags-row">
+                    <span class="agent-tag-pill">#reporting</span>
+                    <span class="agent-tag-pill">#visualization</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Card 3: drcdtrtest -->
+              <div class="agent-card-item">
+                <div class="agent-card-top">
+                  <div class="agent-card-title-row">
+                    <span class="agent-radio-indicator"></span>
+                    <h3 class="agent-card-title">drcdtrtest</h3>
+                  </div>
+                  <p class="agent-card-description">rdctdcdcdcf</p>
+                </div>
+                <div class="agent-card-bottom">
+                  <div class="agent-meta-text">never deployed · xai/grok-4.3</div>
+                  <div class="agent-meta-text">no runs last 7 days</div>
+                </div>
+              </div>
+
+              <!-- Card 4: MCU Reviewer Agent -->
+              <div class="agent-card-item">
+                <div class="agent-card-top">
+                  <div class="agent-card-title-row">
+                    <span class="agent-radio-indicator"></span>
+                    <h3 class="agent-card-title">MCU Reviewer Agent</h3>
+                  </div>
+                  <p class="agent-card-description">No description yet.</p>
+                </div>
+                <div class="agent-card-bottom">
+                  <div class="agent-meta-text">never deployed · xai/grok-4.3</div>
+                  <div class="agent-meta-text">no runs last 7 days</div>
+                </div>
+              </div>
+
+              <!-- Card 5: Claim Document Analyzer -->
+              <div class="agent-card-item">
+                <div class="agent-card-top">
+                  <div class="agent-card-title-row">
+                    <span class="agent-radio-indicator"></span>
+                    <h3 class="agent-card-title">Claim Document Analyzer</h3>
+                  </div>
+                  <p class="agent-card-description">
+                    Reads a supplied claim document (FNOL, adjuster report, invoice, medical bill, police...
+                  </p>
+                </div>
+                <div class="agent-card-bottom">
+                  <div class="agent-meta-text">never deployed · xai/grok-4.3</div>
+                  <div class="agent-meta-text">no runs last 7 days</div>
+                </div>
+              </div>
+
+              <!-- Card 6: Test Agent -->
+              <div class="agent-card-item">
+                <div class="agent-card-top">
+                  <div class="agent-card-title-row">
+                    <span class="agent-radio-indicator"></span>
+                    <h3 class="agent-card-title">Test Agent</h3>
+                  </div>
+                  <p class="agent-card-description">
+                    Answers questions about a specific document set, citing what it used.
+                  </p>
+                </div>
+                <div class="agent-card-bottom">
+                  <div class="agent-meta-text">never deployed · xai/grok-4.3</div>
+                  <div class="agent-meta-text">no runs last 7 days</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Pane 2: Tools -->
+          <div class="modal-pane-section" id="agent-pane-tools">
+            <h1 class="section-main-heading">Tools (8)</h1>
+            <p class="section-sub-desc">Custom extensions, Python sandboxes, and external APIs exposed to agents.</p>
+            <div class="modal-mini-table-card">
+              <table class="modal-mini-table">
+                <thead>
+                  <tr>
+                    <th>Tool Name</th>
+                    <th>Type</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>web_search</strong></td>
+                    <td>External API</td>
+                    <td><span class="status-pill-active"><span class="status-dot-green"></span>Ready</span></td>
+                  </tr>
+                  <tr>
+                    <td><strong>code_sandbox</strong></td>
+                    <td>Python Docker</td>
+                    <td><span class="status-pill-active"><span class="status-dot-green"></span>Ready</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Pane 3: Deployments -->
+          <div class="modal-pane-section" id="agent-pane-deployments">
+            <h1 class="section-main-heading">Deployments</h1>
+            <p class="section-sub-desc">Production and staging endpoint runtimes.</p>
+            <div class="modal-mini-table-card">
+              <table class="modal-mini-table">
+                <thead>
+                  <tr>
+                    <th>Endpoint</th>
+                    <th>Environment</th>
+                    <th>Uptime</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>api.zenith.ai/v1/agents/claim-analyzer</td>
+                    <td>Production (v1.4)</td>
+                    <td>99.99%</td>
+                  </tr>
+                  <tr>
+                    <td>staging.zenith.ai/v1/agents/reviewer</td>
+                    <td>Staging (v2.0-rc)</td>
+                    <td>100%</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Pane 4: Recent -->
+          <div class="modal-pane-section" id="agent-pane-recent">
+            <h1 class="section-main-heading">Recent Executions</h1>
+            <p class="section-sub-desc">Live execution telemetry and trace logs.</p>
+            <div class="modal-mini-table-card">
+              <table class="modal-mini-table">
+                <thead>
+                  <tr>
+                    <th>Run ID</th>
+                    <th>Agent</th>
+                    <th>Duration</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>#run-10492</td>
+                    <td>Claim Document Analyzer</td>
+                    <td>1.4s</td>
+                    <td><span class="status-pill-active"><span class="status-dot-green"></span>Success</span></td>
+                  </tr>
+                  <tr>
+                    <td>#run-10488</td>
+                    <td>Attendance Analyst</td>
+                    <td>0.8s</td>
+                    <td><span class="status-pill-active"><span class="status-dot-green"></span>Success</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Pane 5: Workflows -->
+          <div class="modal-pane-section" id="agent-pane-workflows">
+            <h1 class="section-main-heading">Workflows</h1>
+            <p class="section-sub-desc">Multi-agent graphs, routing pipelines, and automated evaluator chains.</p>
+            <div class="modal-mini-table-card">
+              <table class="modal-mini-table">
+                <thead>
+                  <tr>
+                    <th>Workflow Name</th>
+                    <th>Steps</th>
+                    <th>Triggers</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>Document Processing Pipeline</strong></td>
+                    <td>4 agents (OCR → Extraction → Review → Export)</td>
+                    <td>Webhook / S3 upload</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Customer Ticket Triage</strong></td>
+                    <td>2 agents (Classifier → Routing)</td>
+                    <td>Incoming chat</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+  </div>
+
+  <!-- JavaScript -->
+  <script src="js/sidebar.js"></script>
+  <script src="js/dashboard.js"></script>
+  <script src="js/modal.js"></script>
+</body>
+
+</html>
