@@ -1,0 +1,636 @@
+/* ==========================================================================
+   ZENITH AI - DEPLOYMENT & DEVOPS DASHBOARD STYLING
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. VIEW CONTAINER & MAIN DASHBOARD LAYOUT
+   -------------------------------------------------------------------------- */
+#deployViewContainer.active {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  background-color: #f8fafc;
+}
+
+.deploy-dashboard-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  padding: 1.5rem 1.75rem 2.5rem 1.75rem;
+  width: 100%;
+  max-width: 1600px;
+  box-sizing: border-box;
+}
+
+/* --------------------------------------------------------------------------
+   2. TOP ROW: MULTI-ENVIRONMENT STATUS & INFRASTRUCTURE TELEMETRY
+   -------------------------------------------------------------------------- */
+.deploy-env-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+}
+
+@media (max-width: 1200px) {
+  .deploy-env-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.deploy-card {
+  background-color: #ffffff;
+  border: 1px solid #eef2f6;
+  border-radius: var(--radius-lg);
+  padding: 1.25rem 1.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.02);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 1rem;
+  transition: all var(--transition-fast);
+}
+
+.deploy-card:hover {
+  border-color: #cbd5e1;
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.05);
+  transform: translateY(-2px);
+}
+
+.deploy-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.deploy-env-name-row {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.deploy-env-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0;
+}
+
+.deploy-version-tag {
+  font-family: var(--font-mono), monospace;
+  font-size: 0.725rem;
+  font-weight: 600;
+  background-color: #f1f5f9;
+  color: #334155;
+  padding: 0.15rem 0.45rem;
+  border-radius: 4px;
+}
+
+/* Status Indicators */
+.deploy-status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.2rem 0.6rem;
+  border-radius: var(--radius-full);
+}
+
+.status-pill-prod {
+  background-color: #dcfce7;
+  color: #15803d;
+}
+
+.status-pill-staging {
+  background-color: #dbeafe;
+  color: #1d4ed8;
+}
+
+.status-pill-infra {
+  background-color: #ede9fe;
+  color: #6d28d9;
+}
+
+.status-glow-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background-color: currentColor;
+  box-shadow: 0 0 0 2px rgba(34, 197, 94, 0.3);
+}
+
+/* Environment URL & Commit Info */
+.deploy-url-box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #fafbfc;
+  border: 1px solid #eef2f6;
+  border-radius: var(--radius-md);
+  padding: 0.55rem 0.75rem;
+}
+
+.deploy-url-link {
+  font-size: 0.825rem;
+  font-weight: 600;
+  color: #2563eb;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.deploy-url-link:hover {
+  text-decoration: underline;
+}
+
+.deploy-commit-meta {
+  font-size: 0.775rem;
+  color: #64748b;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.deploy-commit-meta code {
+  font-family: var(--font-mono), monospace;
+  font-weight: 600;
+  color: #334155;
+  background-color: #f1f5f9;
+  padding: 0.1rem 0.3rem;
+  border-radius: 3px;
+}
+
+/* Metrics Chips */
+.deploy-metrics-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 0.5rem;
+  border-top: 1px solid #f8fafc;
+}
+
+.deploy-metric-chip {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.deploy-metric-chip-label {
+  font-size: 0.7rem;
+  color: #94a3b8;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.deploy-metric-chip-val {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+/* Progress bar for resources */
+.infra-progress-bar-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.infra-bar-track {
+  width: 100%;
+  height: 6px;
+  border-radius: var(--radius-full);
+  background-color: #f1f5f9;
+  overflow: hidden;
+}
+
+.infra-bar-fill {
+  height: 100%;
+  border-radius: var(--radius-full);
+}
+
+.infra-bar-fill.fill-cpu {
+  width: 24%;
+  background: linear-gradient(90deg, #60a5fa 0%, #2563eb 100%);
+}
+
+.infra-bar-fill.fill-mem {
+  width: 48%;
+  background: linear-gradient(90deg, #a78bfa 0%, #7c3aed 100%);
+}
+
+/* Card Actions Toolbar */
+.deploy-card-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.btn-deploy-card-action {
+  flex: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  padding: 0.45rem 0.75rem;
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: var(--radius-sm);
+  color: #334155;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.btn-deploy-card-action:hover {
+  background-color: #f8fafc;
+  color: #2563eb;
+  border-color: #bfdbfe;
+}
+
+.btn-deploy-card-action.primary {
+  background-color: #2563eb;
+  border-color: #2563eb;
+  color: #ffffff;
+}
+
+.btn-deploy-card-action.primary:hover {
+  background-color: #1d4ed8;
+  border-color: #1d4ed8;
+}
+
+/* --------------------------------------------------------------------------
+   3. MIDDLE ROW: CI/CD PIPELINE VISUALIZER
+   -------------------------------------------------------------------------- */
+.deploy-pipeline-card {
+  background-color: #ffffff;
+  border: 1px solid #eef2f6;
+  border-radius: var(--radius-lg);
+  padding: 1.25rem 1.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.pipeline-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.pipeline-title-left {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.pipeline-main-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0;
+}
+
+.btn-trigger-deploy {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%);
+  border: none;
+  border-radius: var(--radius-md);
+  color: #ffffff;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  box-shadow: 0 4px 10px rgba(37, 99, 235, 0.25);
+}
+
+.btn-trigger-deploy:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(37, 99, 235, 0.35);
+}
+
+/* 5-Stage Pipeline Flow Grid */
+.pipeline-flow-steps {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  overflow-x: auto;
+  padding-bottom: 0.25rem;
+}
+
+.pipeline-step-box {
+  flex: 1;
+  min-width: 145px;
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: var(--radius-md);
+  padding: 0.85rem 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  transition: all var(--transition-fast);
+}
+
+.pipeline-step-box.passed {
+  border-color: #86efac;
+}
+
+.pipeline-step-box.in-progress {
+  border-color: #6366f1;
+  box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.12);
+}
+
+.pipeline-step-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.pipeline-step-num {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #16a34a;
+}
+
+.pipeline-step-duration {
+  font-size: 0.7rem;
+  color: #94a3b8;
+  font-family: var(--font-mono), monospace;
+}
+
+.pipeline-step-name {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #1e293b;
+}
+
+.pipeline-step-sub {
+  font-size: 0.75rem;
+  color: #64748b;
+  line-height: 1.35;
+}
+
+.pipeline-step-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.725rem;
+  font-weight: 600;
+  color: #16a34a;
+  margin-top: auto;
+}
+
+.pipeline-step-arrow {
+  color: #cbd5e1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+/* --------------------------------------------------------------------------
+   4. BOTTOM ROW: DEPLOYMENT HISTORY & LIVE STREAMING TERMINAL
+   -------------------------------------------------------------------------- */
+.deploy-bottom-grid {
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: 1.25rem;
+  align-items: stretch;
+}
+
+@media (max-width: 1200px) {
+  .deploy-bottom-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* History Table Card */
+.deploy-history-card {
+  background-color: #ffffff;
+  border: 1px solid #eef2f6;
+  border-radius: var(--radius-lg);
+  padding: 1.25rem 1.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.history-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.history-card-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0;
+}
+
+.deploy-table-wrapper {
+  overflow-x: auto;
+  border: 1px solid #f1f5f9;
+  border-radius: var(--radius-sm);
+}
+
+.deploy-history-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.deploy-history-table th {
+  background-color: #fafbfc;
+  color: #475569;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 0.75rem 0.85rem;
+  text-align: left;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.deploy-history-table td {
+  padding: 0.75rem 0.85rem;
+  font-size: 0.825rem;
+  color: #334155;
+  border-bottom: 1px solid #f8fafc;
+}
+
+.deploy-history-table tbody tr:hover {
+  background-color: #fafbfc;
+}
+
+.deploy-id-text {
+  font-family: var(--font-mono), monospace;
+  font-weight: 600;
+  color: #6366f1;
+}
+
+.deploy-env-badge {
+  font-size: 0.725rem;
+  font-weight: 600;
+  padding: 0.15rem 0.45rem;
+  border-radius: 4px;
+}
+
+.badge-env-prod {
+  background-color: #dcfce7;
+  color: #15803d;
+}
+
+.badge-env-staging {
+  background-color: #dbeafe;
+  color: #1d4ed8;
+}
+
+.badge-env-preview {
+  background-color: #f1f5f9;
+  color: #475569;
+}
+
+.deploy-table-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.btn-table-action-sm {
+  padding: 0.25rem 0.5rem;
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #334155;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.btn-table-action-sm:hover {
+  background-color: #f8fafc;
+  color: #2563eb;
+  border-color: #bfdbfe;
+}
+
+/* Live Terminal Card */
+.deploy-terminal-card {
+  background-color: #0f172a;
+  border: 1px solid #1e293b;
+  border-radius: var(--radius-lg);
+  padding: 1.25rem;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 0.85rem;
+  color: #f8fafc;
+}
+
+.terminal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #1e293b;
+  padding-bottom: 0.75rem;
+}
+
+.terminal-title-left {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.terminal-stream-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.725rem;
+  font-weight: 600;
+  color: #4ade80;
+}
+
+.terminal-stream-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: #4ade80;
+  box-shadow: 0 0 0 2px rgba(74, 222, 128, 0.3);
+}
+
+.terminal-body {
+  font-family: var(--font-mono), monospace;
+  font-size: 0.775rem;
+  line-height: 1.55;
+  color: #cbd5e1;
+  height: 240px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  padding-right: 0.35rem;
+}
+
+.log-line {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+
+.log-time {
+  color: #64748b;
+  flex-shrink: 0;
+}
+
+.log-tag-info {
+  color: #38bdf8;
+  font-weight: 700;
+}
+
+.log-tag-success {
+  color: #4ade80;
+  font-weight: 700;
+}
+
+.log-tag-warn {
+  color: #fbbf24;
+  font-weight: 700;
+}
+
+.terminal-footer-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 0.65rem;
+  border-top: 1px solid #1e293b;
+}
+
+.btn-terminal-tool {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 4px;
+  color: #e2e8f0;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.3rem 0.65rem;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.btn-terminal-tool:hover {
+  background: rgba(255, 255, 255, 0.16);
+  color: #ffffff;
+}

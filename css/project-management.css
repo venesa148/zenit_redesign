@@ -1,0 +1,919 @@
+/* ==========================================================================
+   ZENITH AI - PROJECT MANAGEMENT DASHBOARD STYLES
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. VIEW CONTAINERS & MAIN DASHBOARD LAYOUT
+   -------------------------------------------------------------------------- */
+.workspace-views-wrapper {
+  flex: 1;
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+}
+
+.workspace-view-pane {
+  display: none;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.workspace-view-pane.active {
+  display: flex;
+}
+
+/* Specific view layouts */
+#buildViewContainer.active {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 100%;
+}
+
+#pmViewContainer.active {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  background-color: #f8fafc;
+}
+
+/* Project Management Dashboard Inner Container */
+.pm-dashboard-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  padding: 1.5rem 1.75rem 2.5rem 1.75rem;
+  width: 100%;
+  max-width: 1600px;
+  box-sizing: border-box;
+}
+
+/* --------------------------------------------------------------------------
+   2. COMMON CARD BASE STYLES
+   -------------------------------------------------------------------------- */
+.pm-card {
+  background-color: #ffffff;
+  border: 1px solid #eef2f6;
+  border-radius: var(--radius-lg);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.02);
+  padding: 1.25rem 1.5rem;
+  box-sizing: border-box;
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.pm-card:hover {
+  border-color: #e2e8f0;
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.04);
+}
+
+.pm-card-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #0f172a;
+  letter-spacing: -0.01em;
+  margin: 0;
+}
+
+/* --------------------------------------------------------------------------
+   3. TOP ROW: OVERALL PROGRESS & 7-PHASE SDLC PROGRESS
+   -------------------------------------------------------------------------- */
+.pm-top-grid {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: 1.25rem;
+  align-items: stretch;
+}
+
+@media (max-width: 1200px) {
+  .pm-top-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Card: Overall Progress */
+.pm-card-overall {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.pm-overall-body {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin-top: 1rem;
+}
+
+/* SVG Donut Progress Chart */
+.pm-donut-wrapper {
+  position: relative;
+  width: 100px;
+  height: 100px;
+  min-width: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pm-donut-svg {
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+}
+
+.pm-donut-track {
+  fill: none;
+  stroke: #f1f5f9;
+  stroke-width: 9;
+}
+
+.pm-donut-fill {
+  fill: none;
+  stroke: #6366f1;
+  stroke-width: 9;
+  stroke-linecap: round;
+  stroke-dasharray: 276.46;
+  stroke-dashoffset: calc(276.46 * (1 - 0.28));
+  transition: stroke-dashoffset 0.8s ease-in-out;
+}
+
+.pm-donut-center-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: #0f172a;
+  letter-spacing: -0.02em;
+}
+
+/* Stats list */
+.pm-overall-stats {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.pm-stat-row {
+  font-size: 0.825rem;
+  color: #64748b;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.pm-stat-row strong {
+  color: #0f172a;
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+/* Card: 7-Phase SDLC Progress */
+.pm-card-sdlc {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.pm-sdlc-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.btn-view-phase-details {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.825rem;
+  font-weight: 600;
+  color: #334155;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  padding: 0.4rem 0.75rem;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.btn-view-phase-details:hover {
+  background-color: #f8fafc;
+  color: #2563eb;
+  border-color: #bfdbfe;
+}
+
+/* Stepper Flow Grid */
+.pm-sdlc-stepper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  overflow-x: auto;
+  padding-bottom: 0.25rem;
+}
+
+.pm-step-card {
+  flex: 1;
+  min-width: 105px;
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: var(--radius-md);
+  padding: 0.75rem 0.65rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  position: relative;
+  transition: all var(--transition-fast);
+  cursor: pointer;
+}
+
+.pm-step-card:hover {
+  border-color: #cbd5e1;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.04);
+}
+
+.pm-step-card.active {
+  border: 1.75px solid #6366f1;
+  background-color: #ffffff;
+  box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.12);
+}
+
+.pm-step-card.approved {
+  border-color: #86efac;
+}
+
+.pm-step-number {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #059669;
+}
+
+.pm-step-card.active .pm-step-number {
+  color: #6366f1;
+}
+
+.pm-step-card.pending .pm-step-number {
+  color: #94a3b8;
+}
+
+.pm-step-title {
+  font-size: 0.825rem;
+  font-weight: 600;
+  color: #1e293b;
+  line-height: 1.25;
+  min-height: 2rem;
+  display: flex;
+  align-items: flex-start;
+}
+
+.pm-step-card.pending .pm-step-title {
+  color: #475569;
+}
+
+/* Step Status Pill */
+.pm-step-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.725rem;
+  font-weight: 600;
+  padding: 0.15rem 0.45rem;
+  border-radius: var(--radius-full);
+  margin-top: auto;
+  width: fit-content;
+}
+
+.pm-step-badge.badge-approved {
+  color: #16a34a;
+  background-color: transparent;
+}
+
+.pm-step-badge.badge-in-progress {
+  color: #6366f1;
+  background-color: #e0e7ff;
+}
+
+.pm-step-badge.badge-pending {
+  color: #64748b;
+  background-color: transparent;
+}
+
+.pm-step-arrow {
+  color: #cbd5e1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.pm-step-arrow svg {
+  width: 14px;
+  height: 14px;
+}
+
+/* --------------------------------------------------------------------------
+   4. MIDDLE SECTION: PROJECT TIMELINE (GANTT MATRIX)
+   -------------------------------------------------------------------------- */
+.pm-timeline-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.25rem;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.pm-timeline-title-area {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.pm-timeline-sub {
+  font-size: 0.825rem;
+  color: #64748b;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.pm-timeline-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.btn-timeline-tool {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.4rem 0.75rem;
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: var(--radius-sm);
+  font-size: 0.825rem;
+  font-weight: 600;
+  color: #334155;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.btn-timeline-tool:hover {
+  background-color: #f8fafc;
+  color: #0f172a;
+  border-color: #cbd5e1;
+}
+
+.timeline-zoom-pill {
+  display: flex;
+  align-items: center;
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+
+.btn-zoom-step {
+  border: none;
+  background: none;
+  padding: 0.4rem 0.6rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #475569;
+  cursor: pointer;
+  transition: background-color var(--transition-fast);
+}
+
+.btn-zoom-step:hover {
+  background-color: #f1f5f9;
+  color: #0f172a;
+}
+
+.zoom-pct-display {
+  padding: 0 0.35rem;
+  font-size: 0.775rem;
+  font-weight: 600;
+  color: #334155;
+}
+
+/* Gantt Chart Matrix Table */
+.pm-gantt-scrollable {
+  width: 100%;
+  overflow-x: auto;
+  border-radius: var(--radius-sm);
+  border: 1px solid #f1f5f9;
+}
+
+.pm-gantt-table {
+  width: 100%;
+  min-width: 960px;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+.pm-gantt-table th,
+.pm-gantt-table td {
+  padding: 0.65rem 0.5rem;
+  border-bottom: 1px solid #f8fafc;
+  border-right: 1px solid #f1f5f9;
+  font-size: 0.8rem;
+  text-align: center;
+  position: relative;
+}
+
+.pm-gantt-table th:last-child,
+.pm-gantt-table td:last-child {
+  border-right: none;
+}
+
+.pm-gantt-table thead th {
+  background-color: #fafbfc;
+  color: #475569;
+  font-weight: 700;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 0.75rem 0.5rem;
+  border-bottom: 1.5px solid #e2e8f0;
+}
+
+.pm-gantt-table th.col-phase-label,
+.pm-gantt-table td.col-phase-label {
+  text-align: left;
+  width: 320px;
+  min-width: 320px;
+  max-width: 320px;
+  font-weight: 600;
+  color: #334155;
+  padding-left: 0.85rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  border-right: 1.5px solid #e2e8f0;
+}
+
+.pm-gantt-table tbody tr:hover {
+  background-color: #fafbfc;
+}
+
+.col-week {
+  width: 48px;
+}
+
+/* Gantt Bar Component in Rows */
+.gantt-bar-cell-container {
+  position: relative;
+  height: 28px;
+  display: flex;
+  align-items: center;
+}
+
+.gantt-bar {
+  position: absolute;
+  height: 18px;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 4px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s ease, filter 0.2s ease;
+  cursor: pointer;
+  z-index: 2;
+}
+
+.gantt-bar:hover {
+  filter: brightness(1.08);
+  transform: scaleY(1.15);
+}
+
+.gantt-bar-check {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.9);
+  color: #15803d;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 9px;
+  font-weight: 900;
+}
+
+/* Gantt Bar Color Palette */
+.gantt-bar-green {
+  background: linear-gradient(90deg, #84cc16 0%, #65a30d 100%);
+}
+
+.gantt-bar-blue {
+  background: linear-gradient(90deg, #3b82f6 0%, #2563eb 100%);
+}
+
+.gantt-bar-blue .gantt-bar-check {
+  color: #2563eb;
+}
+
+.gantt-bar-purple {
+  background: linear-gradient(90deg, #8b5cf6 0%, #7c3aed 100%);
+}
+
+.gantt-bar-amber {
+  background: linear-gradient(90deg, #f59e0b 0%, #d97706 100%);
+}
+
+.gantt-bar-orange {
+  background: linear-gradient(90deg, #f97316 0%, #ea580c 100%);
+}
+
+.gantt-bar-red {
+  background: linear-gradient(90deg, #ef4444 0%, #dc2626 100%);
+}
+
+.gantt-bar-teal {
+  background: linear-gradient(90deg, #14b8a6 0%, #0d9488 100%);
+}
+
+.gantt-bar-slate {
+  background: linear-gradient(90deg, #64748b 0%, #475569 100%);
+}
+
+/* --------------------------------------------------------------------------
+   5. BOTTOM ROW: CURRENT SPRINT TASKS & SPRINT DETAILS CARD
+   -------------------------------------------------------------------------- */
+.pm-bottom-grid {
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: 1.25rem;
+  align-items: stretch;
+}
+
+@media (max-width: 1100px) {
+  .pm-bottom-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Card: Current Sprint Tasks */
+.pm-card-tasks {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.pm-tasks-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.15rem;
+}
+
+.pm-tasks-title-group {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.sprint-sub-name {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #64748b;
+}
+
+.badge-sprint-inprogress {
+  font-size: 0.725rem;
+  font-weight: 600;
+  padding: 0.2rem 0.55rem;
+  border-radius: var(--radius-full);
+  background-color: #ede9fe;
+  color: #6d28d9;
+}
+
+.btn-view-all-sprints {
+  font-size: 0.825rem;
+  font-weight: 600;
+  color: #475569;
+  text-decoration: none;
+  cursor: pointer;
+  transition: color var(--transition-fast);
+}
+
+.btn-view-all-sprints:hover {
+  color: #2563eb;
+}
+
+/* Tasks Data Table */
+.pm-tasks-table-wrapper {
+  overflow-x: auto;
+  border-radius: var(--radius-sm);
+  border: 1px solid #f1f5f9;
+}
+
+.pm-tasks-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: auto;
+}
+
+.pm-tasks-table th {
+  background-color: #fafbfc;
+  color: #475569;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 0.75rem 0.85rem;
+  text-align: left;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.pm-tasks-table td {
+  padding: 0.75rem 0.85rem;
+  font-size: 0.85rem;
+  border-bottom: 1px solid #f8fafc;
+  color: #334155;
+}
+
+.pm-tasks-table tbody tr:hover {
+  background-color: #fafbfc;
+}
+
+.task-id-link {
+  color: #6366f1;
+  font-weight: 600;
+  text-decoration: none;
+  font-size: 0.825rem;
+}
+
+.task-id-link:hover {
+  text-decoration: underline;
+  color: #4f46e5;
+}
+
+.task-name-text {
+  font-weight: 500;
+  color: #0f172a;
+}
+
+/* Status Monospace Badges */
+.task-status-badge {
+  font-family: var(--font-mono), monospace;
+  font-size: 0.8rem;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.task-status-badge.status-progress {
+  color: #2563eb;
+}
+
+.task-status-badge.status-done {
+  color: #16a34a;
+}
+
+.task-status-badge.status-todo {
+  color: #475569;
+}
+
+.task-status-badge.status-blocked {
+  color: #dc2626;
+}
+
+/* AI Agent Pill */
+.agent-pill-info {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.825rem;
+  font-weight: 500;
+  color: #334155;
+}
+
+.agent-icon-circle {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background-color: #eff6ff;
+  border: 1px solid #bfdbfe;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+}
+
+/* Priority Indicators */
+.priority-indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.825rem;
+  font-weight: 500;
+}
+
+.priority-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.priority-dot.dot-high {
+  background-color: #ef4444;
+  box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.2);
+}
+
+.priority-dot.dot-medium {
+  background-color: #f59e0b;
+  box-shadow: 0 0 0 2px rgba(245, 158, 11, 0.2);
+}
+
+.priority-dot.dot-low {
+  background-color: #10b981;
+  box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.2);
+}
+
+/* Table Pagination Footer */
+.pm-tasks-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 1rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid #f1f5f9;
+}
+
+.pm-tasks-count-info {
+  font-size: 0.8rem;
+  color: #64748b;
+}
+
+.pm-pagination-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.btn-page-nav {
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-sm);
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  color: #475569;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.btn-page-nav:hover {
+  background-color: #f1f5f9;
+  color: #0f172a;
+}
+
+.btn-page-nav.active {
+  background-color: #6366f1;
+  border-color: #6366f1;
+  color: #ffffff;
+}
+
+/* --------------------------------------------------------------------------
+   6. RIGHT SPRINT SUMMARY CARD (Sprint S2.2)
+   -------------------------------------------------------------------------- */
+.pm-card-sprint-summary {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 1.25rem;
+}
+
+.sprint-card-top-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.sprint-card-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0;
+}
+
+.sprint-details-desc-area {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.sprint-module-title {
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: #334155;
+  margin: 0;
+}
+
+.sprint-module-desc {
+  font-size: 0.825rem;
+  color: #64748b;
+  line-height: 1.45;
+  margin: 0;
+}
+
+/* Sprint Metrics List */
+.sprint-metrics-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.sprint-metric-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.85rem;
+}
+
+.sprint-metric-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #475569;
+  font-weight: 500;
+}
+
+.sprint-metric-label svg {
+  color: #94a3b8;
+  width: 15px;
+  height: 15px;
+}
+
+.sprint-metric-val {
+  font-weight: 700;
+  color: #0f172a;
+}
+
+/* Progress Bar */
+.sprint-progress-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.sprint-progress-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.85rem;
+}
+
+.sprint-progress-track {
+  width: 100%;
+  height: 7px;
+  border-radius: var(--radius-full);
+  background-color: #f1f5f9;
+  overflow: hidden;
+}
+
+.sprint-progress-fill {
+  height: 100%;
+  width: 60%;
+  background: linear-gradient(90deg, #818cf8 0%, #6366f1 100%);
+  border-radius: var(--radius-full);
+  transition: width 0.6s ease;
+}
+
+/* View Sprint Detail CTA Button */
+.btn-view-sprint-detail {
+  width: 100%;
+  padding: 0.65rem 1rem;
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: var(--radius-md);
+  color: #1e293b;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: center;
+  transition: all var(--transition-fast);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+}
+
+.btn-view-sprint-detail:hover {
+  background-color: #f8fafc;
+  border-color: #cbd5e1;
+  color: #2563eb;
+  transform: translateY(-1px);
+}
