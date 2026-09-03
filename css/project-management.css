@@ -204,9 +204,9 @@
 }
 
 .btn-view-phase-details:hover {
-  background-color: #f8fafc;
-  color: #2563eb;
-  border-color: #bfdbfe;
+  background-color: #f0f4f9;
+  color: #2d5584;
+  border-color: #cbd9eb;
 }
 
 /* Stepper Flow Grid */
@@ -515,11 +515,11 @@
 }
 
 .gantt-bar-blue {
-  background: linear-gradient(90deg, #3b82f6 0%, #2563eb 100%);
+  background: linear-gradient(90deg, #487cb6 0%, #2d5584 100%);
 }
 
 .gantt-bar-blue .gantt-bar-check {
-  color: #2563eb;
+  color: #2d5584;
 }
 
 .gantt-bar-purple {
@@ -607,7 +607,7 @@
 }
 
 .btn-view-all-sprints:hover {
-  color: #2563eb;
+  color: #2d5584;
 }
 
 /* Tasks Data Table */

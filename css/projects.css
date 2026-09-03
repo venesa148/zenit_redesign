@@ -1,5 +1,5 @@
 /* ==========================================================================
-   ZENITH AI - ALL PROJECTS PAGE STYLING
+   ZENITH AI - ALL PROJECTS PAGE STYLING (CALM SLATE-NAVY THEME)
    ========================================================================== */
 
 .projects-viewport {
@@ -52,15 +52,15 @@
   align-items: center;
   flex: 1;
   background-color: #ffffff;
-  border: 1px solid #e2e8f0;
+  border: 1px solid #d2dce8;
   border-radius: var(--radius-md);
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
   transition: all var(--transition-fast);
 }
 
 .project-search-wrapper:focus-within {
-  border-color: #1e3a8a;
-  box-shadow: 0 0 0 3px rgba(30, 58, 138, 0.12);
+  border-color: #2d5584;
+  box-shadow: 0 0 0 3px rgba(45, 85, 132, 0.12);
 }
 
 .search-icon {
@@ -98,7 +98,7 @@
   height: 42px;
   padding: 0 1rem;
   background-color: #ffffff;
-  border: 1px solid #e2e8f0;
+  border: 1px solid #d2dce8;
   border-radius: var(--radius-md);
   font-size: 0.875rem;
   font-weight: 500;
@@ -111,7 +111,7 @@
 
 .btn-filter-dropdown:hover {
   background-color: #f8fafc;
-  border-color: #cbd5e1;
+  border-color: #b3c5da;
 }
 
 .btn-filter-dropdown svg {
@@ -127,7 +127,7 @@
   left: 0;
   min-width: 150px;
   background-color: #ffffff;
-  border: 1px solid #e2e8f0;
+  border: 1px solid #d2dce8;
   border-radius: var(--radius-md);
   box-shadow: var(--shadow-lg);
   padding: 0.35rem;
@@ -151,13 +151,13 @@
 }
 
 .filter-menu-item:hover {
-  background-color: #eff4ff;
-  color: #1e3a8a;
+  background-color: #f0f4f9;
+  color: #1b2a47;
 }
 
 .filter-menu-item.active {
-  background-color: #eff4ff;
-  color: #1e3a8a;
+  background-color: #f0f4f9;
+  color: #2d5584;
   font-weight: 600;
 }
 
@@ -166,7 +166,7 @@
   display: flex;
   align-items: center;
   background-color: #ffffff;
-  border: 1px solid #e2e8f0;
+  border: 1px solid #d2dce8;
   border-radius: var(--radius-md);
   padding: 3px;
   gap: 2px;
@@ -190,8 +190,8 @@
 }
 
 .btn-view-mode.active {
-  background-color: #eff4ff;
-  color: #1e3a8a;
+  background-color: #f0f4f9;
+  color: #2d5584;
 }
 
 .btn-view-mode svg {
@@ -204,7 +204,7 @@
    -------------------------------------------------------------------------- */
 .projects-table-card {
   background-color: #ffffff;
-  border: 1px solid #eef2f6;
+  border: 1px solid #edf2f7;
   border-radius: var(--radius-xl);
   box-shadow: 0 4px 20px -4px rgba(0, 0, 0, 0.03);
   overflow: hidden;
@@ -221,7 +221,7 @@
   font-size: 0.8rem;
   font-weight: 600;
   color: #64748b;
-  border-bottom: 1px solid #f1f5f9;
+  border-bottom: 1px solid #edf2f7;
   background-color: #ffffff;
 }
 
@@ -279,13 +279,13 @@
 }
 
 .badge-icon-blue {
-  background-color: #dbeafe;
-  color: #2563eb;
+  background-color: #f0f4f9;
+  color: #2d5584;
 }
 
 .badge-icon-indigo {
-  background-color: #e0e7ff;
-  color: #4f46e5;
+  background-color: #ede9fe;
+  color: #6d28d9;
 }
 
 .badge-icon-slate {
@@ -302,7 +302,7 @@
 }
 
 .project-row:hover .project-title-link {
-  color: #2563eb;
+  color: #2d5584;
 }
 
 /* Type Badge */
@@ -315,15 +315,15 @@
 }
 
 .type-badge-project {
-  background-color: #eff6ff;
-  color: #2563eb;
-  border: 1px solid #dbeafe;
+  background-color: #f0f4f9;
+  color: #2d5584;
+  border: 1px solid #cbd9eb;
 }
 
 .type-badge-prototype {
-  background-color: #e0e7ff;
-  color: #4f46e5;
-  border: 1px solid #c7d2fe;
+  background-color: #e6eef7;
+  color: #1b2a47;
+  border: 1px solid #cbd9eb;
 }
 
 /* Date Text */
@@ -346,44 +346,21 @@
 
 .project-grid-card {
   background-color: #ffffff;
-  border: 1px solid #eef2f6;
+  border: 1px solid #edf2f7;
   border-radius: var(--radius-lg);
   padding: 1.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  transition: all var(--transition-fast);
+  cursor: pointer;
+  text-decoration: none;
+  color: inherit;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  gap: 1.25rem;
-  cursor: pointer;
-  transition: all var(--transition-fast);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+  gap: 1rem;
 }
 
 .project-grid-card:hover {
-  border-color: #cbd5e1;
   transform: translateY(-2px);
   box-shadow: var(--shadow-md);
-}
-
-/* Empty State */
-.projects-empty-state {
-  display: none;
-  text-align: center;
-  padding: 4rem 2rem;
-  color: #94a3b8;
-}
-
-.projects-empty-state.show {
-  display: block;
-}
-
-/* Responsive */
-@media (max-width: 900px) {
-  .projects-content-container {
-    padding: 2rem 1.5rem;
-  }
-
-  .projects-table th:nth-child(2),
-  .projects-table td:nth-child(2) {
-    display: none;
-  }
+  border-color: #cbd9eb;
 }

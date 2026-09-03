@@ -1,10 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Zenith — All Projects</title>
   <meta name="description" content="View and manage all Zenith AI projects and prototypes." />
+
+  <!-- Google Fonts Typography Standards -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
+    rel="stylesheet" />
 
   <!-- Stylesheets -->
   <link rel="stylesheet" href="css/tokens.css" />
@@ -13,6 +21,7 @@
   <link rel="stylesheet" href="css/projects.css" />
   <link rel="stylesheet" href="css/modal.css" />
 </head>
+
 <body>
   <div class="app-container" style="display: flex; height: 100vh; overflow: hidden;">
     <!-- ==========================================
@@ -29,18 +38,20 @@
 
           <!-- Top Collapse Toggle Button -->
           <button type="button" class="global-sb-collapse-btn" id="btnToggleGlobalTop" title="Collapse Global Sidebar">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-              <polyline points="11 17 6 12 11 7"/>
-              <polyline points="18 17 13 12 18 7"/>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="11 17 6 12 11 7" />
+              <polyline points="18 17 13 12 18 7" />
             </svg>
           </button>
         </div>
 
         <!-- + New Project Button -->
         <a href="dashboard.html" class="global-sb-new-btn" id="btnNewProject" title="New project">
-          <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-            <line x1="12" y1="5" x2="12" y2="19"/>
-            <line x1="5" y1="12" x2="19" y2="12"/>
+          <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="12" y1="5" x2="12" y2="19" />
+            <line x1="5" y1="12" x2="19" y2="12" />
           </svg>
           <span>New project</span>
         </a>
@@ -49,32 +60,36 @@
         <nav class="global-sb-nav" aria-label="Global menus">
           <!-- All Projects (Active) -->
           <a href="all-projects.html" class="global-sb-nav-item active" id="navAllProjects" title="All projects">
-            <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13c0 1.1.9 2 2 2Z"/>
+            <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path
+                d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13c0 1.1.9 2 2 2Z" />
             </svg>
             <span>All projects</span>
           </a>
 
           <!-- Manage -->
           <a href="#manage" class="global-sb-nav-item" id="navManage" title="Manage">
-            <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <line x1="4" x2="4" y1="21" y2="14"/>
-              <line x1="4" x2="4" y1="10" y2="3"/>
-              <line x1="12" x2="12" y1="21" y2="12"/>
-              <line x1="12" x2="12" y1="8" y2="3"/>
-              <line x1="20" x2="20" y1="21" y2="16"/>
-              <line x1="20" x2="20" y1="12" y2="3"/>
-              <line x1="1" x2="7" y1="14" y2="14"/>
-              <line x1="9" x2="15" y1="8" y2="8"/>
-              <line x1="17" x2="23" y1="16" y2="16"/>
+            <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="4" x2="4" y1="21" y2="14" />
+              <line x1="4" x2="4" y1="10" y2="3" />
+              <line x1="12" x2="12" y1="21" y2="12" />
+              <line x1="12" x2="12" y1="8" y2="3" />
+              <line x1="20" x2="20" y1="21" y2="16" />
+              <line x1="20" x2="20" y1="12" y2="3" />
+              <line x1="1" x2="7" y1="14" y2="14" />
+              <line x1="9" x2="15" y1="8" y2="8" />
+              <line x1="17" x2="23" y1="16" y2="16" />
             </svg>
             <span>Manage</span>
           </a>
 
           <!-- Agent Studio -->
           <a href="#agent-studio" class="global-sb-nav-item" id="navAgentStudio" title="Agent Studio">
-            <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+            <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
             </svg>
             <span>Agent Studio</span>
           </a>
@@ -99,24 +114,26 @@
       <!-- Bottom Sidebar Items -->
       <div class="global-sb-bottom">
         <a href="#help" class="global-sb-feedback-link" id="feedbackLink" title="Feedback & help">
-          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="12" cy="12" r="10"/>
-            <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
-            <path d="M12 17h.01"/>
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10" />
+            <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" />
+            <path d="M12 17h.01" />
           </svg>
           <span>Feedback &amp; help</span>
         </a>
 
         <div class="global-sb-profile-row">
-          <a href="login.html" class="global-sb-profile-info" title="User Profile: Johanes">
+          <a href="login.html" class="global-sb-profile-info" title="User Profile: Josua">
             <div class="global-sb-user-avatar">J</div>
-            <span class="global-sb-user-name">Johanes</span>
+            <span class="global-sb-user-name">Josua</span>
           </a>
           <a href="login.html" class="global-sb-logout-btn" id="logoutBtn" aria-label="Log out" title="Log out">
-            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
-              <polyline points="16 17 21 12 16 7"/>
-              <line x1="21" y1="12" x2="9" y2="12"/>
+            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+              <polyline points="16 17 21 12 16 7" />
+              <line x1="21" y1="12" x2="9" y2="12" />
             </svg>
           </a>
         </div>
@@ -129,10 +146,12 @@
     <main class="projects-viewport">
       <!-- Top Navbar with Workspace Selector -->
       <header class="top-navbar" style="display: flex; justify-content: flex-end; padding: 1.25rem 2.5rem;">
-        <button type="button" class="workspace-dropdown-btn" id="workspaceDropdownBtn" style="display: flex; align-items: center; gap: 0.45rem; color: #475569; font-size: 0.875rem; font-weight: 500;">
+        <button type="button" class="workspace-dropdown-btn" id="workspaceDropdownBtn"
+          style="display: flex; align-items: center; gap: 0.45rem; color: #475569; font-size: 0.875rem; font-weight: 500;">
           <span>Workspace</span>
-          <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="m6 9 6 6 6-6"/>
+          <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="m6 9 6 6 6-6" />
           </svg>
         </button>
       </header>
@@ -147,28 +166,26 @@
           <div class="toolbar-left-group">
             <!-- Search Box -->
             <div class="project-search-wrapper">
-              <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="11" cy="11" r="8"/>
-                <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+              <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24"
+                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="8" />
+                <line x1="21" y1="21" x2="16.65" y2="16.65" />
               </svg>
-              <input 
-                type="text" 
-                class="project-search-input" 
-                id="projectSearchInput" 
-                placeholder="Search projects..." 
-                aria-label="Search projects"
-              />
+              <input type="text" class="project-search-input" id="projectSearchInput" placeholder="Search projects..."
+                aria-label="Search projects" />
             </div>
 
             <!-- Filter Dropdown -->
             <div class="filter-dropdown-container">
               <button type="button" class="btn-filter-dropdown" id="btnFilterDropdown">
-                <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/>
+                <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3" />
                 </svg>
                 <span id="filterLabel">Filter: All</span>
-                <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="m6 9 6 6 6-6"/>
+                <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="m6 9 6 6 6-6" />
                 </svg>
               </button>
 
@@ -182,22 +199,25 @@
 
           <!-- View Mode Switcher -->
           <div class="view-mode-switcher" role="group" aria-label="View mode switcher">
-            <button type="button" class="btn-view-mode active" id="btnListView" title="List View" aria-label="List View">
-              <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <line x1="8" y1="6" x2="21" y2="6"/>
-                <line x1="8" y1="12" x2="21" y2="12"/>
-                <line x1="8" y1="18" x2="21" y2="18"/>
-                <line x1="3" y1="6" x2="3.01" y2="6"/>
-                <line x1="3" y1="12" x2="3.01" y2="12"/>
-                <line x1="3" y1="18" x2="3.01" y2="18"/>
+            <button type="button" class="btn-view-mode active" id="btnListView" title="List View"
+              aria-label="List View">
+              <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="8" y1="6" x2="21" y2="6" />
+                <line x1="8" y1="12" x2="21" y2="12" />
+                <line x1="8" y1="18" x2="21" y2="18" />
+                <line x1="3" y1="6" x2="3.01" y2="6" />
+                <line x1="3" y1="12" x2="3.01" y2="12" />
+                <line x1="3" y1="18" x2="3.01" y2="18" />
               </svg>
             </button>
             <button type="button" class="btn-view-mode" id="btnGridView" title="Grid View" aria-label="Grid View">
-              <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <rect width="7" height="7" x="3" y="3" rx="1"/>
-                <rect width="7" height="7" x="14" y="3" rx="1"/>
-                <rect width="7" height="7" x="14" y="14" rx="1"/>
-                <rect width="7" height="7" x="3" y="14" rx="1"/>
+              <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect width="7" height="7" x="3" y="3" rx="1" />
+                <rect width="7" height="7" x="14" y="3" rx="1" />
+                <rect width="7" height="7" x="14" y="14" rx="1" />
+                <rect width="7" height="7" x="3" y="14" rx="1" />
               </svg>
             </button>
           </div>
@@ -219,10 +239,11 @@
                 <td>
                   <div class="project-name-cell">
                     <div class="project-icon-badge badge-icon-blue">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <circle cx="8" cy="21" r="1"/>
-                        <circle cx="19" cy="21" r="1"/>
-                        <path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="8" cy="21" r="1" />
+                        <circle cx="19" cy="21" r="1" />
+                        <path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12" />
                       </svg>
                     </div>
                     <a href="workspace.html" class="project-title-link">E-commerce Redesign</a>
@@ -241,9 +262,10 @@
                 <td>
                   <div class="project-name-cell">
                     <div class="project-icon-badge badge-icon-indigo">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <rect width="14" height="20" x="5" y="2" rx="2" ry="2"/>
-                        <path d="M12 18h.01"/>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect width="14" height="20" x="5" y="2" rx="2" ry="2" />
+                        <path d="M12 18h.01" />
                       </svg>
                     </div>
                     <a href="workspace.html" class="project-title-link">Mobile App Prototype</a>
@@ -262,11 +284,12 @@
                 <td>
                   <div class="project-name-cell">
                     <div class="project-icon-badge badge-icon-slate">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <rect width="7" height="7" x="3" y="3" rx="1"/>
-                        <rect width="7" height="7" x="14" y="3" rx="1"/>
-                        <rect width="7" height="7" x="14" y="14" rx="1"/>
-                        <rect width="7" height="7" x="3" y="14" rx="1"/>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect width="7" height="7" x="3" y="3" rx="1" />
+                        <rect width="7" height="7" x="14" y="3" rx="1" />
+                        <rect width="7" height="7" x="14" y="14" rx="1" />
+                        <rect width="7" height="7" x="3" y="14" rx="1" />
                       </svg>
                     </div>
                     <a href="workspace.html" class="project-title-link">Dashboard v2</a>
@@ -288,12 +311,18 @@
           <div class="project-grid-card" onclick="window.location.href='workspace.html'">
             <div style="display: flex; align-items: center; justify-content: space-between;">
               <div class="project-icon-badge badge-icon-blue">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2">
+                  <circle cx="8" cy="21" r="1" />
+                  <circle cx="19" cy="21" r="1" />
+                  <path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12" />
+                </svg>
               </div>
               <span class="table-type-badge type-badge-project">Project</span>
             </div>
             <div>
-              <h3 style="font-size: 1.05rem; font-weight: 700; color: #0f172a; margin-bottom: 0.25rem;">E-commerce Redesign</h3>
+              <h3 style="font-size: 1.05rem; font-weight: 700; color: #0f172a; margin-bottom: 0.25rem;">E-commerce
+                Redesign</h3>
               <p style="font-size: 0.825rem; color: #64748b;">Modified Today, 10:42 AM</p>
             </div>
           </div>
@@ -301,12 +330,17 @@
           <div class="project-grid-card" onclick="window.location.href='workspace.html'">
             <div style="display: flex; align-items: center; justify-content: space-between;">
               <div class="project-icon-badge badge-icon-indigo">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="14" height="20" x="5" y="2" rx="2" ry="2"/><path d="M12 18h.01"/></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2">
+                  <rect width="14" height="20" x="5" y="2" rx="2" ry="2" />
+                  <path d="M12 18h.01" />
+                </svg>
               </div>
               <span class="table-type-badge type-badge-prototype">Prototype</span>
             </div>
             <div>
-              <h3 style="font-size: 1.05rem; font-weight: 700; color: #0f172a; margin-bottom: 0.25rem;">Mobile App Prototype</h3>
+              <h3 style="font-size: 1.05rem; font-weight: 700; color: #0f172a; margin-bottom: 0.25rem;">Mobile App
+                Prototype</h3>
               <p style="font-size: 0.825rem; color: #64748b;">Modified Yesterday</p>
             </div>
           </div>
@@ -314,12 +348,19 @@
           <div class="project-grid-card" onclick="window.location.href='workspace.html'">
             <div style="display: flex; align-items: center; justify-content: space-between;">
               <div class="project-icon-badge badge-icon-slate">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="7" height="7" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/><rect width="7" height="7" x="14" y="14" rx="1"/><rect width="7" height="7" x="3" y="14" rx="1"/></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2">
+                  <rect width="7" height="7" x="3" y="3" rx="1" />
+                  <rect width="7" height="7" x="14" y="3" rx="1" />
+                  <rect width="7" height="7" x="14" y="14" rx="1" />
+                  <rect width="7" height="7" x="3" y="14" rx="1" />
+                </svg>
               </div>
               <span class="table-type-badge type-badge-project">Project</span>
             </div>
             <div>
-              <h3 style="font-size: 1.05rem; font-weight: 700; color: #0f172a; margin-bottom: 0.25rem;">Dashboard v2</h3>
+              <h3 style="font-size: 1.05rem; font-weight: 700; color: #0f172a; margin-bottom: 0.25rem;">Dashboard v2
+              </h3>
               <p style="font-size: 0.825rem; color: #64748b;">Modified Oct 12, 2023</p>
             </div>
           </div>
@@ -336,15 +377,17 @@
   <!-- ==========================================
        MANAGE LARGE POP-UP MODAL
        ========================================== -->
-  <div class="zenith-modal-backdrop" id="manageModalBackdrop" role="dialog" aria-modal="true" aria-labelledby="manageModalTitle">
+  <div class="zenith-modal-backdrop" id="manageModalBackdrop" role="dialog" aria-modal="true"
+    aria-labelledby="manageModalTitle">
     <div class="zenith-modal-window">
       <!-- Modal Header Bar -->
       <div class="modal-header-bar">
         <h2 class="modal-header-title" id="manageModalTitle">Manage</h2>
         <button type="button" class="modal-close-btn" id="btnManageModalClose" aria-label="Close modal">
-          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-            <line x1="18" y1="6" x2="6" y2="18"/>
-            <line x1="6" y1="6" x2="18" y2="18"/>
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18" />
+            <line x1="6" y1="6" x2="18" y2="18" />
           </svg>
         </button>
       </div>
@@ -354,42 +397,49 @@
         <!-- Inner Sidebar -->
         <aside class="modal-inner-sidebar" aria-label="Manage sections">
           <button type="button" class="modal-nav-item active" data-tab="monitoring">
-            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M3 3v18h18"/>
-              <path d="m19 9-5 5-4-4-3 3"/>
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 3v18h18" />
+              <path d="m19 9-5 5-4-4-3 3" />
             </svg>
             <span>Monitoring</span>
           </button>
 
           <button type="button" class="modal-nav-item" data-tab="sessions">
-            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="12" cy="12" r="10"/>
-              <polyline points="12 6 12 12 16 14"/>
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10" />
+              <polyline points="12 6 12 12 16 14" />
             </svg>
             <span>Sessions</span>
           </button>
 
           <button type="button" class="modal-nav-item" data-tab="people">
-            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
-              <circle cx="9" cy="7" r="4"/>
-              <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
-              <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+              <circle cx="9" cy="7" r="4" />
+              <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
+              <path d="M16 3.13a4 4 0 0 1 0 7.75" />
             </svg>
             <span>People</span>
           </button>
 
           <button type="button" class="modal-nav-item" data-tab="system">
-            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/>
-              <circle cx="12" cy="12" r="3"/>
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path
+                d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z" />
+              <circle cx="12" cy="12" r="3" />
             </svg>
             <span>System</span>
           </button>
 
           <button type="button" class="modal-nav-item" data-tab="myfiles">
-            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13c0 1.1.9 2 2 2Z"/>
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path
+                d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13c0 1.1.9 2 2 2Z" />
             </svg>
             <span>My Files</span>
           </button>
@@ -521,10 +571,27 @@
             <p class="section-sub-desc">Active and archived AI developer sessions.</p>
             <div class="modal-mini-table-card">
               <table class="modal-mini-table">
-                <thead><tr><th>Session ID</th><th>Agent Mode</th><th>Messages</th><th>Started</th></tr></thead>
+                <thead>
+                  <tr>
+                    <th>Session ID</th>
+                    <th>Agent Mode</th>
+                    <th>Messages</th>
+                    <th>Started</th>
+                  </tr>
+                </thead>
                 <tbody>
-                  <tr><td>#sess-9824</td><td>Claude 3.7 Sonnet</td><td>142 messages</td><td>Today, 10:15 AM</td></tr>
-                  <tr><td>#sess-9810</td><td>Autonomous Coder</td><td>88 messages</td><td>Yesterday</td></tr>
+                  <tr>
+                    <td>#sess-9824</td>
+                    <td>Claude 3.7 Sonnet</td>
+                    <td>142 messages</td>
+                    <td>Today, 10:15 AM</td>
+                  </tr>
+                  <tr>
+                    <td>#sess-9810</td>
+                    <td>Autonomous Coder</td>
+                    <td>88 messages</td>
+                    <td>Yesterday</td>
+                  </tr>
                 </tbody>
               </table>
             </div>
@@ -536,10 +603,24 @@
             <p class="section-sub-desc">Team members and workspace roles.</p>
             <div class="modal-mini-table-card">
               <table class="modal-mini-table">
-                <thead><tr><th>Member</th><th>Role</th><th>Access</th></tr></thead>
+                <thead>
+                  <tr>
+                    <th>Member</th>
+                    <th>Role</th>
+                    <th>Access</th>
+                  </tr>
+                </thead>
                 <tbody>
-                  <tr><td><strong>Johanes (You)</strong></td><td>Owner</td><td>Full Admin</td></tr>
-                  <tr><td><strong>Engineering Team</strong></td><td>Developer</td><td>Read &amp; Write</td></tr>
+                  <tr>
+                    <td><strong>Josua (You)</strong></td>
+                    <td>Owner</td>
+                    <td>Full Admin</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Engineering Team</strong></td>
+                    <td>Developer</td>
+                    <td>Read &amp; Write</td>
+                  </tr>
                 </tbody>
               </table>
             </div>
@@ -550,10 +631,18 @@
             <h1 class="section-main-heading">System</h1>
             <p class="section-sub-desc">Platform telemetry, container nodes, and environment specs.</p>
             <div class="manage-metrics-grid">
-              <div class="metric-stat-card"><span class="metric-card-label">CPU USAGE</span><div class="metric-card-value">18%</div></div>
-              <div class="metric-stat-card"><span class="metric-card-label">MEMORY</span><div class="metric-card-value">2.4 / 8GB</div></div>
-              <div class="metric-stat-card"><span class="metric-card-label">STORAGE</span><div class="metric-card-value">12.1GB</div></div>
-              <div class="metric-stat-card"><span class="metric-card-label">UPTIME</span><div class="metric-card-value">99.98%</div></div>
+              <div class="metric-stat-card"><span class="metric-card-label">CPU USAGE</span>
+                <div class="metric-card-value">18%</div>
+              </div>
+              <div class="metric-stat-card"><span class="metric-card-label">MEMORY</span>
+                <div class="metric-card-value">2.4 / 8GB</div>
+              </div>
+              <div class="metric-stat-card"><span class="metric-card-label">STORAGE</span>
+                <div class="metric-card-value">12.1GB</div>
+              </div>
+              <div class="metric-stat-card"><span class="metric-card-label">UPTIME</span>
+                <div class="metric-card-value">99.98%</div>
+              </div>
             </div>
           </div>
 
@@ -563,10 +652,24 @@
             <p class="section-sub-desc">Assets, schemas, and documents stored in this workspace.</p>
             <div class="modal-mini-table-card">
               <table class="modal-mini-table">
-                <thead><tr><th>Filename</th><th>Size</th><th>Uploaded</th></tr></thead>
+                <thead>
+                  <tr>
+                    <th>Filename</th>
+                    <th>Size</th>
+                    <th>Uploaded</th>
+                  </tr>
+                </thead>
                 <tbody>
-                  <tr><td>design_system_tokens.json</td><td>24 KB</td><td>Oct 28, 2023</td></tr>
-                  <tr><td>api_specs_v2.yaml</td><td>110 KB</td><td>Oct 25, 2023</td></tr>
+                  <tr>
+                    <td>design_system_tokens.json</td>
+                    <td>24 KB</td>
+                    <td>Oct 28, 2023</td>
+                  </tr>
+                  <tr>
+                    <td>api_specs_v2.yaml</td>
+                    <td>110 KB</td>
+                    <td>Oct 25, 2023</td>
+                  </tr>
                 </tbody>
               </table>
             </div>
@@ -579,25 +682,29 @@
   <!-- ==========================================
        AGENT STUDIO LARGE POP-UP MODAL
        ========================================== -->
-  <div class="zenith-modal-backdrop" id="agentStudioModalBackdrop" role="dialog" aria-modal="true" aria-labelledby="agentStudioModalTitle">
+  <div class="zenith-modal-backdrop" id="agentStudioModalBackdrop" role="dialog" aria-modal="true"
+    aria-labelledby="agentStudioModalTitle">
     <div class="zenith-modal-window">
       <!-- Modal Header Bar -->
       <div class="modal-header-bar">
         <div class="modal-header-left">
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: #0f172a;">
-            <rect width="18" height="12" x="3" y="6" rx="2"/>
-            <line x1="9" x2="9" y1="12" y2="12"/>
-            <line x1="15" x2="15" y1="12" y2="12"/>
-            <path d="M12 2v4"/>
-            <path d="M2 10h1"/>
-            <path d="M21 10h1"/>
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+            style="color: #0f172a;">
+            <rect width="18" height="12" x="3" y="6" rx="2" />
+            <line x1="9" x2="9" y1="12" y2="12" />
+            <line x1="15" x2="15" y1="12" y2="12" />
+            <path d="M12 2v4" />
+            <path d="M2 10h1" />
+            <path d="M21 10h1" />
           </svg>
           <h2 class="modal-header-title" id="agentStudioModalTitle">Agent Studio</h2>
         </div>
         <button type="button" class="modal-close-btn" id="btnAgentStudioClose" aria-label="Close modal">
-          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-            <line x1="18" y1="6" x2="6" y2="18"/>
-            <line x1="6" y1="6" x2="18" y2="18"/>
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18" />
+            <line x1="6" y1="6" x2="18" y2="18" />
           </svg>
         </button>
       </div>
@@ -640,9 +747,10 @@
                 </p>
               </div>
               <button type="button" class="btn-modal-dark-cta" id="btnNewAgent">
-                <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                  <line x1="12" y1="5" x2="12" y2="19"/>
-                  <line x1="5" y1="12" x2="19" y2="12"/>
+                <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="12" y1="5" x2="12" y2="19" />
+                  <line x1="5" y1="12" x2="19" y2="12" />
                 </svg>
                 <span>New agent</span>
               </button>
@@ -758,10 +866,24 @@
             <p class="section-sub-desc">Custom extensions, Python sandboxes, and external APIs exposed to agents.</p>
             <div class="modal-mini-table-card">
               <table class="modal-mini-table">
-                <thead><tr><th>Tool Name</th><th>Type</th><th>Status</th></tr></thead>
+                <thead>
+                  <tr>
+                    <th>Tool Name</th>
+                    <th>Type</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
                 <tbody>
-                  <tr><td><strong>web_search</strong></td><td>External API</td><td><span class="status-pill-active"><span class="status-dot-green"></span>Ready</span></td></tr>
-                  <tr><td><strong>code_sandbox</strong></td><td>Python Docker</td><td><span class="status-pill-active"><span class="status-dot-green"></span>Ready</span></td></tr>
+                  <tr>
+                    <td><strong>web_search</strong></td>
+                    <td>External API</td>
+                    <td><span class="status-pill-active"><span class="status-dot-green"></span>Ready</span></td>
+                  </tr>
+                  <tr>
+                    <td><strong>code_sandbox</strong></td>
+                    <td>Python Docker</td>
+                    <td><span class="status-pill-active"><span class="status-dot-green"></span>Ready</span></td>
+                  </tr>
                 </tbody>
               </table>
             </div>
@@ -773,10 +895,24 @@
             <p class="section-sub-desc">Production and staging endpoint runtimes.</p>
             <div class="modal-mini-table-card">
               <table class="modal-mini-table">
-                <thead><tr><th>Endpoint</th><th>Environment</th><th>Uptime</th></tr></thead>
+                <thead>
+                  <tr>
+                    <th>Endpoint</th>
+                    <th>Environment</th>
+                    <th>Uptime</th>
+                  </tr>
+                </thead>
                 <tbody>
-                  <tr><td>api.zenith.ai/v1/agents/claim-analyzer</td><td>Production (v1.4)</td><td>99.99%</td></tr>
-                  <tr><td>staging.zenith.ai/v1/agents/reviewer</td><td>Staging (v2.0-rc)</td><td>100%</td></tr>
+                  <tr>
+                    <td>api.zenith.ai/v1/agents/claim-analyzer</td>
+                    <td>Production (v1.4)</td>
+                    <td>99.99%</td>
+                  </tr>
+                  <tr>
+                    <td>staging.zenith.ai/v1/agents/reviewer</td>
+                    <td>Staging (v2.0-rc)</td>
+                    <td>100%</td>
+                  </tr>
                 </tbody>
               </table>
             </div>
@@ -788,10 +924,27 @@
             <p class="section-sub-desc">Live execution telemetry and trace logs.</p>
             <div class="modal-mini-table-card">
               <table class="modal-mini-table">
-                <thead><tr><th>Run ID</th><th>Agent</th><th>Duration</th><th>Status</th></tr></thead>
+                <thead>
+                  <tr>
+                    <th>Run ID</th>
+                    <th>Agent</th>
+                    <th>Duration</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
                 <tbody>
-                  <tr><td>#run-10492</td><td>Claim Document Analyzer</td><td>1.4s</td><td><span class="status-pill-active"><span class="status-dot-green"></span>Success</span></td></tr>
-                  <tr><td>#run-10488</td><td>Attendance Analyst</td><td>0.8s</td><td><span class="status-pill-active"><span class="status-dot-green"></span>Success</span></td></tr>
+                  <tr>
+                    <td>#run-10492</td>
+                    <td>Claim Document Analyzer</td>
+                    <td>1.4s</td>
+                    <td><span class="status-pill-active"><span class="status-dot-green"></span>Success</span></td>
+                  </tr>
+                  <tr>
+                    <td>#run-10488</td>
+                    <td>Attendance Analyst</td>
+                    <td>0.8s</td>
+                    <td><span class="status-pill-active"><span class="status-dot-green"></span>Success</span></td>
+                  </tr>
                 </tbody>
               </table>
             </div>
@@ -803,10 +956,24 @@
             <p class="section-sub-desc">Multi-agent graphs, routing pipelines, and automated evaluator chains.</p>
             <div class="modal-mini-table-card">
               <table class="modal-mini-table">
-                <thead><tr><th>Workflow Name</th><th>Steps</th><th>Triggers</th></tr></thead>
+                <thead>
+                  <tr>
+                    <th>Workflow Name</th>
+                    <th>Steps</th>
+                    <th>Triggers</th>
+                  </tr>
+                </thead>
                 <tbody>
-                  <tr><td><strong>Document Processing Pipeline</strong></td><td>4 agents (OCR → Extraction → Review → Export)</td><td>Webhook / S3 upload</td></tr>
-                  <tr><td><strong>Customer Ticket Triage</strong></td><td>2 agents (Classifier → Routing)</td><td>Incoming chat</td></tr>
+                  <tr>
+                    <td><strong>Document Processing Pipeline</strong></td>
+                    <td>4 agents (OCR → Extraction → Review → Export)</td>
+                    <td>Webhook / S3 upload</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Customer Ticket Triage</strong></td>
+                    <td>2 agents (Classifier → Routing)</td>
+                    <td>Incoming chat</td>
+                  </tr>
                 </tbody>
               </table>
             </div>
@@ -821,4 +988,5 @@
   <script src="js/projects.js"></script>
   <script src="js/modal.js"></script>
 </body>
+
 </html>

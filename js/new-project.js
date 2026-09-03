@@ -32,8 +32,8 @@ function initFileUpload() {
   // Drag & drop visual feedback
   dropzone.addEventListener('dragover', (e) => {
     e.preventDefault();
-    dropzone.style.borderColor = '#2563eb';
-    dropzone.style.backgroundColor = '#eff6ff';
+    dropzone.style.borderColor = '#2d5584';
+    dropzone.style.backgroundColor = '#f0f4f9';
   });
 
   dropzone.addEventListener('dragleave', () => {
@@ -78,10 +78,10 @@ function initCreateProject() {
     `;
 
     setTimeout(() => {
-      btnCreate.innerHTML = `<span>Redirecting to workspace...</span>`;
+      btnCreate.innerHTML = `<span>Redirecting to Build view...</span>`;
       console.log('Project created successfully');
       setTimeout(() => {
-        window.location.href = 'workspace.html';
+        window.location.href = 'workspace.html#build';
       }, 500);
     }, 1000);
   });

@@ -1,47 +1,51 @@
 /* ==========================================================================
-   ZENITH AI - DESIGN TOKENS
+   ZENITH AI - DESIGN TOKENS (CALM SLATE-NAVY PALETTE & STANDARDS)
    ========================================================================== */
 
 :root {
-  /* Brand Primary Colors - Refined Rich Deep Blue (Not too dark, not too bright) */
-  --zenith-primary: #1e3a8a;
-  --zenith-primary-hover: #2551be;
-  --zenith-primary-active: #172b64;
-  --zenith-primary-light: #eff4ff;
-  --zenith-primary-border: #bfdbfe;
-  --zenith-primary-glow: rgba(30, 58, 138, 0.35);
+  /* Brand Primary Colors - Calm, Low-Contrast Slate-Navy Family */
+  --zenith-primary-deep: #141e33;
+  --zenith-primary-dark: #1b2a47;
+  --zenith-primary: #2d5584;
+  --zenith-primary-hover: #39689e;
+  --zenith-primary-active: #224166;
+  --zenith-primary-accent: #487cb6;
+  --zenith-primary-light: #f0f4f9;
+  --zenith-primary-tint: #e6eef7;
+  --zenith-primary-border: #cbd9eb;
+  --zenith-primary-glow: rgba(45, 85, 132, 0.22);
 
-  /* Deep Hero Aurora & Dark Gradients */
-  --hero-bg-deep: #0f1c3f;
-  --hero-bg-dark: #172b64;
-  --hero-bg-mid: #1e3a8a;
-  --hero-bg-bright: #2563eb;
-  --hero-glow-accent: rgba(59, 130, 246, 0.45);
-  --hero-card-bg: rgba(255, 255, 255, 0.08);
-  --hero-card-border: rgba(255, 255, 255, 0.16);
-  --hero-card-hover-bg: rgba(255, 255, 255, 0.14);
-  --hero-card-hover-border: rgba(255, 255, 255, 0.32);
+  /* Deep Hero Aurora & Dark Gradients with Soft Slate-Navy Undertones */
+  --hero-bg-deep: #0e1726;
+  --hero-bg-dark: #152238;
+  --hero-bg-mid: #1d304e;
+  --hero-bg-bright: #29466e;
+  --hero-glow-accent: rgba(72, 124, 182, 0.25);
+  --hero-card-bg: rgba(255, 255, 255, 0.07);
+  --hero-card-border: rgba(203, 217, 235, 0.18);
+  --hero-card-hover-bg: rgba(255, 255, 255, 0.12);
+  --hero-card-hover-border: rgba(203, 217, 235, 0.35);
 
   /* Light Theme Neutrals */
   --bg-app: #fbfcfe;
   --bg-surface: #ffffff;
-  --bg-surface-subtle: #f8fafc;
-  --border-subtle: #eef2f6;
-  --border-default: #d1d5db;
-  --border-focus: #2563eb;
+  --bg-surface-subtle: #f6f8fb;
+  --border-subtle: #edf2f7;
+  --border-default: #d2dce8;
+  --border-focus: #2d5584;
 
   /* Typography Colors */
   --text-primary: #111827;
-  --text-secondary: #4b5563;
-  --text-muted: #6b7280;
-  --text-light: #9ca3af;
+  --text-secondary: #3b4858;
+  --text-muted: #64748b;
+  --text-light: #94a3b8;
   --text-white: #ffffff;
-  --text-white-dim: rgba(255, 255, 255, 0.82);
-  --text-white-subtle: rgba(255, 255, 255, 0.52);
+  --text-white-dim: rgba(255, 255, 255, 0.88);
+  --text-white-subtle: rgba(255, 255, 255, 0.55);
 
-  /* Typography Fonts */
-  --font-serif: 'Playfair Display', 'Newsreader', Georgia, serif;
-  --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  /* Standardized Typography Fonts */
+  --font-serif: 'Playfair Display', Georgia, serif;
+  --font-sans: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
 
   /* Spacing Scale */
@@ -64,13 +68,13 @@
   --radius-2xl: 32px;
   --radius-full: 9999px;
 
-  /* Shadows */
-  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.07), 0 2px 4px -2px rgba(0, 0, 0, 0.04);
-  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -4px rgba(0, 0, 0, 0.04);
-  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.04);
-  --shadow-primary-btn: 0 8px 24px -4px rgba(37, 99, 235, 0.45);
-  --shadow-hero-card: 0 25px 60px -15px rgba(10, 20, 50, 0.4);
+  /* Shadows with Calm Slate Undertones */
+  --shadow-sm: 0 1px 2px 0 rgba(17, 24, 39, 0.04);
+  --shadow-md: 0 4px 6px -1px rgba(17, 24, 39, 0.06), 0 2px 4px -2px rgba(17, 24, 39, 0.03);
+  --shadow-lg: 0 10px 15px -3px rgba(17, 24, 39, 0.07), 0 4px 6px -4px rgba(17, 24, 39, 0.03);
+  --shadow-xl: 0 20px 25px -5px rgba(17, 24, 39, 0.08), 0 8px 10px -6px rgba(17, 24, 39, 0.03);
+  --shadow-primary-btn: 0 6px 20px -3px rgba(45, 85, 132, 0.32);
+  --shadow-hero-card: 0 20px 50px -10px rgba(14, 23, 38, 0.35);
 
   /* Transitions */
   --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
@@ -79,11 +83,11 @@
 }
 
 [data-theme="dark"] {
-  --bg-app: #080c14;
-  --bg-surface: #0f172a;
-  --bg-surface-subtle: #1e293b;
-  --border-subtle: #1e293b;
-  --border-default: #334155;
+  --bg-app: #090e17;
+  --bg-surface: #0e1724;
+  --bg-surface-subtle: #141f30;
+  --border-subtle: #1a2a40;
+  --border-default: #253954;
   --text-primary: #f8fafc;
   --text-secondary: #cbd5e1;
   --text-muted: #94a3b8;

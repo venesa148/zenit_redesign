@@ -142,7 +142,7 @@ function initDeploymentDashboard() {
         <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="spin-icon"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg>
         <span>Deploying Pipeline...</span>
       `;
-      showToast('🚀 Memulai pipeline deployment baru #dep-8922...');
+      showToast('Memulai pipeline deployment baru #dep-8922...');
 
       appendLog('PIPELINE', 'Triggering manual build & deployment workflow #wf-4093...', 'log-tag-info');
 
@@ -163,13 +163,13 @@ function initDeploymentDashboard() {
       }, 3100);
 
       setTimeout(() => {
-        appendLog('SUCCESS', '🎉 Deployment #dep-8922 is LIVE! Healthcheck HTTP 200 OK.', 'log-tag-success');
+        appendLog('SUCCESS', 'Deployment #dep-8922 is LIVE! Healthcheck HTTP 200 OK.', 'log-tag-success');
         triggerBtn.disabled = false;
         triggerBtn.innerHTML = `
           <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
           <span>Trigger Deployment</span>
         `;
-        showToast('✅ Deployment #dep-8922 berhasil dan live di Production!');
+        showToast('Deployment #dep-8922 berhasil dan live di Production!');
       }, 3800);
     });
   }
@@ -177,14 +177,14 @@ function initDeploymentDashboard() {
   // Quick Action Buttons
   if (promoteBtn) {
     promoteBtn.addEventListener('click', () => {
-      showToast('🚀 Mempromosikan Staging v1.5.0-rc2 ke Production...');
+      showToast('Mempromosikan Staging v1.5.0-rc2 ke Production...');
       appendLog('PROMOTE', 'Promoting staging build (v1.5.0-rc2) to Production cluster...', 'log-tag-info');
     });
   }
 
   if (redeployProdBtn) {
     redeployProdBtn.addEventListener('click', () => {
-      showToast('🔄 Memulai redeploy Production v1.4.2...');
+      showToast('Memulai redeploy Production v1.4.2...');
       appendLog('REDEPLOY', 'Restarting container pods for Production (v1.4.2)...', 'log-tag-info');
     });
   }
@@ -192,7 +192,7 @@ function initDeploymentDashboard() {
   rollbackBtns.forEach(btn => {
     btn.addEventListener('click', () => {
       const depId = btn.getAttribute('data-id') || 'dep';
-      showToast(`⏪ Memulai rollback ke versi #${depId}...`);
+      showToast(`Memulai rollback ke versi #${depId}...`);
       appendLog('ROLLBACK', `Rolling back cluster release to version #${depId}...`, 'log-tag-warn');
     });
   });
@@ -207,7 +207,7 @@ function initDeploymentDashboard() {
 
   if (downloadLogsBtn) {
     downloadLogsBtn.addEventListener('click', () => {
-      showToast('📥 Mengunduh file runtime-logs.txt...');
+      showToast('Mengunduh file runtime-logs.txt...');
     });
   }
 }
@@ -411,47 +411,49 @@ function initProjectManagementInteractions() {
   const tasksTableBody = document.getElementById('sprintTasksTableBody');
   const tasksCountInfo = document.getElementById('tasksPaginationCount');
 
+  const robotSvg = '<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="10" rx="2"/><circle cx="12" cy="5" r="2"/><path d="M12 7v4"/><line x1="8" y1="16" x2="8" y2="16"/><line x1="16" y1="16" x2="16" y2="16"/></svg>';
+
   const page1HTML = `
     <tr>
       <td><a href="#task-25" class="task-id-link">US-25</a></td>
       <td class="task-name-text">Implement Customer Management Module</td>
       <td><span class="task-status-badge status-progress">[-] In Progress</span></td>
-      <td><span class="agent-pill-info"><span class="agent-icon-circle">🤖</span><span>Dev Backend Agent</span></span></td>
+      <td><span class="agent-pill-info"><span class="agent-icon-circle">${robotSvg}</span><span>Dev Backend Agent</span></span></td>
       <td><span class="priority-indicator"><span class="priority-dot dot-high"></span><span>High</span></span></td>
     </tr>
     <tr>
       <td><a href="#task-26" class="task-id-link">US-26</a></td>
       <td class="task-name-text">Create API for Customer Data</td>
       <td><span class="task-status-badge status-done">[x] Done</span></td>
-      <td><span class="agent-pill-info"><span class="agent-icon-circle">🤖</span><span>Dev Backend Agent</span></span></td>
+      <td><span class="agent-pill-info"><span class="agent-icon-circle">${robotSvg}</span><span>Dev Backend Agent</span></span></td>
       <td><span class="priority-indicator"><span class="priority-dot dot-medium"></span><span>Medium</span></span></td>
     </tr>
     <tr>
       <td><a href="#task-27" class="task-id-link">US-27</a></td>
       <td class="task-name-text">Build Customer List UI</td>
       <td><span class="task-status-badge status-progress">[-] In Progress</span></td>
-      <td><span class="agent-pill-info"><span class="agent-icon-circle">🤖</span><span>Dev Frontend Agent</span></span></td>
+      <td><span class="agent-pill-info"><span class="agent-icon-circle">${robotSvg}</span><span>Dev Frontend Agent</span></span></td>
       <td><span class="priority-indicator"><span class="priority-dot dot-high"></span><span>High</span></span></td>
     </tr>
     <tr>
       <td><a href="#task-28" class="task-id-link">US-28</a></td>
       <td class="task-name-text">Customer Detail &amp; Edit UI</td>
       <td><span class="task-status-badge status-todo">[ ] To Do</span></td>
-      <td><span class="agent-pill-info"><span class="agent-icon-circle">🤖</span><span>Dev Frontend Agent</span></span></td>
+      <td><span class="agent-pill-info"><span class="agent-icon-circle">${robotSvg}</span><span>Dev Frontend Agent</span></span></td>
       <td><span class="priority-indicator"><span class="priority-dot dot-medium"></span><span>Medium</span></span></td>
     </tr>
     <tr>
       <td><a href="#task-29" class="task-id-link">US-29</a></td>
       <td class="task-name-text">Customer Search &amp; Filter</td>
       <td><span class="task-status-badge status-todo">[ ] To Do</span></td>
-      <td><span class="agent-pill-info"><span class="agent-icon-circle">🤖</span><span>Dev Frontend Agent</span></span></td>
+      <td><span class="agent-pill-info"><span class="agent-icon-circle">${robotSvg}</span><span>Dev Frontend Agent</span></span></td>
       <td><span class="priority-indicator"><span class="priority-dot dot-medium"></span><span>Medium</span></span></td>
     </tr>
     <tr>
       <td><a href="#task-30" class="task-id-link">US-30</a></td>
       <td class="task-name-text">Unit Test for Customer Module</td>
       <td><span class="task-status-badge status-blocked">[!] Blocked</span></td>
-      <td><span class="agent-pill-info"><span class="agent-icon-circle">🤖</span><span>QA Agent</span></span></td>
+      <td><span class="agent-pill-info"><span class="agent-icon-circle">${robotSvg}</span><span>QA Agent</span></span></td>
       <td><span class="priority-indicator"><span class="priority-dot dot-low"></span><span>Low</span></span></td>
     </tr>
   `;
@@ -461,42 +463,42 @@ function initProjectManagementInteractions() {
       <td><a href="#task-31" class="task-id-link">US-31</a></td>
       <td class="task-name-text">Customer Data Export to CSV &amp; PDF</td>
       <td><span class="task-status-badge status-todo">[ ] To Do</span></td>
-      <td><span class="agent-pill-info"><span class="agent-icon-circle">🤖</span><span>Dev Backend Agent</span></span></td>
+      <td><span class="agent-pill-info"><span class="agent-icon-circle">${robotSvg}</span><span>Dev Backend Agent</span></span></td>
       <td><span class="priority-indicator"><span class="priority-dot dot-medium"></span><span>Medium</span></span></td>
     </tr>
     <tr>
       <td><a href="#task-32" class="task-id-link">US-32</a></td>
       <td class="task-name-text">Audit Log &amp; Activity History Tracker</td>
       <td><span class="task-status-badge status-todo">[ ] To Do</span></td>
-      <td><span class="agent-pill-info"><span class="agent-icon-circle">🤖</span><span>Dev Backend Agent</span></span></td>
+      <td><span class="agent-pill-info"><span class="agent-icon-circle">${robotSvg}</span><span>Dev Backend Agent</span></span></td>
       <td><span class="priority-indicator"><span class="priority-dot dot-low"></span><span>Low</span></span></td>
     </tr>
     <tr>
       <td><a href="#task-33" class="task-id-link">US-33</a></td>
       <td class="task-name-text">Role-based Permissions for Sales Manager</td>
       <td><span class="task-status-badge status-todo">[ ] To Do</span></td>
-      <td><span class="agent-pill-info"><span class="agent-icon-circle">🤖</span><span>Dev Backend Agent</span></span></td>
+      <td><span class="agent-pill-info"><span class="agent-icon-circle">${robotSvg}</span><span>Dev Backend Agent</span></span></td>
       <td><span class="priority-indicator"><span class="priority-dot dot-high"></span><span>High</span></span></td>
     </tr>
     <tr>
       <td><a href="#task-34" class="task-id-link">US-34</a></td>
       <td class="task-name-text">Customer Bulk Import Validation Pipeline</td>
       <td><span class="task-status-badge status-todo">[ ] To Do</span></td>
-      <td><span class="agent-pill-info"><span class="agent-icon-circle">🤖</span><span>Dev Backend Agent</span></span></td>
+      <td><span class="agent-pill-info"><span class="agent-icon-circle">${robotSvg}</span><span>Dev Backend Agent</span></span></td>
       <td><span class="priority-indicator"><span class="priority-dot dot-medium"></span><span>Medium</span></span></td>
     </tr>
     <tr>
       <td><a href="#task-35" class="task-id-link">US-35</a></td>
       <td class="task-name-text">Integration E2E Cypress Test Suite</td>
       <td><span class="task-status-badge status-todo">[ ] To Do</span></td>
-      <td><span class="agent-pill-info"><span class="agent-icon-circle">🤖</span><span>QA Agent</span></span></td>
+      <td><span class="agent-pill-info"><span class="agent-icon-circle">${robotSvg}</span><span>QA Agent</span></span></td>
       <td><span class="priority-indicator"><span class="priority-dot dot-high"></span><span>High</span></span></td>
     </tr>
     <tr>
       <td><a href="#task-36" class="task-id-link">US-36</a></td>
       <td class="task-name-text">Customer Performance Load Testing (10k RPS)</td>
       <td><span class="task-status-badge status-todo">[ ] To Do</span></td>
-      <td><span class="agent-pill-info"><span class="agent-icon-circle">🤖</span><span>QA Agent</span></span></td>
+      <td><span class="agent-pill-info"><span class="agent-icon-circle">${robotSvg}</span><span>QA Agent</span></span></td>
       <td><span class="priority-indicator"><span class="priority-dot dot-medium"></span><span>Medium</span></span></td>
     </tr>
   `;
@@ -641,16 +643,15 @@ function initChatPromptActions() {
     const aiBubble = document.createElement('div');
     aiBubble.className = 'chat-bubble-ai';
     aiBubble.innerHTML = `
-      <div style="display: flex; align-items: center; gap: 0.5rem; font-weight: 700; color: #2563eb;">
-        <span>⚡ Zenith Assistant</span>
-        <span style="font-size: 0.725rem; color: #64748b; font-weight: 500;">Claude 3.7 Sonnet</span>
+      <div class="chat-sender-header" style="display: flex; align-items: center; gap: 0.35rem; font-weight: 700; color: #2563eb;">
+        <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+        <span>Zenith Assistant</span>
+        <span style="font-size: 0.725rem; color: #64748b; font-weight: 500; margin-left: auto;">Claude 3.7 Sonnet</span>
       </div>
       <div>
         Membangun prototype <strong>Toko Kecantikan 'Rose &amp; Petal'</strong> dengan palet warna <em>soft pastel pink</em>, 4 kartu skincare botanical, metrik pesanan, dan keranjang belanja interaktif...
       </div>
       <div class="ai-step-pills">
-        <span class="step-pill-done">✓ 1. Design Tokens Generated</span>
-        <span class="step-pill-done">✓ 2. Soft Pastel Components Ready</span>
         <span class="step-pill-done">✓ 3. Live Preview Running</span>
       </div>
     `;
