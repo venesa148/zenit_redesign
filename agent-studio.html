@@ -1,0 +1,2272 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Zenith AI — Agent Studio</title>
+  <meta name="description"
+    content="Zenith AI Agent Studio - Build, test, evaluate, and deploy autonomous AI agents and workflows." />
+
+  <!-- CSS Stylesheets -->
+  <link rel="stylesheet" href="css/tokens.css?v=3" />
+  <link rel="stylesheet" href="css/base.css?v=3" />
+  <link rel="stylesheet" href="css/sidebar.css?v=3" />
+  <link rel="stylesheet" href="css/agent-studio.css?v=3" />
+  <link rel="stylesheet" href="css/modal.css?v=3" />
+  <!-- Early Theme Mode Loader (Prevents White Flash) -->
+  <script>
+    (function() {
+      try {
+        var pref = localStorage.getItem('zenith_theme_preference') || 'system';
+        var theme = pref;
+        if (pref === 'system') {
+          theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        }
+        document.documentElement.setAttribute('data-theme', theme);
+        document.documentElement.setAttribute('data-theme-preference', pref);
+      } catch (e) {}
+    })();
+  </script>
+</head>
+
+<body>
+  <div class="studio-layout">
+    <!-- ==========================================
+         LEVEL 1: UNIFIED GLOBAL SIDEBAR (ROYAL BLUE)
+         ========================================== -->
+    <aside class="global-sidebar-root collapsed" id="globalSidebarRoot" aria-label="Global Navigation">
+      <div class="global-sb-top">
+        <!-- Brand Header & Top Collapse Toggle -->
+        <div class="global-sb-header">
+          <a href="dashboard.html" class="global-sb-brand" id="brandHeader" title="Zenith Home">
+            <div class="global-sb-avatar">z</div>
+            <span class="global-sb-title">Zenith</span>
+          </a>
+
+          <!-- Top Collapse Toggle Button -->
+          <button type="button" class="global-sb-collapse-btn" id="btnToggleGlobalTop" title="Expand Global Sidebar">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="13 17 18 12 13 7" />
+              <polyline points="6 17 11 12 6 7" />
+            </svg>
+          </button>
+        </div>
+
+        <!-- + New Project Button -->
+        <a href="new-project.html" class="global-sb-new-btn" id="btnNewProject" title="New project">
+          <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="12" y1="5" x2="12" y2="19" />
+            <line x1="5" y1="12" x2="19" y2="12" />
+          </svg>
+          <span>New project</span>
+        </a>
+
+        <!-- Main Navigation Links -->
+        <nav class="global-sb-nav" aria-label="Global menus">
+          <!-- All Projects -->
+          <a href="all-projects.html" class="global-sb-nav-item" id="navAllProjects" title="All projects">
+            <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path
+                d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13c0 1.1.9 2 2 2Z" />
+            </svg>
+            <span>All projects</span>
+          </a>
+
+          <!-- Manage -->
+          <a href="#manage" class="global-sb-nav-item" id="navManage" title="Manage">
+            <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="4" x2="4" y1="21" y2="14" />
+              <line x1="4" x2="4" y1="10" y2="3" />
+              <line x1="12" x2="12" y1="21" y2="12" />
+              <line x1="12" x2="12" y1="8" y2="3" />
+              <line x1="20" x2="20" y1="21" y2="16" />
+              <line x1="20" x2="20" y1="12" y2="3" />
+              <line x1="1" x2="7" y1="14" y2="14" />
+              <line x1="9" x2="15" y1="8" y2="8" />
+              <line x1="17" x2="23" y1="16" y2="16" />
+            </svg>
+            <span>Manage</span>
+          </a>
+
+          <!-- Agent Studio (Active) -->
+          <a href="agent-studio.html" class="global-sb-nav-item active" id="navAgentStudio" title="Agent Studio">
+            <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
+            </svg>
+            <span>Agent Studio</span>
+          </a>
+        </nav>
+
+        <!-- Recent Projects Section -->
+        <div class="global-sb-recent-section">
+          <div class="global-sb-section-title">RECENT</div>
+          <div class="global-sb-nav">
+            <a href="workspace.html" class="global-sb-recent-item" id="recentItem1" title="E-commerce Redesign">
+              <span class="global-sb-recent-name">E-commerce Redesign</span>
+              <span class="global-sb-recent-badge sb-badge-project">Project</span>
+            </a>
+            <a href="workspace.html" class="global-sb-recent-item" id="recentItem2" title="Mobile App Prototype">
+              <span class="global-sb-recent-name">Mobile App Prototy...</span>
+              <span class="global-sb-recent-badge sb-badge-prototype">Prototype</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bottom Sidebar Items -->
+      <div class="global-sb-bottom">
+        <a href="#help" class="global-sb-feedback-link" id="feedbackLink" title="Feedback & help">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10" />
+            <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" />
+            <path d="M12 17h.01" />
+          </svg>
+          <span>Feedback &amp; help</span>
+        </a>
+
+        <!-- Direct 1-Click Global Theme Toggle Switch -->
+        <button type="button" class="global-sb-theme-btn" id="btnGlobalThemeToggle"
+          title="Beralih ke Mode Gelap / Terang" aria-label="Toggle Dark / Light Mode">
+          <span class="theme-btn-icon" id="themeActiveIcon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="4" />
+              <path d="M12 2v2" />
+              <path d="M12 20v2" />
+              <path d="m4.93 4.93 1.41 1.41" />
+              <path d="m17.66 17.66 1.41 1.41" />
+              <path d="M2 12h2" />
+              <path d="M20 12h2" />
+              <path d="m6.34 17.66-1.41 1.41" />
+              <path d="m19.07 4.93-1.41 1.41" />
+            </svg>
+          </span>
+          <span class="theme-btn-label" id="themeActiveLabel">Mode Terang</span>
+          <span class="theme-switch-pill" id="themeSwitchPill">
+            <span class="theme-switch-thumb"></span>
+          </span>
+        </button>
+
+        <div class="global-sb-profile-row">
+          <a href="login.html" class="global-sb-profile-info" title="User Profile: Josua">
+            <div class="global-sb-user-avatar">J</div>
+            <span class="global-sb-user-name">Josua</span>
+          </a>
+          <a href="login.html" class="global-sb-logout-btn" id="logoutBtn" aria-label="Log out" title="Log out">
+            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+              <polyline points="16 17 21 12 16 7" />
+              <line x1="21" y1="12" x2="9" y2="12" />
+            </svg>
+          </a>
+        </div>
+      </div>
+    </aside>
+
+    <!-- ==========================================
+         LEVEL 2: SECONDARY SIDEBAR (AGENT STUDIO NAV)
+         ========================================== -->
+    <div class="secondary-sidebar-wrapper">
+      <aside class="secondary-sidebar" id="secondarySidebar" aria-label="Agent Studio Navigation">
+        <!-- Secondary Header with Top-Right Collapse Button -->
+        <div class="sec-sidebar-header">
+          <span class="sec-sidebar-header-title">AGENT STUDIO</span>
+          <button type="button" class="sec-sidebar-collapse-btn" id="btnToggleSecSidebar"
+            title="Collapse Secondary Sidebar">
+            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="11 17 6 12 11 7" />
+              <polyline points="18 17 13 12 18 7" />
+            </svg>
+          </button>
+        </div>
+
+        <!-- + New Agent Button -->
+        <button type="button" class="btn-new-chat" id="btnNewAgentSidebar" title="Create New Agent">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="12" y1="5" x2="12" y2="19" />
+            <line x1="5" y1="12" x2="19" y2="12" />
+          </svg>
+          <span>New Agent</span>
+        </button>
+
+        <!-- Secondary Sub-Menu Items -->
+        <nav class="secondary-nav-list" aria-label="Agent Studio Menu">
+          <!-- 1. Agents -->
+          <a href="#agents" class="studio-sec-nav-item sec-nav-item active" id="secNavAgents" data-view="agents">
+            <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect width="18" height="12" x="3" y="6" rx="2" />
+              <line x1="9" x2="9" y1="12" y2="12" />
+              <line x1="15" x2="15" y1="12" y2="12" />
+              <path d="M12 2v4" />
+            </svg>
+            <span>Agents</span>
+            <span class="sec-nav-badge">6</span>
+          </a>
+
+          <!-- 2. Workflows -->
+          <a href="#workflows" class="studio-sec-nav-item sec-nav-item" id="secNavWorkflows" data-view="workflows">
+            <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="12 2 2 7 12 12 22 7 12 2" />
+              <polyline points="2 17 12 22 22 17" />
+              <polyline points="2 12 12 17 22 12" />
+            </svg>
+            <span>Workflows</span>
+            <span class="sec-nav-badge">4</span>
+          </a>
+
+          <!-- 3. Tools & Sandboxes -->
+          <a href="#tools" class="studio-sec-nav-item sec-nav-item" id="secNavTools" data-view="tools">
+            <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path
+                d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z" />
+            </svg>
+            <span>Tools &amp; Sandboxes</span>
+            <span class="sec-nav-badge">8</span>
+          </a>
+
+          <!-- 4. Knowledge Bases -->
+          <a href="#knowledge" class="studio-sec-nav-item sec-nav-item" id="secNavKnowledge" data-view="knowledge">
+            <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z" />
+              <path d="M6 6h10" />
+              <path d="M6 10h10" />
+            </svg>
+            <span>Knowledge Bases</span>
+            <span class="sec-nav-badge">3</span>
+          </a>
+
+          <!-- 5. Deployments -->
+          <a href="#deployments" class="studio-sec-nav-item sec-nav-item" id="secNavDeployments" data-view="deployments">
+            <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
+            </svg>
+            <span>Deployments</span>
+            <span class="sec-nav-status-dot" title="2 Active Endpoints"></span>
+          </a>
+
+          <!-- 6. Telemetry & Traces -->
+          <a href="#telemetry" class="studio-sec-nav-item sec-nav-item" id="secNavTelemetry" data-view="telemetry">
+            <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
+            </svg>
+            <span>Telemetry &amp; Traces</span>
+          </a>
+
+          <!-- 7. Evaluations -->
+          <a href="#evals" class="studio-sec-nav-item sec-nav-item" id="secNavEvals" data-view="evals">
+            <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+              <polyline points="22 4 12 14.01 9 11.01" />
+            </svg>
+            <span>Evaluations &amp; Tests</span>
+          </a>
+
+          <!-- 8. Settings -->
+          <a href="#settings" class="studio-sec-nav-item sec-nav-item" id="secNavSettings" data-view="settings">
+            <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path
+                d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z" />
+              <circle cx="12" cy="12" r="3" />
+            </svg>
+            <span>Studio Settings</span>
+          </a>
+        </nav>
+
+        <!-- Recent Agents Section -->
+        <div class="sec-section-title" style="margin-top: 1.5rem;">RECENT AGENTS</div>
+        <div class="secondary-nav-list">
+          <a href="#agents" class="sec-agent-recent-item" data-agent="Zenith BA Architect">
+            <div class="sec-agent-recent-left">
+              <span class="sec-agent-dot active"></span>
+              <span class="sec-agent-name">Zenith BA Architect</span>
+            </div>
+            <span class="sec-agent-badge">Active</span>
+          </a>
+          <a href="#agents" class="sec-agent-recent-item" data-agent="DevCore Code Synthesizer">
+            <div class="sec-agent-recent-left">
+              <span class="sec-agent-dot active"></span>
+              <span class="sec-agent-name">DevCore Synthesizer</span>
+            </div>
+            <span class="sec-agent-badge">v2.4</span>
+          </a>
+          <a href="#agents" class="sec-agent-recent-item" data-agent="Omni PM & Sprint Orchestrator">
+            <div class="sec-agent-recent-left">
+              <span class="sec-agent-dot active"></span>
+              <span class="sec-agent-name">Omni PM Orchestrator</span>
+            </div>
+            <span class="sec-agent-badge">Ready</span>
+          </a>
+          <a href="#agents" class="sec-agent-recent-item" data-agent="PixelCraft UI/UX Agent">
+            <div class="sec-agent-recent-left">
+              <span class="sec-agent-dot active"></span>
+              <span class="sec-agent-name">PixelCraft UI Agent</span>
+            </div>
+            <span class="sec-agent-badge">Active</span>
+          </a>
+        </div>
+      </aside>
+
+      <!-- Re-open expand tab when secondary sidebar is collapsed -->
+      <button type="button" class="sec-sidebar-reopen-tab" id="secSidebarReopenTab" title="Open Agent Studio Sidebar">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="13 17 18 12 13 7" />
+          <polyline points="6 17 11 12 6 7" />
+        </svg>
+      </button>
+    </div>
+
+    <!-- ==========================================
+         MAIN AGENT STUDIO VIEWPORT
+         ========================================== -->
+    <main class="studio-viewport">
+      <!-- Top Navbar -->
+      <header class="studio-top-navbar">
+        <div class="studio-breadcrumbs">
+          <span class="studio-crumb-main">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+              stroke="#2d5584" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
+            </svg>
+            Agent Studio
+          </span>
+          <span class="studio-crumb-separator">/</span>
+          <span class="studio-crumb-sub" id="studioCrumbSub">Agents</span>
+        </div>
+
+        <div class="studio-header-actions">
+          <div class="studio-search-bar">
+            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8" />
+              <line x1="21" y1="21" x2="16.65" y2="16.65" />
+            </svg>
+            <input type="text" id="studioAgentSearch" placeholder="Search agents, tools, models..." />
+          </div>
+
+          <button type="button" class="btn-studio-cta" id="btnNewAgentTop">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="12" y1="5" x2="12" y2="19" />
+              <line x1="5" y1="12" x2="19" y2="12" />
+            </svg>
+            <span>New agent</span>
+          </button>
+        </div>
+      </header>
+
+      <!-- Multi-view Panes Container -->
+      <div class="studio-views-container">
+        <!-- ========================================
+             PANE 1: AGENTS LIST & CARDS
+             ======================================== -->
+        <section class="studio-pane-section active" id="pane-agents">
+          <div class="studio-section-header">
+            <div class="studio-section-title-group">
+              <h1>
+                <span>Agents</span>
+                <span class="studio-count-pill">6 active</span>
+              </h1>
+              <p>Declarative, versioned multi-role agents empowering single builders to act as BA, Developer, and PM simultaneously.</p>
+            </div>
+          </div>
+
+          <!-- Controls Filter Bar -->
+          <div class="studio-controls-bar">
+            <div class="studio-filter-chips">
+              <button type="button" class="filter-chip active" data-filter="all">All Agents (6)</button>
+              <button type="button" class="filter-chip" data-filter="active">Active (5)</button>
+              <button type="button" class="filter-chip" data-filter="deployed">Deployed (2)</button>
+              <button type="button" class="filter-chip" data-filter="custom">Custom (1)</button>
+            </div>
+
+            <div class="studio-controls-right">
+              <select class="studio-select-dropdown" id="selectModelFilter" aria-label="Filter by model">
+                <option value="all">All Models</option>
+                <option value="claude-3-5-sonnet">Claude 3.5 Sonnet</option>
+                <option value="gpt-4o">GPT-4o</option>
+                <option value="gemini">Gemini 2.5</option>
+                <option value="xai/grok-4.3">xAI Grok-4.3</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Agents Rich Cards Grid -->
+          <div class="agents-rich-grid">
+            <!-- Card 1: Zenith BA Architect (Business Analyst) -->
+            <div class="agent-rich-card" data-status="active" data-model="claude-3-5-sonnet" data-tags="#business-analyst #prd #spec #architecture">
+              <div class="agent-card-top">
+                <div class="agent-card-header">
+                  <div class="agent-avatar-title">
+                    <div class="agent-icon-box analytics" style="background: rgba(59, 130, 246, 0.15); color: #2563eb;">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" />
+                        <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
+                      </svg>
+                    </div>
+                    <div class="agent-header-meta">
+                      <h3 class="agent-card-name">Zenith BA Architect</h3>
+                      <span class="agent-status-badge">
+                        <span style="width: 5px; height: 5px; border-radius: 50%; background-color: #10b981;"></span>
+                        Active · Business Analyst
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <p class="agent-card-desc">Translates conversational chat ideas into formal PRDs, User Stories, Gherkin BDD criteria, and system sequence flowcharts.</p>
+                <div class="agent-card-runtime-row">
+                  <span class="runtime-model-tag">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none"
+                      stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <circle cx="12" cy="12" r="10" />
+                      <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20" />
+                    </svg>
+                    claude-3-5-sonnet
+                  </span>
+                  <span class="runtime-stats-text">1.2s avg · 14.8k runs</span>
+                </div>
+              </div>
+              <div class="agent-card-footer">
+                <div class="agent-tags-list">
+                  <span class="agent-tag-item">#business-analyst</span>
+                  <span class="agent-tag-item">#prd-generator</span>
+                </div>
+                <div class="agent-card-actions">
+                  <button type="button" class="btn-agent-action-secondary btn-test-agent">Test Run</button>
+                  <button type="button" class="btn-agent-action-primary">Config</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Card 2: DevCore Code Synthesizer (Lead Developer) -->
+            <div class="agent-rich-card" data-status="deployed" data-model="claude-3-5-sonnet" data-tags="#developer #fullstack #codegen #livepatch">
+              <div class="agent-card-top">
+                <div class="agent-card-header">
+                  <div class="agent-avatar-title">
+                    <div class="agent-icon-box claims" style="background: rgba(16, 185, 129, 0.15); color: #059669;">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="16 18 22 12 16 6" />
+                        <polyline points="8 6 2 12 8 18" />
+                      </svg>
+                    </div>
+                    <div class="agent-header-meta">
+                      <h3 class="agent-card-name">DevCore Code Synthesizer</h3>
+                      <span class="agent-status-badge deployed">
+                        <span style="width: 5px; height: 5px; border-radius: 50%; background-color: #2563eb;"></span>
+                        Deployed · Full-Stack Dev
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <p class="agent-card-desc">Lead full-stack developer agent generating React/Vite components, REST/GraphQL APIs, Prisma schema, and live preview patches.</p>
+                <div class="agent-card-runtime-row">
+                  <span class="runtime-model-tag">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none"
+                      stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <circle cx="12" cy="12" r="10" />
+                      <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20" />
+                    </svg>
+                    claude-3-5-sonnet
+                  </span>
+                  <span class="runtime-stats-text">0.9s avg · 38.2k runs</span>
+                </div>
+              </div>
+              <div class="agent-card-footer">
+                <div class="agent-tags-list">
+                  <span class="agent-tag-item">#developer</span>
+                  <span class="agent-tag-item">#fullstack</span>
+                </div>
+                <div class="agent-card-actions">
+                  <button type="button" class="btn-agent-action-secondary btn-test-agent">Test Run</button>
+                  <button type="button" class="btn-agent-action-primary">Endpoint</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Card 3: Omni PM & Sprint Orchestrator (Product Manager) -->
+            <div class="agent-rich-card" data-status="active" data-model="gpt-4o" data-tags="#product-manager #sprint #roadmap #backlog">
+              <div class="agent-card-top">
+                <div class="agent-card-header">
+                  <div class="agent-avatar-title">
+                    <div class="agent-icon-box robot" style="background: rgba(245, 158, 11, 0.15); color: #d97706;">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect width="18" height="18" x="3" y="3" rx="2" />
+                        <path d="M9 3v18" />
+                        <path d="M15 9h6" />
+                        <path d="M15 15h6" />
+                      </svg>
+                    </div>
+                    <div class="agent-header-meta">
+                      <h3 class="agent-card-name">Omni PM &amp; Sprint Orchestrator</h3>
+                      <span class="agent-status-badge">
+                        <span style="width: 5px; height: 5px; border-radius: 50%; background-color: #10b981;"></span>
+                        Active · Product Manager
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <p class="agent-card-desc">Decomposes project goals into milestone roadmaps, automated sprint backlog tickets, task dependencies, and MVP release scopes.</p>
+                <div class="agent-card-runtime-row">
+                  <span class="runtime-model-tag">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none"
+                      stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <circle cx="12" cy="12" r="10" />
+                      <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20" />
+                    </svg>
+                    gpt-4o
+                  </span>
+                  <span class="runtime-stats-text">1.1s avg · 9.4k runs</span>
+                </div>
+              </div>
+              <div class="agent-card-footer">
+                <div class="agent-tags-list">
+                  <span class="agent-tag-item">#product-manager</span>
+                  <span class="agent-tag-item">#sprint-planning</span>
+                </div>
+                <div class="agent-card-actions">
+                  <button type="button" class="btn-agent-action-secondary btn-test-agent">Test Run</button>
+                  <button type="button" class="btn-agent-action-primary">Config</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Card 4: PixelCraft UI/UX Agent (Designer) -->
+            <div class="agent-rich-card" data-status="active" data-model="gemini" data-tags="#ui-ux #design-system #tokens #wireframe">
+              <div class="agent-card-top">
+                <div class="agent-card-header">
+                  <div class="agent-avatar-title">
+                    <div class="agent-icon-box" style="background: rgba(168, 85, 247, 0.15); color: #9333ea;">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10" />
+                        <path d="m4.93 4.93 4.24 4.24" />
+                        <path d="m14.83 14.83 4.24 4.24" />
+                        <path d="m14.83 9.17 4.24-4.24" />
+                        <path d="m4.93 19.07 4.24-4.24" />
+                      </svg>
+                    </div>
+                    <div class="agent-header-meta">
+                      <h3 class="agent-card-name">PixelCraft UI/UX Agent</h3>
+                      <span class="agent-status-badge">
+                        <span style="width: 5px; height: 5px; border-radius: 50%; background-color: #10b981;"></span>
+                        Active · UI/UX Designer
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <p class="agent-card-desc">Crafts accessible CSS tokens, modern glassmorphic surfaces, responsive component wireframes, and design-to-code conversions.</p>
+                <div class="agent-card-runtime-row">
+                  <span class="runtime-model-tag">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none"
+                      stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <circle cx="12" cy="12" r="10" />
+                      <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20" />
+                    </svg>
+                    google/gemini-2.5
+                  </span>
+                  <span class="runtime-stats-text">0.7s avg · 12.1k runs</span>
+                </div>
+              </div>
+              <div class="agent-card-footer">
+                <div class="agent-tags-list">
+                  <span class="agent-tag-item">#ui-ux</span>
+                  <span class="agent-tag-item">#design-system</span>
+                </div>
+                <div class="agent-card-actions">
+                  <button type="button" class="btn-agent-action-secondary btn-test-agent">Test Run</button>
+                  <button type="button" class="btn-agent-action-primary">Config</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Card 5: DeployGuard & QA Agent (DevOps & QA) -->
+            <div class="agent-rich-card" data-status="deployed" data-model="xai/grok-4.3" data-tags="#devops #qa #docker #ci-cd">
+              <div class="agent-card-top">
+                <div class="agent-card-header">
+                  <div class="agent-avatar-title">
+                    <div class="agent-icon-box claims" style="background: rgba(239, 68, 68, 0.15); color: #dc2626;">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10" />
+                        <polyline points="9 12 11 14 15 10" />
+                      </svg>
+                    </div>
+                    <div class="agent-header-meta">
+                      <h3 class="agent-card-name">DeployGuard &amp; QA Agent</h3>
+                      <span class="agent-status-badge deployed">
+                        <span style="width: 5px; height: 5px; border-radius: 50%; background-color: #2563eb;"></span>
+                        Deployed · DevOps &amp; QA
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <p class="agent-card-desc">Compiles standalone Docker container images, executes automated E2E test suites, and orchestrates zero-downtime edge cloud deployments.</p>
+                <div class="agent-card-runtime-row">
+                  <span class="runtime-model-tag">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none"
+                      stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <circle cx="12" cy="12" r="10" />
+                      <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20" />
+                    </svg>
+                    zenith-turbo
+                  </span>
+                  <span class="runtime-stats-text">0.5s avg · 21.6k runs</span>
+                </div>
+              </div>
+              <div class="agent-card-footer">
+                <div class="agent-tags-list">
+                  <span class="agent-tag-item">#devops</span>
+                  <span class="agent-tag-item">#ci-cd</span>
+                </div>
+                <div class="agent-card-actions">
+                  <button type="button" class="btn-agent-action-secondary btn-test-agent">Test Run</button>
+                  <button type="button" class="btn-agent-action-primary">Endpoint</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Card 6: E-Commerce Growth Architect (Custom User Agent) -->
+            <div class="agent-rich-card" data-status="custom" data-model="xai/grok-4.3" data-tags="#custom-agent #ecommerce #checkout #analytics">
+              <div class="agent-card-top">
+                <div class="agent-card-header">
+                  <div class="agent-avatar-title">
+                    <div class="agent-icon-box robot" style="background: rgba(14, 165, 233, 0.15); color: #0284c7;">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="8" cy="21" r="1" />
+                        <circle cx="19" cy="21" r="1" />
+                        <path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12" />
+                      </svg>
+                    </div>
+                    <div class="agent-header-meta">
+                      <h3 class="agent-card-name">E-Commerce Growth Architect</h3>
+                      <span class="agent-status-badge" style="background: #e0f2fe; color: #0369a1; border-color: #bae6fd;">
+                        <span style="width: 5px; height: 5px; border-radius: 50%; background-color: #0284c7;"></span>
+                        Custom Agent (Josua)
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <p class="agent-card-desc">User-built autonomous agent specializing in checkout conversion, dynamic cart pricing schemas, and Stripe/Midtrans payment webhooks.</p>
+                <div class="agent-card-runtime-row">
+                  <span class="runtime-model-tag">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none"
+                      stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <circle cx="12" cy="12" r="10" />
+                      <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20" />
+                    </svg>
+                    xai/grok-4.3
+                  </span>
+                  <span class="runtime-stats-text">0.8s avg · 4.2k runs</span>
+                </div>
+              </div>
+              <div class="agent-card-footer">
+                <div class="agent-tags-list">
+                  <span class="agent-tag-item">#custom-agent</span>
+                  <span class="agent-tag-item">#ecommerce</span>
+                </div>
+                <div class="agent-card-actions">
+                  <button type="button" class="btn-agent-action-secondary btn-test-agent">Test Run</button>
+                  <button type="button" class="btn-agent-action-primary">Config</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Create New Agent Dashed Card -->
+            <div class="create-agent-dashed-card" id="btnNewAgentCard">
+              <div class="create-agent-icon-circle">
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="12" y1="5" x2="12" y2="19" />
+                  <line x1="5" y1="12" x2="19" y2="12" />
+                </svg>
+              </div>
+              <h3 class="create-agent-title">Build Your Custom Agent</h3>
+              <p class="create-agent-subtitle">Define prompt instructions, attach sandbox tools, and connect vector knowledge bases.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- ========================================
+             PANE: TEST AGENT (Full-Page Live Runner)
+             ======================================== -->
+        <section class="studio-pane-section" id="pane-test-agent">
+          <!-- Top bar: back button + agent info -->
+          <div class="test-agent-topbar">
+            <button type="button" class="btn-back-to-agents" id="btnBackToAgents">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="15 18 9 12 15 6" />
+              </svg>
+              <span>Back to Agents</span>
+            </button>
+            <div class="test-agent-identity" id="testAgentIdentity">
+              <div class="test-agent-icon-wrap" id="testAgentIconWrap">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2">
+                  <rect width="18" height="12" x="3" y="6" rx="2"/>
+                  <path d="M12 2v4"/>
+                </svg>
+              </div>
+              <div class="test-agent-title-group">
+                <h2 class="test-agent-name" id="testAgentName">Agent Name</h2>
+                <span class="test-agent-meta" id="testAgentMeta">Active · claude-3-5-sonnet</span>
+              </div>
+            </div>
+            <div class="test-agent-topbar-actions">
+              <button type="button" class="btn-test-secondary" id="btnClearTestChat">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2">
+                  <polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/>
+                </svg>
+                <span>Reset</span>
+              </button>
+              <span class="test-agent-live-pill">
+                <span class="live-dot"></span>Live Test
+              </span>
+            </div>
+          </div>
+
+          <!-- Split Layout: Trace Left | Conversation Right -->
+          <div class="test-agent-split-layout">
+
+            <!-- ── LEFT: Execution Trace Panel ──────────────────────────── -->
+            <div class="test-trace-panel" id="testTracePanel">
+              <div class="trace-panel-header">
+                <span class="trace-header-title">Execution Trace</span>
+                <button type="button" class="btn-trace-icon" id="btnToggleTraceDebug" title="Toggle debug output">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2">
+                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>
+                  </svg>
+                </button>
+              </div>
+
+              <!-- Trace scroll body -->
+              <div class="trace-scroll-body" id="traceScrollBody">
+                <!-- Empty state shown before first message -->
+                <div class="trace-empty-state" id="traceEmptyState">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/>
+                    <line x1="12" y1="16" x2="12.01" y2="16"/>
+                  </svg>
+                  <p>Send a message to start the execution trace.</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- ── RIGHT: Conversation Preview Panel ────────────────────── -->
+            <div class="test-conv-panel">
+              <div class="test-conv-header">
+                <span class="conv-panel-title">Conversation Preview</span>
+                <div class="test-conv-header-actions">
+                  <button type="button" class="btn-test-secondary btn-trace-icon" id="btnToggleFullTrace"
+                    title="Show/hide trace panel">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
+                      stroke="currentColor" stroke-width="2">
+                      <rect x="3" y="3" width="18" height="18" rx="2"/><line x1="9" y1="3" x2="9" y2="21"/>
+                    </svg>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Chat messages feed -->
+              <div class="test-conv-body" id="testConvBody">
+                <!-- Agent welcome message (populated dynamically) -->
+                <div class="test-conv-welcome" id="testConvWelcome">
+                  <div class="test-welcome-avatar" id="testWelcomeAvatar">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none"
+                      stroke="currentColor" stroke-width="2">
+                      <rect width="18" height="12" x="3" y="6" rx="2"/>
+                      <path d="M12 2v4"/><line x1="9" y1="12" x2="9" y2="12"/><line x1="15" y1="12" x2="15" y2="12"/>
+                    </svg>
+                  </div>
+                  <div class="test-welcome-text">
+                    <strong id="testWelcomeTitle">Hi, I'm an AI service assistant.</strong>
+                    <p id="testWelcomeSubtitle">How can I help you?</p>
+                  </div>
+                </div>
+
+                <!-- Quick test prompt chips -->
+                <div class="test-quick-chips" id="testQuickChips">
+                  <!-- chips injected by JS per agent -->
+                </div>
+              </div>
+
+              <!-- Telemetry bar (hidden until first exchange) -->
+              <div class="test-telemetry-bar" id="testTelemetryBar" style="display: none;">
+                <span class="telem-badge" id="taTurn">Turn: 1</span>
+                <span class="telem-badge" id="taTokens">0 tokens</span>
+                <span class="telem-badge" id="taLatency">—</span>
+                <span class="telem-badge success" id="taStatus">Passed</span>
+                <span class="telem-badge" id="taModel" style="margin-left: auto; opacity: 0.7;"></span>
+              </div>
+
+              <!-- Input bar -->
+              <div class="test-conv-footer">
+                <div class="test-input-row">
+                  <textarea id="testPromptInput" class="test-prompt-textarea"
+                    placeholder="Describe your task or ask a question…" rows="1"
+                    oninput="this.style.height='auto';this.style.height=this.scrollHeight+'px'"></textarea>
+                  <button type="button" class="btn-test-send" id="btnTestSend" title="Send">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                      stroke="currentColor" stroke-width="2.5">
+                      <line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/>
+                    </svg>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ========================================
+             PANE 2: WORKFLOWS (MULTI-AGENT PIPELINES)
+             ======================================== -->
+        <section class="studio-pane-section" id="pane-workflows">
+          <div class="studio-section-header">
+            <div class="studio-section-title-group">
+              <h1>
+                <span>Workflows</span>
+                <span class="studio-count-pill">4 graphs</span>
+              </h1>
+              <p>Visual multi-agent orchestration graphs, conditional routing pipelines, and automated builder chains.</p>
+            </div>
+            <button type="button" class="btn-studio-cta">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="12" y1="5" x2="12" y2="19" />
+                <line x1="5" y1="12" x2="19" y2="12" />
+              </svg>
+              <span>New workflow</span>
+            </button>
+          </div>
+
+          <div class="workflows-grid">
+            <!-- Workflow 1: End-to-End Chat-to-App Pipeline -->
+            <div class="workflow-pipeline-card">
+              <div class="workflow-header">
+                <div class="workflow-title-area">
+                  <div class="workflow-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                      stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <polyline points="16 18 22 12 16 6" />
+                      <polyline points="8 6 2 12 8 18" />
+                    </svg>
+                  </div>
+                  <div>
+                    <h3 class="workflow-name">End-to-End Chat-to-App Pipeline</h3>
+                    <p class="workflow-desc">Converts natural language chat prompts into full PRDs, synthesis code, UI styling, and preview deployment.</p>
+                  </div>
+                </div>
+                <div class="workflow-meta-pills">
+                  <span class="workflow-pill">Trigger: User Chat Prompt</span>
+                  <span class="status-pill-active"><span class="status-dot-green"></span>Active</span>
+                </div>
+              </div>
+
+              <!-- Visual Flow Nodes -->
+              <div class="workflow-nodes-flow">
+                <div class="workflow-node-step">
+                  <span class="node-step-icon">1</span>
+                  <div class="node-step-info">
+                    <span class="node-step-title">Prompt Ingestion</span>
+                    <span class="node-step-sub">User idea &amp; context</span>
+                  </div>
+                </div>
+                <svg class="workflow-connector-arrow" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                  <polyline points="9 18 15 12 9 6" />
+                </svg>
+                <div class="workflow-node-step">
+                  <span class="node-step-icon">2</span>
+                  <div class="node-step-info">
+                    <span class="node-step-title">Zenith BA Architect</span>
+                    <span class="node-step-sub">PRD &amp; User Stories</span>
+                  </div>
+                </div>
+                <svg class="workflow-connector-arrow" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                  <polyline points="9 18 15 12 9 6" />
+                </svg>
+                <div class="workflow-node-step">
+                  <span class="node-step-icon">3</span>
+                  <div class="node-step-info">
+                    <span class="node-step-title">DevCore Synthesizer</span>
+                    <span class="node-step-sub">React &amp; API Code</span>
+                  </div>
+                </div>
+                <svg class="workflow-connector-arrow" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                  <polyline points="9 18 15 12 9 6" />
+                </svg>
+                <div class="workflow-node-step">
+                  <span class="node-step-icon">4</span>
+                  <div class="node-step-info">
+                    <span class="node-step-title">DeployGuard QA</span>
+                    <span class="node-step-sub">Build &amp; Live Preview</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Workflow 2: Feature Sprint & Backlog Breakdown -->
+            <div class="workflow-pipeline-card">
+              <div class="workflow-header">
+                <div class="workflow-title-area">
+                  <div class="workflow-icon" style="background: #fdf2f8; color: #db2777;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                      stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" />
+                      <rect x="8" y="2" width="8" height="4" rx="1" ry="1" />
+                    </svg>
+                  </div>
+                  <div>
+                    <h3 class="workflow-name">Feature Sprint &amp; Backlog Breakdown</h3>
+                    <p class="workflow-desc">Transforms project epics into actionable sprint backlogs, task estimations, and test cases.</p>
+                  </div>
+                </div>
+                <div class="workflow-meta-pills">
+                  <span class="workflow-pill">Trigger: Milestone / Epic</span>
+                  <span class="status-pill-active"><span class="status-dot-green"></span>Active</span>
+                </div>
+              </div>
+
+              <!-- Visual Flow Nodes -->
+              <div class="workflow-nodes-flow">
+                <div class="workflow-node-step">
+                  <span class="node-step-icon">1</span>
+                  <div class="node-step-info">
+                    <span class="node-step-title">Epic Intake</span>
+                    <span class="node-step-sub">Product Goal Spec</span>
+                  </div>
+                </div>
+                <svg class="workflow-connector-arrow" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                  <polyline points="9 18 15 12 9 6" />
+                </svg>
+                <div class="workflow-node-step">
+                  <span class="node-step-icon">2</span>
+                  <div class="node-step-info">
+                    <span class="node-step-title">Omni PM</span>
+                    <span class="node-step-sub">Sprint Planning</span>
+                  </div>
+                </div>
+                <svg class="workflow-connector-arrow" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                  <polyline points="9 18 15 12 9 6" />
+                </svg>
+                <div class="workflow-node-step">
+                  <span class="node-step-icon">3</span>
+                  <div class="node-step-info">
+                    <span class="node-step-title">DevCore Gen</span>
+                    <span class="node-step-sub">Component Code</span>
+                  </div>
+                </div>
+                <svg class="workflow-connector-arrow" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                  <polyline points="9 18 15 12 9 6" />
+                </svg>
+                <div class="workflow-node-step">
+                  <span class="node-step-icon">4</span>
+                  <div class="node-step-info">
+                    <span class="node-step-title">PR &amp; Preview</span>
+                    <span class="node-step-sub">Sandbox Validation</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ========================================
+             PANE 3: TOOLS & SANDBOXES
+             ======================================== -->
+        <section class="studio-pane-section" id="pane-tools">
+          <div class="studio-section-header">
+            <div class="studio-section-title-group">
+              <h1>
+                <span>Tools &amp; Sandboxes</span>
+                <span class="studio-count-pill">8 registered</span>
+              </h1>
+              <p>In-browser WebContainers, AST code indexers, and schema engines bound to Zenith agents.</p>
+            </div>
+            <button type="button" class="btn-studio-cta">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="12" y1="5" x2="12" y2="19" />
+                <line x1="5" y1="12" x2="19" y2="12" />
+              </svg>
+              <span>Register Tool</span>
+            </button>
+          </div>
+
+          <div class="studio-table-card">
+            <table class="studio-table">
+              <thead>
+                <tr>
+                  <th>Tool Identifier</th>
+                  <th>Runtime Type</th>
+                  <th>Latency</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    <div class="tool-name-cell">
+                      <div class="tool-icon-box">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                          <polyline points="16 18 22 12 16 6" />
+                          <polyline points="8 6 2 12 8 18" />
+                        </svg>
+                      </div>
+                      <div>
+                        <strong>webcontainer_sandbox</strong>
+                        <div style="font-size: 0.775rem; color: #64748b;">In-browser Node.js &amp; Vite dev server execution runtime</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td><span class="code-pill">WebContainer Node</span></td>
+                  <td>25ms</td>
+                  <td><span class="status-pill-active"><span class="status-dot-green"></span>Ready</span></td>
+                  <td><button type="button" class="btn-agent-action-secondary">Test</button></td>
+                </tr>
+                <tr>
+                  <td>
+                    <div class="tool-name-cell">
+                      <div class="tool-icon-box">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                          <polyline points="14 2 14 8 20 8" />
+                          <line x1="16" y1="13" x2="8" y2="13" />
+                          <line x1="16" y1="17" x2="8" y2="17" />
+                        </svg>
+                      </div>
+                      <div>
+                        <strong>ast_code_indexer</strong>
+                        <div style="font-size: 0.775rem; color: #64748b;">Fast AST syntax tree parser and symbol dependency analyzer</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td><span class="code-pill">Rust AST Engine</span></td>
+                  <td>15ms</td>
+                  <td><span class="status-pill-active"><span class="status-dot-green"></span>Ready</span></td>
+                  <td><button type="button" class="btn-agent-action-secondary">Test</button></td>
+                </tr>
+                <tr>
+                  <td>
+                    <div class="tool-name-cell">
+                      <div class="tool-icon-box">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                          <ellipse cx="12" cy="5" rx="9" ry="3" />
+                          <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3" />
+                          <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5" />
+                        </svg>
+                      </div>
+                      <div>
+                        <strong>postgres_schema_engine</strong>
+                        <div style="font-size: 0.775rem; color: #64748b;">Prisma &amp; PostgreSQL relational schema generator &amp; validator</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td><span class="code-pill">Prisma Engine</span></td>
+                  <td>40ms</td>
+                  <td><span class="status-pill-active"><span class="status-dot-green"></span>Ready</span></td>
+                  <td><button type="button" class="btn-agent-action-secondary">Test</button></td>
+                </tr>
+                <tr>
+                  <td>
+                    <div class="tool-name-cell">
+                      <div class="tool-icon-box">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                          <rect width="18" height="18" x="3" y="3" rx="2" ry="2" />
+                          <circle cx="9" cy="9" r="2" />
+                          <path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21" />
+                        </svg>
+                      </div>
+                      <div>
+                        <strong>figma_tokens_bridge</strong>
+                        <div style="font-size: 0.775rem; color: #64748b;">Syncs design tokens, HSL colors, and typography into CSS variables</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td><span class="code-pill">Token Engine</span></td>
+                  <td>60ms</td>
+                  <td><span class="status-pill-active"><span class="status-dot-green"></span>Ready</span></td>
+                  <td><button type="button" class="btn-agent-action-secondary">Test</button></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- ========================================
+             PANE 4: KNOWLEDGE BASES (RAG)
+             ======================================== -->
+        <section class="studio-pane-section" id="pane-knowledge">
+          <div class="studio-section-header">
+            <div class="studio-section-title-group">
+              <h1>
+                <span>Knowledge Bases</span>
+                <span class="studio-count-pill">3 collections</span>
+              </h1>
+              <p>Vector databases containing architecture patterns, design tokens, and technical documentation.</p>
+            </div>
+            <button type="button" class="btn-studio-cta">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="12" y1="5" x2="12" y2="19" />
+                <line x1="5" y1="12" x2="19" y2="12" />
+              </svg>
+              <span>Add Knowledge Source</span>
+            </button>
+          </div>
+
+          <div class="kb-grid">
+            <div class="kb-card">
+              <div class="kb-card-top">
+                <div class="kb-icon">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10" />
+                    <line x1="2" y1="12" x2="22" y2="12" />
+                    <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+                  </svg>
+                </div>
+                <div class="kb-info">
+                  <h3>Zenith Design System &amp; Tokens</h3>
+                  <p>Glassmorphic tokens, CSS variables, WCAG accessibility, and micro-interactions.</p>
+                </div>
+              </div>
+              <div class="kb-stats-grid">
+                <div>
+                  <div class="kb-stat-val">2,400</div>
+                  <div class="kb-stat-lbl">Chunks</div>
+                </div>
+                <div>
+                  <div class="kb-stat-val">1536d</div>
+                  <div class="kb-stat-lbl">Vector Dim</div>
+                </div>
+                <div>
+                  <div class="kb-stat-val">Synced</div>
+                  <div class="kb-stat-lbl">Status</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="kb-card">
+              <div class="kb-card-top">
+                <div class="kb-icon" style="background: #e0f2fe; color: #0284c7;">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="16 18 22 12 16 6" />
+                    <polyline points="8 6 2 12 8 18" />
+                  </svg>
+                </div>
+                <div class="kb-info">
+                  <h3>Next.js 15 &amp; React Server Components</h3>
+                  <p>Full-stack architecture guidelines, Server Actions, Prisma ORM, and edge caching.</p>
+                </div>
+              </div>
+              <div class="kb-stats-grid">
+                <div>
+                  <div class="kb-stat-val">6,800</div>
+                  <div class="kb-stat-lbl">Chunks</div>
+                </div>
+                <div>
+                  <div class="kb-stat-val">3072d</div>
+                  <div class="kb-stat-lbl">Vector Dim</div>
+                </div>
+                <div>
+                  <div class="kb-stat-val">Synced</div>
+                  <div class="kb-stat-lbl">Status</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="kb-card">
+              <div class="kb-card-top">
+                <div class="kb-icon" style="background: #fdf4ff; color: #9333ea;">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="9" cy="21" r="1" />
+                    <circle cx="20" cy="21" r="1" />
+                    <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
+                  </svg>
+                </div>
+                <div class="kb-info">
+                  <h3>E-Commerce &amp; SaaS Blueprints</h3>
+                  <p>Multi-tenant auth, Stripe webhooks, cart persistence, and microservices patterns.</p>
+                </div>
+              </div>
+              <div class="kb-stats-grid">
+                <div>
+                  <div class="kb-stat-val">4,120</div>
+                  <div class="kb-stat-lbl">Chunks</div>
+                </div>
+                <div>
+                  <div class="kb-stat-val">1536d</div>
+                  <div class="kb-stat-lbl">Vector Dim</div>
+                </div>
+                <div>
+                  <div class="kb-stat-val">Synced</div>
+                  <div class="kb-stat-lbl">Status</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ========================================
+             PANE 5: DEPLOYMENTS
+             ======================================== -->
+        <section class="studio-pane-section" id="pane-deployments">
+          <div class="studio-section-header">
+            <div class="studio-section-title-group">
+              <h1>
+                <span>Deployments</span>
+                <span class="studio-count-pill">2 live</span>
+              </h1>
+              <p>Production and staging endpoint runtimes served behind high-availability Zenith proxy.</p>
+            </div>
+            <button type="button" class="btn-studio-cta">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="12" y1="5" x2="12" y2="19" />
+                <line x1="5" y1="12" x2="19" y2="12" />
+              </svg>
+              <span>Deploy Endpoint</span>
+            </button>
+          </div>
+
+          <div class="studio-table-card">
+            <table class="studio-table">
+              <thead>
+                <tr>
+                  <th>Endpoint URL</th>
+                  <th>Environment</th>
+                  <th>Uptime</th>
+                  <th>Avg Response</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    <span class="code-pill" style="font-size: 0.85rem;">api.zenith.ai/v1/agents/devcore-synthesizer</span>
+                  </td>
+                  <td><span class="agent-status-badge deployed">Production (v2.4)</span></td>
+                  <td><strong>99.99%</strong></td>
+                  <td>280ms</td>
+                  <td>
+                    <button type="button" class="btn-agent-action-secondary btn-copy-code"
+                      data-copy="https://api.zenith.ai/v1/agents/devcore-synthesizer">Copy cURL</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <span class="code-pill" style="font-size: 0.85rem;">staging.zenith.ai/v1/agents/ba-architect</span>
+                  </td>
+                  <td><span class="agent-status-badge draft">Staging (v3.0-rc)</span></td>
+                  <td><strong>100%</strong></td>
+                  <td>190ms</td>
+                  <td>
+                    <button type="button" class="btn-agent-action-secondary btn-copy-code"
+                      data-copy="https://staging.zenith.ai/v1/agents/ba-architect">Copy cURL</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- ========================================
+             PANE 6: TELEMETRY & TRACES
+             ======================================== -->
+        <section class="studio-pane-section" id="pane-telemetry">
+          <div class="studio-section-header">
+            <div class="studio-section-title-group">
+              <h1>
+                <span>Telemetry &amp; Traces</span>
+              </h1>
+              <p>Real-time execution telemetry, synthesis latency, token costs, and detailed multi-agent traces.</p>
+            </div>
+          </div>
+
+          <div class="telemetry-metrics-row">
+            <div class="telemetry-stat-card">
+              <span class="telemetry-stat-title">Total Executions</span>
+              <div class="telemetry-stat-number">
+                <span>148.2k</span>
+                <span class="telemetry-stat-badge">+12.4%</span>
+              </div>
+            </div>
+            <div class="telemetry-stat-card">
+              <span class="telemetry-stat-title">Average Latency</span>
+              <div class="telemetry-stat-number">
+                <span>0.84s</span>
+                <span class="telemetry-stat-badge">-0.12s</span>
+              </div>
+            </div>
+            <div class="telemetry-stat-card">
+              <span class="telemetry-stat-title">Success Rate</span>
+              <div class="telemetry-stat-number">
+                <span>99.8%</span>
+                <span class="telemetry-stat-badge">Healthy</span>
+              </div>
+            </div>
+            <div class="telemetry-stat-card">
+              <span class="telemetry-stat-title">Token Cost (30d)</span>
+              <div class="telemetry-stat-number">
+                <span>$42.15</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="studio-table-card">
+            <table class="studio-table">
+              <thead>
+                <tr>
+                  <th>Run ID</th>
+                  <th>Agent</th>
+                  <th>Duration</th>
+                  <th>Tokens</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><span class="code-pill">#run-20894</span></td>
+                  <td>DevCore Code Synthesizer</td>
+                  <td>1.2s</td>
+                  <td>2,450 tok</td>
+                  <td><span class="status-pill-active"><span class="status-dot-green"></span>Success</span></td>
+                </tr>
+                <tr>
+                  <td><span class="code-pill">#run-20891</span></td>
+                  <td>Zenith BA Architect</td>
+                  <td>0.8s</td>
+                  <td>1,620 tok</td>
+                  <td><span class="status-pill-active"><span class="status-dot-green"></span>Success</span></td>
+                </tr>
+                <tr>
+                  <td><span class="code-pill">#run-20887</span></td>
+                  <td>Omni PM Orchestrator</td>
+                  <td>0.6s</td>
+                  <td>1,180 tok</td>
+                  <td><span class="status-pill-active"><span class="status-dot-green"></span>Success</span></td>
+                </tr>
+                <tr>
+                  <td><span class="code-pill">#run-20883</span></td>
+                  <td>DeployGuard QA Agent</td>
+                  <td>1.8s</td>
+                  <td>3,200 tok</td>
+                  <td><span class="status-pill-active"><span class="status-dot-green"></span>Success</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- ========================================
+             PANE 7: EVALUATIONS
+             ======================================== -->
+        <section class="studio-pane-section" id="pane-evals">
+          <div class="studio-section-header">
+            <div class="studio-section-title-group">
+              <h1>
+                <span>Evaluations &amp; Tests</span>
+              </h1>
+              <p>Automated code syntax verification, PRD coverage benchmark suites, and safety guardrails.</p>
+            </div>
+            <button type="button" class="btn-studio-cta">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <polygon points="5 3 19 12 5 21 5 3" />
+              </svg>
+              <span>Run All Evals</span>
+            </button>
+          </div>
+
+          <div class="kb-grid">
+            <div class="kb-card">
+              <div class="kb-card-top">
+                <div class="kb-icon" style="background: #f0fdf4; color: #16a34a;">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="20 6 9 17 4 12" />
+                  </svg>
+                </div>
+                <div class="kb-info">
+                  <h3>Code Syntax &amp; TypeScript Soundness</h3>
+                  <p>Evaluates generated TypeScript code for compilation zero-errors, type safety, and lint compliance.</p>
+                </div>
+              </div>
+              <div class="kb-stats-grid">
+                <div>
+                  <div class="kb-stat-val">99.8%</div>
+                  <div class="kb-stat-lbl">Pass Rate</div>
+                </div>
+                <div>
+                  <div class="kb-stat-val">1,500</div>
+                  <div class="kb-stat-lbl">Test Cases</div>
+                </div>
+                <div>
+                  <div class="kb-stat-val">Passed</div>
+                  <div class="kb-stat-lbl">Status</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="kb-card">
+              <div class="kb-card-top">
+                <div class="kb-icon" style="background: #eff6ff; color: #2563eb;">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10" />
+                  </svg>
+                </div>
+                <div class="kb-info">
+                  <h3>PRD-to-Story Semantic Completeness</h3>
+                  <p>Validates that generated user stories cover 100% of functional requirements and edge cases.</p>
+                </div>
+              </div>
+              <div class="kb-stats-grid">
+                <div>
+                  <div class="kb-stat-val">100%</div>
+                  <div class="kb-stat-lbl">Pass Rate</div>
+                </div>
+                <div>
+                  <div class="kb-stat-val">850</div>
+                  <div class="kb-stat-lbl">Test Cases</div>
+                </div>
+                <div>
+                  <div class="kb-stat-val">Passed</div>
+                  <div class="kb-stat-lbl">Status</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ========================================
+             PANE 8: STUDIO SETTINGS
+             ======================================== -->
+        <section class="studio-pane-section" id="pane-settings">
+          <div class="studio-section-header">
+            <div class="studio-section-title-group">
+              <h1>
+                <span>Studio Settings &amp; Models</span>
+              </h1>
+              <p>Configure model routing providers, default parameters, API secrets, and webhook endpoints.</p>
+            </div>
+          </div>
+
+          <div class="studio-table-card" style="padding: 2rem; max-width: 800px;">
+            <div class="studio-form-group" style="margin-bottom: 1.5rem;">
+              <label class="studio-form-label">Default LLM Provider</label>
+              <select class="studio-form-select">
+                <option value="xai">xAI Grok-4.3 (Fastest)</option>
+                <option value="anthropic">Anthropic Claude 3.5 Sonnet</option>
+                <option value="openai">OpenAI GPT-4o</option>
+                <option value="google">Google Gemini 2.5 Flash</option>
+              </select>
+            </div>
+
+            <div class="studio-form-group" style="margin-bottom: 1.5rem;">
+              <label class="studio-form-label">Fallback Model Routing</label>
+              <select class="studio-form-select">
+                <option value="auto">Automatic Cascade (xAI → Claude → GPT-4o)</option>
+                <option value="strict">Strict (Fail on provider error)</option>
+              </select>
+            </div>
+
+            <div class="studio-form-group" style="margin-bottom: 1.5rem;">
+              <label class="studio-form-label">Zenith Studio API Key</label>
+              <div style="display: flex; gap: 0.5rem;">
+                <input type="password" class="studio-form-input" value="zen_live_99482710382947192" readonly
+                  style="flex: 1;" />
+                <button type="button" class="btn-agent-action-secondary btn-copy-code"
+                  data-copy="zen_live_99482710382947192">Copy</button>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <!-- ==========================================
+       INTERACTIVE TEST RUN SLIDE-OVER DRAWER
+       ========================================== -->
+  <div class="studio-drawer-backdrop" id="testRunDrawer">
+    <div class="studio-drawer-panel">
+      <div class="drawer-header">
+        <div class="drawer-title-area">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+            stroke="#2d5584" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="5 3 19 12 5 21 5 3" />
+          </svg>
+          <span class="drawer-title" id="drawerAgentTitle">Test: Zenith BA Architect</span>
+        </div>
+        <button type="button" class="drawer-close-btn" id="btnDrawerClose" aria-label="Close Test Drawer">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18" />
+            <line x1="6" y1="6" x2="18" y2="18" />
+          </svg>
+        </button>
+      </div>
+
+      <div class="drawer-body" id="drawerChatBody">
+        <div class="drawer-chat-message assistant">
+          <div class="drawer-bubble">
+            Ready to test. Type your feature idea, requirements, or architecture request to evaluate this agent's multi-role synthesis capability.
+          </div>
+        </div>
+      </div>
+
+      <div class="drawer-footer">
+        <div class="drawer-input-row">
+          <input type="text" id="drawerPromptInput" placeholder="Send a test message..." autocomplete="off" />
+          <button type="button" class="btn-drawer-send" id="btnDrawerSend" title="Send Prompt">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="22" y1="2" x2="11" y2="13" />
+              <polygon points="22 2 15 22 11 13 2 9 22 2" />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================
+       CREATE NEW AGENT MULTI-STEP WIZARD & TEST STUDIO
+       ========================================== -->
+  <div class="studio-modal-backdrop" id="createAgentModal">
+    <div class="studio-modal-card agent-wizard-window">
+      <!-- Wizard Top Navigation & Action Header -->
+      <div class="wizard-top-header">
+        <div class="wizard-header-title-group">
+          <div class="wizard-title-badge">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="11" width="18" height="10" rx="2" />
+              <circle cx="12" cy="5" r="2" />
+              <path d="M12 7v4" />
+            </svg>
+            <span>Agent Studio Builder</span>
+          </div>
+          <h2 class="wizard-main-title" id="wizardHeaderTitle">Customize your agent</h2>
+        </div>
+
+        <!-- Top Right Action Buttons -->
+        <div class="wizard-top-actions">
+          <button type="button" class="btn-wizard-action-ghost" id="btnViewSetupChecklist" title="View Setup Checklist">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M9 11l3 3L22 4" />
+              <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" />
+            </svg>
+            <span>View Setup Checklist</span>
+          </button>
+          <button type="button" class="btn-wizard-action-ghost" id="btnBatchTestTrigger" title="Batch Test Suite">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="5 3 19 12 5 21 5 3" />
+            </svg>
+            <span>Batch Test</span>
+          </button>
+          <button type="button" class="drawer-close-btn" id="btnCancelCreateAgent" aria-label="Close Wizard">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="18" y1="6" x2="6" y2="18" />
+              <line x1="6" y1="6" x2="18" y2="18" />
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Top Connected Stepper Progress Bar -->
+      <div class="wizard-stepper-bar">
+        <div class="wizard-step-node active" data-step="1" id="stepNode1">
+          <div class="step-circle">1</div>
+          <span class="step-label">1. Customize Agent</span>
+        </div>
+        <div class="wizard-step-line" id="stepLine1"></div>
+        <div class="wizard-step-node" data-step="2" id="stepNode2">
+          <div class="step-circle">2</div>
+          <span class="step-label">2. Definition &amp; Topics</span>
+        </div>
+        <div class="wizard-step-line" id="stepLine2"></div>
+        <div class="wizard-step-node" data-step="3" id="stepNode3">
+          <div class="step-circle">3</div>
+          <span class="step-label">3. Test &amp; Preview</span>
+        </div>
+      </div>
+
+      <div class="wizard-content-body">
+        <!-- ==========================================
+             STEP 1: CUSTOMIZE YOUR AGENT
+             ========================================== -->
+        <div class="wizard-step-pane active" id="wizardStep1">
+          <div class="wizard-pane-desc-header">
+            <h3>Describe your agent's job in more detail</h3>
+            <p>You can edit and calibrate these properties at any point during deployment.</p>
+          </div>
+
+          <form id="formWizardStep1" class="wizard-form-layout">
+            <div class="wizard-grid-2col">
+              <div class="studio-form-group">
+                <label class="studio-form-label required" for="wizardAgentName">
+                  <span>Name</span>
+                  <span class="field-asterisk">*</span>
+                </label>
+                <input type="text" class="studio-form-input" id="wizardAgentName" value="Agentforce Service Agent"
+                  placeholder="e.g. Agentforce Service Agent" required />
+              </div>
+              <div class="studio-form-group">
+                <label class="studio-form-label required" for="wizardAgentApiName">
+                  <span>API Name</span>
+                  <span class="field-asterisk">*</span>
+                </label>
+                <input type="text" class="studio-form-input font-mono" id="wizardAgentApiName"
+                  value="Agentforce_Service_Agent" placeholder="Agentforce_Service_Agent" required />
+              </div>
+            </div>
+
+            <div class="studio-form-group">
+              <div class="label-with-tooltip">
+                <label class="studio-form-label required" for="wizardAgentDesc">
+                  <span>Description</span>
+                  <span class="field-asterisk">*</span>
+                </label>
+                <span class="info-tooltip-icon" title="High-level description of what this autonomous agent solves">ⓘ</span>
+              </div>
+              <textarea class="studio-form-textarea" id="wizardAgentDesc" rows="3" maxlength="1000"
+                placeholder="Deliver personalized customer interactions with an autonomous AI agent. Agentforce Service Agent intelligently supports your customers with common inquiries and escalates complex issues.">Deliver personalized customer interactions with an autonomous AI agent. Agentforce Service Agent intelligently supports your customers with common inquiries and escalates complex issues.</textarea>
+              <div class="char-counter-text" id="descCharCounter">814 characters remaining</div>
+            </div>
+
+            <div class="studio-form-group">
+              <div class="label-with-tooltip">
+                <label class="studio-form-label required" for="wizardAgentRole">
+                  <span>Role</span>
+                  <span class="field-asterisk">*</span>
+                </label>
+                <span class="info-tooltip-icon" title="Functional role persona adopted by the foundation model">ⓘ</span>
+              </div>
+              <textarea class="studio-form-textarea" id="wizardAgentRole" rows="2" maxlength="300"
+                placeholder="An AI customer service agent whose job is to help customers with support questions or other issues.">An AI customer service agent whose job is to help customers with support questions or other issues.</textarea>
+              <div class="char-counter-text" id="roleCharCounter">156 characters remaining</div>
+            </div>
+
+            <div class="studio-form-group">
+              <div class="label-with-tooltip">
+                <label class="studio-form-label required" for="wizardAgentCompany">
+                  <span>Company</span>
+                  <span class="field-asterisk">*</span>
+                </label>
+                <span class="info-tooltip-icon" title="Company domain and business vertical context">ⓘ</span>
+              </div>
+              <textarea class="studio-form-textarea" id="wizardAgentCompany" rows="2"
+                placeholder="Example: Your company specializes in providing customer relationship management (CRM) software and applications. Its solutions, including Sales Center and Service Center, help businesses manage customer interactions and streamline processes.">Example: Your company specializes in providing customer relationship management (CRM) software and applications. Its solutions, including Sales Center and Service Center, help businesses manage customer interactions and streamline processes.</textarea>
+            </div>
+
+            <div class="studio-form-group">
+              <div class="label-with-tooltip">
+                <label class="studio-form-label required">
+                  <span>Agent User</span>
+                  <span class="field-asterisk">*</span>
+                </label>
+                <span class="info-tooltip-icon" title="User account identity bound to the agent execution session">ⓘ</span>
+              </div>
+              <div class="agent-user-tag-box">
+                <div class="agent-user-tag-pill">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+                    <circle cx="9" cy="7" r="4" />
+                    <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
+                    <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                  </svg>
+                  <span>New Agent User</span>
+                  <button type="button" class="btn-tag-remove" title="Remove User">✕</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="wizard-checkbox-row">
+              <input type="checkbox" id="chkEnhancedLogs" checked />
+              <label for="chkEnhancedLogs">
+                Keep a record of conversations with enhanced event logs to review agent behavior
+                <a href="#logs" class="learn-more-link" onclick="event.preventDefault();">Learn More</a>
+              </label>
+            </div>
+          </form>
+        </div>
+
+        <!-- ==========================================
+             STEP 2: AGENT TEST — DEFINITION & TOPICS
+             ========================================== -->
+        <div class="wizard-step-pane" id="wizardStep2">
+          <div class="definition-header-banner">
+            <div>
+              <span class="def-badge">AGENT TEST — definition</span>
+              <h3 class="def-title">The agent's instruction, guardrails, tools, knowledge, model and limits.</h3>
+            </div>
+          </div>
+
+          <!-- Create / Edit a Topic Card -->
+          <div class="wizard-topic-card">
+            <div class="topic-card-header">
+              <div class="topic-title-area">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                  stroke="#2563eb" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                  <polyline points="14 2 14 8 20 8" />
+                  <line x1="16" y1="13" x2="8" y2="13" />
+                  <line x1="16" y1="17" x2="8" y2="17" />
+                </svg>
+                <span class="topic-header-text">Create a Topic</span>
+              </div>
+              <span class="topic-status-pill">Active Topic</span>
+            </div>
+
+            <div class="wizard-grid-2col" style="margin-bottom: 1rem;">
+              <div class="studio-form-group">
+                <label class="studio-form-label required">
+                  <span>Name</span>
+                  <span class="field-asterisk">*</span>
+                </label>
+                <input type="text" class="studio-form-input" id="wizardTopicName" value="Case Management" required />
+              </div>
+              <div class="studio-form-group">
+                <label class="studio-form-label required">
+                  <span>API Name</span>
+                  <span class="field-asterisk">*</span>
+                </label>
+                <input type="text" class="studio-form-input font-mono" id="wizardTopicApiName"
+                  value="Case_Management" required />
+              </div>
+            </div>
+
+            <div class="studio-form-group" style="margin-bottom: 1rem;">
+              <div class="label-with-tooltip">
+                <label class="studio-form-label required">
+                  <span>Classification Description</span>
+                  <span class="field-asterisk">*</span>
+                </label>
+                <span class="info-tooltip-icon">ⓘ</span>
+              </div>
+              <textarea class="studio-form-textarea" id="wizardTopicDesc" rows="2">Handles case status inquiries and related issues. Used for managing and updating the status of cases.</textarea>
+            </div>
+
+            <div class="studio-form-group" style="margin-bottom: 1.25rem;">
+              <div class="label-with-tooltip">
+                <label class="studio-form-label required">
+                  <span>Scope</span>
+                  <span class="field-asterisk">*</span>
+                </label>
+                <span class="info-tooltip-icon">ⓘ</span>
+              </div>
+              <textarea class="studio-form-textarea" id="wizardTopicScope" rows="2">Your job is only to manage the status of cases, including updating, retrieving, and providing information about the case status.</textarea>
+            </div>
+
+            <!-- Dynamic Instructions List -->
+            <div class="instructions-section">
+              <div class="instructions-header-row">
+                <div class="label-with-tooltip">
+                  <span class="instructions-title">Instructions</span>
+                  <span class="info-tooltip-icon">ⓘ</span>
+                </div>
+                <span class="instructions-subtitle">The following instructions are used to run this topic.</span>
+              </div>
+
+              <div class="instruction-cards-list" id="instructionsCardsList">
+                <div class="instruction-card-row">
+                  <div class="instruction-input-wrap">
+                    <span class="instruction-dot-label">* Instruction</span>
+                    <input type="text" class="instruction-text-field"
+                      value="If a user inquires about their case status, retrieve and provide the current status." />
+                  </div>
+                  <div class="instruction-row-actions">
+                    <button type="button" class="btn-instruction-action" title="Edit Instruction">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2">
+                        <path d="M12 20h9" />
+                        <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z" />
+                      </svg>
+                    </button>
+                    <button type="button" class="btn-instruction-action btn-delete-instruction" title="Delete Instruction">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2">
+                        <polyline points="3 6 5 6 21 6" />
+                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+
+                <div class="instruction-card-row">
+                  <div class="instruction-input-wrap">
+                    <span class="instruction-dot-label">* Instruction</span>
+                    <input type="text" class="instruction-text-field"
+                      value="If a user does not have their case number, ask for alternative information to locate the case." />
+                  </div>
+                  <div class="instruction-row-actions">
+                    <button type="button" class="btn-instruction-action" title="Edit Instruction">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2">
+                        <path d="M12 20h9" />
+                        <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z" />
+                      </svg>
+                    </button>
+                    <button type="button" class="btn-instruction-action btn-delete-instruction" title="Delete Instruction">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2">
+                        <polyline points="3 6 5 6 21 6" />
+                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+
+                <div class="instruction-card-row">
+                  <div class="instruction-input-wrap">
+                    <span class="instruction-dot-label">* Instruction</span>
+                    <input type="text" class="instruction-text-field"
+                      value="Offer to escalate the case to a human agent if the user is not satisfied with the provided information." />
+                  </div>
+                  <div class="instruction-row-actions">
+                    <button type="button" class="btn-instruction-action" title="Edit Instruction">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2">
+                        <path d="M12 20h9" />
+                        <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z" />
+                      </svg>
+                    </button>
+                    <button type="button" class="btn-instruction-action btn-delete-instruction" title="Delete Instruction">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2">
+                        <polyline points="3 6 5 6 21 6" />
+                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+
+                <div class="instruction-card-row">
+                  <div class="instruction-input-wrap">
+                    <span class="instruction-dot-label">* Instruction</span>
+                    <input type="text" class="instruction-text-field"
+                      value="Update the case status based on the user's input and confirm the update with the user." />
+                  </div>
+                  <div class="instruction-row-actions">
+                    <button type="button" class="btn-instruction-action" title="Edit Instruction">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2">
+                        <path d="M12 20h9" />
+                        <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z" />
+                      </svg>
+                    </button>
+                    <button type="button" class="btn-instruction-action btn-delete-instruction" title="Delete Instruction">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2">
+                        <polyline points="3 6 5 6 21 6" />
+                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <button type="button" class="btn-add-instruction-row" id="btnAddInstructionRow">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2.5">
+                  <line x1="12" y1="5" x2="12" y2="19" />
+                  <line x1="5" y1="12" x2="19" y2="12" />
+                </svg>
+                <span>Add Instruction</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Section: Instructions, Guardrails, Tools, Knowledge Blocks -->
+          <div class="definition-blocks-grid">
+            <!-- Instruction & Smoke Test Box -->
+            <div class="def-block-card">
+              <div class="def-block-top">
+                <div class="def-block-title-row">
+                  <h4>Instruction</h4>
+                  <span class="word-count-pill">172 words</span>
+                </div>
+                <p class="def-instruction-intro">
+                  You are a smoke-test agent. Your only job is to prove that a run reached a live model and came back intact — you are not here to be helpful about the subject matter.
+                </p>
+                <div class="smoke-spec-box">
+                  <div class="smoke-spec-line">For every message, reply with exactly these four lines and nothing else:</div>
+                  <pre class="smoke-spec-code">OK
+received: &lt;the user's message, verbatim, truncated to 200 characters&gt;
+length: &lt;character count of the user's full message&gt;
+turn: &lt;how many times you have replied in this conversation, starting at 1&gt;</pre>
+                  <div class="smoke-rules-list">
+                    <strong>Rules:</strong>
+                    <ul>
+                      <li>Never add greetings, explanations, apologies or follow-up questions. The four lines are the whole reply.</li>
+                      <li>Echo the message exactly as sent — do not correct spelling, translate, reformat, or summarise it.</li>
+                      <li>If the message is empty, echo an empty value after "received:" and report length: 0.</li>
+                      <li>If asked to do real work, still reply with the four lines. This agent is a probe, not an assistant.</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div class="def-steer-row">
+                <input type="text" class="steer-input" placeholder="Optional steer — “shorter”, “refuse pricing questions”" />
+                <button type="button" class="btn-refine-steer">Refine</button>
+              </div>
+            </div>
+
+            <!-- Guardrails, Tools, Knowledge Row -->
+            <div class="def-sub-blocks-col">
+              <!-- Guardrails -->
+              <div class="def-mini-card">
+                <div class="mini-card-header">
+                  <h4>Guardrails</h4>
+                  <span class="status-dot-green"></span>
+                </div>
+                <div class="mini-card-body">
+                  <span class="mini-val">none — deterministic, runner-enforced</span>
+                </div>
+              </div>
+
+              <!-- Tools -->
+              <div class="def-mini-card">
+                <div class="mini-card-header">
+                  <h4>Tools</h4>
+                  <button type="button" class="btn-mini-action" id="btnAddToolWizard">+ Add tool</button>
+                </div>
+                <div class="mini-card-body">
+                  <span class="mini-val text-muted">none attached</span>
+                  <p class="mini-card-note">No tools attached — builtin, HTTP and MCP tools attach individually, never all-or-nothing.</p>
+                </div>
+              </div>
+
+              <!-- Knowledge -->
+              <div class="def-mini-card">
+                <div class="mini-card-header">
+                  <h4>Knowledge</h4>
+                  <span class="status-pill-draft">Index Ready</span>
+                </div>
+                <div class="mini-card-body">
+                  <span class="mini-val text-muted">none — drop files to index</span>
+                  <div class="knowledge-drop-box">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                      stroke="currentColor" stroke-width="2">
+                      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                      <polyline points="17 8 12 3 7 8" />
+                      <line x1="12" y1="3" x2="12" y2="15" />
+                    </svg>
+                    <span>Drop documents here, or click to pick — PDF, markdown, tex</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ==========================================
+             STEP 3: CONVERSATION PREVIEW & TEST STUDIO
+             ========================================== -->
+        <div class="wizard-step-pane" id="wizardStep3">
+          <div class="wizard-test-split-layout">
+            <!-- Left: Test Parameters & Guardrails Summary -->
+            <div class="wizard-test-summary-col">
+              <div class="test-config-summary-card">
+                <div class="summary-card-header">
+                  <h4>Agent Setup State</h4>
+                  <span class="status-pill-active"><span class="status-dot-green"></span>Ready to Test</span>
+                </div>
+
+                <div class="summary-details-list">
+                  <div class="summary-item">
+                    <span class="summary-lbl">Target Agent</span>
+                    <strong class="summary-val" id="testSummaryAgentName">Agentforce Service Agent</strong>
+                  </div>
+                  <div class="summary-item">
+                    <span class="summary-lbl">Topic</span>
+                    <strong class="summary-val" id="testSummaryTopicName">Case Management</strong>
+                  </div>
+                  <div class="summary-item">
+                    <span class="summary-lbl">Foundation Model</span>
+                    <strong class="summary-val">xAI Grok-4.3 (Fastest)</strong>
+                  </div>
+                  <div class="summary-item">
+                    <span class="summary-lbl">Guardrail Mode</span>
+                    <strong class="summary-val">Deterministic Probe Runner</strong>
+                  </div>
+                </div>
+
+                <div class="checklist-items-box">
+                  <div class="chk-item active">
+                    <span class="chk-icon">✓</span>
+                    <span>Metadata &amp; API slug validated</span>
+                  </div>
+                  <div class="chk-item active">
+                    <span class="chk-icon">✓</span>
+                    <span>4 Instructions &amp; Case scope active</span>
+                  </div>
+                  <div class="chk-item active">
+                    <span class="chk-icon">✓</span>
+                    <span>Smoke test 4-line protocol loaded</span>
+                  </div>
+                  <div class="chk-item active">
+                    <span class="chk-icon">✓</span>
+                    <span>WebContainer live execution ready</span>
+                  </div>
+                </div>
+
+                <div class="test-steer-box">
+                  <label class="studio-form-label">Active Prompt Steer</label>
+                  <input type="text" class="studio-form-input" id="testLiveSteerInput"
+                    placeholder="Optional steer — “shorter”, “refuse pricing”" />
+                </div>
+              </div>
+            </div>
+
+            <!-- Right: Interactive Conversation Preview Panel -->
+            <div class="wizard-test-preview-col">
+              <div class="conversation-preview-window">
+                <!-- Preview Top Header -->
+                <div class="conv-preview-header">
+                  <div class="conv-header-left">
+                    <span class="status-dot-green"></span>
+                    <span class="conv-header-title">Conversation Preview</span>
+                  </div>
+                  <div class="conv-header-right">
+                    <button type="button" class="btn-conv-icon" id="btnToggleDebugView" title="Toggle Debug Traces">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2">
+                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                        <circle cx="12" cy="12" r="3" />
+                      </svg>
+                    </button>
+                    <button type="button" class="btn-conv-icon" id="btnResetConversation" title="Reset Conversation">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2">
+                        <polyline points="23 4 23 10 17 10" />
+                        <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10" />
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Preview Chat Body -->
+                <div class="conv-preview-body" id="wizardChatFeed">
+                  <!-- Robot Mascot Welcome Banner -->
+                  <div class="conv-mascot-hero" id="convMascotHero">
+                    <div class="conv-mascot-graphic">
+                      <svg width="68" height="68" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="40" cy="40" r="38" fill="url(#mascotGrad)" />
+                        <!-- Cute Robot Face -->
+                        <rect x="24" y="26" width="32" height="26" rx="8" fill="#ffffff" />
+                        <circle cx="33" cy="38" r="3.5" fill="#0284c7" />
+                        <circle cx="47" cy="38" r="3.5" fill="#0284c7" />
+                        <path d="M36 46c2 2 6 2 8 0" stroke="#0284c7" stroke-width="2" stroke-linecap="round" />
+                        <!-- Antenna -->
+                        <line x1="40" y1="18" x2="40" y2="26" stroke="#ffffff" stroke-width="2.5" />
+                        <circle cx="40" cy="16" r="3" fill="#38bdf8" />
+                        <!-- Blush -->
+                        <circle cx="28" cy="42" r="2" fill="#f43f5e" opacity="0.6" />
+                        <circle cx="52" cy="42" r="2" fill="#f43f5e" opacity="0.6" />
+                        <defs>
+                          <linearGradient id="mascotGrad" x1="10" y1="10" x2="70" y2="70" gradientUnits="userSpaceOnUse">
+                            <stop stop-color="#0284c7" />
+                            <stop offset="1" stop-color="#38bdf8" />
+                          </linearGradient>
+                        </defs>
+                      </svg>
+                    </div>
+                    <h3 class="conv-mascot-title">Let's chat!</h3>
+                    <p class="conv-mascot-subtitle">Hi, I'm an AI service assistant. How can I help you?</p>
+                  </div>
+
+                  <!-- Initial Test Message Pills -->
+                  <div class="conv-sample-pills-row" id="convSamplePills">
+                    <button type="button" class="btn-conv-pill" data-prompt="What's the status of case #CS-8924?">
+                      What's the status of case #CS-8924?
+                    </button>
+                    <button type="button" class="btn-conv-pill" data-prompt="Run deterministic smoke test probe">
+                      Run smoke test probe
+                    </button>
+                    <button type="button" class="btn-conv-pill" data-prompt="I don't have my case number, can you help?">
+                      I don't have my case number
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Preview Trace Telemetry Bar -->
+                <div class="conv-telemetry-pill-bar" id="convTelemetryBar" style="display: none;">
+                  <span class="telem-badge" id="telemTurn">Turn: 1</span>
+                  <span class="telem-badge" id="telemTokens">184 tokens</span>
+                  <span class="telem-badge" id="telemLatency">0.24s</span>
+                  <span class="telem-badge success" id="telemStatus">Rules: Passed 4/4</span>
+                </div>
+
+                <!-- Preview Bottom Input Bar -->
+                <div class="conv-preview-footer">
+                  <div class="conv-input-row">
+                    <input type="text" id="wizardPromptInput" placeholder="Describe your task or ask a question..."
+                      autocomplete="off" />
+                    <button type="button" class="btn-conv-send" id="btnWizardSendPrompt" title="Send message">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2.5">
+                        <line x1="22" y1="2" x2="11" y2="13" />
+                        <polygon points="22 2 15 22 11 13 2 9 22 2" />
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Wizard Bottom Navigation Footer -->
+      <div class="wizard-bottom-footer">
+        <!-- Step Indicator Dots -->
+        <div class="wizard-footer-dots-indicator" id="footerDotsIndicator">
+          <span class="footer-step-dot active" data-step="1"></span>
+          <span class="footer-step-dot" data-step="2"></span>
+          <span class="footer-step-dot" data-step="3"></span>
+        </div>
+
+        <!-- Footer Control Buttons -->
+        <div class="wizard-footer-btn-group">
+          <button type="button" class="btn-modal-cancel" id="btnWizardBack" style="display: none;">Back</button>
+          <button type="button" class="btn-modal-cancel" id="btnCancelModal">Cancel</button>
+          <button type="button" class="btn-studio-cta" id="btnWizardNext">Next</button>
+          <button type="button" class="btn-studio-cta btn-activate-agent" id="btnActivateAgent" style="display: none;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2.5">
+              <polygon points="5 3 19 12 5 21 5 3" />
+            </svg>
+            <span>Activate Agent</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================
+       MANAGE MODAL (ACCOUNT & SUBSCRIPTIONS)
+       ========================================== -->
+  <div class="zenith-modal-backdrop" id="manageModalBackdrop" role="dialog" aria-modal="true"
+    aria-labelledby="manageModalTitle">
+    <div class="zenith-modal-window">
+      <!-- Modal Header Bar -->
+      <div class="modal-header-bar">
+        <div class="modal-header-left">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+            style="color: #2563eb;">
+            <line x1="4" x2="4" y1="21" y2="14" />
+            <line x1="4" x2="4" y1="10" y2="3" />
+            <line x1="12" x2="12" y1="21" y2="12" />
+            <line x1="12" x2="12" y1="8" y2="3" />
+            <line x1="20" x2="20" y1="21" y2="16" />
+            <line x1="20" x2="20" y1="12" y2="3" />
+            <line x1="1" x2="7" y1="14" y2="14" />
+            <line x1="9" x2="15" y1="8" y2="8" />
+            <line x1="17" x2="23" y1="16" y2="16" />
+          </svg>
+          <h2 class="modal-header-title" id="manageModalTitle">Manage</h2>
+        </div>
+        <button type="button" class="modal-close-btn" id="btnManageModalClose" aria-label="Close modal">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18" />
+            <line x1="6" y1="6" x2="18" y2="18" />
+          </svg>
+        </button>
+      </div>
+
+      <!-- Modal Body Layout -->
+      <div class="modal-body-layout">
+        <!-- Inner Sidebar -->
+        <aside class="modal-inner-sidebar" aria-label="Manage sections">
+          <button type="button" class="modal-nav-item active" data-tab="credits">
+            <span>Credits</span>
+          </button>
+          <button type="button" class="modal-nav-item" data-tab="team">
+            <span>Team</span>
+          </button>
+          <button type="button" class="modal-nav-item" data-tab="activity">
+            <span>Activity</span>
+          </button>
+          <button type="button" class="modal-nav-item" data-tab="settings">
+            <span>Settings</span>
+          </button>
+        </aside>
+
+        <!-- Content Panes -->
+        <main class="modal-content-pane">
+          <!-- Pane 1: Credits -->
+          <div class="modal-pane-section active" id="pane-credits">
+            <h1 class="section-main-heading">Credits &amp; Usage</h1>
+            <p class="section-sub-desc">Track token usage, subscription tiers, and compute quota.</p>
+            <div class="manage-metrics-grid">
+              <div class="metric-stat-card">
+                <span class="metric-card-label">AVAILABLE TOKENS</span>
+                <div class="metric-card-value">2.4M</div>
+                <span class="metric-card-subinfo">Renews in 18 days</span>
+              </div>
+              <div class="metric-stat-card">
+                <span class="metric-card-label">CURRENT TIER</span>
+                <div class="metric-card-value">Pro</div>
+                <span class="metric-card-subinfo">Enterprise Cluster</span>
+              </div>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/sidebar.js"></script>
+  <script src="js/modal.js"></script>
+  <script src="js/agent-studio.js"></script>
+</body>
+
+</html>

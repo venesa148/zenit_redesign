@@ -15,14 +15,28 @@
     rel="stylesheet" />
 
   <!-- CSS Stylesheets -->
-  <link rel="stylesheet" href="css/tokens.css" />
-  <link rel="stylesheet" href="css/base.css" />
-  <link rel="stylesheet" href="css/sidebar.css" />
-  <link rel="stylesheet" href="css/workspace.css" />
-  <link rel="stylesheet" href="css/project-management.css" />
-  <link rel="stylesheet" href="css/documents.css" />
-  <link rel="stylesheet" href="css/deployment.css" />
-  <link rel="stylesheet" href="css/modal.css" />
+  <link rel="stylesheet" href="css/tokens.css?v=3" />
+  <link rel="stylesheet" href="css/base.css?v=3" />
+  <link rel="stylesheet" href="css/sidebar.css?v=3" />
+  <link rel="stylesheet" href="css/workspace.css?v=3" />
+  <link rel="stylesheet" href="css/project-management.css?v=3" />
+  <link rel="stylesheet" href="css/documents.css?v=3" />
+  <link rel="stylesheet" href="css/deployment.css?v=3" />
+  <link rel="stylesheet" href="css/modal.css?v=3" />
+  <!-- Early Theme Mode Loader (Prevents White Flash) -->
+  <script>
+    (function() {
+      try {
+        var pref = localStorage.getItem('zenith_theme_preference') || 'system';
+        var theme = pref;
+        if (pref === 'system') {
+          theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        }
+        document.documentElement.setAttribute('data-theme', theme);
+        document.documentElement.setAttribute('data-theme-preference', pref);
+      } catch (e) {}
+    })();
+  </script>
 </head>
 
 <body>
@@ -83,7 +97,7 @@
           </a>
 
           <!-- Agent Studio -->
-          <a href="#agent-studio" class="global-sb-nav-item" id="navAgentStudio" title="Agent Studio">
+          <a href="agent-studio.html" class="global-sb-nav-item" id="navAgentStudio" title="Agent Studio">
             <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="none"
               stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
@@ -119,6 +133,29 @@
           </svg>
           <span>Feedback &amp; help</span>
         </a>
+
+        <!-- Direct 1-Click Global Theme Toggle Switch -->
+        <button type="button" class="global-sb-theme-btn" id="btnGlobalThemeToggle"
+          title="Beralih ke Mode Gelap / Terang" aria-label="Toggle Dark / Light Mode">
+          <span class="theme-btn-icon" id="themeActiveIcon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="4" />
+              <path d="M12 2v2" />
+              <path d="M12 20v2" />
+              <path d="m4.93 4.93 1.41 1.41" />
+              <path d="m17.66 17.66 1.41 1.41" />
+              <path d="M2 12h2" />
+              <path d="M20 12h2" />
+              <path d="m6.34 17.66-1.41 1.41" />
+              <path d="m19.07 4.93-1.41 1.41" />
+            </svg>
+          </span>
+          <span class="theme-btn-label" id="themeActiveLabel">Mode Terang</span>
+          <span class="theme-switch-pill" id="themeSwitchPill">
+            <span class="theme-switch-thumb"></span>
+          </span>
+        </button>
 
         <div class="global-sb-profile-row">
           <a href="login.html" class="global-sb-profile-info" title="User Profile: Josua">
@@ -202,6 +239,18 @@
               <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
             </svg>
             <span>Deployment</span>
+          </a>
+
+          <a href="#context-vault" class="sec-nav-item" id="secNavContextVault">
+            <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path
+                d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
+              <polyline points="3.27 6.96 12 12.01 20.73 6.96" />
+              <line x1="12" y1="22.08" x2="12" y2="12" />
+            </svg>
+            <span>Context Vault</span>
+            <span class="vault-count-badge" id="secNavVaultBadge">4</span>
           </a>
         </nav>
 
@@ -289,16 +338,13 @@
                       <div class="agent-item-avatar">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
                           stroke="currentColor" stroke-width="2">
-                          <rect x="3" y="11" width="18" height="10" rx="2" />
-                          <circle cx="12" cy="5" r="2" />
-                          <path d="M12 7v4" />
-                          <line x1="8" y1="16" x2="8" y2="16" />
-                          <line x1="16" y1="16" x2="16" y2="16" />
+                          <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" />
+                          <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
                         </svg>
                       </div>
                       <div class="agent-item-details">
-                        <div class="agent-item-name">Attendance Analyst</div>
-                        <div class="agent-item-sub">xai/grok-4.3 · Active</div>
+                        <div class="agent-item-name">Zenith BA Architect</div>
+                        <div class="agent-item-sub">PRD, User Stories &amp; BDD Spec · Active</div>
                       </div>
                       <span class="agent-active-check">✓</span>
                     </div>
@@ -306,77 +352,78 @@
                       <div class="agent-item-avatar">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
                           stroke="currentColor" stroke-width="2">
-                          <line x1="18" y1="20" x2="18" y2="10" />
-                          <line x1="12" y1="20" x2="12" y2="4" />
-                          <line x1="6" y1="20" x2="6" y2="14" />
+                          <polyline points="16 18 22 12 16 6" />
+                          <polyline points="8 6 2 12 8 18" />
                         </svg>
                       </div>
                       <div class="agent-item-details">
-                        <div class="agent-item-name">claim analyzer</div>
-                        <div class="agent-item-sub">#reporting · #visualization</div>
+                        <div class="agent-item-name">DevCore Synthesizer</div>
+                        <div class="agent-item-sub">Fullstack React 19 &amp; REST APIs</div>
                       </div>
                     </div>
                     <div class="agent-popover-item">
                       <div class="agent-item-avatar">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
                           stroke="currentColor" stroke-width="2">
-                          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
-                          <polyline points="14 2 14 8 20 8" />
+                          <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" />
+                          <rect x="8" y="2" width="8" height="4" rx="1" ry="1" />
                         </svg>
                       </div>
                       <div class="agent-item-details">
-                        <div class="agent-item-name">Claim Document Analyzer</div>
-                        <div class="agent-item-sub">Document parser &amp; FNOL</div>
+                        <div class="agent-item-name">Omni PM Orchestrator</div>
+                        <div class="agent-item-sub">Sprint Roadmaps &amp; Backlogs</div>
                       </div>
                     </div>
                     <div class="agent-popover-item">
                       <div class="agent-item-avatar">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
                           stroke="currentColor" stroke-width="2">
-                          <circle cx="11" cy="11" r="8" />
-                          <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                          <circle cx="12" cy="12" r="10" />
+                          <line x1="2" y1="12" x2="22" y2="12" />
+                          <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
                         </svg>
                       </div>
                       <div class="agent-item-details">
-                        <div class="agent-item-name">MCU Reviewer Agent</div>
-                        <div class="agent-item-sub">Code &amp; system reviewer</div>
+                        <div class="agent-item-name">PixelCraft UI/UX</div>
+                        <div class="agent-item-sub">Glassmorphic CSS &amp; Wireframes</div>
                       </div>
                     </div>
                     <div class="agent-popover-item">
                       <div class="agent-item-avatar">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
                           stroke="currentColor" stroke-width="2">
-                          <path
-                            d="M10 2v7.527a2 2 0 0 1-.211.896L4.72 20.55a1 1 0 0 0 .9 1.45h12.76a1 1 0 0 0 .9-1.45l-5.069-10.127A2 2 0 0 1 14 9.527V2" />
-                          <path d="M8.5 2h7" />
+                          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10" />
                         </svg>
                       </div>
                       <div class="agent-item-details">
-                        <div class="agent-item-name">Test Agent</div>
-                        <div class="agent-item-sub">Q&amp;A on workspace docs</div>
+                        <div class="agent-item-name">DeployGuard QA</div>
+                        <div class="agent-item-sub">Docker Build &amp; E2E Testing</div>
                       </div>
                     </div>
                     <div class="agent-popover-item">
                       <div class="agent-item-avatar">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
                           stroke="currentColor" stroke-width="2">
-                          <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
+                          <circle cx="9" cy="21" r="1" />
+                          <circle cx="20" cy="21" r="1" />
+                          <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
                         </svg>
                       </div>
                       <div class="agent-item-details">
-                        <div class="agent-item-name">drcdtrtest</div>
-                        <div class="agent-item-sub">Custom pipeline runner</div>
+                        <div class="agent-item-name">E-Commerce Growth Architect</div>
+                        <div class="agent-item-sub">Custom checkout &amp; payment agent</div>
                       </div>
                     </div>
                   </div>
                   <div class="agent-popover-footer">
-                    <button type="button" class="btn-popover-manage-agents" id="btnOpenAgentStudioModalFromPopover">
+                    <a href="agent-studio.html" class="btn-popover-manage-agents"
+                      id="btnOpenAgentStudioModalFromPopover" style="text-decoration: none;">
                       <span>Open Agent Studio</span>
                       <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none"
                         stroke="currentColor" stroke-width="2">
                         <path d="m9 18 6-6-6-6" />
                       </svg>
-                    </button>
+                    </a>
                   </div>
                 </div>
               </div>
@@ -395,23 +442,56 @@
 
             <h2 class="chat-hero-headline">What do you want to build?</h2>
             <p class="chat-hero-desc">
-              Tell me the idea in a sentence or two — I'll start Phase 1 as the business-analyst and ask a few questions
-              before drafting anything. Your Claude session, your subscription.
+              Describe your feature or product concept — Zenith simultaneously assumes Business Analyst, Developer, and PM roles to draft PRDs, synthesize full-stack code, and orchestrate sprint milestones.
             </p>
 
             <!-- Suggestion Pills -->
             <div class="suggestion-pills-row">
-              <button type="button" class="btn-suggestion-pill">Create a task manager</button>
-              <button type="button" class="btn-suggestion-pill">Build a landing page</button>
-              <button type="button" class="btn-suggestion-pill">Dashboard for sales</button>
+              <button type="button" class="btn-suggestion-pill">📊 [BA] Generate PRD for SaaS billing</button>
+              <button type="button" class="btn-suggestion-pill">💻 [Dev] Synthesize React dashboard</button>
+              <button type="button" class="btn-suggestion-pill">📋 [PM] Plan 2-week sprint backlog</button>
+              <button type="button" class="btn-suggestion-pill">🎨 [UI] Create glassmorphism theme</button>
             </div>
           </div>
 
           <!-- Bottom Chat Input Form -->
-          <div class="chat-bottom-form-area">
-            <div class="chat-input-box-card">
+          <div class="chat-bottom-form-area" id="chatBottomFormArea">
+            <!-- Attached Context Badges List (Dynamic Context Chips) -->
+            <div class="attached-context-bar" id="attachedContextBar" style="display: none;">
+              <span class="context-bar-label">
+                <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path
+                    d="m21.44 11.05-9.19 9.19a6 6 0 0 1-8.49-8.49l8.57-8.57A4 4 0 1 1 18 8.84l-8.59 8.57a2 2 0 0 1-2.83-2.83l8.49-8.48" />
+                </svg>
+                <span>Active Context:</span>
+              </span>
+              <div class="attached-chips-wrapper" id="attachedChipsWrapper">
+                <!-- Dynamically populated chips -->
+              </div>
+              <button type="button" class="btn-clear-all-context" id="btnClearAllContext"
+                title="Clear all attached context">
+                Clear all
+              </button>
+            </div>
+
+            <!-- Chat Input Box Card with Drop Overlay -->
+            <div class="chat-input-box-card" id="chatInputBoxCard">
+              <!-- Orca / Canva Drag and Drop Overlay -->
+              <div class="chat-drop-overlay" id="chatDropOverlay">
+                <div class="drop-overlay-content">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="7 10 12 15 17 10" />
+                    <line x1="12" x2="12" y1="3" y2="15" />
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                  </svg>
+                  <span>Drop preview element here to reference in AI prompt</span>
+                </div>
+              </div>
+
               <textarea class="chat-prompt-textarea" id="chatPromptInput"
-                placeholder="Start building something, e.g. Start Phase 1 — Business & Planning" rows="2"></textarea>
+                placeholder="Start building something, or drag elements from preview to edit..." rows="2"></textarea>
 
               <div class="chat-input-toolbar">
                 <div class="toolbar-left-controls">
@@ -423,7 +503,7 @@
                     </svg>
                   </button>
 
-                  <button type="button" class="btn-attach-file" id="btnAttachFile" title="Attach file">
+                  <button type="button" class="btn-attach-file" id="btnAttachFile" title="Attach file to prompt">
                     <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none"
                       stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                       <path
@@ -452,14 +532,14 @@
                     <polyline points="14 2 14 8 20 8" />
                   </svg>
                   <span>Add Context</span>
-                  <span
-                    style="color: #94a3b8; font-weight: 400; margin-left: 0.5rem; display: inline-flex; align-items: center; gap: 0.25rem;">
+                  <span class="context-count-indicator" id="contextCountIndicator"
+                    style="color: #94a3b8; font-weight: 500; margin-left: 0.5rem; display: inline-flex; align-items: center; gap: 0.25rem;">
                     <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
                       stroke="currentColor" stroke-width="2">
                       <path
                         d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13c0 1.1.9 2 2 2Z" />
                     </svg>
-                    0 files
+                    <span id="contextCountText">0 files</span>
                   </span>
                 </span>
                 <svg class="context-right-chevron" xmlns="http://www.w3.org/2000/svg" width="15" height="15"
@@ -525,60 +605,123 @@
             </div>
           </header>
 
-          <!-- Action Toolbar Controls -->
-          <div class="preview-actions-toolbar">
-            <span class="badge-status-running">RUNNING</span>
+          <!-- Action Toolbar Controls (with 3-Dots Dropdown & Wide Mode Open/Exit) -->
+          <div class="preview-actions-toolbar" id="previewActionsToolbar">
+            <span class="badge-status-running" id="previewStatusBadge">RUNNING</span>
 
-            <button type="button" class="btn-preview-tool" id="btnStartPrevTool">
-              <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none"
-                stroke="currentColor" stroke-width="2.5">
-                <polygon points="5 3 19 12 5 21 5 3" />
-              </svg>
-              <span>Start preview</span>
-            </button>
+            <!-- 3-Dots Action Dropdown Menu -->
+            <div class="preview-dots-menu-wrap" id="prevDotsMenuWrap">
+              <button type="button" class="btn-preview-dots-menu" id="btnPreviewMoreActions"
+                title="More preview actions">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                  <circle cx="12" cy="12" r="2" />
+                  <circle cx="19" cy="12" r="2" />
+                  <circle cx="5" cy="12" r="2" />
+                </svg>
+                <span>Actions</span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="m6 9 6 6 6-6" />
+                </svg>
+              </button>
 
-            <button type="button" class="btn-preview-tool" id="btnStopTool">
-              <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
-                <rect width="14" height="14" x="5" y="5" rx="1" />
-              </svg>
-              <span>Stop</span>
-            </button>
+              <!-- Dropdown Menu Card -->
+              <div class="preview-dots-dropdown" id="prevDotsDropdownCard">
+                <div class="dots-dropdown-header">CONTAINER &amp; PREVIEW</div>
+                <button type="button" class="dots-dropdown-item" id="menuItemStart">
+                  <span class="dots-item-icon icon-play">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24"
+                      fill="currentColor">
+                      <polygon points="5 3 19 12 5 21 5 3" />
+                    </svg>
+                  </span>
+                  <div class="dots-item-label">
+                    <strong>Start preview</strong>
+                    <span>Start Node watch dev server</span>
+                  </div>
+                </button>
 
-            <button type="button" class="btn-preview-tool" id="btnRestartTool">
-              <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none"
-                stroke="currentColor" stroke-width="2">
-                <path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
-                <path d="M3 3v5h5" />
-                <path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16" />
-                <path d="M16 21h5v-5" />
-              </svg>
-              <span>Restart</span>
-            </button>
+                <button type="button" class="dots-dropdown-item" id="menuItemStop">
+                  <span class="dots-item-icon icon-stop">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24"
+                      fill="currentColor">
+                      <rect width="14" height="14" x="5" y="5" rx="1" />
+                    </svg>
+                  </span>
+                  <div class="dots-item-label">
+                    <strong>Stop preview</strong>
+                    <span>Halt dev server and free ports</span>
+                  </div>
+                </button>
 
-            <button type="button" class="btn-preview-tool" id="btnBuildImgTool">
-              <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none"
-                stroke="currentColor" stroke-width="2">
-                <path d="m15 12-8.5 8.5c-.83.83-2.17.83-3 0 0 0 0 0 0 0a2.12 2.12 0 0 1 0-3L12 9" />
-                <path d="M17.64 15 22 10.64" />
-                <path
-                  d="m20.91 3.26-1.57-1.57a2.12 2.12 0 0 0-3 0l-3.86 3.86 4.57 4.57 3.86-3.86a2.12 2.12 0 0 0 0-3z" />
-              </svg>
-              <span>Build image</span>
-            </button>
+                <button type="button" class="dots-dropdown-item" id="menuItemRestart">
+                  <span class="dots-item-icon icon-restart">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none"
+                      stroke="currentColor" stroke-width="2">
+                      <path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
+                      <path d="M3 3v5h5" />
+                      <path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16" />
+                      <path d="M16 21h5v-5" />
+                    </svg>
+                  </span>
+                  <div class="dots-item-label">
+                    <strong>Restart</strong>
+                    <span>Hot-reload &amp; flush runtime cache</span>
+                  </div>
+                </button>
 
-            <a href="#external" class="btn-preview-open-ext" id="btnOpenExt" title="Open in new window">
+                <div class="dots-dropdown-divider"></div>
+
+                <button type="button" class="dots-dropdown-item" id="menuItemBuildImg">
+                  <span class="dots-item-icon icon-docker">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none"
+                      stroke="currentColor" stroke-width="2">
+                      <path d="m15 12-8.5 8.5c-.83.83-2.17.83-3 0 0 0 0 0 0 0a2.12 2.12 0 0 1 0-3L12 9" />
+                      <path d="M17.64 15 22 10.64" />
+                      <path
+                        d="m20.91 3.26-1.57-1.57a2.12 2.12 0 0 0-3 0l-3.86 3.86 4.57 4.57 3.86-3.86a2.12 2.12 0 0 0 0-3z" />
+                    </svg>
+                  </span>
+                  <div class="dots-item-label">
+                    <strong>Build image</strong>
+                    <span>Compile standalone container image</span>
+                  </div>
+                </button>
+              </div>
+            </div>
+
+            <!-- Orca & Canva Visual Builder Mode Pill -->
+            <!-- <div class="orca-mode-pill" title="Click any element in preview to direct edit text or drag to chat">
+              <span class="orca-pill-dot"></span>
+              <span>Visual Edit &amp; Drag (Canva/Orca)</span>
+            </div> -->
+
+            <!-- Expand / Open Wide View Button -->
+            <button type="button" class="btn-preview-open-ext" id="btnOpenExt" title="Expand preview to wide view">
               <span>Open</span>
               <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none"
                 stroke="currentColor" stroke-width="2">
-                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
                 <polyline points="15 3 21 3 21 9" />
-                <line x1="10" x2="21" y1="14" y2="3" />
+                <polyline points="9 21 3 21 3 15" />
+                <line x1="21" x2="14" y1="3" y2="10" />
+                <line x1="3" x2="10" y1="21" y2="14" />
               </svg>
-            </a>
+            </button>
+
+            <!-- Exit Wide View Button (Visible when in Wide Mode) -->
+            <button type="button" class="btn-exit-wide-preview" id="btnExitWidePreview"
+              title="Exit wide view (restore sidebars)">
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18" />
+                <line x1="6" y1="6" x2="18" y2="18" />
+              </svg>
+              <span>Exit Wide View</span>
+            </button>
           </div>
 
           <!-- Empty State Canvas (Visible when preview is stopped) -->
-          <div class="preview-canvas-empty" id="previewCanvasEmpty">
+          <div class="preview-canvas-empty" id="previewCanvasEmpty" style="display: none;">
             <div class="monitor-icon-wrapper">
               <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none"
                 stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
@@ -603,14 +746,56 @@
           <!-- ==========================================
            SOFT PASTEL PINK BEAUTY STORE LIVE PREVIEW
            ========================================== -->
-          <div class="beauty-preview-viewport" id="beautyPreviewViewport">
+          <div class="beauty-preview-viewport active" id="beautyPreviewViewport">
+            <!-- Orca & Canva Visual Selection Floating Overlay -->
+            <div class="orca-selection-overlay" id="orcaSelectionOverlay" style="display: none;">
+              <div class="orca-corner-dot top-left"></div>
+              <div class="orca-corner-dot top-right"></div>
+              <div class="orca-corner-dot bottom-left"></div>
+              <div class="orca-corner-dot bottom-right"></div>
+              <div class="orca-tag-badge" id="orcaTagBadge">&lt;div.beauty-card&gt;</div>
+              <div class="orca-floating-toolbar" id="orcaFloatingToolbar">
+                <button type="button" class="orca-tool-btn" id="orcaBtnEditText"
+                  title="Edit text in place (Double-click)">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2">
+                    <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
+                    <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
+                  </svg>
+                  <span>Edit Text</span>
+                </button>
+                <button type="button" class="orca-tool-btn" id="orcaBtnSendToChat"
+                  title="Send element reference to AI chat">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2">
+                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+                  </svg>
+                  <span>Ask AI</span>
+                </button>
+                <div class="orca-tool-drag-handle" id="orcaDragHandle" draggable="true" title="Drag to Chat input box">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2">
+                    <circle cx="9" cy="5" r="1" />
+                    <circle cx="9" cy="12" r="1" />
+                    <circle cx="9" cy="19" r="1" />
+                    <circle cx="15" cy="5" r="1" />
+                    <circle cx="15" cy="12" r="1" />
+                    <circle cx="15" cy="19" r="1" />
+                  </svg>
+                  <span>Drag to Chat</span>
+                </div>
+              </div>
+            </div>
+
             <!-- Beauty Store Navbar -->
-            <header class="beauty-nav">
+            <header class="beauty-nav orca-interactive-el" data-orca-component="navbar"
+              data-component-name="Store Navbar" draggable="true">
               <div class="beauty-brand">
                 <div class="beauty-brand-logo">🌸</div>
                 <div>
-                  <span class="beauty-brand-name">Rose &amp; Petal</span>
-                  <span class="beauty-brand-tag">BOTANICALS</span>
+                  <span class="beauty-brand-name orca-editable-text" title="Double click to edit">Rose &amp;
+                    Petal</span>
+                  <span class="beauty-brand-tag orca-editable-text" title="Double click to edit">BOTANICALS</span>
                 </div>
               </div>
 
@@ -625,8 +810,10 @@
             <!-- Main Beauty Content -->
             <div class="beauty-main-content">
               <!-- Hero Banner -->
-              <div class="beauty-hero-card">
-                <div class="beauty-hero-tag" style="display: inline-flex; align-items: center; gap: 0.35rem;">
+              <div class="beauty-hero-card orca-interactive-el" data-orca-component="hero-banner"
+                data-component-name="Hero Banner (Spring Collection)" draggable="true">
+                <div class="beauty-hero-tag orca-editable-text"
+                  style="display: inline-flex; align-items: center; gap: 0.35rem;" title="Double click to edit">
                   <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none"
                     stroke="currentColor" stroke-width="2.5">
                     <path
@@ -634,12 +821,14 @@
                   </svg>
                   <span>SPRING RESTORATIVE COLLECTION</span>
                 </div>
-                <h2 class="beauty-hero-title">Radiant Skin Begins with Petal Drops</h2>
-                <p class="beauty-hero-desc">
+                <h2 class="beauty-hero-title orca-editable-text" title="Double click to edit">Radiant Skin Begins with
+                  Petal Drops</h2>
+                <p class="beauty-hero-desc orca-editable-text" title="Double click to edit">
                   Formula lembut berbasis 100% ekstrak sakura &amp; rose water untuk kulit bercahaya alami dan kenyal
                   sepanjang hari.
                 </p>
-                <button type="button" class="btn-beauty-cta" id="btnExploreCollection">
+                <button type="button" class="btn-beauty-cta orca-editable-text" id="btnExploreCollection"
+                  title="Double click to edit">
                   <span>Shop New Arrivals</span>
                   <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
                     stroke="currentColor" stroke-width="2.5">
@@ -650,112 +839,129 @@
               </div>
 
               <!-- Quick Metrics Row -->
-              <div class="beauty-metrics-row">
+              <div class="beauty-metrics-row orca-interactive-el" data-orca-component="metrics-row"
+                data-component-name="Key Metrics Row" draggable="true">
                 <div class="beauty-stat-box">
-                  <span class="beauty-stat-label">Total Orders</span>
-                  <span class="beauty-stat-val">1,428</span>
-                  <span class="beauty-stat-sub">↑ 18.4% this week</span>
+                  <span class="beauty-stat-label orca-editable-text" title="Double click to edit">Total Orders</span>
+                  <span class="beauty-stat-val orca-editable-text" title="Double click to edit">1,428</span>
+                  <span class="beauty-stat-sub orca-editable-text" title="Double click to edit">↑ 18.4% this week</span>
                 </div>
 
                 <div class="beauty-stat-box">
-                  <span class="beauty-stat-label">Satisfaction</span>
-                  <span class="beauty-stat-val">99.4%</span>
-                  <span class="beauty-stat-sub">⭐️⭐️⭐️⭐️⭐️ (4.9/5)</span>
+                  <span class="beauty-stat-label orca-editable-text" title="Double click to edit">Satisfaction</span>
+                  <span class="beauty-stat-val orca-editable-text" title="Double click to edit">99.4%</span>
+                  <span class="beauty-stat-sub orca-editable-text" title="Double click to edit">⭐️⭐️⭐️⭐️⭐️
+                    (4.9/5)</span>
                 </div>
 
                 <div class="beauty-stat-box">
-                  <span class="beauty-stat-label">Best Seller</span>
-                  <span class="beauty-stat-val" style="font-size: 0.95rem;">Peony Glaze</span>
-                  <span class="beauty-stat-sub">480 units sold</span>
+                  <span class="beauty-stat-label orca-editable-text" title="Double click to edit">Best Seller</span>
+                  <span class="beauty-stat-val orca-editable-text" style="font-size: 0.95rem;"
+                    title="Double click to edit">Peony Glaze</span>
+                  <span class="beauty-stat-sub orca-editable-text" title="Double click to edit">480 units sold</span>
                 </div>
 
                 <div class="beauty-stat-box">
-                  <span class="beauty-stat-label">Monthly Rev</span>
-                  <span class="beauty-stat-val">Rp 48.5M</span>
-                  <span class="beauty-stat-sub">↑ 24% target met</span>
+                  <span class="beauty-stat-label orca-editable-text" title="Double click to edit">Monthly Rev</span>
+                  <span class="beauty-stat-val orca-editable-text" title="Double click to edit">Rp 48.5M</span>
+                  <span class="beauty-stat-sub orca-editable-text" title="Double click to edit">↑ 24% target met</span>
                 </div>
               </div>
 
               <!-- Featured Skincare Catalog -->
-              <div class="beauty-section-header">
-                <h3 class="beauty-section-title">Popular Skincare Formulations</h3>
-                <span class="beauty-section-more">View All (18) →</span>
+              <div class="beauty-section-header orca-interactive-el" data-orca-component="catalog-header"
+                data-component-name="Catalog Header" draggable="true">
+                <h3 class="beauty-section-title orca-editable-text" title="Double click to edit">Popular Skincare
+                  Formulations</h3>
+                <span class="beauty-section-more orca-editable-text" title="Double click to edit">View All (18) →</span>
               </div>
 
               <!-- 2-Column Product Cards Grid -->
               <div class="beauty-products-grid">
                 <!-- Product Card 1 -->
-                <div class="beauty-product-card">
+                <div class="beauty-product-card orca-interactive-el" data-orca-component="product-card-1"
+                  data-component-name="Petal Drops Hydrating Serum" data-price="Rp 189.000" draggable="true">
+                  <span class="component-drag-badge" title="Drag to AI Chat">⠿</span>
                   <div class="beauty-card-thumb">
-                    <span class="beauty-card-tag">#HYDRATION</span>
+                    <span class="beauty-card-tag orca-editable-text">#HYDRATION</span>
                     <span>💧</span>
                   </div>
                   <div class="beauty-card-info">
-                    <h4 class="beauty-card-title">Petal Drops Hydrating Serum</h4>
+                    <h4 class="beauty-card-title orca-editable-text" title="Double click to edit">Petal Drops Hydrating
+                      Serum</h4>
                     <div class="beauty-card-rating">
-                      <span>★ 4.9</span>
+                      <span class="orca-editable-text">★ 4.9</span>
                       <span style="color: #94a3b8; font-weight: 500;">(234 reviews)</span>
                     </div>
                   </div>
                   <div class="beauty-card-bottom">
-                    <span class="beauty-price">Rp 189.000</span>
+                    <span class="beauty-price orca-editable-text" title="Double click to edit">Rp 189.000</span>
                     <button type="button" class="btn-add-bag" data-product="Petal Drops Serum">+ Add to Bag</button>
                   </div>
                 </div>
 
                 <!-- Product Card 2 -->
-                <div class="beauty-product-card">
+                <div class="beauty-product-card orca-interactive-el" data-orca-component="product-card-2"
+                  data-component-name="Rose Velvet Cloud Cleanser" data-price="Rp 145.000" draggable="true">
+                  <span class="component-drag-badge" title="Drag to AI Chat">⠿</span>
                   <div class="beauty-card-thumb">
-                    <span class="beauty-card-tag">#GENTLE</span>
+                    <span class="beauty-card-tag orca-editable-text">#GENTLE</span>
                     <span>🧼</span>
                   </div>
                   <div class="beauty-card-info">
-                    <h4 class="beauty-card-title">Rose Velvet Cloud Cleanser</h4>
+                    <h4 class="beauty-card-title orca-editable-text" title="Double click to edit">Rose Velvet Cloud
+                      Cleanser</h4>
                     <div class="beauty-card-rating">
-                      <span>★ 4.8</span>
+                      <span class="orca-editable-text">★ 4.8</span>
                       <span style="color: #94a3b8; font-weight: 500;">(182 reviews)</span>
                     </div>
                   </div>
                   <div class="beauty-card-bottom">
-                    <span class="beauty-price">Rp 145.000</span>
+                    <span class="beauty-price orca-editable-text" title="Double click to edit">Rp 145.000</span>
                     <button type="button" class="btn-add-bag" data-product="Rose Velvet Cleanser">+ Add to Bag</button>
                   </div>
                 </div>
 
                 <!-- Product Card 3 -->
-                <div class="beauty-product-card">
+                <div class="beauty-product-card orca-interactive-el" data-orca-component="product-card-3"
+                  data-component-name="Sakura Night Repair Elixir" data-price="Rp 235.000" draggable="true">
+                  <span class="component-drag-badge" title="Drag to AI Chat">⠿</span>
                   <div class="beauty-card-thumb">
-                    <span class="beauty-card-tag">#BESTSELLER</span>
+                    <span class="beauty-card-tag orca-editable-text">#BESTSELLER</span>
                     <span>🌸</span>
                   </div>
                   <div class="beauty-card-info">
-                    <h4 class="beauty-card-title">Sakura Night Repair Elixir</h4>
+                    <h4 class="beauty-card-title orca-editable-text" title="Double click to edit">Sakura Night Repair
+                      Elixir</h4>
                     <div class="beauty-card-rating">
-                      <span>★ 5.0</span>
+                      <span class="orca-editable-text">★ 5.0</span>
                       <span style="color: #94a3b8; font-weight: 500;">(410 reviews)</span>
                     </div>
                   </div>
                   <div class="beauty-card-bottom">
-                    <span class="beauty-price">Rp 235.000</span>
+                    <span class="beauty-price orca-editable-text" title="Double click to edit">Rp 235.000</span>
                     <button type="button" class="btn-add-bag" data-product="Sakura Night Elixir">+ Add to Bag</button>
                   </div>
                 </div>
 
                 <!-- Product Card 4 -->
-                <div class="beauty-product-card">
+                <div class="beauty-product-card orca-interactive-el" data-orca-component="product-card-4"
+                  data-component-name="Peony Blossom Dew Lip Oil" data-price="Rp 98.000" draggable="true">
+                  <span class="component-drag-badge" title="Drag to AI Chat">⠿</span>
                   <div class="beauty-card-thumb">
-                    <span class="beauty-card-tag">#GLOW</span>
+                    <span class="beauty-card-tag orca-editable-text">#GLOW</span>
                     <span>💄</span>
                   </div>
                   <div class="beauty-card-info">
-                    <h4 class="beauty-card-title">Peony Blossom Dew Lip Oil</h4>
+                    <h4 class="beauty-card-title orca-editable-text" title="Double click to edit">Peony Blossom Dew Lip
+                      Oil</h4>
                     <div class="beauty-card-rating">
-                      <span>★ 4.9</span>
+                      <span class="orca-editable-text">★ 4.9</span>
                       <span style="color: #94a3b8; font-weight: 500;">(96 reviews)</span>
                     </div>
                   </div>
                   <div class="beauty-card-bottom">
-                    <span class="beauty-price">Rp 98.000</span>
+                    <span class="beauty-price orca-editable-text" title="Double click to edit">Rp 98.000</span>
                     <button type="button" class="btn-add-bag" data-product="Peony Lip Oil">+ Add to Bag</button>
                   </div>
                 </div>
@@ -2696,7 +2902,7 @@
             </div>
 
             <!-- Right: Live Deployment Terminal Card -->
-            <div class="deploy-terminal-card">
+            <!-- <div class="deploy-terminal-card">
               <div class="terminal-header">
                 <div class="terminal-title-left">
                   <span class="terminal-dot"></span>
@@ -2710,9 +2916,11 @@
 
               <div class="terminal-logs-window" id="deployTerminalLogs">
                 <div class="log-line"><span class="log-time">[09:13:01]</span> <span class="log-tag-info">[INFO]</span>
-                  <span>Starting deployment pipeline #dep-8921 for environment Production...</span></div>
+                  <span>Starting deployment pipeline #dep-8921 for environment Production...</span>
+                </div>
                 <div class="log-line"><span class="log-time">[09:13:04]</span> <span class="log-tag-info">[GIT]</span>
-                  <span>Fetching origin/main (commit a93bf81: Customer management APIs)... OK</span></div>
+                  <span>Fetching origin/main (commit a93bf81: Customer management APIs)... OK</span>
+                </div>
                 <div class="log-line"><span class="log-time">[09:13:46]</span> <span
                     class="log-tag-info">[DOCKER]</span> <span>Multi-stage build finished. Image tagged
                     zenith/pad-erp:v1.4.2 (size: 84MB)</span></div>
@@ -2723,14 +2931,315 @@
                     class="log-tag-info">[SECURITY]</span> <span>Vulnerability scan completed. 0 critical, 0 high
                     vulnerabilities found.</span></div>
                 <div class="log-line"><span class="log-time">[09:15:22]</span> <span class="log-tag-info">[K8S]</span>
-                  <span>Applying rolling update to 6 pods with zero downtime...</span></div>
+                  <span>Applying rolling update to 6 pods with zero downtime...</span>
+                </div>
                 <div class="log-line"><span class="log-time">[09:15:27]</span> <span
                     class="log-tag-success">[SUCCESS]</span> <span>Healthcheck HTTP 200 OK. Production deployment
                     #dep-8921 is now LIVE!</span></div>
               </div>
+            </div> -->
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ----------------------------------------
+       VIEW 5: CONTEXT VAULT (REUSABLE KNOWLEDGE & DOCS)
+       ---------------------------------------- -->
+      <div class="workspace-view-pane" id="contextVaultViewContainer">
+        <div class="vault-dashboard-content">
+          <!-- Top Header Row -->
+          <div class="vault-header-row">
+            <div class="vault-header-title-group">
+              <div style="display: flex; align-items: center; gap: 0.65rem;">
+                <h1 class="vault-header-title">Knowledge &amp; Context Vault</h1>
+                <span class="vault-persistent-pill">REUSABLE CONTEXT</span>
+              </div>
+              <span class="vault-header-sub">
+                Simpan, daftarkan, dan gunakan dokumen spesifikasi, schema, atau panduan desain secara berulang untuk
+                memberikan konteks mendalam ke AI Zenith pada setiap proyek.
+              </span>
+            </div>
+
+            <div class="vault-header-actions">
+              <input type="file" id="vaultFileInput" multiple
+                accept=".pdf,.docx,.txt,.json,.md,.csv,.yaml,.yml,.png,.jpg,.jpeg" style="display: none;" />
+              <button type="button" class="btn-vault-upload-cta" id="btnVaultUploadCta">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                  <polyline points="17 8 12 3 7 8" />
+                  <line x1="12" x2="12" y1="3" y2="15" />
+                </svg>
+                <span>Upload Documents</span>
+              </button>
             </div>
           </div>
 
+          <!-- 1. TOP ROW: 4 KEY STATISTIC CARDS -->
+          <!-- <div class="vault-stats-grid">
+            <!-- Stat Card 1 -->
+          <!-- <div class="vault-stat-card">
+              <div class="vault-stat-top">
+                <span class="vault-stat-label">Stored Documents</span>
+                <div class="vault-stat-icon-badge icon-indigo">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                    <polyline points="14 2 14 8 20 8" />
+                  </svg>
+                </div>
+              </div>
+              <div class="vault-stat-val" id="statTotalDocs">4 Files</div>
+              <span class="vault-stat-sub">Persisted in local vault</span>
+            </div> -->
+
+          <!-- Stat Card 2 -->
+          <!-- <div class="vault-stat-card">
+              <div class="vault-stat-top">
+                <span class="vault-stat-label">Active in Current Build</span>
+                <div class="vault-stat-icon-badge icon-green">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2">
+                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+                    <polyline points="22 4 12 14.01 9 11.01" />
+                  </svg>
+                </div>
+              </div>
+              <div class="vault-stat-val" id="statActiveDocs">0 Selected</div>
+              <span class="vault-stat-sub">Available to AI prompt</span>
+            </div> -->
+
+          <!-- Stat Card 3 -->
+          <!-- <div class="vault-stat-card">
+              <div class="vault-stat-top">
+                <span class="vault-stat-label">Storage Used</span>
+                <div class="vault-stat-icon-badge icon-sky">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2">
+                    <ellipse cx="12" cy="5" rx="9" ry="3" />
+                    <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3" />
+                    <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5" />
+                  </svg>
+                </div>
+              </div>
+              <div class="vault-stat-val" id="statStorageUsed">1.42 MB</div>
+              <span class="vault-stat-sub">Limit: 50 MB / local</span>
+            </div> -->
+
+          <!-- Stat Card 4 -->
+          <!-- <div class="vault-stat-card">
+              <div class="vault-stat-top">
+                <span class="vault-stat-label">Total Token Depth</span>
+                <div class="vault-stat-icon-badge icon-purple">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2">
+                    <polygon points="12 2 2 7 12 12 22 7 12 2" />
+                    <polyline points="2 17 12 22 22 17" />
+                    <polyline points="2 12 12 17 22 12" />
+                  </svg>
+                </div>
+              </div>
+              <div class="vault-stat-val">~34.8k tokens</div>
+              <span class="vault-stat-sub">Instant AI retrieval</span>
+            </div>
+          </div>  -->
+
+          <!-- 2. DRAG & DROP UPLOAD ZONE -->
+          <!-- <div class="vault-dropzone-card" id="vaultDropzone">
+            <div class="vault-dropzone-icon-wrap">
+              <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242" />
+                <path d="M12 12v9" />
+                <path d="m16 16-4-4-4 4" />
+              </svg>
+            </div>
+            <div class="vault-dropzone-text-group">
+              <h3 class="vault-dropzone-title">Upload Reusable Documents &amp; Schemas</h3>
+              <p class="vault-dropzone-desc">
+                Drag &amp; drop file ke sini, atau <button type="button" class="btn-browse-vault-link"
+                  id="btnBrowseVaultLink">pilih file dari perangkat</button>.
+                File akan otomatis terdaftar dan bisa dipakai berulang pada semua sesi build.
+              </p>
+            </div>
+            <div class="vault-supported-formats-row">
+              <span class="format-tag">.PDF</span>
+              <span class="format-tag">.DOCX</span>
+              <span class="format-tag">.JSON</span>
+              <span class="format-tag">.YAML</span>
+              <span class="format-tag">.CSV</span>
+              <span class="format-tag">.MD</span>
+              <span class="format-tag">.TXT</span>
+              <span class="format-tag">.PNG / JPG</span>
+            </div>
+          </div> -->
+
+          <!-- 3. DOCUMENT REGISTRY TABLE & FILTER -->
+          <div class="vault-table-card">
+            <!-- Table Action & Search Bar -->
+            <div class="vault-table-header-bar">
+              <div class="vault-search-box">
+                <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2">
+                  <circle cx="11" cy="11" r="8" />
+                  <line x1="21" x2="16.65" y1="21" y2="16.65" />
+                </svg>
+                <input type="text" class="vault-search-input" id="vaultSearchInput"
+                  placeholder="Filter documents by name, tag, or format..." />
+              </div>
+
+              <div class="vault-filter-pills" id="vaultFilterPills">
+                <button type="button" class="vault-filter-btn active" data-filter="all">All Documents (<span
+                    id="countFilterAll">4</span>)</button>
+                <button type="button" class="vault-filter-btn" data-filter="pdf">PDF Specs</button>
+                <button type="button" class="vault-filter-btn" data-filter="json">Schemas</button>
+                <button type="button" class="vault-filter-btn" data-filter="doc">Requirements</button>
+              </div>
+            </div>
+
+            <!-- Documents Table -->
+            <div class="vault-table-wrapper">
+              <table class="vault-documents-table">
+                <thead>
+                  <tr>
+                    <th style="width: 32px;"><input type="checkbox" id="chkVaultSelectAll" title="Select all" /></th>
+                    <th>Document Name</th>
+                    <th>Category / Tag</th>
+                    <th>Size</th>
+                    <th>Uploaded</th>
+                    <th>Usage Count</th>
+                    <th>Status</th>
+                    <th style="text-align: right;">Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="vaultDocsTableBody">
+                  <!-- Dynamically populated via JavaScript -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- ==========================================
+       MODAL 1: SELECT CONTEXT DOCUMENTS (FOR CHAT BUILD)
+       ========================================== -->
+    <div class="zenith-modal-backdrop" id="contextSelectModalBackdrop" role="dialog" aria-modal="true"
+      aria-labelledby="contextSelectModalTitle">
+      <div class="zenith-modal-window context-select-modal-window">
+        <!-- Modal Header -->
+        <div class="modal-header-bar">
+          <div style="display: flex; align-items: center; gap: 0.6rem;">
+            <div class="modal-header-icon-badge">
+              <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                <polyline points="14 2 14 8 20 8" />
+              </svg>
+            </div>
+            <div>
+              <h2 class="modal-header-title" id="contextSelectModalTitle">Select Reusable Context Documents</h2>
+              <span class="modal-header-sub">Choose documents from your vault to feed into the active AI Build
+                session.</span>
+            </div>
+          </div>
+          <button type="button" class="modal-close-btn" id="btnContextModalClose" aria-label="Close modal">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2.5">
+              <line x1="18" y1="6" x2="6" y2="18" />
+              <line x1="6" y1="6" x2="18" y2="18" />
+            </svg>
+          </button>
+        </div>
+
+        <!-- Modal Search & Quick Upload Toolbar -->
+        <div class="context-modal-toolbar">
+          <div class="context-modal-search">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2">
+              <circle cx="11" cy="11" r="8" />
+              <line x1="21" x2="16.65" y1="21" y2="16.65" />
+            </svg>
+            <input type="text" class="context-search-input" id="contextModalSearchInput"
+              placeholder="Search context documents..." />
+          </div>
+
+          <button type="button" class="btn-quick-upload-modal" id="btnQuickUploadModal">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2.5">
+              <line x1="12" y1="5" x2="12" y2="19" />
+              <line x1="5" y1="12" x2="19" y2="12" />
+            </svg>
+            <span>+ Upload New</span>
+          </button>
+        </div>
+
+        <!-- Modal Document Checklist List -->
+        <div class="context-modal-body">
+          <div class="context-docs-checklist" id="contextDocsChecklist">
+            <!-- Populated dynamically via JS -->
+          </div>
+        </div>
+
+        <!-- Modal Footer Bar -->
+        <div class="context-modal-footer">
+          <div class="context-modal-selection-count">
+            <span id="modalSelectedCountText">0 documents selected</span>
+          </div>
+          <div class="context-modal-actions">
+            <button type="button" class="btn-cancel-modal" id="btnCancelContextModal">Cancel</button>
+            <button type="button" class="btn-attach-modal-cta" id="btnApplyContextModal">
+              <span>Attach to AI Prompt</span>
+              <span class="btn-badge-count" id="btnModalApplyCount">0</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==========================================
+       MODAL 2: DOCUMENT QUICK PREVIEW MODAL
+       ========================================== -->
+    <div class="zenith-modal-backdrop" id="docQuickPreviewModalBackdrop" role="dialog" aria-modal="true">
+      <div class="zenith-modal-window doc-preview-modal-window">
+        <div class="modal-header-bar">
+          <div style="display: flex; align-items: center; gap: 0.6rem;">
+            <span class="preview-doc-type-icon" id="previewModalDocIcon">📄</span>
+            <div>
+              <h2 class="modal-header-title" id="previewModalDocTitle">Document Preview</h2>
+              <span class="modal-header-sub" id="previewModalDocMeta">Size: 245 KB · Uploaded today</span>
+            </div>
+          </div>
+          <button type="button" class="modal-close-btn" id="btnDocPreviewClose" aria-label="Close preview">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2.5">
+              <line x1="18" y1="6" x2="6" y2="18" />
+              <line x1="6" y1="6" x2="18" y2="18" />
+            </svg>
+          </button>
+        </div>
+
+        <div class="doc-preview-modal-content">
+          <pre class="doc-preview-text-block" id="docPreviewTextBlock">
+Loading document content...
+          </pre>
+        </div>
+
+        <div class="modal-preview-footer">
+          <button type="button" class="btn-copy-doc-ref" id="btnCopyDocRefFromModal">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2">
+              <rect width="14" height="14" x="8" y="8" rx="2" ry="2" />
+              <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2" />
+            </svg>
+            <span>Copy Reference Tag</span>
+          </button>
+          <button type="button" class="btn-attach-direct-from-modal" id="btnAttachDirectFromModal">
+            <span>+ Attach to Current Build</span>
+          </button>
         </div>
       </div>
     </div>
@@ -3030,310 +3539,6 @@
                       <td>api_specs_v2.yaml</td>
                       <td>110 KB</td>
                       <td>Oct 25, 2023</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </main>
-        </div>
-      </div>
-    </div>
-
-    <!-- ==========================================
-       AGENT STUDIO LARGE POP-UP MODAL
-       ========================================== -->
-    <div class="zenith-modal-backdrop" id="agentStudioModalBackdrop" role="dialog" aria-modal="true"
-      aria-labelledby="agentStudioModalTitle">
-      <div class="zenith-modal-window">
-        <!-- Modal Header Bar -->
-        <div class="modal-header-bar">
-          <div class="modal-header-left">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
-              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-              style="color: #0f172a;">
-              <rect width="18" height="12" x="3" y="6" rx="2" />
-              <line x1="9" x2="9" y1="12" y2="12" />
-              <line x1="15" x2="15" y1="12" y2="12" />
-              <path d="M12 2v4" />
-              <path d="M2 10h1" />
-              <path d="M21 10h1" />
-            </svg>
-            <h2 class="modal-header-title" id="agentStudioModalTitle">Agent Studio</h2>
-          </div>
-          <button type="button" class="modal-close-btn" id="btnAgentStudioClose" aria-label="Close modal">
-            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
-              stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-              <line x1="18" y1="6" x2="6" y2="18" />
-              <line x1="6" y1="6" x2="18" y2="18" />
-            </svg>
-          </button>
-        </div>
-
-        <!-- Modal Body Layout -->
-        <div class="modal-body-layout">
-          <!-- Inner Sidebar -->
-          <aside class="modal-inner-sidebar solid-blue-active" aria-label="Agent Studio sections">
-            <button type="button" class="modal-nav-item active" data-tab="agents">
-              <span>Agents</span>
-            </button>
-
-            <button type="button" class="modal-nav-item" data-tab="tools">
-              <span>Tools</span>
-            </button>
-
-            <button type="button" class="modal-nav-item" data-tab="deployments">
-              <span>Deployments</span>
-            </button>
-
-            <button type="button" class="modal-nav-item" data-tab="recent">
-              <span>Recent</span>
-            </button>
-
-            <button type="button" class="modal-nav-item" data-tab="workflows">
-              <span>Workflows</span>
-            </button>
-          </aside>
-
-          <!-- Content Panes -->
-          <main class="modal-content-pane">
-            <!-- Pane 1: Agents -->
-            <div class="modal-pane-section active" id="agent-pane-agents">
-              <!-- Header Row with + New agent Button -->
-              <div class="section-header-row">
-                <div>
-                  <h1 class="section-main-heading">Agents (6)</h1>
-                  <p class="section-sub-desc">
-                    Declarative, versioned agents — YAML files in the Studio workspace, deployed behind the run API.
-                  </p>
-                </div>
-                <button type="button" class="btn-modal-dark-cta" id="btnNewAgent">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none"
-                    stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                    <line x1="12" y1="5" x2="12" y2="19" />
-                    <line x1="5" y1="12" x2="19" y2="12" />
-                  </svg>
-                  <span>New agent</span>
-                </button>
-              </div>
-
-              <!-- Agents Cards Grid -->
-              <div class="agents-cards-grid">
-                <!-- Card 1: Attendance Analyst -->
-                <div class="agent-card-item">
-                  <div class="agent-card-top">
-                    <div class="agent-card-title-row">
-                      <span class="agent-radio-indicator"></span>
-                      <h3 class="agent-card-title">Attendance Analyst</h3>
-                    </div>
-                    <p class="agent-card-description">No description yet.</p>
-                  </div>
-                  <div class="agent-card-bottom">
-                    <div class="agent-meta-text">never deployed · xai/grok-4.3</div>
-                    <div class="agent-meta-text">no runs last 7 days</div>
-                  </div>
-                </div>
-
-                <!-- Card 2: claim analyzer -->
-                <div class="agent-card-item">
-                  <div class="agent-card-top">
-                    <div class="agent-card-title-row">
-                      <span class="agent-radio-indicator"></span>
-                      <h3 class="agent-card-title">claim analyzer</h3>
-                    </div>
-                    <p class="agent-card-description">
-                      Produces a structured, renderable report (sections + chart specs) from supplied data.
-                    </p>
-                  </div>
-                  <div class="agent-card-bottom">
-                    <div class="agent-meta-text">never deployed · xai/grok-4.3</div>
-                    <div class="agent-meta-text">no runs last 7 days</div>
-                    <div class="agent-tags-row">
-                      <span class="agent-tag-pill">#reporting</span>
-                      <span class="agent-tag-pill">#visualization</span>
-                    </div>
-                  </div>
-                </div>
-
-                <!-- Card 3: drcdtrtest -->
-                <div class="agent-card-item">
-                  <div class="agent-card-top">
-                    <div class="agent-card-title-row">
-                      <span class="agent-radio-indicator"></span>
-                      <h3 class="agent-card-title">drcdtrtest</h3>
-                    </div>
-                    <p class="agent-card-description">rdctdcdcdcf</p>
-                  </div>
-                  <div class="agent-card-bottom">
-                    <div class="agent-meta-text">never deployed · xai/grok-4.3</div>
-                    <div class="agent-meta-text">no runs last 7 days</div>
-                  </div>
-                </div>
-
-                <!-- Card 4: MCU Reviewer Agent -->
-                <div class="agent-card-item">
-                  <div class="agent-card-top">
-                    <div class="agent-card-title-row">
-                      <span class="agent-radio-indicator"></span>
-                      <h3 class="agent-card-title">MCU Reviewer Agent</h3>
-                    </div>
-                    <p class="agent-card-description">No description yet.</p>
-                  </div>
-                  <div class="agent-card-bottom">
-                    <div class="agent-meta-text">never deployed · xai/grok-4.3</div>
-                    <div class="agent-meta-text">no runs last 7 days</div>
-                  </div>
-                </div>
-
-                <!-- Card 5: Claim Document Analyzer -->
-                <div class="agent-card-item">
-                  <div class="agent-card-top">
-                    <div class="agent-card-title-row">
-                      <span class="agent-radio-indicator"></span>
-                      <h3 class="agent-card-title">Claim Document Analyzer</h3>
-                    </div>
-                    <p class="agent-card-description">
-                      Reads a supplied claim document (FNOL, adjuster report, invoice, medical bill, police...
-                    </p>
-                  </div>
-                  <div class="agent-card-bottom">
-                    <div class="agent-meta-text">never deployed · xai/grok-4.3</div>
-                    <div class="agent-meta-text">no runs last 7 days</div>
-                  </div>
-                </div>
-
-                <!-- Card 6: Test Agent -->
-                <div class="agent-card-item">
-                  <div class="agent-card-top">
-                    <div class="agent-card-title-row">
-                      <span class="agent-radio-indicator"></span>
-                      <h3 class="agent-card-title">Test Agent</h3>
-                    </div>
-                    <p class="agent-card-description">
-                      Answers questions about a specific document set, citing what it used.
-                    </p>
-                  </div>
-                  <div class="agent-card-bottom">
-                    <div class="agent-meta-text">never deployed · xai/grok-4.3</div>
-                    <div class="agent-meta-text">no runs last 7 days</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Pane 2: Tools -->
-            <div class="modal-pane-section" id="agent-pane-tools">
-              <h1 class="section-main-heading">Tools (8)</h1>
-              <p class="section-sub-desc">Custom extensions, Python sandboxes, and external APIs exposed to agents.</p>
-              <div class="modal-mini-table-card">
-                <table class="modal-mini-table">
-                  <thead>
-                    <tr>
-                      <th>Tool Name</th>
-                      <th>Type</th>
-                      <th>Status</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td><strong>web_search</strong></td>
-                      <td>External API</td>
-                      <td><span class="status-pill-active"><span class="status-dot-green"></span>Ready</span></td>
-                    </tr>
-                    <tr>
-                      <td><strong>code_sandbox</strong></td>
-                      <td>Python Docker</td>
-                      <td><span class="status-pill-active"><span class="status-dot-green"></span>Ready</span></td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <!-- Pane 3: Deployments -->
-            <div class="modal-pane-section" id="agent-pane-deployments">
-              <h1 class="section-main-heading">Deployments</h1>
-              <p class="section-sub-desc">Production and staging endpoint runtimes.</p>
-              <div class="modal-mini-table-card">
-                <table class="modal-mini-table">
-                  <thead>
-                    <tr>
-                      <th>Endpoint</th>
-                      <th>Environment</th>
-                      <th>Uptime</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>api.zenith.ai/v1/agents/claim-analyzer</td>
-                      <td>Production (v1.4)</td>
-                      <td>99.99%</td>
-                    </tr>
-                    <tr>
-                      <td>staging.zenith.ai/v1/agents/reviewer</td>
-                      <td>Staging (v2.0-rc)</td>
-                      <td>100%</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <!-- Pane 4: Recent -->
-            <div class="modal-pane-section" id="agent-pane-recent">
-              <h1 class="section-main-heading">Recent Executions</h1>
-              <p class="section-sub-desc">Live execution telemetry and trace logs.</p>
-              <div class="modal-mini-table-card">
-                <table class="modal-mini-table">
-                  <thead>
-                    <tr>
-                      <th>Run ID</th>
-                      <th>Agent</th>
-                      <th>Duration</th>
-                      <th>Status</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>#run-10492</td>
-                      <td>Claim Document Analyzer</td>
-                      <td>1.4s</td>
-                      <td><span class="status-pill-active"><span class="status-dot-green"></span>Success</span></td>
-                    </tr>
-                    <tr>
-                      <td>#run-10488</td>
-                      <td>Attendance Analyst</td>
-                      <td>0.8s</td>
-                      <td><span class="status-pill-active"><span class="status-dot-green"></span>Success</span></td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <!-- Pane 5: Workflows -->
-            <div class="modal-pane-section" id="agent-pane-workflows">
-              <h1 class="section-main-heading">Workflows</h1>
-              <p class="section-sub-desc">Multi-agent graphs, routing pipelines, and automated evaluator chains.</p>
-              <div class="modal-mini-table-card">
-                <table class="modal-mini-table">
-                  <thead>
-                    <tr>
-                      <th>Workflow Name</th>
-                      <th>Steps</th>
-                      <th>Triggers</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td><strong>Document Processing Pipeline</strong></td>
-                      <td>4 agents (OCR → Extraction → Review → Export)</td>
-                      <td>Webhook / S3 upload</td>
-                    </tr>
-                    <tr>
-                      <td><strong>Customer Ticket Triage</strong></td>
-                      <td>2 agents (Classifier → Routing)</td>
-                      <td>Incoming chat</td>
                     </tr>
                   </tbody>
                 </table>

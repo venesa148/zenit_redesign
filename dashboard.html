@@ -9,11 +9,25 @@
     content="Zenith AI Workspace - Choose a starting point and turn your next idea into something real." />
 
   <!-- CSS Stylesheets -->
-  <link rel="stylesheet" href="css/tokens.css" />
-  <link rel="stylesheet" href="css/base.css" />
-  <link rel="stylesheet" href="css/sidebar.css" />
-  <link rel="stylesheet" href="css/dashboard.css" />
-  <link rel="stylesheet" href="css/modal.css" />
+  <link rel="stylesheet" href="css/tokens.css?v=3" />
+  <link rel="stylesheet" href="css/base.css?v=3" />
+  <link rel="stylesheet" href="css/sidebar.css?v=3" />
+  <link rel="stylesheet" href="css/dashboard.css?v=3" />
+  <link rel="stylesheet" href="css/modal.css?v=3" />
+  <!-- Early Theme Mode Loader (Prevents White Flash) -->
+  <script>
+    (function() {
+      try {
+        var pref = localStorage.getItem('zenith_theme_preference') || 'system';
+        var theme = pref;
+        if (pref === 'system') {
+          theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        }
+        document.documentElement.setAttribute('data-theme', theme);
+        document.documentElement.setAttribute('data-theme-preference', pref);
+      } catch (e) {}
+    })();
+  </script>
 </head>
 
 <body>
@@ -31,7 +45,7 @@
           </a>
 
           <!-- Top Collapse Toggle Button -->
-          <button type="button" class="global-sb-collapse-btn" id="btnToggleGlobalTop" title="Collapse Global Sidebar">
+          <button type="button" class="global-sb-collapse-btn" id="btnToggleGlobalTop" title="Collapse to Icons">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
               stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
               <polyline points="11 17 6 12 11 7" />
@@ -41,7 +55,7 @@
         </div>
 
         <!-- + New Project Button -->
-        <a href="dashboard.html" class="global-sb-new-btn" id="btnNewProject" title="New project">
+        <a href="dashboard.html" class="global-sb-new-btn active" id="btnNewProject" title="New project">
           <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none"
             stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
             <line x1="12" y1="5" x2="12" y2="19" />
@@ -66,21 +80,15 @@
           <a href="#manage" class="global-sb-nav-item" id="navManage" title="Manage">
             <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="none"
               stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <line x1="4" x2="4" y1="21" y2="14" />
-              <line x1="4" x2="4" y1="10" y2="3" />
-              <line x1="12" x2="12" y1="21" y2="12" />
-              <line x1="12" x2="12" y1="8" y2="3" />
-              <line x1="20" x2="20" y1="21" y2="16" />
-              <line x1="20" x2="20" y1="12" y2="3" />
-              <line x1="1" x2="7" y1="14" y2="14" />
-              <line x1="9" x2="15" y1="8" y2="8" />
-              <line x1="17" x2="23" y1="16" y2="16" />
+              <circle cx="12" cy="12" r="3" />
+              <path
+                d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z" />
             </svg>
             <span>Manage</span>
           </a>
 
           <!-- Agent Studio -->
-          <a href="#agent-studio" class="global-sb-nav-item" id="navAgentStudio" title="Agent Studio">
+          <a href="agent-studio.html" class="global-sb-nav-item" id="navAgentStudio" title="Agent Studio">
             <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="none"
               stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
@@ -116,6 +124,29 @@
           </svg>
           <span>Feedback &amp; help</span>
         </a>
+
+        <!-- Direct 1-Click Global Theme Toggle Switch -->
+        <button type="button" class="global-sb-theme-btn" id="btnGlobalThemeToggle"
+          title="Beralih ke Mode Gelap / Terang" aria-label="Toggle Dark / Light Mode">
+          <span class="theme-btn-icon" id="themeActiveIcon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="4" />
+              <path d="M12 2v2" />
+              <path d="M12 20v2" />
+              <path d="m4.93 4.93 1.41 1.41" />
+              <path d="m17.66 17.66 1.41 1.41" />
+              <path d="M2 12h2" />
+              <path d="M20 12h2" />
+              <path d="m6.34 17.66-1.41 1.41" />
+              <path d="m19.07 4.93-1.41 1.41" />
+            </svg>
+          </span>
+          <span class="theme-btn-label" id="themeActiveLabel">Mode Terang</span>
+          <span class="theme-switch-pill" id="themeSwitchPill">
+            <span class="theme-switch-thumb"></span>
+          </span>
+        </button>
 
         <div class="global-sb-profile-row">
           <a href="login.html" class="global-sb-profile-info" title="User Profile: Josua">
@@ -522,313 +553,6 @@
           </div>
         </main>
       </div>
-    </div>
-  </div>
-
-  <!-- ==========================================
-       AGENT STUDIO LARGE POP-UP MODAL
-       ========================================== -->
-  <div class="zenith-modal-backdrop" id="agentStudioModalBackdrop" role="dialog" aria-modal="true"
-    aria-labelledby="agentStudioModalTitle">
-    <div class="zenith-modal-window">
-      <!-- Modal Header Bar -->
-      <div class="modal-header-bar">
-        <div class="modal-header-left">
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
-            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-            style="color: #0f172a;">
-            <rect width="18" height="12" x="3" y="6" rx="2" />
-            <line x1="9" x2="9" y1="12" y2="12" />
-            <line x1="15" x2="15" y1="12" y2="12" />
-            <path d="M12 2v4" />
-            <path d="M2 10h1" />
-            <path d="M21 10h1" />
-          </svg>
-          <h2 class="modal-header-title" id="agentStudioModalTitle">Agent Studio</h2>
-        </div>
-        <button type="button" class="modal-close-btn" id="btnAgentStudioClose" aria-label="Close modal">
-          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
-            stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-            <line x1="18" y1="6" x2="6" y2="18" />
-            <line x1="6" y1="6" x2="18" y2="18" />
-          </svg>
-        </button>
-      </div>
-
-      <!-- Modal Body Layout -->
-      <div class="modal-body-layout">
-        <!-- Inner Sidebar -->
-        <aside class="modal-inner-sidebar solid-blue-active" aria-label="Agent Studio sections">
-          <button type="button" class="modal-nav-item active" data-tab="agents">
-            <span>Agents</span>
-          </button>
-
-          <button type="button" class="modal-nav-item" data-tab="tools">
-            <span>Tools</span>
-          </button>
-
-          <button type="button" class="modal-nav-item" data-tab="deployments">
-            <span>Deployments</span>
-          </button>
-
-          <button type="button" class="modal-nav-item" data-tab="recent">
-            <span>Recent</span>
-          </button>
-
-          <button type="button" class="modal-nav-item" data-tab="workflows">
-            <span>Workflows</span>
-          </button>
-        </aside>
-
-        <!-- Content Panes -->
-        <main class="modal-content-pane">
-          <!-- Pane 1: Agents -->
-          <div class="modal-pane-section active" id="agent-pane-agents">
-            <!-- Header Row with + New agent Button -->
-            <div class="section-header-row">
-              <div>
-                <h1 class="section-main-heading">Agents (6)</h1>
-                <p class="section-sub-desc">
-                  Declarative, versioned agents — YAML files in the Studio workspace, deployed behind the run API.
-                </p>
-              </div>
-              <button type="button" class="btn-modal-dark-cta" id="btnNewAgent">
-                <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none"
-                  stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                  <line x1="12" y1="5" x2="12" y2="19" />
-                  <line x1="5" y1="12" x2="19" y2="12" />
-                </svg>
-                <span>New agent</span>
-              </button>
-            </div>
-
-            <!-- Agents Cards Grid -->
-            <div class="agents-cards-grid">
-              <!-- Card 1: Attendance Analyst -->
-              <div class="agent-card-item">
-                <div class="agent-card-top">
-                  <div class="agent-card-title-row">
-                    <span class="agent-radio-indicator"></span>
-                    <h3 class="agent-card-title">Attendance Analyst</h3>
-                  </div>
-                  <p class="agent-card-description">No description yet.</p>
-                </div>
-                <div class="agent-card-bottom">
-                  <div class="agent-meta-text">never deployed · xai/grok-4.3</div>
-                  <div class="agent-meta-text">no runs last 7 days</div>
-                </div>
-              </div>
-
-              <!-- Card 2: claim analyzer -->
-              <div class="agent-card-item">
-                <div class="agent-card-top">
-                  <div class="agent-card-title-row">
-                    <span class="agent-radio-indicator"></span>
-                    <h3 class="agent-card-title">claim analyzer</h3>
-                  </div>
-                  <p class="agent-card-description">
-                    Produces a structured, renderable report (sections + chart specs) from supplied data.
-                  </p>
-                </div>
-                <div class="agent-card-bottom">
-                  <div class="agent-meta-text">never deployed · xai/grok-4.3</div>
-                  <div class="agent-meta-text">no runs last 7 days</div>
-                  <div class="agent-tags-row">
-                    <span class="agent-tag-pill">#reporting</span>
-                    <span class="agent-tag-pill">#visualization</span>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Card 3: drcdtrtest -->
-              <div class="agent-card-item">
-                <div class="agent-card-top">
-                  <div class="agent-card-title-row">
-                    <span class="agent-radio-indicator"></span>
-                    <h3 class="agent-card-title">drcdtrtest</h3>
-                  </div>
-                  <p class="agent-card-description">rdctdcdcdcf</p>
-                </div>
-                <div class="agent-card-bottom">
-                  <div class="agent-meta-text">never deployed · xai/grok-4.3</div>
-                  <div class="agent-meta-text">no runs last 7 days</div>
-                </div>
-              </div>
-
-              <!-- Card 4: MCU Reviewer Agent -->
-              <div class="agent-card-item">
-                <div class="agent-card-top">
-                  <div class="agent-card-title-row">
-                    <span class="agent-radio-indicator"></span>
-                    <h3 class="agent-card-title">MCU Reviewer Agent</h3>
-                  </div>
-                  <p class="agent-card-description">No description yet.</p>
-                </div>
-                <div class="agent-card-bottom">
-                  <div class="agent-meta-text">never deployed · xai/grok-4.3</div>
-                  <div class="agent-meta-text">no runs last 7 days</div>
-                </div>
-              </div>
-
-              <!-- Card 5: Claim Document Analyzer -->
-              <div class="agent-card-item">
-                <div class="agent-card-top">
-                  <div class="agent-card-title-row">
-                    <span class="agent-radio-indicator"></span>
-                    <h3 class="agent-card-title">Claim Document Analyzer</h3>
-                  </div>
-                  <p class="agent-card-description">
-                    Reads a supplied claim document (FNOL, adjuster report, invoice, medical bill, police...
-                  </p>
-                </div>
-                <div class="agent-card-bottom">
-                  <div class="agent-meta-text">never deployed · xai/grok-4.3</div>
-                  <div class="agent-meta-text">no runs last 7 days</div>
-                </div>
-              </div>
-
-              <!-- Card 6: Test Agent -->
-              <div class="agent-card-item">
-                <div class="agent-card-top">
-                  <div class="agent-card-title-row">
-                    <span class="agent-radio-indicator"></span>
-                    <h3 class="agent-card-title">Test Agent</h3>
-                  </div>
-                  <p class="agent-card-description">
-                    Answers questions about a specific document set, citing what it used.
-                  </p>
-                </div>
-                <div class="agent-card-bottom">
-                  <div class="agent-meta-text">never deployed · xai/grok-4.3</div>
-                  <div class="agent-meta-text">no runs last 7 days</div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Pane 2: Tools -->
-          <div class="modal-pane-section" id="agent-pane-tools">
-            <h1 class="section-main-heading">Tools (8)</h1>
-            <p class="section-sub-desc">Custom extensions, Python sandboxes, and external APIs exposed to agents.</p>
-            <div class="modal-mini-table-card">
-              <table class="modal-mini-table">
-                <thead>
-                  <tr>
-                    <th>Tool Name</th>
-                    <th>Type</th>
-                    <th>Status</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td><strong>web_search</strong></td>
-                    <td>External API</td>
-                    <td><span class="status-pill-active"><span class="status-dot-green"></span>Ready</span></td>
-                  </tr>
-                  <tr>
-                    <td><strong>code_sandbox</strong></td>
-                    <td>Python Docker</td>
-                    <td><span class="status-pill-active"><span class="status-dot-green"></span>Ready</span></td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-
-          <!-- Pane 3: Deployments -->
-          <div class="modal-pane-section" id="agent-pane-deployments">
-            <h1 class="section-main-heading">Deployments</h1>
-            <p class="section-sub-desc">Production and staging endpoint runtimes.</p>
-            <div class="modal-mini-table-card">
-              <table class="modal-mini-table">
-                <thead>
-                  <tr>
-                    <th>Endpoint</th>
-                    <th>Environment</th>
-                    <th>Uptime</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>api.zenith.ai/v1/agents/claim-analyzer</td>
-                    <td>Production (v1.4)</td>
-                    <td>99.99%</td>
-                  </tr>
-                  <tr>
-                    <td>staging.zenith.ai/v1/agents/reviewer</td>
-                    <td>Staging (v2.0-rc)</td>
-                    <td>100%</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-
-          <!-- Pane 4: Recent -->
-          <div class="modal-pane-section" id="agent-pane-recent">
-            <h1 class="section-main-heading">Recent Executions</h1>
-            <p class="section-sub-desc">Live execution telemetry and trace logs.</p>
-            <div class="modal-mini-table-card">
-              <table class="modal-mini-table">
-                <thead>
-                  <tr>
-                    <th>Run ID</th>
-                    <th>Agent</th>
-                    <th>Duration</th>
-                    <th>Status</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>#run-10492</td>
-                    <td>Claim Document Analyzer</td>
-                    <td>1.4s</td>
-                    <td><span class="status-pill-active"><span class="status-dot-green"></span>Success</span></td>
-                  </tr>
-                  <tr>
-                    <td>#run-10488</td>
-                    <td>Attendance Analyst</td>
-                    <td>0.8s</td>
-                    <td><span class="status-pill-active"><span class="status-dot-green"></span>Success</span></td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-
-          <!-- Pane 5: Workflows -->
-          <div class="modal-pane-section" id="agent-pane-workflows">
-            <h1 class="section-main-heading">Workflows</h1>
-            <p class="section-sub-desc">Multi-agent graphs, routing pipelines, and automated evaluator chains.</p>
-            <div class="modal-mini-table-card">
-              <table class="modal-mini-table">
-                <thead>
-                  <tr>
-                    <th>Workflow Name</th>
-                    <th>Steps</th>
-                    <th>Triggers</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td><strong>Document Processing Pipeline</strong></td>
-                    <td>4 agents (OCR → Extraction → Review → Export)</td>
-                    <td>Webhook / S3 upload</td>
-                  </tr>
-                  <tr>
-                    <td><strong>Customer Ticket Triage</strong></td>
-                    <td>2 agents (Classifier → Routing)</td>
-                    <td>Incoming chat</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </main>
-      </div>
-    </div>
-  </div>
-
   <!-- JavaScript -->
   <script src="js/sidebar.js"></script>
   <script src="js/dashboard.js"></script>

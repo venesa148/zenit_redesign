@@ -268,3 +268,89 @@
     width: 100%;
   }
 }
+
+/* ==========================================================================
+   DARK THEME OVERRIDES (NEW PROJECT)
+   ========================================================================== */
+[data-theme="dark"] .new-project-main-title {
+  color: var(--text-primary, #f8fafc);
+}
+
+[data-theme="dark"] .new-project-subtitle {
+  color: var(--text-secondary, #94a3b8);
+}
+
+[data-theme="dark"] .create-form-card {
+  background-color: var(--bg-surface-subtle, #131e30);
+  border-color: var(--border-default, #22354e);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+}
+
+[data-theme="dark"] .project-form-label {
+  color: var(--text-primary, #f1f5f9);
+}
+
+[data-theme="dark"] .project-input-text,
+[data-theme="dark"] .project-textarea {
+  background-color: #0b1320;
+  border-color: var(--border-default, #22354e);
+  color: var(--text-primary, #f8fafc);
+}
+
+[data-theme="dark"] .project-input-text:focus,
+[data-theme="dark"] .project-textarea:focus {
+  background-color: #0e1726;
+  border-color: var(--brand-primary, #3b82f6);
+}
+
+[data-theme="dark"] .type-select-card {
+  background-color: #0b1320;
+  border-color: var(--border-default, #22354e);
+}
+
+[data-theme="dark"] .type-select-card:hover {
+  border-color: var(--brand-primary, #3b82f6);
+  background-color: #121c2d;
+}
+
+[data-theme="dark"] .type-select-card.active {
+  background-color: #15243b;
+  border-color: var(--brand-primary, #3b82f6);
+  box-shadow: 0 0 0 1.5px var(--brand-primary, #3b82f6);
+}
+
+[data-theme="dark"] .type-select-card:not(.active) .type-card-icon {
+  background-color: #1a2a44;
+  color: #60a5fa;
+}
+
+[data-theme="dark"] .type-card-title {
+  color: var(--text-primary, #f8fafc);
+}
+
+[data-theme="dark"] .type-card-desc {
+  color: var(--text-secondary, #94a3b8);
+}
+
+[data-theme="dark"] .btn-back-action {
+  background-color: #0b1320;
+  border-color: var(--border-default, #22354e);
+  color: var(--text-secondary, #94a3b8);
+}
+
+[data-theme="dark"] .btn-back-action:hover {
+  background-color: #17243a;
+  color: var(--text-primary, #f8fafc);
+  border-color: #334e70;
+}
+
+[data-theme="dark"] .btn-create-project {
+  background: linear-gradient(135deg, #1d4ed8, #2563eb);
+  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.35);
+}
+
+[data-theme="dark"] .btn-create-project:hover {
+  background: linear-gradient(135deg, #2563eb, #3b82f6);
+  box-shadow: 0 8px 22px rgba(37, 99, 235, 0.45);
+}
+

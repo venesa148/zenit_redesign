@@ -1,5 +1,5 @@
 /**
- * Zenith AI - Multi-level Workspace Interactions & Live Beauty Preview
+ * Zenith AI - Multi-level Workspace Interactions, Context Vault & Live Beauty Preview
  */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -7,25 +7,32 @@ document.addEventListener('DOMContentLoaded', () => {
   initProjectManagementInteractions();
   initDocumentsExplorer();
   initDeploymentDashboard();
+  initContextVault();
+  initContextSelectorModal();
   initTabsSwitchers();
   initChatPromptActions();
   initLivePreviewActions();
+  initPreview3DotsMenu();
+  initPreviewWideMode();
+  initOrcaCanvaVisualEditor();
   initAgentPopover();
   initBeautyStoreInteractions();
 });
 
 /**
- * Handles switching between Build View, Project Management View, Documents View, and Deployment View
+ * Handles switching between Build View, Project Management View, Documents View, Deployment View, and Context Vault View
  */
 function initWorkspaceViewSwitcher() {
   const btnBuild = document.getElementById('secNavBuild');
   const btnManagement = document.getElementById('secNavManagement');
   const btnDocument = document.getElementById('secNavDocument');
   const btnDeployment = document.getElementById('secNavDeployment');
+  const btnContextVault = document.getElementById('secNavContextVault');
   const buildView = document.getElementById('buildViewContainer');
   const pmView = document.getElementById('pmViewContainer');
   const docView = document.getElementById('docViewContainer');
   const deployView = document.getElementById('deployViewContainer');
+  const contextVaultView = document.getElementById('contextVaultViewContainer');
   const secNavItems = document.querySelectorAll('.sec-nav-item');
 
   function switchView(targetView) {
@@ -34,6 +41,7 @@ function initWorkspaceViewSwitcher() {
     if (pmView) pmView.classList.remove('active');
     if (docView) docView.classList.remove('active');
     if (deployView) deployView.classList.remove('active');
+    if (contextVaultView) contextVaultView.classList.remove('active');
 
     if (targetView === 'build') {
       if (buildView) buildView.classList.add('active');
@@ -47,6 +55,10 @@ function initWorkspaceViewSwitcher() {
       if (deployView) deployView.classList.add('active');
       if (btnDeployment) btnDeployment.classList.add('active');
       window.location.hash = '#deployment';
+    } else if (targetView === 'context-vault') {
+      if (contextVaultView) contextVaultView.classList.add('active');
+      if (btnContextVault) btnContextVault.classList.add('active');
+      window.location.hash = '#context-vault';
     } else {
       // Default to Project Management
       if (pmView) pmView.classList.add('active');
@@ -83,6 +95,13 @@ function initWorkspaceViewSwitcher() {
     });
   }
 
+  if (btnContextVault) {
+    btnContextVault.addEventListener('click', (e) => {
+      e.preventDefault();
+      switchView('context-vault');
+    });
+  }
+
   // Handle URL Hash on Initial Load & Hash changes
   function applyHashView() {
     const hash = window.location.hash;
@@ -92,6 +111,8 @@ function initWorkspaceViewSwitcher() {
       switchView('document');
     } else if (hash === '#deployment') {
       switchView('deployment');
+    } else if (hash === '#context-vault') {
+      switchView('context-vault');
     } else if (hash === '#project-management') {
       switchView('project-management');
     }
@@ -668,7 +689,7 @@ function initChatPromptActions() {
 function startLivePreview() {
   const emptyCanvas = document.getElementById('previewCanvasEmpty');
   const beautyViewport = document.getElementById('beautyPreviewViewport');
-  const statusBadge = document.querySelector('.badge-status-running');
+  const statusBadge = document.getElementById('previewStatusBadge') || document.querySelector('.badge-status-running');
 
   if (emptyCanvas && beautyViewport) {
     emptyCanvas.style.display = 'none';
@@ -682,48 +703,1013 @@ function startLivePreview() {
 }
 
 /**
- * Handles Live Preview Toolbar Actions (Start, Stop, Restart)
+ * Handles Live Preview Initial Actions (CTA start buttons)
  */
 function initLivePreviewActions() {
   const startBtn = document.getElementById('btnStartLivePreview');
-  const startToolBtn = document.getElementById('btnStartPrevTool');
-  const stopToolBtn = document.getElementById('btnStopTool');
-  const restartToolBtn = document.getElementById('btnRestartTool');
+  if (startBtn) {
+    startBtn.addEventListener('click', () => {
+      startLivePreview();
+      showToastFeedback('Live preview dimulai (Node watch server live)');
+    });
+  }
+}
+
+/**
+ * FEATURE 1: PREVIEW 3-DOTS MORE ACTIONS DROPDOWN (Start, Stop, Restart, Build Image)
+ */
+function initPreview3DotsMenu() {
+  const dotsBtn = document.getElementById('btnPreviewMoreActions');
+  const dropdownCard = document.getElementById('prevDotsDropdownCard');
+  const menuStart = document.getElementById('menuItemStart');
+  const menuStop = document.getElementById('menuItemStop');
+  const menuRestart = document.getElementById('menuItemRestart');
+  const menuBuildImg = document.getElementById('menuItemBuildImg');
   const emptyCanvas = document.getElementById('previewCanvasEmpty');
   const beautyViewport = document.getElementById('beautyPreviewViewport');
-  const statusBadge = document.querySelector('.badge-status-running');
+  const statusBadge = document.getElementById('previewStatusBadge');
 
-  function handleStart() {
-    startLivePreview();
+  if (!dotsBtn || !dropdownCard) return;
+
+  // Toggle Dropdown on click
+  dotsBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    dropdownCard.classList.toggle('show-dropdown');
+  });
+
+  // Close when clicking outside
+  document.addEventListener('click', (e) => {
+    if (!dropdownCard.contains(e.target) && e.target !== dotsBtn) {
+      dropdownCard.classList.remove('show-dropdown');
+    }
+  });
+
+  // 1. Start Preview
+  if (menuStart) {
+    menuStart.addEventListener('click', () => {
+      dropdownCard.classList.remove('show-dropdown');
+      startLivePreview();
+      showToastFeedback('🟢 Live preview berjalan di port 3000');
+    });
   }
 
-  function handleStop() {
-    if (emptyCanvas && beautyViewport) {
-      beautyViewport.classList.remove('active');
-      emptyCanvas.style.display = 'flex';
+  // 2. Stop Preview
+  if (menuStop) {
+    menuStop.addEventListener('click', () => {
+      dropdownCard.classList.remove('show-dropdown');
+      if (emptyCanvas && beautyViewport) {
+        beautyViewport.classList.remove('active');
+        emptyCanvas.style.display = 'flex';
+        if (statusBadge) {
+          statusBadge.textContent = 'STOPPED';
+          statusBadge.style.backgroundColor = '#f1f5f9';
+          statusBadge.style.color = '#64748b';
+        }
+      }
+      // Hide selection overlay if active
+      const overlay = document.getElementById('orcaSelectionOverlay');
+      if (overlay) overlay.style.display = 'none';
+      showToastFeedback('🔴 Preview dev server dihentikan');
+    });
+  }
+
+  // 3. Restart Preview
+  if (menuRestart) {
+    menuRestart.addEventListener('click', () => {
+      dropdownCard.classList.remove('show-dropdown');
       if (statusBadge) {
-        statusBadge.textContent = 'STOPPED';
-        statusBadge.style.backgroundColor = '#f1f5f9';
-        statusBadge.style.color = '#64748b';
+        statusBadge.textContent = 'RESTARTING...';
+        statusBadge.style.backgroundColor = '#fef3c7';
+        statusBadge.style.color = '#d97706';
+      }
+      showToastFeedback('🔄 Membersihkan cache & me-restart runtime...');
+      setTimeout(() => {
+        startLivePreview();
+        showToastFeedback('🟢 Preview berhasil di-restart');
+      }, 700);
+    });
+  }
+
+  // 4. Build Image
+  if (menuBuildImg) {
+    menuBuildImg.addEventListener('click', () => {
+      dropdownCard.classList.remove('show-dropdown');
+      showToastFeedback('📦 Mengompilasi Docker image zenith/rose-beauty:latest...');
+      setTimeout(() => {
+        showToastFeedback('✅ Image Docker berhasil di-build (38.4MB)');
+      }, 1600);
+    });
+  }
+}
+
+/**
+ * FEATURE 2: PREVIEW WIDE / EXPANDED FULLSCREEN MODE (Inside Website)
+ */
+function initPreviewWideMode() {
+  const btnOpenExt = document.getElementById('btnOpenExt');
+  const btnExitWide = document.getElementById('btnExitWidePreview');
+  const buildView = document.getElementById('buildViewContainer');
+  const secSidebar = document.getElementById('secondarySidebar');
+  const reopenTab = document.getElementById('secSidebarReopenTab');
+
+  if (!btnOpenExt || !buildView) return;
+
+  function enterWideMode() {
+    buildView.classList.add('preview-expanded-mode');
+    if (secSidebar) secSidebar.classList.add('collapsed');
+    if (reopenTab) reopenTab.classList.add('visible');
+    showToastFeedback('Preview diperluas ke mode layar penuh');
+  }
+
+  function exitWideMode() {
+    buildView.classList.remove('preview-expanded-mode');
+    if (secSidebar) secSidebar.classList.remove('collapsed');
+    if (reopenTab) reopenTab.classList.remove('visible');
+    showToastFeedback('Tampilan split 2 kolom dikembalikan');
+  }
+
+  btnOpenExt.addEventListener('click', (e) => {
+    e.preventDefault();
+    enterWideMode();
+  });
+
+  if (btnExitWide) {
+    btnExitWide.addEventListener('click', (e) => {
+      e.preventDefault();
+      exitWideMode();
+    });
+  }
+
+  // ESC key exits wide preview
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && buildView.classList.contains('preview-expanded-mode')) {
+      exitWideMode();
+    }
+  });
+}
+
+/**
+ * FEATURE 3: ORCA & CANVA VISUAL BUILDER (Direct in-line editing & Drag-and-drop to Chat)
+ */
+function initOrcaCanvaVisualEditor() {
+  const interactiveEls = document.querySelectorAll('.orca-interactive-el');
+  const editableTexts = document.querySelectorAll('.orca-editable-text');
+  const overlay = document.getElementById('orcaSelectionOverlay');
+  const tagBadge = document.getElementById('orcaTagBadge');
+  const btnEditText = document.getElementById('orcaBtnEditText');
+  const btnSendToChat = document.getElementById('orcaBtnSendToChat');
+  const dragHandle = document.getElementById('orcaDragHandle');
+  const chatInputCard = document.getElementById('chatInputBoxCard');
+  const chatTextarea = document.getElementById('chatPromptInput');
+  const beautyViewport = document.getElementById('beautyPreviewViewport');
+
+  let selectedElement = null;
+
+  // 1. Element Selection & Floating Overlay
+  function positionOverlay(el) {
+    if (!overlay || !beautyViewport) return;
+    const vpRect = beautyViewport.getBoundingClientRect();
+    const elRect = el.getBoundingClientRect();
+
+    const top = elRect.top - vpRect.top + beautyViewport.scrollTop;
+    const left = elRect.left - vpRect.left + beautyViewport.scrollLeft;
+
+    overlay.style.top = `${top}px`;
+    overlay.style.left = `${left}px`;
+    overlay.style.width = `${elRect.width}px`;
+    overlay.style.height = `${elRect.height}px`;
+    overlay.style.display = 'block';
+
+    const compName = el.getAttribute('data-component-name') || el.tagName.toLowerCase();
+    const compTag = el.getAttribute('data-orca-component') || '';
+    if (tagBadge) {
+      tagBadge.textContent = `<${el.tagName.toLowerCase()}.${compTag}> ${compName}`;
+    }
+  }
+
+  interactiveEls.forEach(el => {
+    el.addEventListener('click', (e) => {
+      // Don't select if clicking a button inside unless specifically targeted
+      if (e.target.closest('.btn-add-bag')) return;
+      
+      interactiveEls.forEach(item => item.classList.remove('orca-selected'));
+      el.classList.add('orca-selected');
+      selectedElement = el;
+      positionOverlay(el);
+    });
+
+    // Native Drag and Drop from Element
+    el.addEventListener('dragstart', (e) => {
+      const compName = el.getAttribute('data-component-name') || 'Komponen';
+      const price = el.getAttribute('data-price') || '';
+      const textSample = el.querySelector('h4, h2, span, p')?.textContent?.trim() || '';
+
+      const dragPayload = {
+        name: compName,
+        price: price,
+        text: textSample,
+        tag: el.getAttribute('data-orca-component') || 'element'
+      };
+
+      e.dataTransfer.setData('text/plain', JSON.stringify(dragPayload));
+      e.dataTransfer.effectAllowed = 'copyMove';
+
+      if (chatInputCard) chatInputCard.classList.add('drag-target-active');
+    });
+
+    el.addEventListener('dragend', () => {
+      if (chatInputCard) chatInputCard.classList.remove('drag-target-active');
+    });
+  });
+
+  // Reposition overlay on scroll
+  if (beautyViewport) {
+    beautyViewport.addEventListener('scroll', () => {
+      if (selectedElement && overlay && overlay.style.display === 'block') {
+        positionOverlay(selectedElement);
+      }
+    });
+  }
+
+  // 2. Direct In-Line Text Editing (Canva concept)
+  editableTexts.forEach(textEl => {
+    textEl.addEventListener('dblclick', (e) => {
+      e.stopPropagation();
+      enableInlineEdit(textEl);
+    });
+  });
+
+  function enableInlineEdit(textEl) {
+    textEl.setAttribute('contenteditable', 'true');
+    textEl.focus();
+
+    // Place cursor at the end
+    const range = document.createRange();
+    range.selectNodeContents(textEl);
+    range.collapse(false);
+    const sel = window.getSelection();
+    sel.removeAllRanges();
+    sel.addRange(range);
+
+    showToastFeedback('✏️ Mode Edit Aktif — Ubah teks lalu tekan Enter');
+
+    function saveInlineEdit() {
+      textEl.removeAttribute('contenteditable');
+      textEl.removeEventListener('blur', saveInlineEdit);
+      textEl.removeEventListener('keydown', handleKey);
+      showToastFeedback('🌸 Perubahan teks berhasil disimpan!');
+      if (selectedElement) positionOverlay(selectedElement);
+    }
+
+    function handleKey(e) {
+      if (e.key === 'Enter' && !e.shiftKey) {
+        e.preventDefault();
+        saveInlineEdit();
       }
     }
+
+    textEl.addEventListener('blur', saveInlineEdit);
+    textEl.addEventListener('keydown', handleKey);
   }
 
-  function handleRestart() {
-    if (statusBadge) {
-      statusBadge.textContent = 'RESTARTING...';
-      statusBadge.style.backgroundColor = '#fef3c7';
-      statusBadge.style.color = '#d97706';
+  if (btnEditText) {
+    btnEditText.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (selectedElement) {
+        const firstEditable = selectedElement.querySelector('.orca-editable-text') || selectedElement;
+        enableInlineEdit(firstEditable);
+      }
+    });
+  }
+
+  // 3. Send Reference to AI Chat Button
+  if (btnSendToChat) {
+    btnSendToChat.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (!selectedElement || !chatTextarea) return;
+      const compName = selectedElement.getAttribute('data-component-name') || 'Komponen';
+      const price = selectedElement.getAttribute('data-price') || '';
+      const textContent = selectedElement.querySelector('h4, h2, p')?.textContent?.trim() || '';
+
+      appendComponentRefToChat({
+        name: compName,
+        price: price,
+        text: textContent
+      });
+    });
+  }
+
+  // 4. Drag Handle from Overlay
+  if (dragHandle) {
+    dragHandle.addEventListener('dragstart', (e) => {
+      if (!selectedElement) return;
+      const compName = selectedElement.getAttribute('data-component-name') || 'Komponen';
+      const price = selectedElement.getAttribute('data-price') || '';
+      const textSample = selectedElement.querySelector('h4, h2, span, p')?.textContent?.trim() || '';
+
+      const dragPayload = {
+        name: compName,
+        price: price,
+        text: textSample,
+        tag: selectedElement.getAttribute('data-orca-component') || 'element'
+      };
+
+      e.dataTransfer.setData('text/plain', JSON.stringify(dragPayload));
+      e.dataTransfer.effectAllowed = 'copyMove';
+
+      if (chatInputCard) chatInputCard.classList.add('drag-target-active');
+    });
+
+    dragHandle.addEventListener('dragend', () => {
+      if (chatInputCard) chatInputCard.classList.remove('drag-target-active');
+    });
+  }
+
+  // 5. Chat Input Drop Zone Handlers
+  if (chatInputCard) {
+    chatInputCard.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      e.dataTransfer.dropEffect = 'copy';
+      chatInputCard.classList.add('drag-target-active');
+    });
+
+    chatInputCard.addEventListener('dragleave', () => {
+      chatInputCard.classList.remove('drag-target-active');
+    });
+
+    chatInputCard.addEventListener('drop', (e) => {
+      e.preventDefault();
+      chatInputCard.classList.remove('drag-target-active');
+
+      try {
+        const rawData = e.dataTransfer.getData('text/plain');
+        if (rawData) {
+          const data = JSON.parse(rawData);
+          appendComponentRefToChat(data);
+        }
+      } catch (err) {
+        // Fallback for raw text
+        const rawText = e.dataTransfer.getData('text/plain');
+        if (rawText && chatTextarea) {
+          chatTextarea.value = `${chatTextarea.value} ${rawText}`.trim();
+          chatTextarea.focus();
+        }
+      }
+    });
+  }
+
+  function appendComponentRefToChat(data) {
+    if (!chatTextarea) return;
+    const priceStr = data.price ? ` (${data.price})` : '';
+    const textSnippet = data.text ? ` - "${data.text.substring(0, 35)}..."` : '';
+    const refTag = `[Target: ${data.name}${priceStr}${textSnippet}]`;
+
+    if (!chatTextarea.value.includes(refTag)) {
+      chatTextarea.value = chatTextarea.value
+        ? `${chatTextarea.value}\n${refTag} Tolong ubah styling dan sesuaikan layout komponen ini: `
+        : `${refTag} Tolong ubah styling dan sesuaikan layout komponen ini: `;
     }
-    setTimeout(() => {
-      startLivePreview();
-    }, 600);
+
+    chatTextarea.focus();
+    const sendBtn = document.getElementById('btnChatSend');
+    if (sendBtn) sendBtn.classList.add('active');
+
+    showToastFeedback(`🎯 Elemen '${data.name}' dilampirkan ke AI prompt!`);
+  }
+}
+
+/**
+ * Helper to show toast messages
+ */
+function showToastFeedback(msg) {
+  const toast = document.getElementById('beautyToast');
+  const toastText = document.getElementById('beautyToastText');
+  if (toast && toastText) {
+    toastText.textContent = msg;
+    toast.style.display = 'inline-flex';
+    clearTimeout(toast._timer);
+    toast._timer = setTimeout(() => {
+      toast.style.display = 'none';
+    }, 2400);
+  }
+}
+
+/**
+ * FEATURE 4: KNOWLEDGE & REUSABLE CONTEXT VAULT CONTROLLER
+ */
+const VAULT_STORAGE_KEY = 'zenith_context_vault_docs';
+
+const DEFAULT_VAULT_DOCS = [
+  {
+    id: 'doc-prd-1',
+    name: 'PRD-Skincare-Commerce-v2.2.pdf',
+    ext: 'pdf',
+    size: '245 KB',
+    sizeBytes: 250880,
+    tag: 'Specification',
+    date: 'Today, 10:30',
+    usageCount: 5,
+    status: 'Ready for AI',
+    content: `[PRD Document: Rose & Petal Botanical Beauty eCommerce]\nVersion: 2.2\nStatus: Approved\n\n1. Product Vision: Pure botanical skincare brand targeting young adults with pastel aesthetic.\n2. Core Features: Interactive Product Catalog, Realtime Shopping Bag with Toast notifications, 4 Featured Formulas (Petal Drops, Rose Velvet Cleanser, Sakura Night Elixir, Peony Lip Oil).\n3. Pricing Architecture: IDR currency standardization with unit price tags ranging from Rp 98.000 to Rp 235.000.\n4. Design Tokens: Base palette Soft Pastel Pink (#fff5f7, #fce7f3, #ec4899, #831843).`
+  },
+  {
+    id: 'doc-schema-2',
+    name: 'Beauty_Catalog_Schema.json',
+    ext: 'json',
+    size: '48 KB',
+    sizeBytes: 49152,
+    tag: 'Data Schema',
+    date: 'Yesterday',
+    usageCount: 3,
+    status: 'Ready for AI',
+    content: `{\n  "$schema": "http://json-schema.org/draft-07/schema#",\n  "title": "ProductCatalog",\n  "type": "object",\n  "properties": {\n    "catalog_id": { "type": "string" },\n    "currency": { "type": "string", "default": "IDR" },\n    "items": {\n      "type": "array",\n      "items": {\n        "type": "object",\n        "properties": {\n          "sku": { "type": "string" },\n          "name": { "type": "string" },\n          "price": { "type": "number" },\n          "category": { "type": "string" }\n        }\n      }\n    }\n  }\n}`
+  },
+  {
+    id: 'doc-brand-3',
+    name: 'Brand_Guidelines_Pink_Pastel.pdf',
+    ext: 'pdf',
+    size: '1.1 MB',
+    sizeBytes: 1153433,
+    tag: 'Brand & UI',
+    date: '3 days ago',
+    usageCount: 8,
+    status: 'Ready for AI',
+    content: `[Brand Design Guidelines: Rose & Petal]\nPrimary Tone: Botanical Warm Pastel\nTypography: Plus Jakarta Sans / Inter\nPrimary Accent: Rose Magenta #ec4899\nDark Header Text: Wine Slate #831843\nSurface Background: Rosewater Mist #fff5f7\nCard Shadows: 0 4px 14px rgba(244, 114, 182, 0.12)`
+  },
+  {
+    id: 'doc-brd-4',
+    name: 'Business_Requirements_BRD.docx',
+    ext: 'docx',
+    size: '180 KB',
+    sizeBytes: 184320,
+    tag: 'Requirements',
+    date: 'Last week',
+    usageCount: 2,
+    status: 'Ready for AI',
+    content: `[Business Requirements Document: Zenith Pad Commerce]\nAuthor: Business Analyst Agent\nKey Objectives:\n- Increase conversion by 25% with 1-click add to cart.\n- Provide real-time stock verification.\n- Multi-channel export for marketing assets.`
+  }
+];
+
+let activeSelectedDocIds = [];
+
+function loadVaultDocs() {
+  try {
+    const raw = localStorage.getItem(VAULT_STORAGE_KEY);
+    if (!raw) {
+      localStorage.setItem(VAULT_STORAGE_KEY, JSON.stringify(DEFAULT_VAULT_DOCS));
+      return DEFAULT_VAULT_DOCS;
+    }
+    return JSON.parse(raw);
+  } catch (e) {
+    return DEFAULT_VAULT_DOCS;
+  }
+}
+
+function saveVaultDocs(docs) {
+  try {
+    localStorage.setItem(VAULT_STORAGE_KEY, JSON.stringify(docs));
+  } catch (e) {
+    console.error('Error saving vault docs to localStorage:', e);
+  }
+}
+
+function initContextVault() {
+  const uploadCtaBtn = document.getElementById('btnVaultUploadCta');
+  const fileInput = document.getElementById('vaultFileInput');
+  const browseLink = document.getElementById('btnBrowseVaultLink');
+  const dropzone = document.getElementById('vaultDropzone');
+  const tableBody = document.getElementById('vaultDocsTableBody');
+  const searchInput = document.getElementById('vaultSearchInput');
+  const filterBtns = document.querySelectorAll('.vault-filter-btn');
+  const selectAllChk = document.getElementById('chkVaultSelectAll');
+
+  // Preview Modal Elements
+  const previewModal = document.getElementById('docQuickPreviewModalBackdrop');
+  const previewCloseBtn = document.getElementById('btnDocPreviewClose');
+  const previewTitle = document.getElementById('previewModalDocTitle');
+  const previewMeta = document.getElementById('previewModalDocMeta');
+  const previewTextBlock = document.getElementById('docPreviewTextBlock');
+  const btnCopyRef = document.getElementById('btnCopyDocRefFromModal');
+  const btnAttachDirect = document.getElementById('btnAttachDirectFromModal');
+
+  let currentPreviewDoc = null;
+  let currentFilter = 'all';
+
+  function renderTable() {
+    if (!tableBody) return;
+    const docs = loadVaultDocs();
+    const query = searchInput ? searchInput.value.toLowerCase().trim() : '';
+
+    const filtered = docs.filter(doc => {
+      const matchSearch = doc.name.toLowerCase().includes(query) || doc.tag.toLowerCase().includes(query);
+      if (!matchSearch) return false;
+      if (currentFilter === 'all') return true;
+      if (currentFilter === 'pdf') return doc.ext === 'pdf';
+      if (currentFilter === 'json') return doc.ext === 'json' || doc.ext === 'yaml';
+      if (currentFilter === 'doc') return doc.ext === 'docx' || doc.tag.toLowerCase().includes('requirement');
+      return true;
+    });
+
+    tableBody.innerHTML = '';
+
+    if (filtered.length === 0) {
+      tableBody.innerHTML = `
+        <tr>
+          <td colspan="8" style="text-align: center; padding: 2rem; color: #94a3b8;">
+            Tidak ada dokumen yang sesuai dengan pencarian.
+          </td>
+        </tr>
+      `;
+      return;
+    }
+
+    filtered.forEach(doc => {
+      const tr = document.createElement('tr');
+      const isChecked = activeSelectedDocIds.includes(doc.id);
+
+      tr.innerHTML = `
+        <td><input type="checkbox" class="chk-vault-doc" data-id="${doc.id}" ${isChecked ? 'checked' : ''} /></td>
+        <td>
+          <div class="doc-name-cell">
+            <span class="doc-format-icon ${doc.ext}">${doc.ext.toUpperCase()}</span>
+            <span>${doc.name}</span>
+          </div>
+        </td>
+        <td><span class="vault-tag-pill">${doc.tag}</span></td>
+        <td>${doc.size}</td>
+        <td style="color: #64748b;">${doc.date}</td>
+        <td><span style="font-weight: 600; color: #2d5584;">${doc.usageCount} builds</span></td>
+        <td><span class="vault-status-pill ready">● ${doc.status}</span></td>
+        <td>
+          <div class="vault-actions-group">
+            <button type="button" class="btn-vault-action btn-action-preview" data-id="${doc.id}" title="Preview text">👁️ View</button>
+            <button type="button" class="btn-vault-action btn-action-copy" data-name="${doc.name}" title="Copy reference tag">🔗 Ref</button>
+            <button type="button" class="btn-vault-action btn-action-attach" data-id="${doc.id}" title="Attach to Active Build">➕ Attach</button>
+            <button type="button" class="btn-vault-action btn-action-delete" data-id="${doc.id}" title="Delete document">🗑️</button>
+          </div>
+        </td>
+      `;
+      tableBody.appendChild(tr);
+    });
+
+    updateCounters(docs);
+    attachTableEventListeners();
   }
 
-  if (startBtn) startBtn.addEventListener('click', handleStart);
-  if (startToolBtn) startToolBtn.addEventListener('click', handleStart);
-  if (stopToolBtn) stopToolBtn.addEventListener('click', handleStop);
-  if (restartToolBtn) restartToolBtn.addEventListener('click', handleRestart);
+  function updateCounters(docs) {
+    const totalDocsEl = document.getElementById('statTotalDocs');
+    const activeDocsEl = document.getElementById('statActiveDocs');
+    const storageUsedEl = document.getElementById('statStorageUsed');
+    const navBadge = document.getElementById('secNavVaultBadge');
+    const countFilterAll = document.getElementById('countFilterAll');
+
+    if (totalDocsEl) totalDocsEl.textContent = `${docs.length} Files`;
+    if (activeDocsEl) activeDocsEl.textContent = `${activeSelectedDocIds.length} Selected`;
+    if (navBadge) navBadge.textContent = docs.length;
+    if (countFilterAll) countFilterAll.textContent = docs.length;
+
+    // Calculate approx storage
+    const totalBytes = docs.reduce((acc, d) => acc + (d.sizeBytes || 102400), 0);
+    const mb = (totalBytes / (1024 * 1024)).toFixed(2);
+    if (storageUsedEl) storageUsedEl.textContent = `${mb} MB`;
+  }
+
+  function attachTableEventListeners() {
+    // Checkbox toggling
+    document.querySelectorAll('.chk-vault-doc').forEach(chk => {
+      chk.addEventListener('change', () => {
+        const id = chk.getAttribute('data-id');
+        if (chk.checked) {
+          if (!activeSelectedDocIds.includes(id)) activeSelectedDocIds.push(id);
+        } else {
+          activeSelectedDocIds = activeSelectedDocIds.filter(item => item !== id);
+        }
+        syncAttachedContextChips();
+      });
+    });
+
+    // Preview
+    document.querySelectorAll('.btn-action-preview').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const id = btn.getAttribute('data-id');
+        const docs = loadVaultDocs();
+        const doc = docs.find(d => d.id === id);
+        if (doc) openDocPreviewModal(doc);
+      });
+    });
+
+    // Copy ref
+    document.querySelectorAll('.btn-action-copy').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const name = btn.getAttribute('data-name');
+        navigator.clipboard?.writeText(`@context:${name}`);
+        showToastFeedback(`📋 Reference tag '@context:${name}' disalin!`);
+      });
+    });
+
+    // Attach directly
+    document.querySelectorAll('.btn-action-attach').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const id = btn.getAttribute('data-id');
+        if (!activeSelectedDocIds.includes(id)) {
+          activeSelectedDocIds.push(id);
+        }
+        syncAttachedContextChips();
+        renderTable();
+        showToastFeedback('📄 Dokumen dilampirkan ke sesi Build!');
+      });
+    });
+
+    // Delete
+    document.querySelectorAll('.btn-action-delete').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const id = btn.getAttribute('data-id');
+        let docs = loadVaultDocs();
+        const doc = docs.find(d => d.id === id);
+        if (confirm(`Hapus dokumen "${doc?.name || 'ini'}" dari Context Vault?`)) {
+          docs = docs.filter(d => d.id !== id);
+          activeSelectedDocIds = activeSelectedDocIds.filter(item => item !== id);
+          saveVaultDocs(docs);
+          syncAttachedContextChips();
+          renderTable();
+          showToastFeedback('🗑️ Dokumen dihapus dari vault.');
+        }
+      });
+    });
+  }
+
+  function openDocPreviewModal(doc) {
+    if (!previewModal) return;
+    currentPreviewDoc = doc;
+    if (previewTitle) previewTitle.textContent = doc.name;
+    if (previewMeta) previewMeta.textContent = `Size: ${doc.size} · Tag: ${doc.tag} · Uploaded ${doc.date}`;
+    if (previewTextBlock) previewTextBlock.textContent = doc.content || `[No preview text content available for ${doc.name}]`;
+    previewModal.classList.add('active');
+  }
+
+  function closeDocPreviewModal() {
+    if (previewModal) previewModal.classList.remove('active');
+  }
+
+  if (previewCloseBtn) previewCloseBtn.addEventListener('click', closeDocPreviewModal);
+  if (previewModal) {
+    previewModal.addEventListener('click', (e) => {
+      if (e.target === previewModal) closeDocPreviewModal();
+    });
+  }
+
+  if (btnCopyRef) {
+    btnCopyRef.addEventListener('click', () => {
+      if (currentPreviewDoc) {
+        navigator.clipboard?.writeText(`@context:${currentPreviewDoc.name}`);
+        showToastFeedback(`📋 Tag '@context:${currentPreviewDoc.name}' disalin!`);
+      }
+    });
+  }
+
+  if (btnAttachDirect) {
+    btnAttachDirect.addEventListener('click', () => {
+      if (currentPreviewDoc) {
+        if (!activeSelectedDocIds.includes(currentPreviewDoc.id)) {
+          activeSelectedDocIds.push(currentPreviewDoc.id);
+        }
+        syncAttachedContextChips();
+        renderTable();
+        closeDocPreviewModal();
+        showToastFeedback(`📄 '${currentPreviewDoc.name}' dilampirkan ke Build!`);
+      }
+    });
+  }
+
+  // Upload Handlers (CTA & File Input)
+  if (uploadCtaBtn && fileInput) {
+    uploadCtaBtn.addEventListener('click', () => fileInput.click());
+  }
+  if (browseLink && fileInput) {
+    browseLink.addEventListener('click', (e) => {
+      e.stopPropagation();
+      fileInput.click();
+    });
+  }
+
+  if (fileInput) {
+    fileInput.addEventListener('change', (e) => {
+      if (e.target.files && e.target.files.length > 0) {
+        handleUploadedFiles(Array.from(e.target.files));
+        fileInput.value = '';
+      }
+    });
+  }
+
+  // Dropzone Drag & Drop
+  if (dropzone) {
+    dropzone.addEventListener('click', () => {
+      if (fileInput) fileInput.click();
+    });
+
+    dropzone.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      dropzone.classList.add('drag-over');
+    });
+
+    dropzone.addEventListener('dragleave', () => {
+      dropzone.classList.remove('drag-over');
+    });
+
+    dropzone.addEventListener('drop', (e) => {
+      e.preventDefault();
+      dropzone.classList.remove('drag-over');
+      if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+        handleUploadedFiles(Array.from(e.dataTransfer.files));
+      }
+    });
+  }
+
+  function handleUploadedFiles(files) {
+    let docs = loadVaultDocs();
+    let processedCount = 0;
+
+    files.forEach(file => {
+      const ext = file.name.split('.').pop().toLowerCase() || 'txt';
+      const sizeKB = (file.size / 1024).toFixed(0);
+      const sizeStr = file.size > 1024 * 1024 ? `${(file.size / (1024 * 1024)).toFixed(1)} MB` : `${sizeKB} KB`;
+
+      let tag = 'Document';
+      if (ext === 'pdf') tag = 'Specification';
+      else if (ext === 'json' || ext === 'yaml' || ext === 'yml') tag = 'Data Schema';
+      else if (ext === 'docx') tag = 'Requirements';
+      else if (ext === 'md') tag = 'Guides';
+
+      const newDoc = {
+        id: `doc-${Date.now()}-${Math.random().toString(36).substring(2, 6)}`,
+        name: file.name,
+        ext: ext,
+        size: sizeStr,
+        sizeBytes: file.size,
+        tag: tag,
+        date: 'Baru saja',
+        usageCount: 1,
+        status: 'Ready for AI',
+        content: `[Content of uploaded file: ${file.name}]\nSize: ${sizeStr}\nFormat: ${ext.toUpperCase()}\nStatus: Processed & Indexed in Zenith Context Vault.`
+      };
+
+      // Read text if text/json/md
+      if (file.type.includes('text') || ext === 'json' || ext === 'md' || ext === 'csv' || ext === 'yaml') {
+        const reader = new FileReader();
+        reader.onload = (event) => {
+          newDoc.content = event.target.result || newDoc.content;
+          docs.unshift(newDoc);
+          processedCount++;
+          if (processedCount === files.length) {
+            saveVaultDocs(docs);
+            renderTable();
+            showToastFeedback(`✅ ${files.length} dokumen berhasil di-upload dan disimpan di Vault!`);
+          }
+        };
+        reader.readAsText(file);
+      } else {
+        docs.unshift(newDoc);
+        processedCount++;
+        if (processedCount === files.length) {
+          saveVaultDocs(docs);
+          renderTable();
+          showToastFeedback(`✅ ${files.length} dokumen berhasil di-upload dan disimpan di Vault!`);
+        }
+      }
+    });
+  }
+
+  // Search & Filter
+  if (searchInput) {
+    searchInput.addEventListener('input', renderTable);
+  }
+
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      filterBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      currentFilter = btn.getAttribute('data-filter') || 'all';
+      renderTable();
+    });
+  });
+
+  if (selectAllChk) {
+    selectAllChk.addEventListener('change', () => {
+      const docs = loadVaultDocs();
+      if (selectAllChk.checked) {
+        activeSelectedDocIds = docs.map(d => d.id);
+      } else {
+        activeSelectedDocIds = [];
+      }
+      syncAttachedContextChips();
+      renderTable();
+    });
+  }
+
+  // Initial render
+  renderTable();
+}
+
+/**
+ * FEATURE 5: CONTEXT SELECTOR MODAL & ATTACHED CONTEXT CHIPS (For Chat Build)
+ */
+function initContextSelectorModal() {
+  const btnAddContext = document.getElementById('btnAddContext');
+  const modalBackdrop = document.getElementById('contextSelectModalBackdrop');
+  const closeBtn = document.getElementById('btnContextModalClose');
+  const cancelBtn = document.getElementById('btnCancelContextModal');
+  const applyBtn = document.getElementById('btnApplyContextModal');
+  const checklistContainer = document.getElementById('contextDocsChecklist');
+  const searchInput = document.getElementById('contextModalSearchInput');
+  const selectedCountText = document.getElementById('modalSelectedCountText');
+  const btnApplyCount = document.getElementById('btnModalApplyCount');
+  const quickUploadBtn = document.getElementById('btnQuickUploadModal');
+  const clearAllBtn = document.getElementById('btnClearAllContext');
+
+  let modalTempSelectedIds = [];
+
+  function openModal() {
+    if (!modalBackdrop) return;
+    modalTempSelectedIds = [...activeSelectedDocIds];
+    renderChecklist();
+    modalBackdrop.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal() {
+    if (!modalBackdrop) return;
+    modalBackdrop.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  function renderChecklist() {
+    if (!checklistContainer) return;
+    const docs = loadVaultDocs();
+    const query = searchInput ? searchInput.value.toLowerCase().trim() : '';
+
+    const filtered = docs.filter(d => d.name.toLowerCase().includes(query) || d.tag.toLowerCase().includes(query));
+
+    checklistContainer.innerHTML = '';
+
+    if (filtered.length === 0) {
+      checklistContainer.innerHTML = `
+        <div style="text-align: center; padding: 2rem; color: #94a3b8;">
+          Tidak ada dokumen ditemukan. Klik "+ Upload New" untuk menambahkan.
+        </div>
+      `;
+      return;
+    }
+
+    filtered.forEach(doc => {
+      const isSelected = modalTempSelectedIds.includes(doc.id);
+      const item = document.createElement('div');
+      item.className = `context-check-item ${isSelected ? 'selected' : ''}`;
+      item.innerHTML = `
+        <input type="checkbox" data-id="${doc.id}" ${isSelected ? 'checked' : ''} />
+        <span class="doc-format-icon ${doc.ext}">${doc.ext.toUpperCase()}</span>
+        <div class="context-item-info">
+          <span class="context-item-name">${doc.name}</span>
+          <div class="context-item-meta">
+            <span>${doc.tag}</span> · <span>${doc.size}</span>
+            <span class="context-token-pill">~${Math.round((doc.sizeBytes || 50000) / 40)} tokens</span>
+          </div>
+        </div>
+      `;
+
+      item.addEventListener('click', (e) => {
+        if (e.target.tagName.toLowerCase() !== 'input') {
+          const chk = item.querySelector('input[type="checkbox"]');
+          chk.checked = !chk.checked;
+        }
+        const chk = item.querySelector('input[type="checkbox"]');
+        if (chk.checked) {
+          if (!modalTempSelectedIds.includes(doc.id)) modalTempSelectedIds.push(doc.id);
+          item.classList.add('selected');
+        } else {
+          modalTempSelectedIds = modalTempSelectedIds.filter(id => id !== doc.id);
+          item.classList.remove('selected');
+        }
+        updateModalSelectionText();
+      });
+
+      checklistContainer.appendChild(item);
+    });
+
+    updateModalSelectionText();
+  }
+
+  function updateModalSelectionText() {
+    if (selectedCountText) {
+      selectedCountText.textContent = `${modalTempSelectedIds.length} documents selected`;
+    }
+    if (btnApplyCount) {
+      btnApplyCount.textContent = modalTempSelectedIds.length;
+    }
+  }
+
+  if (btnAddContext) {
+    btnAddContext.addEventListener('click', (e) => {
+      e.preventDefault();
+      openModal();
+    });
+  }
+
+  if (closeBtn) closeBtn.addEventListener('click', closeModal);
+  if (cancelBtn) cancelBtn.addEventListener('click', closeModal);
+
+  if (modalBackdrop) {
+    modalBackdrop.addEventListener('click', (e) => {
+      if (e.target === modalBackdrop) closeModal();
+    });
+  }
+
+  if (applyBtn) {
+    applyBtn.addEventListener('click', () => {
+      activeSelectedDocIds = [...modalTempSelectedIds];
+      syncAttachedContextChips();
+      closeModal();
+      showToastFeedback(`🎯 ${activeSelectedDocIds.length} dokumen dilampirkan sebagai konteks prompt AI!`);
+    });
+  }
+
+  if (searchInput) {
+    searchInput.addEventListener('input', renderChecklist);
+  }
+
+  // Quick upload inside modal
+  if (quickUploadBtn) {
+    quickUploadBtn.addEventListener('click', () => {
+      const fileInput = document.getElementById('vaultFileInput');
+      if (fileInput) fileInput.click();
+    });
+  }
+
+  if (clearAllBtn) {
+    clearAllBtn.addEventListener('click', () => {
+      activeSelectedDocIds = [];
+      syncAttachedContextChips();
+      showToastFeedback('Semua konteks aktif dibersihkan.');
+    });
+  }
+
+  // Sync on startup with first 2 docs as active sample
+  activeSelectedDocIds = ['doc-prd-1', 'doc-schema-2'];
+  syncAttachedContextChips();
+}
+
+/**
+ * Synchronizes context chips above textarea and counter badges
+ */
+function syncAttachedContextChips() {
+  const bar = document.getElementById('attachedContextBar');
+  const wrapper = document.getElementById('attachedChipsWrapper');
+  const countText = document.getElementById('contextCountText');
+  const statActiveDocs = document.getElementById('statActiveDocs');
+  const docs = loadVaultDocs();
+
+  if (!wrapper || !countText) return;
+
+  const selectedDocs = docs.filter(d => activeSelectedDocIds.includes(d.id));
+
+  if (selectedDocs.length > 0) {
+    if (bar) bar.style.display = 'flex';
+    countText.textContent = `${selectedDocs.length} files`;
+    countText.style.color = '#2d5584';
+    countText.style.fontWeight = '700';
+
+    wrapper.innerHTML = '';
+    selectedDocs.forEach(doc => {
+      const chip = document.createElement('div');
+      chip.className = 'context-chip-item';
+      chip.innerHTML = `
+        <span class="chip-icon">📄</span>
+        <span>${doc.name}</span>
+        <button type="button" class="btn-remove-chip" data-id="${doc.id}" title="Remove context">✕</button>
+      `;
+
+      chip.querySelector('.btn-remove-chip').addEventListener('click', (e) => {
+        e.stopPropagation();
+        activeSelectedDocIds = activeSelectedDocIds.filter(id => id !== doc.id);
+        syncAttachedContextChips();
+        // Update vault table if open
+        const chk = document.querySelector(`.chk-vault-doc[data-id="${doc.id}"]`);
+        if (chk) chk.checked = false;
+        showToastFeedback(`Konteks '${doc.name}' dilepas.`);
+      });
+
+      wrapper.appendChild(chip);
+    });
+  } else {
+    if (bar) bar.style.display = 'none';
+    countText.textContent = '0 files';
+    countText.style.color = '#94a3b8';
+    countText.style.fontWeight = '500';
+    wrapper.innerHTML = '';
+  }
+
+  if (statActiveDocs) {
+    statActiveDocs.textContent = `${selectedDocs.length} Selected`;
+  }
 }
 
 /**
@@ -781,16 +1767,12 @@ function initAgentPopover() {
     }
   });
 
-  // Open full Agent Studio modal from popover button
+  // Open full Agent Studio page from popover button
   if (openStudioBtn) {
     openStudioBtn.addEventListener('click', (e) => {
       e.preventDefault();
       container.classList.remove('show-popover');
-      const agentModal = document.getElementById('agentStudioModalBackdrop');
-      if (agentModal) {
-        agentModal.classList.add('active');
-        document.body.style.overflow = 'hidden';
-      }
+      window.location.href = 'agent-studio.html';
     });
   }
 

@@ -630,3 +630,49 @@
   color: #facc15;
   font-weight: 700;
 }
+
+/* ==========================================================================
+   DARK THEME: DEPLOYMENT PIPELINE VIEW
+   ========================================================================== */
+[data-theme="dark"] #deployViewContainer {
+  background-color: #0c1422;
+  color: #f8fafc;
+}
+
+[data-theme="dark"] .deploy-dashboard-content {
+  background-color: #0c1422;
+}
+
+[data-theme="dark"] .env-card-glass,
+[data-theme="dark"] .deploy-overview-card,
+[data-theme="dark"] .pipeline-stage-box,
+[data-theme="dark"] .metrics-spark-card,
+[data-theme="dark"] .deploy-history-card {
+  background-color: #0e1828 !important;
+  border-color: #1e314d !important;
+  color: #f8fafc !important;
+}
+
+[data-theme="dark"] .deploy-history-table th {
+  background-color: #121e32;
+  color: #94a3b8;
+  border-bottom-color: #1e314d;
+}
+
+[data-theme="dark"] .deploy-history-table td {
+  border-bottom-color: #1a293f;
+  color: #cbd5e1;
+}
+
+[data-theme="dark"] .deploy-history-table tr:hover td {
+  background-color: #132034;
+}
+
+[data-theme="dark"] .btn-trigger-deploy {
+  background-color: #2563eb;
+  color: #ffffff;
+}
+
+[data-theme="dark"] .btn-trigger-deploy:hover {
+  background-color: #1d4ed8;
+}

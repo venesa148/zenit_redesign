@@ -92,16 +92,15 @@ function initCardInteractions() {
   const agentStudioCard = document.getElementById('cardAgentStudio');
 
   if (platformBuilderCard) {
-    platformBuilderCard.addEventListener('click', (e) => {
-      e.preventDefault();
+    platformBuilderCard.addEventListener('click', () => {
       console.log('Selected Platform Builder');
     });
   }
 
   if (agentStudioCard) {
-    agentStudioCard.addEventListener('click', (e) => {
-      e.preventDefault();
+    agentStudioCard.addEventListener('click', () => {
       console.log('Selected Agent Studio');
     });
   }
 }
+

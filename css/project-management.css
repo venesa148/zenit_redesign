@@ -8,7 +8,7 @@
 .workspace-views-wrapper {
   flex: 1;
   display: flex;
-  height: 100vh;
+  height: calc(100vh - 16px);
   overflow: hidden;
   position: relative;
   width: 100%;
@@ -916,4 +916,69 @@
   border-color: #cbd5e1;
   color: #2563eb;
   transform: translateY(-1px);
+}
+
+/* ==========================================================================
+   DARK THEME: PROJECT MANAGEMENT VIEW
+   ========================================================================== */
+[data-theme="dark"] #pmViewContainer {
+  background-color: #0c1422;
+  color: #f8fafc;
+}
+
+[data-theme="dark"] .pm-dashboard-content {
+  background-color: #0c1422;
+}
+
+[data-theme="dark"] .pm-stat-box,
+[data-theme="dark"] .pm-card,
+[data-theme="dark"] .sprint-card,
+[data-theme="dark"] .quick-actions-card,
+[data-theme="dark"] .team-workload-card,
+[data-theme="dark"] .backlog-summary-card,
+[data-theme="dark"] .burndown-chart-card,
+[data-theme="dark"] .milestones-card,
+[data-theme="dark"] .sprint-velocity-card {
+  background-color: #0e1828 !important;
+  border-color: #1e314d !important;
+  color: #f8fafc !important;
+}
+
+[data-theme="dark"] .pm-stat-title,
+[data-theme="dark"] .card-header-title,
+[data-theme="dark"] .table-header-cell {
+  color: #f8fafc;
+}
+
+[data-theme="dark"] .pm-stat-subtitle,
+[data-theme="dark"] .card-header-sub,
+[data-theme="dark"] .text-muted {
+  color: #94a3b8;
+}
+
+[data-theme="dark"] .btn-view-sprint-detail {
+  background-color: #131e30;
+  border-color: #1e314d;
+  color: #cbd5e1;
+}
+
+[data-theme="dark"] .btn-view-sprint-detail:hover {
+  background-color: #182840;
+  border-color: #3b82f6;
+  color: #ffffff;
+}
+
+[data-theme="dark"] .pm-table th {
+  background-color: #121e32;
+  color: #94a3b8;
+  border-bottom-color: #1e314d;
+}
+
+[data-theme="dark"] .pm-table td {
+  border-bottom-color: #1a293f;
+  color: #cbd5e1;
+}
+
+[data-theme="dark"] .pm-table tr:hover td {
+  background-color: #132034;
 }

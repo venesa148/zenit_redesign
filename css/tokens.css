@@ -83,13 +83,52 @@
 }
 
 [data-theme="dark"] {
-  --bg-app: #090e17;
-  --bg-surface: #0e1724;
-  --bg-surface-subtle: #141f30;
-  --border-subtle: #1a2a40;
-  --border-default: #253954;
+  /* Dark Theme Neutrals & Backgrounds */
+  --bg-app: #080c14;
+  --bg-surface: #0e1726;
+  --bg-surface-subtle: #131e30;
+  --bg-surface-elevated: #18263c;
+  --border-subtle: #18253a;
+  --border-default: #22354e;
+  --border-focus: #3b82f6;
+
+  /* Typography Colors in Dark Mode */
   --text-primary: #f8fafc;
   --text-secondary: #cbd5e1;
   --text-muted: #94a3b8;
   --text-light: #64748b;
+  --text-white: #ffffff;
+  --text-white-dim: rgba(255, 255, 255, 0.92);
+  --text-white-subtle: rgba(255, 255, 255, 0.6);
+
+  /* Brand Primary in Dark Mode */
+  --zenith-primary-deep: #09101d;
+  --zenith-primary-dark: #0f1c30;
+  --zenith-primary: #3b82f6;
+  --zenith-primary-hover: #60a5fa;
+  --zenith-primary-active: #2563eb;
+  --zenith-primary-accent: #60a5fa;
+  --zenith-primary-light: #16253c;
+  --zenith-primary-tint: #1b2e4b;
+  --zenith-primary-border: #29466e;
+  --zenith-primary-glow: rgba(59, 130, 246, 0.28);
+
+  /* Deep Hero Aurora & Dark Gradients */
+  --hero-bg-deep: #060a12;
+  --hero-bg-dark: #0b1322;
+  --hero-bg-mid: #101c30;
+  --hero-bg-bright: #182a46;
+  --hero-glow-accent: rgba(59, 130, 246, 0.25);
+  --hero-card-bg: rgba(255, 255, 255, 0.04);
+  --hero-card-border: rgba(255, 255, 255, 0.1);
+  --hero-card-hover-bg: rgba(255, 255, 255, 0.08);
+  --hero-card-hover-border: rgba(96, 165, 250, 0.35);
+
+  /* Shadows in Dark Mode */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.45);
+  --shadow-md: 0 4px 10px -1px rgba(0, 0, 0, 0.55), 0 2px 4px -2px rgba(0, 0, 0, 0.35);
+  --shadow-lg: 0 12px 25px -3px rgba(0, 0, 0, 0.65), 0 4px 6px -4px rgba(0, 0, 0, 0.4);
+  --shadow-xl: 0 24px 40px -5px rgba(0, 0, 0, 0.75), 0 8px 10px -6px rgba(0, 0, 0, 0.45);
+  --shadow-primary-btn: 0 6px 20px -3px rgba(59, 130, 246, 0.4);
+  --shadow-hero-card: 0 20px 50px -10px rgba(0, 0, 0, 0.8);
 }

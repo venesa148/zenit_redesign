@@ -789,3 +789,49 @@
   flex-direction: column;
   gap: 0.75rem;
 }
+
+/* ==========================================================================
+   DARK THEME: DOCUMENTS EXPLORER VIEW
+   ========================================================================== */
+[data-theme="dark"] #docViewContainer {
+  background-color: #0c1422;
+  color: #f8fafc;
+}
+
+[data-theme="dark"] .docs-sidebar,
+[data-theme="dark"] .docs-main-content,
+[data-theme="dark"] .doc-card,
+[data-theme="dark"] .erd-entity-card,
+[data-theme="dark"] .api-endpoint-card,
+[data-theme="dark"] .arch-component-box {
+  background-color: #0e1828 !important;
+  border-color: #1e314d !important;
+  color: #f8fafc !important;
+}
+
+[data-theme="dark"] .docs-tree-item:hover {
+  background-color: #142238;
+}
+
+[data-theme="dark"] .docs-tree-item.active {
+  background-color: #182840;
+  color: #60a5fa;
+}
+
+[data-theme="dark"] .erd-entity-table td {
+  border-bottom-color: #1a293f;
+  color: #cbd5e1;
+}
+
+[data-theme="dark"] .api-endpoint-header {
+  background-color: #121e32;
+  border-bottom-color: #1e314d;
+}
+
+[data-theme="dark"] .api-endpoint-path {
+  color: #60a5fa;
+}
+
+[data-theme="dark"] .api-endpoint-desc {
+  color: #94a3b8;
+}

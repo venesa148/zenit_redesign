@@ -6,7 +6,7 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  height: calc(100vh - 16px);
   overflow-y: auto;
   background-color: #fbfcfe;
 }
@@ -364,3 +364,84 @@
   box-shadow: var(--shadow-md);
   border-color: #cbd9eb;
 }
+
+/* ==========================================================================
+   DARK THEME OVERRIDES (ALL PROJECTS)
+   ========================================================================== */
+[data-theme="dark"] .projects-viewport {
+  background-color: var(--bg-surface, #0e1726);
+}
+
+[data-theme="dark"] .projects-header-title {
+  color: var(--text-primary, #f8fafc);
+}
+
+[data-theme="dark"] .project-search-wrapper,
+[data-theme="dark"] .btn-filter-dropdown,
+[data-theme="dark"] .btn-view-toggle,
+[data-theme="dark"] .projects-table-card,
+[data-theme="dark"] .project-grid-card {
+  background-color: var(--bg-surface-subtle, #131e30);
+  border-color: var(--border-default, #22354e);
+}
+
+[data-theme="dark"] .btn-filter-dropdown,
+[data-theme="dark"] .btn-view-toggle {
+  color: var(--text-secondary, #94a3b8);
+}
+
+[data-theme="dark"] .btn-view-toggle.active {
+  background-color: var(--brand-primary, #3b82f6);
+  color: #ffffff;
+  border-color: var(--brand-primary, #3b82f6);
+}
+
+[data-theme="dark"] .projects-table th {
+  background-color: #0b1320;
+  color: var(--text-secondary, #94a3b8);
+  border-bottom-color: var(--border-default, #22354e);
+}
+
+[data-theme="dark"] .projects-table td {
+  border-bottom-color: var(--border-subtle, #18253a);
+}
+
+[data-theme="dark"] .project-row:hover td {
+  background-color: #17243a;
+}
+
+[data-theme="dark"] .project-title-link {
+  color: var(--text-primary, #f8fafc);
+}
+
+[data-theme="dark"] .project-row:hover .project-title-link {
+  color: #60a5fa;
+}
+
+[data-theme="dark"] .type-badge-project {
+  background-color: rgba(59, 130, 246, 0.15);
+  color: #93c5fd;
+  border-color: rgba(59, 130, 246, 0.3);
+}
+
+[data-theme="dark"] .type-badge-prototype {
+  background-color: rgba(168, 85, 247, 0.15);
+  color: #d8b4fe;
+  border-color: rgba(168, 85, 247, 0.3);
+}
+
+[data-theme="dark"] .filter-dropdown-menu {
+  background-color: var(--bg-surface-subtle, #131e30);
+  border-color: var(--border-default, #22354e);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+}
+
+[data-theme="dark"] .filter-option {
+  color: var(--text-secondary, #94a3b8);
+}
+
+[data-theme="dark"] .filter-option:hover {
+  background-color: #1a2a44;
+  color: var(--text-primary, #f8fafc);
+}
+
