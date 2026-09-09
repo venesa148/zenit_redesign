@@ -18,14 +18,14 @@
   <link rel="stylesheet" href="css/tokens.css?v=3" />
   <link rel="stylesheet" href="css/base.css?v=3" />
   <link rel="stylesheet" href="css/sidebar.css?v=3" />
-  <link rel="stylesheet" href="css/workspace.css?v=3" />
+  <link rel="stylesheet" href="css/workspace.css?v=11" />
   <link rel="stylesheet" href="css/project-management.css?v=3" />
   <link rel="stylesheet" href="css/documents.css?v=3" />
   <link rel="stylesheet" href="css/deployment.css?v=3" />
   <link rel="stylesheet" href="css/modal.css?v=3" />
   <!-- Early Theme Mode Loader (Prevents White Flash) -->
   <script>
-    (function() {
+    (function () {
       try {
         var pref = localStorage.getItem('zenith_theme_preference') || 'system';
         var theme = pref;
@@ -34,7 +34,7 @@
         }
         document.documentElement.setAttribute('data-theme', theme);
         document.documentElement.setAttribute('data-theme-preference', pref);
-      } catch (e) {}
+      } catch (e) { }
     })();
   </script>
 </head>
@@ -204,7 +204,7 @@
 
         <!-- Secondary Sub-Menu Items -->
         <nav class="secondary-nav-list">
-          <a href="#build" class="sec-nav-item" id="secNavBuild">
+          <a href="#build" class="sec-nav-item active" id="secNavBuild">
             <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none"
               stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <polygon points="12 2 2 7 12 12 22 7 12 2" />
@@ -214,7 +214,7 @@
             <span>Build</span>
           </a>
 
-          <a href="#project-management" class="sec-nav-item active" id="secNavManagement">
+          <a href="#project-management" class="sec-nav-item" id="secNavManagement">
             <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none"
               stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <path
@@ -278,7 +278,7 @@
       <!-- ----------------------------------------
            VIEW 1: BUILD (AI CHAT & LIVE PREVIEW)
            ---------------------------------------- -->
-      <div class="workspace-view-pane" id="buildViewContainer">
+      <div class="workspace-view-pane active" id="buildViewContainer">
         <!-- Center Workspace: AI Chat & Builder -->
         <main class="workspace-chat-pane">
           <!-- Top Chat Header -->
@@ -380,7 +380,8 @@
                           stroke="currentColor" stroke-width="2">
                           <circle cx="12" cy="12" r="10" />
                           <line x1="2" y1="12" x2="22" y2="12" />
-                          <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+                          <path
+                            d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
                         </svg>
                       </div>
                       <div class="agent-item-details">
@@ -442,7 +443,8 @@
 
             <h2 class="chat-hero-headline">What do you want to build?</h2>
             <p class="chat-hero-desc">
-              Describe your feature or product concept — Zenith simultaneously assumes Business Analyst, Developer, and PM roles to draft PRDs, synthesize full-stack code, and orchestrate sprint milestones.
+              Describe your feature or product concept — Zenith simultaneously assumes Business Analyst, Developer, and
+              PM roles to draft PRDs, synthesize full-stack code, and orchestrate sprint milestones.
             </p>
 
             <!-- Suggestion Pills -->
@@ -548,7 +550,7 @@
                 </svg>
               </button>
 
-              <button type="button" class="context-row-btn" id="btnBuildSession">
+              <!-- <button type="button" class="context-row-btn" id="btnBuildSession">
                 <span class="context-left-label"
                   style="text-transform: uppercase; font-size: 0.775rem; letter-spacing: 0.04em;">
                   <span>BUILD SESSION</span>
@@ -557,7 +559,7 @@
                   viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                   <path d="m9 18 6-6-6-6" />
                 </svg>
-              </button>
+              </button> -->
             </div>
 
             <p class="chat-disclaimer-text">
@@ -570,10 +572,10 @@
          RIGHT PANEL: LIVE PREVIEW & CONTROLS
          ========================================== -->
         <section class="workspace-preview-pane" aria-label="Preview and Output">
-          <!-- Top Preview Tabs Header -->
+          <!-- Top Preview Tabs Header (Main View: Preview + Dynamic Document Tabs, with right collapse toggle) -->
           <header class="preview-top-header">
-            <div class="preview-tabs-group" role="tablist">
-              <a href="#preview" class="preview-tab-link active" id="tabPreview">
+            <div class="preview-tabs-group" id="previewTabsGroup" role="tablist">
+              <a href="#preview" class="preview-tab-link active" id="tabPreview" data-file="preview">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
                   stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                   <rect width="20" height="14" x="2" y="3" rx="2" />
@@ -582,28 +584,55 @@
                 </svg>
                 <span>Preview</span>
               </a>
+              <!-- Opened document tabs (page.jsx, layout.jsx, etc.) are dynamically injected here -->
+            </div>
 
-              <a href="#files" class="preview-tab-link" id="tabFiles">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+            <!-- Top-Right Collapse Bar Toggle for Right File Explorer Sidebar -->
+            <div class="preview-header-right-actions">
+              <button type="button" class="btn-toggle-file-explorer active" id="btnToggleFileExplorer"
+                title="Toggle File Explorer Sidebar (Right)" aria-label="Toggle File Explorer Sidebar">
+                <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none"
                   stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
-                  <polyline points="14 2 14 8 20 8" />
-                </svg>
-                <span>Files</span>
-              </a>
-
-              <a href="#logs" class="preview-tab-link" id="tabLogs">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
-                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M8 6h8" />
-                  <path d="M8 12h8" />
-                  <path d="M8 18h8" />
                   <rect width="18" height="18" x="3" y="3" rx="2" />
+                  <line x1="15" x2="15" y1="3" y2="21" />
+                  <polyline points="9 9 12 12 9 15" />
                 </svg>
-                <span>Logs</span>
-              </a>
+                <span class="file-toggle-label">Files</span>
+              </button>
             </div>
           </header>
+
+          <!-- Document Breadcrumb Navigation Bar (Shows active file path) -->
+          <nav class="editor-breadcrumb-bar" id="editorBreadcrumbBar" aria-label="Breadcrumb" style="display: none;">
+            <div class="bc-trail">
+              <span class="bc-item bc-root">
+                <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13c0 1.1.9 2 2 2Z" />
+                </svg>
+                <span>coba</span>
+              </span>
+              <span class="bc-sep">/</span>
+              <span class="bc-item bc-dir" id="bcDirectory">app</span>
+              <span class="bc-sep">/</span>
+              <span class="bc-item bc-file" id="bcFileItem">
+                <span class="bc-file-icon" id="bcFileIcon">⚛</span>
+                <span class="bc-file-name" id="bcFileName">page.jsx</span>
+              </span>
+            </div>
+
+            <div class="bc-actions">
+              <span class="bc-lang-pill" id="bcLangPill">React JSX</span>
+              <button type="button" class="btn-bc-copy" id="btnCopyEditorCode" title="Copy code to clipboard">
+                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect width="14" height="14" x="8" y="8" rx="2" ry="2"/>
+                  <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/>
+                </svg>
+                <span>Copy</span>
+              </button>
+            </div>
+          </nav>
 
           <!-- Action Toolbar Controls (with 3-Dots Dropdown & Wide Mode Open/Exit) -->
           <div class="preview-actions-toolbar" id="previewActionsToolbar">
@@ -695,6 +724,20 @@
               <span class="orca-pill-dot"></span>
               <span>Visual Edit &amp; Drag (Canva/Orca)</span>
             </div> -->
+
+            <!-- Runtime Log Panel Toggle Button (Toolbar Aligned) -->
+            <button type="button" class="btn-preview-log-toggle" id="btnToggleLogDrawer"
+              title="Toggle Runtime Logs Drawer (Console)" aria-label="Toggle Runtime Logs">
+              <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M8 6h8" />
+                <path d="M8 12h8" />
+                <path d="M8 18h8" />
+                <rect width="18" height="18" x="3" y="3" rx="2" />
+              </svg>
+              <span>Logs</span>
+              <span class="log-indicator-dot"></span>
+            </button>
 
             <!-- Expand / Open Wide View Button -->
             <button type="button" class="btn-preview-open-ext" id="btnOpenExt" title="Expand preview to wide view">
@@ -974,13 +1017,459 @@
             <span>🌸</span>
             <span id="beautyToastText">Added to bag!</span>
           </div>
+
+          <!-- ==========================================
+               OPEN EDITOR: CODE EDITOR VIEWPORT
+               Dynamically displays syntax-highlighted code for opened document tabs
+               ========================================== -->
+          <div class="code-editor-viewport" id="codeEditorViewport" style="display: none;">
+            <div class="editor-main-canvas">
+              <div class="editor-line-numbers" id="editorLineNumbers">
+                <!-- Dynamically generated line numbers 1..N -->
+              </div>
+              <div class="editor-code-area" id="editorCodeArea">
+                <pre class="editor-pre" id="editorCodePre"><code class="editor-code" id="editorCodeContent"></code></pre>
+              </div>
+            </div>
+            <!-- Editor Bottom Status Bar -->
+            <div class="editor-status-bar" id="editorStatusBar">
+              <div class="status-left">
+                <span id="editorStatusLines">42 lines</span>
+                <span class="status-dot-sep">&middot;</span>
+                <span id="editorStatusEncoding">UTF-8</span>
+                <span class="status-dot-sep">&middot;</span>
+                <span id="editorStatusType">React 19 JSX</span>
+              </div>
+              <div class="status-right">
+                <span>Ln 1, Col 1</span>
+                <span class="status-dot-sep">&middot;</span>
+                <span>Spaces: 2</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- ==========================================
+               BOTTOM PANEL (DRAWER): RUNTIME & BUILD LOGS
+               Half-screen default, resizable via top drag handle
+               ========================================== -->
+          <div class="preview-log-drawer" id="previewLogDrawer" aria-label="Runtime Logs Console">
+            <!-- Top Resize Handle (Drag vertically to adjust height) -->
+            <div class="log-drawer-resizer" id="logDrawerResizer" title="Drag to resize log panel">
+              <div class="log-drawer-resizer-handle"></div>
+            </div>
+
+            <!-- Drawer Header -->
+            <div class="log-drawer-header">
+              <div class="log-header-left">
+                <span class="log-header-indicator"></span>
+                <span class="log-header-title">Runtime &amp; Build Logs</span>
+                <span class="log-badge-process">node watch · port 3000</span>
+              </div>
+
+              <div class="log-header-controls">
+                <!-- Log Level Filters -->
+                <div class="log-filter-group">
+                  <button type="button" class="log-filter-btn active" data-filter="all">All</button>
+                  <button type="button" class="log-filter-btn" data-filter="info">Info</button>
+                  <button type="button" class="log-filter-btn" data-filter="warn">Warn</button>
+                  <button type="button" class="log-filter-btn" data-filter="error">Error</button>
+                </div>
+
+                <!-- Clear Logs -->
+                <button type="button" class="log-control-btn" id="btnClearLogs" title="Clear console logs">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10" />
+                    <line x1="4.93" y1="4.93" x2="19.07" y2="19.07" />
+                  </svg>
+                </button>
+
+                <!-- Quick Height Toggle (Half / Max) -->
+                <button type="button" class="log-control-btn" id="btnLogToggleHeight" title="Toggle expand height">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="18 15 12 9 6 15" />
+                  </svg>
+                </button>
+
+                <!-- Close Drawer Button -->
+                <button type="button" class="log-control-btn log-close-btn" id="btnCloseLogDrawer"
+                  title="Close log panel">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18" />
+                    <line x1="6" y1="6" x2="18" y2="18" />
+                  </svg>
+                </button>
+              </div>
+            </div>
+
+            <!-- Log Terminal Console Stream Body -->
+            <div class="log-drawer-body" id="logDrawerBody">
+              <div class="log-entry" data-level="vite">
+                <span class="log-time">[18:58:01]</span>
+                <span class="log-tag vite">VITE</span>
+                <span class="log-msg">⚡ <span style="color:#f1f5f9;font-weight:600;">Vite v5.4.2</span> dev server
+                  running with React 19 Fast Refresh</span>
+              </div>
+              <div class="log-entry" data-level="info">
+                <span class="log-time">[18:58:02]</span>
+                <span class="log-tag info">LOCAL</span>
+                <span class="log-msg">Server listening at <a href="#"
+                    class="highlight-url">http://localhost:3000/</a></span>
+              </div>
+              <div class="log-entry" data-level="info">
+                <span class="log-time">[18:58:02]</span>
+                <span class="log-tag info">NETWORK</span>
+                <span class="log-msg">Network route ready at <a href="#"
+                    class="highlight-url">http://192.168.1.14:3000/</a></span>
+              </div>
+              <div class="log-entry" data-level="success">
+                <span class="log-time">[18:58:04]</span>
+                <span class="log-tag success">DATABASE</span>
+                <span class="log-msg">PostgreSQL compose container healthy &middot; <span
+                    style="color:#94a3b8;">postgres://zenith:***@localhost:5432/coba_db</span></span>
+              </div>
+              <div class="log-entry" data-level="info">
+                <span class="log-time">[18:58:05]</span>
+                <span class="log-tag info">HMR</span>
+                <span class="log-msg">WebSocket client connected to live preview viewport</span>
+              </div>
+              <div class="log-entry" data-level="vite">
+                <span class="log-time">[18:58:12]</span>
+                <span class="log-tag vite">COMPILED</span>
+                <span class="log-msg">Synthesized <span style="color:#38bdf8;">/app/page.jsx</span> &amp; <span
+                    style="color:#38bdf8;">/app/components/BeautyCard.jsx</span> in <span
+                    class="highlight-time">34ms</span></span>
+              </div>
+              <div class="log-entry" data-level="info">
+                <span class="log-time">[18:58:15]</span>
+                <span class="log-tag info">HTTP</span>
+                <span class="log-msg">GET <span style="color:#34d399;">/api/products</span> &rarr; 200 OK (3 items,
+                  14ms)</span>
+              </div>
+              <div class="log-entry" data-level="warn">
+                <span class="log-time">[18:58:18]</span>
+                <span class="log-tag warn">WARN</span>
+                <span class="log-msg">Image asset &lsquo;peony-dew.webp&rsquo; using fallback vector graphic</span>
+              </div>
+              <div class="log-entry" data-level="success">
+                <span class="log-time">[18:58:22]</span>
+                <span class="log-tag success">READY</span>
+                <span class="log-msg">Ready for interactive visual editing, live preview &amp; AI chat
+                  instructions</span>
+              </div>
+            </div>
+          </div>
         </section>
+
+        <!-- ==========================================
+             FILE EXPLORER SIDEBAR (RIGHT SIDE)
+             Placed on right side of Preview panel
+             ========================================== -->
+        <aside class="file-explorer-sidebar" id="fileExplorerSidebar" aria-label="Project File Explorer">
+          <!-- Explorer Top Header -->
+          <div class="explorer-header">
+            <div class="explorer-header-left">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path
+                  d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13c0 1.1.9 2 2 2Z" />
+              </svg>
+              <span class="explorer-title">Files</span>
+              <span class="explorer-badge">Project</span>
+            </div>
+
+            <div class="explorer-header-actions">
+              <button type="button" class="explorer-action-btn" id="btnExplorerCollapseAll"
+                title="Collapse All Folders">
+                <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="4 14 10 14 10 20" />
+                  <polyline points="20 10 14 10 14 4" />
+                </svg>
+              </button>
+              <button type="button" class="explorer-action-btn" id="btnExplorerRefresh" title="Refresh Tree">
+                <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.2" />
+                </svg>
+              </button>
+
+              <!-- Overflow / More Options Menu (⋮) -->
+              <div class="explorer-more-menu-wrap" id="explorerMoreMenuWrap">
+                <button type="button" class="explorer-action-btn" id="btnExplorerMoreActions"
+                  title="More Options (New File, New Folder, Upload Folder)" aria-label="More Options">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                    <circle cx="12" cy="5" r="2" />
+                    <circle cx="12" cy="12" r="2" />
+                    <circle cx="12" cy="19" r="2" />
+                  </svg>
+                </button>
+
+                <!-- Popover / Dropdown Menu Card -->
+                <div class="explorer-dropdown-menu" id="explorerDropdownMenu" style="display: none;">
+                  <div class="explorer-dropdown-header">
+                    <span>EXPLORER ACTIONS</span>
+                    <span class="explorer-target-dir-badge" id="explorerTargetDirBadge">Root</span>
+                  </div>
+
+                  <button type="button" class="explorer-dropdown-item" id="menuItemNewFile">
+                    <span class="exp-item-icon">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                        <polyline points="14 2 14 8 20 8" />
+                        <line x1="12" y1="18" x2="12" y2="12" />
+                        <line x1="9" y1="15" x2="15" y2="15" />
+                      </svg>
+                    </span>
+                    <div class="exp-item-label">
+                      <strong>+ New File</strong>
+                      <span id="labelNewFileTarget">Create in active directory</span>
+                    </div>
+                  </button>
+
+                  <button type="button" class="explorer-dropdown-item" id="menuItemNewFolder">
+                    <span class="exp-item-icon">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path
+                          d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13c0 1.1.9 2 2 2Z" />
+                        <line x1="12" y1="11" x2="12" y2="17" />
+                        <line x1="9" y1="14" x2="15" y2="14" />
+                      </svg>
+                    </span>
+                    <div class="exp-item-label">
+                      <strong>+ New Folder</strong>
+                      <span id="labelNewFolderTarget">Create folder in active location</span>
+                    </div>
+                  </button>
+
+                  <div class="explorer-dropdown-divider"></div>
+
+                  <button type="button" class="explorer-dropdown-item" id="menuItemUploadFolder">
+                    <span class="exp-item-icon icon-upload">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                        <polyline points="17 8 12 3 7 8" />
+                        <line x1="12" y1="3" x2="12" y2="15" />
+                      </svg>
+                    </span>
+                    <div class="exp-item-label">
+                      <strong>+ Upload Folder</strong>
+                      <span>Upload directory from local device</span>
+                    </div>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Hidden Native Input for Directory Upload -->
+              <input type="file" id="explorerFolderUploadInput" webkitdirectory directory multiple style="display: none;" />
+
+              <button type="button" class="explorer-action-btn explorer-close-btn" id="btnCloseFileExplorer"
+                title="Close Explorer Sidebar">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="18" y1="6" x2="6" y2="18" />
+                  <line x1="6" y1="6" x2="18" y2="18" />
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- Inline Creation Modal Dialog (for + New File and + New Folder) -->
+          <div class="explorer-creation-dialog" id="explorerCreationDialog" style="display: none;">
+            <div class="creation-dialog-card">
+              <div class="creation-dialog-header">
+                <span class="creation-dialog-icon" id="creationDialogIcon">📄</span>
+                <span class="creation-dialog-title" id="creationDialogTitle">New File</span>
+                <button type="button" class="creation-dialog-close" id="btnCancelCreation" aria-label="Cancel">&times;</button>
+              </div>
+              <div class="creation-dialog-body">
+                <div class="creation-target-hint">
+                  <span>Target:</span>
+                  <strong id="creationDialogLocation">Root (coba)</strong>
+                </div>
+                <div class="creation-input-wrapper">
+                  <input type="text" id="creationInputName" class="creation-input" placeholder="e.g. MyComponent.jsx" autocomplete="off" />
+                </div>
+              </div>
+              <div class="creation-dialog-footer">
+                <button type="button" class="btn-creation-cancel" id="btnCreationCancelAction">Cancel</button>
+                <button type="button" class="btn-creation-submit" id="btnCreationSubmitAction">Create</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Quick Search Filter -->
+          <div class="explorer-search-bar">
+            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8" />
+              <line x1="21" y1="21" x2="16.65" y2="16.65" />
+            </svg>
+            <input type="text" class="explorer-search-input" id="explorerSearchInput" placeholder="Filter files..."
+              aria-label="Filter files" />
+          </div>
+
+          <!-- Project Tree View -->
+          <div class="explorer-tree-body" id="explorerTreeBody">
+            <!-- Root Folder: app/ -->
+            <div class="tree-folder open" data-folder="app">
+              <div class="tree-item folder-header">
+                <span class="tree-arrow">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2.5">
+                    <polyline points="6 9 12 15 18 9" />
+                  </svg>
+                </span>
+                <span class="folder-icon">📁</span>
+                <span class="tree-label">app</span>
+                <span class="tree-badge">Next.js</span>
+              </div>
+              <div class="tree-children">
+                <!-- Subfolder: components/ -->
+                <div class="tree-folder open" data-folder="components">
+                  <div class="tree-item folder-header">
+                    <span class="tree-arrow">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2.5">
+                        <polyline points="6 9 12 15 18 9" />
+                      </svg>
+                    </span>
+                    <span class="folder-icon">📁</span>
+                    <span class="tree-label">components</span>
+                  </div>
+                  <div class="tree-children">
+                    <div class="tree-item file-item" data-file="app/components/Header.jsx">
+                      <span class="file-icon icon-jsx">⚛</span>
+                      <span class="tree-label">Header.jsx</span>
+                      <span class="file-meta">2.1 KB</span>
+                    </div>
+                    <div class="tree-item file-item active" data-file="app/components/BeautyCard.jsx">
+                      <span class="file-icon icon-jsx">⚛</span>
+                      <span class="tree-label">BeautyCard.jsx</span>
+                      <span class="file-meta">3.4 KB</span>
+                    </div>
+                    <div class="tree-item file-item" data-file="app/components/BagModal.jsx">
+                      <span class="file-icon icon-jsx">⚛</span>
+                      <span class="tree-label">BagModal.jsx</span>
+                      <span class="file-meta">1.8 KB</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="tree-item file-item" data-file="app/page.jsx">
+                  <span class="file-icon icon-jsx">⚛</span>
+                  <span class="tree-label">page.jsx</span>
+                  <span class="file-meta">4.2 KB</span>
+                </div>
+                <div class="tree-item file-item" data-file="app/layout.jsx">
+                  <span class="file-icon icon-jsx">⚛</span>
+                  <span class="tree-label">layout.jsx</span>
+                  <span class="file-meta">1.5 KB</span>
+                </div>
+                <div class="tree-item file-item" data-file="app/globals.css">
+                  <span class="file-icon icon-css">🎨</span>
+                  <span class="tree-label">globals.css</span>
+                  <span class="file-meta">5.1 KB</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Root Folder: css/ -->
+            <div class="tree-folder open" data-folder="css">
+              <div class="tree-item folder-header">
+                <span class="tree-arrow">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2.5">
+                    <polyline points="6 9 12 15 18 9" />
+                  </svg>
+                </span>
+                <span class="folder-icon">📁</span>
+                <span class="tree-label">css</span>
+              </div>
+              <div class="tree-children">
+                <div class="tree-item file-item" data-file="css/tokens.css">
+                  <span class="file-icon icon-css">🎨</span>
+                  <span class="tree-label">tokens.css</span>
+                  <span class="file-meta">4.8 KB</span>
+                </div>
+                <div class="tree-item file-item" data-file="css/base.css">
+                  <span class="file-icon icon-css">🎨</span>
+                  <span class="tree-label">base.css</span>
+                  <span class="file-meta">3.2 KB</span>
+                </div>
+                <div class="tree-item file-item" data-file="css/workspace.css">
+                  <span class="file-icon icon-css">🎨</span>
+                  <span class="tree-label">workspace.css</span>
+                  <span class="file-meta">67 KB</span>
+                </div>
+                <div class="tree-item file-item" data-file="css/preview.css">
+                  <span class="file-icon icon-css">🎨</span>
+                  <span class="tree-label">preview.css</span>
+                  <span class="file-meta">12 KB</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Root Folder: js/ -->
+            <div class="tree-folder open" data-folder="js">
+              <div class="tree-item folder-header">
+                <span class="tree-arrow">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2.5">
+                    <polyline points="6 9 12 15 18 9" />
+                  </svg>
+                </span>
+                <span class="folder-icon">📁</span>
+                <span class="tree-label">js</span>
+              </div>
+              <div class="tree-children">
+                <div class="tree-item file-item" data-file="js/workspace.js">
+                  <span class="file-icon icon-js">📜</span>
+                  <span class="tree-label">workspace.js</span>
+                  <span class="file-meta">69 KB</span>
+                </div>
+                <div class="tree-item file-item" data-file="js/preview.js">
+                  <span class="file-icon icon-js">📜</span>
+                  <span class="tree-label">preview.js</span>
+                  <span class="file-meta">18 KB</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Root Files -->
+            <div class="tree-item file-item" data-file="package.json">
+              <span class="file-icon icon-json">📦</span>
+              <span class="tree-label">package.json</span>
+              <span class="file-meta">1.1 KB</span>
+            </div>
+            <div class="tree-item file-item" data-file="README.md">
+              <span class="file-icon icon-md">📝</span>
+              <span class="tree-label">README.md</span>
+              <span class="file-meta">2.3 KB</span>
+            </div>
+          </div>
+
+          <!-- Explorer Bottom Footer -->
+          <div class="explorer-footer">
+            <div class="explorer-footer-item">
+              <span>14 files</span>
+              <span>&middot;</span>
+              <span>UTF-8</span>
+            </div>
+            <span class="explorer-branch-badge">main</span>
+          </div>
+        </aside>
       </div>
 
       <!-- ----------------------------------------
        VIEW 2: PROJECT MANAGEMENT (SDLC DASHBOARD)
        ---------------------------------------- -->
-      <div class="workspace-view-pane active" id="pmViewContainer">
+      <div class="workspace-view-pane" id="pmViewContainer">
         <div class="pm-dashboard-content">
           <!-- Top Row: Overall Progress & 7-Phase SDLC Progress -->
           <div class="pm-top-grid">
@@ -3551,7 +4040,7 @@ Loading document content...
 
     <!-- JavaScript -->
     <script src="js/sidebar.js"></script>
-    <script src="js/workspace.js"></script>
+    <script src="js/workspace.js?v=11"></script>
     <script src="js/modal.js"></script>
 </body>
 

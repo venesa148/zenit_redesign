@@ -14,6 +14,9 @@ document.addEventListener('DOMContentLoaded', () => {
   initLivePreviewActions();
   initPreview3DotsMenu();
   initPreviewWideMode();
+  initFileExplorerSidebar();
+  initPreviewLogDrawer();
+  initDocumentTabsManager();
   initOrcaCanvaVisualEditor();
   initAgentPopover();
   initBeautyStoreInteractions();
@@ -59,11 +62,15 @@ function initWorkspaceViewSwitcher() {
       if (contextVaultView) contextVaultView.classList.add('active');
       if (btnContextVault) btnContextVault.classList.add('active');
       window.location.hash = '#context-vault';
-    } else {
-      // Default to Project Management
+    } else if (targetView === 'project-management') {
       if (pmView) pmView.classList.add('active');
       if (btnManagement) btnManagement.classList.add('active');
       window.location.hash = '#project-management';
+    } else {
+      // Default to Build View (AI Chat, Preview & Right File Explorer)
+      if (buildView) buildView.classList.add('active');
+      if (btnBuild) btnBuild.classList.add('active');
+      window.location.hash = '#build';
     }
   }
 
@@ -105,9 +112,7 @@ function initWorkspaceViewSwitcher() {
   // Handle URL Hash on Initial Load & Hash changes
   function applyHashView() {
     const hash = window.location.hash;
-    if (hash === '#build') {
-      switchView('build');
-    } else if (hash === '#document') {
+    if (hash === '#document') {
       switchView('document');
     } else if (hash === '#deployment') {
       switchView('deployment');
@@ -115,6 +120,8 @@ function initWorkspaceViewSwitcher() {
       switchView('context-vault');
     } else if (hash === '#project-management') {
       switchView('project-management');
+    } else {
+      switchView('build');
     }
   }
 
@@ -846,6 +853,1264 @@ function initPreviewWideMode() {
       exitWideMode();
     }
   });
+}
+
+/**
+ * FEATURE: RIGHT FILE EXPLORER SIDEBAR
+ * Handles opening, closing, folder toggle (expand/collapse), file click selection,
+ * search filter, and collapse-all actions.
+ */
+function initFileExplorerSidebar() {
+  const btnToggle = document.getElementById('btnToggleFileExplorer');
+  const sidebar = document.getElementById('fileExplorerSidebar');
+  const btnClose = document.getElementById('btnCloseFileExplorer');
+  const btnCollapseAll = document.getElementById('btnExplorerCollapseAll');
+  const btnRefresh = document.getElementById('btnExplorerRefresh');
+  const searchInput = document.getElementById('explorerSearchInput');
+  const treeFolders = document.querySelectorAll('.tree-folder');
+  const fileItems = document.querySelectorAll('.tree-item.file-item');
+
+  if (!sidebar) return;
+
+  function setSidebarOpen(open) {
+    if (open) {
+      sidebar.classList.remove('collapsed');
+      if (btnToggle) btnToggle.classList.add('active');
+    } else {
+      sidebar.classList.add('collapsed');
+      if (btnToggle) btnToggle.classList.remove('active');
+    }
+  }
+
+  function toggleSidebar() {
+    const isCurrentlyCollapsed = sidebar.classList.contains('collapsed');
+    setSidebarOpen(isCurrentlyCollapsed);
+  }
+
+  if (btnToggle) {
+    btnToggle.addEventListener('click', (e) => {
+      e.preventDefault();
+      toggleSidebar();
+    });
+  }
+
+  if (btnClose) {
+    btnClose.addEventListener('click', (e) => {
+      e.preventDefault();
+      setSidebarOpen(false);
+    });
+  }
+
+  // Folder Expansion / Collapse Toggle
+  treeFolders.forEach(folder => {
+    const header = folder.querySelector(':scope > .folder-header');
+    if (header) {
+      header.addEventListener('click', (e) => {
+        e.stopPropagation();
+        folder.classList.toggle('open');
+      });
+    }
+  });
+
+  // Collapse All Folders
+  if (btnCollapseAll) {
+    btnCollapseAll.addEventListener('click', (e) => {
+      e.preventDefault();
+      treeFolders.forEach(f => f.classList.remove('open'));
+      showToastFeedback('Semua folder ditutup');
+    });
+  }
+
+  // Refresh Tree
+  if (btnRefresh) {
+    btnRefresh.addEventListener('click', (e) => {
+      e.preventDefault();
+      treeFolders.forEach(f => f.classList.add('open'));
+      if (searchInput) searchInput.value = '';
+      fileItems.forEach(item => item.style.display = 'flex');
+      showToastFeedback('Struktur file diperbarui');
+    });
+  }
+
+  // File Click Interaction (Opens document tab in Preview panel)
+  fileItems.forEach(item => {
+    item.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const filename = item.getAttribute('data-file') || item.querySelector('.tree-label').textContent.trim();
+      if (typeof openDocumentTab === 'function') {
+        openDocumentTab(filename);
+      }
+      showToastFeedback(`File dibuka: ${filename}`);
+    });
+  });
+
+  // Search Filter Input
+  if (searchInput) {
+    searchInput.addEventListener('input', () => {
+      const q = searchInput.value.toLowerCase().trim();
+      fileItems.forEach(item => {
+        const text = item.textContent.toLowerCase();
+        if (!q || text.includes(q)) {
+          item.style.display = 'flex';
+        } else {
+          item.style.display = 'none';
+        }
+      });
+      if (q) {
+        // Auto expand all folders when searching
+        treeFolders.forEach(f => f.classList.add('open'));
+      }
+    });
+  }
+
+  // =========================================================================
+  // OVERFLOW MENU (⋮) & FILE / FOLDER MANAGEMENT (+ New File, + New Folder, + Upload Folder)
+  // =========================================================================
+  const btnMoreActions = document.getElementById('btnExplorerMoreActions');
+  const dropdownMenu = document.getElementById('explorerDropdownMenu');
+  const targetDirBadge = document.getElementById('explorerTargetDirBadge');
+  const labelNewFileTarget = document.getElementById('labelNewFileTarget');
+  const labelNewFolderTarget = document.getElementById('labelNewFolderTarget');
+  const menuItemNewFile = document.getElementById('menuItemNewFile');
+  const menuItemNewFolder = document.getElementById('menuItemNewFolder');
+  const menuItemUploadFolder = document.getElementById('menuItemUploadFolder');
+  const folderUploadInput = document.getElementById('explorerFolderUploadInput');
+
+  const creationDialog = document.getElementById('explorerCreationDialog');
+  const creationDialogTitle = document.getElementById('creationDialogTitle');
+  const creationDialogIcon = document.getElementById('creationDialogIcon');
+  const creationDialogLocation = document.getElementById('creationDialogLocation');
+  const creationInputName = document.getElementById('creationInputName');
+  const btnCancelCreation = document.getElementById('btnCancelCreation');
+  const btnCreationCancelAction = document.getElementById('btnCreationCancelAction');
+  const btnCreationSubmitAction = document.getElementById('btnCreationSubmitAction');
+
+  let currentTargetDir = ''; // '' represents root 'coba', or e.g. 'app', 'css', 'js'
+  let currentTargetFolderEl = null;
+  let currentCreationMode = 'file'; // 'file' or 'folder'
+
+  function updateActiveDir(dir, folderEl) {
+    currentTargetDir = dir || '';
+    currentTargetFolderEl = folderEl || null;
+
+    // Highlight target folder in tree
+    document.querySelectorAll('.tree-folder').forEach(f => f.classList.remove('active-target'));
+    if (folderEl) {
+      folderEl.classList.add('active-target');
+    }
+
+    const displayLabel = dir ? `/${dir}` : 'Root';
+    if (targetDirBadge) targetDirBadge.textContent = displayLabel;
+    if (labelNewFileTarget) labelNewFileTarget.textContent = `Create in ${displayLabel}`;
+    if (labelNewFolderTarget) labelNewFolderTarget.textContent = `Create folder in ${displayLabel}`;
+    if (creationDialogLocation) creationDialogLocation.textContent = dir ? `/${dir}` : 'Root (coba)';
+  }
+
+  // Bind active dir selection on tree folders
+  treeFolders.forEach(folder => {
+    const header = folder.querySelector(':scope > .folder-header');
+    if (header) {
+      header.addEventListener('click', () => {
+        const folderDir = folder.getAttribute('data-folder') || '';
+        updateActiveDir(folderDir, folder);
+      });
+    }
+  });
+
+  // Bind active dir selection on file items
+  fileItems.forEach(item => {
+    item.addEventListener('click', () => {
+      const filePath = item.getAttribute('data-file') || '';
+      const fileDir = filePath.includes('/') ? filePath.substring(0, filePath.lastIndexOf('/')) : '';
+      const parentFolder = item.closest('.tree-folder');
+      updateActiveDir(fileDir, parentFolder);
+    });
+  });
+
+  // 1. Toggle Overflow Dropdown Menu (⋮)
+  if (btnMoreActions && dropdownMenu) {
+    btnMoreActions.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      const isVisible = dropdownMenu.style.display !== 'none';
+      dropdownMenu.style.display = isVisible ? 'none' : 'block';
+      btnMoreActions.classList.toggle('active', !isVisible);
+    });
+
+    // Close when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!dropdownMenu.contains(e.target) && e.target !== btnMoreActions && !btnMoreActions.contains(e.target)) {
+        dropdownMenu.style.display = 'none';
+        btnMoreActions.classList.remove('active');
+      }
+    });
+  }
+
+  // 2. Open / Close Creation Dialog
+  function openCreationDialog(mode) {
+    currentCreationMode = mode;
+    if (dropdownMenu) dropdownMenu.style.display = 'none';
+    if (btnMoreActions) btnMoreActions.classList.remove('active');
+
+    if (creationDialog) {
+      creationDialog.style.display = 'block';
+      if (mode === 'file') {
+        if (creationDialogIcon) creationDialogIcon.textContent = '📄';
+        if (creationDialogTitle) creationDialogTitle.textContent = 'New File';
+        if (creationInputName) {
+          creationInputName.placeholder = 'e.g. MyComponent.jsx';
+          creationInputName.value = '';
+          setTimeout(() => creationInputName.focus(), 60);
+        }
+      } else {
+        if (creationDialogIcon) creationDialogIcon.textContent = '📁';
+        if (creationDialogTitle) creationDialogTitle.textContent = 'New Folder';
+        if (creationInputName) {
+          creationInputName.placeholder = 'e.g. utils, hooks, services';
+          creationInputName.value = '';
+          setTimeout(() => creationInputName.focus(), 60);
+        }
+      }
+    }
+  }
+
+  function closeCreationDialog() {
+    if (creationDialog) creationDialog.style.display = 'none';
+    if (creationInputName) creationInputName.value = '';
+  }
+
+  if (menuItemNewFile) {
+    menuItemNewFile.addEventListener('click', (e) => {
+      e.preventDefault();
+      openCreationDialog('file');
+    });
+  }
+
+  if (menuItemNewFolder) {
+    menuItemNewFolder.addEventListener('click', (e) => {
+      e.preventDefault();
+      openCreationDialog('folder');
+    });
+  }
+
+  if (btnCancelCreation) {
+    btnCancelCreation.addEventListener('click', (e) => {
+      e.preventDefault();
+      closeCreationDialog();
+    });
+  }
+
+  if (btnCreationCancelAction) {
+    btnCreationCancelAction.addEventListener('click', (e) => {
+      e.preventDefault();
+      closeCreationDialog();
+    });
+  }
+
+  // 3. Submit New File or Folder
+  function handleSubmitCreation() {
+    if (!creationInputName) return;
+    const rawVal = creationInputName.value.trim();
+    if (!rawVal) {
+      creationInputName.focus();
+      return;
+    }
+
+    const treeBody = document.getElementById('explorerTreeBody');
+    const targetChildren = currentTargetFolderEl
+      ? (currentTargetFolderEl.querySelector(':scope > .tree-children') || currentTargetFolderEl)
+      : treeBody;
+
+    if (currentCreationMode === 'file') {
+      // === CREATE NEW FILE ===
+      const finalName = rawVal.includes('.') ? rawVal : `${rawVal}.jsx`;
+      const fullPath = currentTargetDir ? `${currentTargetDir}/${finalName}` : finalName;
+
+      // Determine language & icon
+      let lang = 'React JSX';
+      let icon = '⚛';
+      let starterCode = `// ${fullPath}\n\nexport default function ${finalName.replace(/[^a-zA-Z0-9]/g, '')}() {\n  return (\n    <div className="p-6 rounded-2xl bg-white border border-slate-100 shadow-sm">\n      <h2 className="text-lg font-bold text-slate-900">${finalName}</h2>\n      <p className="text-sm text-slate-500 mt-1">Component synthesized via Zenith File Explorer.</p>\n    </div>\n  );\n}\n`;
+
+      if (finalName.endsWith('.css')) {
+        lang = 'CSS';
+        icon = '🎨';
+        starterCode = `/* ${fullPath} */\n.${finalName.replace('.css', '')} {\n  display: block;\n  box-sizing: border-box;\n}\n`;
+      } else if (finalName.endsWith('.json')) {
+        lang = 'JSON';
+        icon = '📦';
+        starterCode = `{\n  "name": "${finalName.replace('.json', '')}",\n  "version": "1.0.0"\n}\n`;
+      } else if (finalName.endsWith('.md')) {
+        lang = 'Markdown';
+        icon = '📝';
+        starterCode = `# ${finalName}\n\nDocumentation created in Zenith Workspace.\n`;
+      } else if (finalName.endsWith('.js')) {
+        lang = 'JavaScript';
+        icon = '📜';
+        starterCode = `// ${fullPath}\nexport function ${finalName.replace(/[^a-zA-Z0-9]/g, '')}() {\n  return true;\n}\n`;
+      }
+
+      // Add to database
+      FILE_DATABASE[fullPath] = {
+        name: finalName,
+        dir: currentTargetDir || 'coba',
+        path: fullPath,
+        lang: lang,
+        icon: icon,
+        code: starterCode
+      };
+
+      // Add to DOM Tree
+      if (targetChildren) {
+        const newFileEl = document.createElement('div');
+        newFileEl.className = 'tree-item file-item';
+        newFileEl.setAttribute('data-file', fullPath);
+        newFileEl.innerHTML = `
+          <span class="file-icon">${icon}</span>
+          <span class="tree-label">${finalName}</span>
+          <span class="file-meta">Just now</span>
+        `;
+        newFileEl.addEventListener('click', (e) => {
+          e.stopPropagation();
+          openDocumentTab(fullPath);
+        });
+
+        targetChildren.appendChild(newFileEl);
+        if (currentTargetFolderEl) currentTargetFolderEl.classList.add('open');
+      }
+
+      closeCreationDialog();
+      showToastFeedback(`📄 File '${finalName}' dibuat di ${currentTargetDir ? '/' + currentTargetDir : 'root'}!`);
+      openDocumentTab(fullPath);
+
+    } else {
+      // === CREATE NEW FOLDER ===
+      const folderName = rawVal.replace(/[^a-zA-Z0-9_.-]/g, '');
+      if (!folderName) return;
+
+      const fullFolderDir = currentTargetDir ? `${currentTargetDir}/${folderName}` : folderName;
+
+      if (targetChildren) {
+        const newFolderEl = document.createElement('div');
+        newFolderEl.className = 'tree-folder open';
+        newFolderEl.setAttribute('data-folder', fullFolderDir);
+        newFolderEl.innerHTML = `
+          <div class="tree-item folder-header">
+            <span class="tree-arrow">
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2.5">
+                <polyline points="6 9 12 15 18 9" />
+              </svg>
+            </span>
+            <span class="folder-icon">📁</span>
+            <span class="tree-label">${folderName}</span>
+          </div>
+          <div class="tree-children"></div>
+        `;
+
+        const header = newFolderEl.querySelector('.folder-header');
+        header.addEventListener('click', (e) => {
+          e.stopPropagation();
+          newFolderEl.classList.toggle('open');
+          updateActiveDir(fullFolderDir, newFolderEl);
+        });
+
+        targetChildren.appendChild(newFolderEl);
+        if (currentTargetFolderEl) currentTargetFolderEl.classList.add('open');
+        updateActiveDir(fullFolderDir, newFolderEl);
+      }
+
+      closeCreationDialog();
+      showToastFeedback(`📁 Folder '${folderName}' dibuat di ${currentTargetDir ? '/' + currentTargetDir : 'root'}!`);
+    }
+  }
+
+  if (btnCreationSubmitAction) {
+    btnCreationSubmitAction.addEventListener('click', (e) => {
+      e.preventDefault();
+      handleSubmitCreation();
+    });
+  }
+
+  if (creationInputName) {
+    creationInputName.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        handleSubmitCreation();
+      } else if (e.key === 'Escape') {
+        e.preventDefault();
+        closeCreationDialog();
+      }
+    });
+  }
+
+  // 4. Handle Upload Folder
+  if (menuItemUploadFolder && folderUploadInput) {
+    menuItemUploadFolder.addEventListener('click', (e) => {
+      e.preventDefault();
+      if (dropdownMenu) dropdownMenu.style.display = 'none';
+      if (btnMoreActions) btnMoreActions.classList.remove('active');
+      folderUploadInput.click();
+    });
+
+    folderUploadInput.addEventListener('change', async (e) => {
+      const files = Array.from(e.target.files || []);
+      if (files.length === 0) return;
+
+      let rootFolderName = 'uploaded-folder';
+      if (files[0].webkitRelativePath) {
+        rootFolderName = files[0].webkitRelativePath.split('/')[0];
+      }
+
+      const treeBody = document.getElementById('explorerTreeBody');
+      const targetChildren = currentTargetFolderEl
+        ? (currentTargetFolderEl.querySelector(':scope > .tree-children') || currentTargetFolderEl)
+        : treeBody;
+
+      const fullUploadedDir = currentTargetDir ? `${currentTargetDir}/${rootFolderName}` : rootFolderName;
+
+      const newFolderEl = document.createElement('div');
+      newFolderEl.className = 'tree-folder open';
+      newFolderEl.setAttribute('data-folder', fullUploadedDir);
+      newFolderEl.innerHTML = `
+        <div class="tree-item folder-header">
+          <span class="tree-arrow">
+            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2.5">
+              <polyline points="6 9 12 15 18 9" />
+            </svg>
+          </span>
+          <span class="folder-icon">📁</span>
+          <span class="tree-label">${rootFolderName}</span>
+        </div>
+        <div class="tree-children"></div>
+      `;
+
+      const header = newFolderEl.querySelector('.folder-header');
+      header.addEventListener('click', (ev) => {
+        ev.stopPropagation();
+        newFolderEl.classList.toggle('open');
+        updateActiveDir(fullUploadedDir, newFolderEl);
+      });
+
+      const childrenContainer = newFolderEl.querySelector('.tree-children');
+      let firstFileToOpen = null;
+
+      for (const file of files) {
+        let relativePath = file.webkitRelativePath || `${rootFolderName}/${file.name}`;
+        if (currentTargetDir) {
+          relativePath = `${currentTargetDir}/${relativePath}`;
+        }
+        let content = '';
+        try {
+          content = await file.text();
+        } catch (_) {
+          content = `// Content for ${file.name}\n`;
+        }
+
+        const fileName = file.name;
+        const ext = fileName.split('.').pop().toLowerCase();
+        const lang = ext === 'jsx' || ext === 'tsx' ? 'React JSX' : (ext === 'css' ? 'CSS' : (ext === 'json' ? 'JSON' : (ext === 'md' ? 'Markdown' : 'JavaScript')));
+        const icon = ext === 'jsx' ? '⚛' : (ext === 'css' ? '🎨' : (ext === 'json' ? '📦' : (ext === 'md' ? '📝' : '📜')));
+
+        FILE_DATABASE[relativePath] = {
+          name: fileName,
+          dir: relativePath.includes('/') ? relativePath.substring(0, relativePath.lastIndexOf('/')) : rootFolderName,
+          path: relativePath,
+          lang: lang,
+          icon: icon,
+          code: content || `// ${relativePath}\n`
+        };
+
+        const itemEl = document.createElement('div');
+        itemEl.className = 'tree-item file-item';
+        itemEl.setAttribute('data-file', relativePath);
+        itemEl.innerHTML = `
+          <span class="file-icon">${icon}</span>
+          <span class="tree-label">${fileName}</span>
+          <span class="file-meta">${(file.size / 1024).toFixed(1)} KB</span>
+        `;
+        itemEl.addEventListener('click', (ev) => {
+          ev.stopPropagation();
+          openDocumentTab(relativePath);
+        });
+
+        childrenContainer.appendChild(itemEl);
+
+        if (!firstFileToOpen && (ext === 'jsx' || ext === 'js' || ext === 'css' || ext === 'json')) {
+          firstFileToOpen = relativePath;
+        }
+      }
+
+      if (targetChildren) {
+        targetChildren.appendChild(newFolderEl);
+        if (currentTargetFolderEl) currentTargetFolderEl.classList.add('open');
+      }
+
+      showToastFeedback(`📂 Folder '${rootFolderName}' berhasil diunggah (${files.length} file)!`);
+
+      if (firstFileToOpen) {
+        openDocumentTab(firstFileToOpen);
+      }
+
+      folderUploadInput.value = '';
+    });
+  }
+}
+
+/**
+ * FEATURE: BOTTOM LOG DRAWER & VERTICAL RESIZING
+ * Handles toolbar toggle, vertical drag-to-resize, height toggle, log filters, and clear.
+ */
+function initPreviewLogDrawer() {
+  const btnToggle = document.getElementById('btnToggleLogDrawer');
+  const drawer = document.getElementById('previewLogDrawer');
+  const btnClose = document.getElementById('btnCloseLogDrawer');
+  const btnClear = document.getElementById('btnClearLogs');
+  const btnToggleHeight = document.getElementById('btnLogToggleHeight');
+  const resizer = document.getElementById('logDrawerResizer');
+  const previewPane = document.querySelector('.workspace-preview-pane');
+  const filterBtns = document.querySelectorAll('.log-filter-btn');
+  const logBody = document.getElementById('logDrawerBody');
+
+  if (!drawer || !btnToggle) return;
+
+  function setDrawerOpen(open) {
+    if (open) {
+      drawer.classList.add('open');
+      btnToggle.classList.add('active');
+    } else {
+      drawer.classList.remove('open');
+      btnToggle.classList.remove('active');
+    }
+  }
+
+  function toggleDrawer() {
+    const isOpen = drawer.classList.contains('open');
+    setDrawerOpen(!isOpen);
+  }
+
+  btnToggle.addEventListener('click', (e) => {
+    e.preventDefault();
+    toggleDrawer();
+  });
+
+  if (btnClose) {
+    btnClose.addEventListener('click', (e) => {
+      e.preventDefault();
+      setDrawerOpen(false);
+    });
+  }
+
+  // Quick Height Toggle (Half vs Expanded)
+  if (btnToggleHeight) {
+    btnToggleHeight.addEventListener('click', (e) => {
+      e.preventDefault();
+      if (drawer.classList.contains('expanded-height')) {
+        drawer.classList.remove('expanded-height');
+        drawer.style.height = '48%';
+        btnToggleHeight.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="18 15 12 9 6 15"/></svg>`;
+        btnToggleHeight.title = 'Perluas tinggi panel log';
+      } else {
+        drawer.classList.add('expanded-height');
+        drawer.style.height = '82%';
+        btnToggleHeight.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>`;
+        btnToggleHeight.title = 'Kembalikan setengah layar';
+      }
+    });
+  }
+
+  // Log Filter Pills
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      filterBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const filter = btn.getAttribute('data-filter');
+      const logRows = logBody.querySelectorAll('.log-entry');
+      logRows.forEach(row => {
+        const level = row.getAttribute('data-level');
+        if (filter === 'all') {
+          row.style.display = 'flex';
+        } else if (filter === 'info') {
+          row.style.display = (level === 'info' || level === 'vite' || level === 'success') ? 'flex' : 'none';
+        } else if (filter === 'warn') {
+          row.style.display = (level === 'warn') ? 'flex' : 'none';
+        } else if (filter === 'error') {
+          row.style.display = (level === 'error') ? 'flex' : 'none';
+        }
+      });
+    });
+  });
+
+  // Clear Logs
+  if (btnClear) {
+    btnClear.addEventListener('click', (e) => {
+      e.preventDefault();
+      if (logBody) {
+        logBody.innerHTML = `
+          <div class="log-entry log-cleared">
+            <span class="log-time">[${new Date().toLocaleTimeString('en-US', {hour12: false})}]</span>
+            <span class="log-msg">Console dibersihkan. Menunggu output runtime berikutnya...</span>
+          </div>`;
+        showToastFeedback('Log runtime dibersihkan');
+      }
+    });
+  }
+
+  // Drag-to-Resize Logic on Top Resizer Bar
+  let isResizing = false;
+  let startY = 0;
+  let startHeight = 0;
+
+  if (resizer && previewPane) {
+    resizer.addEventListener('mousedown', (e) => {
+      e.preventDefault();
+      isResizing = true;
+      startY = e.clientY;
+      startHeight = drawer.getBoundingClientRect().height;
+      drawer.classList.add('resizing');
+      document.body.style.cursor = 'row-resize';
+      document.body.style.userSelect = 'none';
+
+      function onMouseMove(e) {
+        if (!isResizing) return;
+        const deltaY = startY - e.clientY;
+        const newHeight = startHeight + deltaY;
+        const paneHeight = previewPane.getBoundingClientRect().height;
+        const minHeight = 110;
+        const maxHeight = paneHeight - 65;
+
+        if (newHeight >= minHeight && newHeight <= maxHeight) {
+          drawer.style.height = `${newHeight}px`;
+        }
+      }
+
+      function onMouseUp() {
+        isResizing = false;
+        drawer.classList.remove('resizing');
+        document.body.style.cursor = '';
+        document.body.style.userSelect = '';
+        window.removeEventListener('mousemove', onMouseMove);
+        window.removeEventListener('mouseup', onMouseUp);
+      }
+
+      window.addEventListener('mousemove', onMouseMove);
+      window.addEventListener('mouseup', onMouseUp);
+    });
+  }
+}
+
+/**
+ * ==========================================================================
+ * FEATURE: DOCUMENT TABS, CODE EDITOR & BREADCRUMB MANAGER
+ * Opens files as tabs alongside Preview, supports syntax highlighting, line numbers,
+ * independent tab closing (X), breadcrumb trail, and copy code.
+ * ==========================================================================
+ */
+let currentActiveFilePath = 'preview';
+
+const FILE_DATABASE = {
+  'app/page.jsx': {
+    name: 'page.jsx',
+    dir: 'app',
+    path: 'app/page.jsx',
+    lang: 'React JSX',
+    icon: '⚛',
+    code: `import React, { useState } from 'react';
+import Header from './components/Header';
+import BeautyCard from './components/BeautyCard';
+import BagModal from './components/BagModal';
+
+export default function HomePage() {
+  const [bag, setBag] = useState([
+    { id: 1, name: 'Velvet Rose Mist', price: 149000, quantity: 1 }
+  ]);
+  const [isBagOpen, setIsBagOpen] = useState(false);
+
+  const products = [
+    { id: 1, name: 'Velvet Rose Mist', category: 'SKINCARE', price: 149000, rating: 4.9, reviews: 128 },
+    { id: 2, name: 'Silk Petal Serum', category: 'BESTSELLER', price: 219000, rating: 5.0, reviews: 245 },
+    { id: 3, name: 'Peony Blossom Dew Lip Oil', category: 'GLOW', price: 98000, rating: 4.9, reviews: 96 }
+  ];
+
+  const handleAddToBag = (product) => {
+    setBag(prev => [...prev, { ...product, quantity: 1 }]);
+    setIsBagOpen(true);
+  };
+
+  return (
+    <div className="store-container min-h-screen bg-rose-50/30">
+      <Header cartCount={bag.length} onOpenCart={() => setIsBagOpen(true)} />
+      
+      <main className="max-w-7xl mx-auto px-6 py-12">
+        {/* Hero Section */}
+        <section className="hero-banner rounded-3xl p-10 bg-gradient-to-r from-rose-100 to-pink-50 shadow-sm">
+          <span className="text-xs font-bold tracking-widest text-rose-600 uppercase">Botanical Luxury</span>
+          <h1 className="text-4xl font-extrabold text-slate-900 mt-2">Radiance from Pure Petals</h1>
+          <p className="text-slate-600 mt-3 max-w-lg">
+            Sustainably harvested damask rose essence and cold-pressed botanical oils formulated for glass-skin hydration.
+          </p>
+        </section>
+
+        {/* Featured Products Grid */}
+        <section className="product-grid grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
+          {products.map(product => (
+            <BeautyCard key={product.id} product={product} onAdd={handleAddToBag} />
+          ))}
+        </section>
+      </main>
+
+      {isBagOpen && <BagModal items={bag} onClose={() => setIsBagOpen(false)} />}
+    </div>
+  );
+}`
+  },
+  'app/layout.jsx': {
+    name: 'layout.jsx',
+    dir: 'app',
+    path: 'app/layout.jsx',
+    lang: 'React JSX',
+    icon: '⚛',
+    code: `import React from 'react';
+import './globals.css';
+
+export const metadata = {
+  title: 'Rose & Petal — Botanical Luxury Beauty',
+  description: 'Clean organic beauty and skincare formulated with cold-pressed rose extracts.',
+  keywords: ['skincare', 'botanical beauty', 'rose petal', 'organic cosmetics']
+};
+
+export default function RootLayout({ children }) {
+  return (
+    <html lang="id" className="font-sans antialiased">
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link 
+          href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" 
+          rel="stylesheet" 
+        />
+      </head>
+      <body className="bg-[#fbfcfe] text-[#111827] selection:bg-rose-200">
+        <div className="app-shell flex flex-col min-h-screen">
+          {children}
+        </div>
+      </body>
+    </html>
+  );
+}`
+  },
+  'app/components/Header.jsx': {
+    name: 'Header.jsx',
+    dir: 'app/components',
+    path: 'app/components/Header.jsx',
+    lang: 'React JSX',
+    icon: '⚛',
+    code: `import React from 'react';
+
+export default function Header({ cartCount = 0, onOpenCart }) {
+  return (
+    <header className="beauty-nav flex items-center justify-between px-8 py-4 bg-white/80 backdrop-blur border-b border-rose-100 sticky top-0 z-30">
+      <div className="flex items-center gap-3">
+        <span className="text-2xl">🌸</span>
+        <div>
+          <span className="font-bold text-lg text-slate-900 tracking-tight">Rose &amp; Petal</span>
+          <span className="block text-[11px] font-semibold text-rose-500 uppercase tracking-widest">Atelier Paris</span>
+        </div>
+      </div>
+
+      <nav className="hidden md:flex items-center gap-6 text-sm font-medium text-slate-600">
+        <a href="#serums" className="hover:text-rose-600 transition-colors">Serums</a>
+        <a href="#creams" className="hover:text-rose-600 transition-colors">Creams</a>
+        <a href="#lipcare" className="hover:text-rose-600 transition-colors">Lip Care</a>
+        <a href="#rituals" className="hover:text-rose-600 transition-colors">Rituals</a>
+      </nav>
+
+      <button 
+        type="button" 
+        onClick={onOpenCart}
+        className="relative flex items-center gap-2 px-4 py-2 rounded-full bg-rose-50 text-rose-700 font-semibold text-sm hover:bg-rose-100 transition-all"
+      >
+        <span>👜 Bag</span>
+        <span className="w-5 h-5 rounded-full bg-rose-600 text-white text-xs flex items-center justify-center font-bold">
+          {cartCount}
+        </span>
+      </button>
+    </header>
+  );
+}`
+  },
+  'app/components/BeautyCard.jsx': {
+    name: 'BeautyCard.jsx',
+    dir: 'app/components',
+    path: 'app/components/BeautyCard.jsx',
+    lang: 'React JSX',
+    icon: '⚛',
+    code: `import React from 'react';
+
+export default function BeautyCard({ product, onAdd }) {
+  const formatRupiah = (val) => new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(val);
+
+  return (
+    <article className="beauty-card group rounded-2xl bg-white p-5 border border-slate-100 shadow-sm hover:shadow-md transition-all hover:-translate-y-1">
+      <div className="relative aspect-square rounded-xl bg-gradient-to-tr from-rose-50 to-pink-50 flex items-center justify-center text-5xl mb-4 overflow-hidden">
+        <span className="absolute top-3 left-3 text-[10px] font-bold px-2 py-0.5 rounded-full bg-white/90 text-rose-600 uppercase tracking-wider">
+          #{product.category}
+        </span>
+        <span className="group-hover:scale-110 transition-transform duration-300">
+          {product.category === 'SKINCARE' ? '🌹' : product.category === 'BESTSELLER' ? '✨' : '💄'}
+        </span>
+      </div>
+
+      <h3 className="font-bold text-slate-800 text-base leading-snug group-hover:text-rose-700 transition-colors">
+        {product.name}
+      </h3>
+
+      <div className="flex items-center gap-1.5 text-xs text-amber-500 mt-1 font-semibold">
+        <span>★ {product.rating.toFixed(1)}</span>
+        <span className="text-slate-400 font-normal">({product.reviews} ulasan)</span>
+      </div>
+
+      <div className="flex items-center justify-between mt-4 pt-3 border-t border-slate-50">
+        <span className="font-extrabold text-slate-900 text-base">
+          {formatRupiah(product.price)}
+        </span>
+        <button
+          type="button"
+          onClick={() => onAdd(product)}
+          className="px-3.5 py-1.5 rounded-lg bg-slate-900 text-white text-xs font-semibold hover:bg-rose-600 transition-colors"
+        >
+          + Add to Bag
+        </button>
+      </div>
+    </article>
+  );
+}`
+  },
+  'app/components/BagModal.jsx': {
+    name: 'BagModal.jsx',
+    dir: 'app/components',
+    path: 'app/components/BagModal.jsx',
+    lang: 'React JSX',
+    icon: '⚛',
+    code: `import React from 'react';
+
+export default function BagModal({ items = [], onClose }) {
+  const total = items.reduce((acc, item) => acc + item.price * item.quantity, 0);
+
+  return (
+    <div className="fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-sm flex justify-end">
+      <div className="w-full max-w-md bg-white h-full p-6 flex flex-col shadow-2xl">
+        <div className="flex items-center justify-between pb-4 border-b">
+          <h2 className="text-lg font-bold text-slate-900">Your Shopping Bag ({items.length})</h2>
+          <button type="button" onClick={onClose} className="p-1 rounded-full hover:bg-slate-100 text-slate-500">
+            ✕
+          </button>
+        </div>
+
+        <div className="flex-1 overflow-y-auto py-4 space-y-3">
+          {items.map((item, idx) => (
+            <div key={idx} className="flex items-center justify-between p-3 rounded-xl bg-slate-50 border">
+              <div>
+                <p className="font-semibold text-sm text-slate-800">{item.name}</p>
+                <p className="text-xs text-rose-600 font-medium">Rp {item.price.toLocaleString('id-ID')} &times; {item.quantity}</p>
+              </div>
+              <span className="text-xl">🌸</span>
+            </div>
+          ))}
+        </div>
+
+        <div className="pt-4 border-t space-y-3">
+          <div className="flex justify-between font-bold text-base">
+            <span>Subtotal</span>
+            <span>Rp {total.toLocaleString('id-ID')}</span>
+          </div>
+          <button type="button" className="w-full py-3 rounded-xl bg-rose-600 text-white font-bold hover:bg-rose-700 transition-colors shadow-lg shadow-rose-200">
+            Checkout Securely
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}`
+  },
+  'app/globals.css': {
+    name: 'globals.css',
+    dir: 'app',
+    path: 'app/globals.css',
+    lang: 'CSS',
+    icon: '🎨',
+    code: `@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --primary-rose: #e11d48;
+  --bg-atelier: #fbfcfe;
+  --font-body: 'Plus Jakarta Sans', sans-serif;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--bg-atelier);
+  color: #111827;
+}
+
+.beauty-card {
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease;
+}
+
+.beauty-card:hover {
+  transform: translateY(-2px);
+}`
+  },
+  'css/tokens.css': {
+    name: 'tokens.css',
+    dir: 'css',
+    path: 'css/tokens.css',
+    lang: 'CSS',
+    icon: '🎨',
+    code: `:root {
+  --zenith-primary: #2d5584;
+  --zenith-primary-hover: #39689e;
+  --zenith-primary-active: #224166;
+  --zenith-primary-light: #f0f4f9;
+  --bg-app: #fbfcfe;
+  --bg-surface: #ffffff;
+  --text-primary: #111827;
+  --text-muted: #64748b;
+  --font-sans: 'Plus Jakarta Sans', 'Inter', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}`
+  },
+  'package.json': {
+    name: 'package.json',
+    dir: 'coba',
+    path: 'package.json',
+    lang: 'JSON',
+    icon: '📦',
+    code: `{
+  "name": "zenith-coba-project",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "next": "^15.0.0",
+    "lucide-react": "^0.460.0",
+    "tailwindcss": "^3.4.1"
+  }
+}`
+  },
+  'README.md': {
+    name: 'README.md',
+    dir: 'coba',
+    path: 'README.md',
+    lang: 'Markdown',
+    icon: '📝',
+    code: `# Zenith Coba — Rose & Petal Atelier 🌸
+
+Full-stack luxury e-commerce prototype synthesized with **Next.js 15 & React 19**.
+
+## Features
+- ✨ Glassmorphic luxury beauty catalog
+- 🛍️ Dynamic interactive shopping bag store
+- 📦 PostgreSQL Compose backend integration
+- 🚀 Real-time Vite HMR development watcher
+
+## Getting Started
+\`\`\`bash
+npm install
+npm run dev
+\`\`\`
+
+Open [http://localhost:3000](http://localhost:3000) to view the live preview.
+`
+  }
+};
+
+/**
+ * Formats raw code with HTML syntax highlighting tokens (Single-pass tokenization)
+ */
+function formatCodeWithSyntax(rawCode, lang) {
+  const escaped = rawCode
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+
+  if (lang === 'React JSX' || lang === 'JavaScript') {
+    const tokenRegex = /(\/\/[^\n]*)|("(?:\\.|[^"\\])*"|'(?:\\.|[^'\\])*'|`(?:\\.|[^`\\])*`)|(\b(?:import|export|default|function|const|let|var|return|from|if|else|new|class|extends|async|await)\b)|(\b(?:useState|useEffect|useMemo|useCallback|useRef)\b)|(&lt;\/?[A-Z][a-zA-Z0-9]*)|(&lt;\/?[a-z][a-z0-9-]*)|(\b[a-zA-Z_][a-zA-Z0-9_]*(?=\s*=))|(\b\d+\b)/g;
+
+    return escaped.replace(tokenRegex, (match, comment, str, keyword, hook, comp, tag, attr, num) => {
+      if (comment) return `<span class="syn-comment">${comment}</span>`;
+      if (str) return `<span class="syn-string">${str}</span>`;
+      if (keyword) return `<span class="syn-keyword">${keyword}</span>`;
+      if (hook) return `<span class="syn-fn">${hook}</span>`;
+      if (comp) return `<span class="syn-component">${comp}</span>`;
+      if (tag) return `<span class="syn-tag">${tag}</span>`;
+      if (attr) return `<span class="syn-attr">${attr}</span>`;
+      if (num) return `<span class="syn-num">${num}</span>`;
+      return match;
+    });
+  } else if (lang === 'CSS') {
+    const tokenRegex = /(\/\*[\s\S]*?\*\/)|(@[a-zA-Z-]+)|(--[a-zA-Z0-9-]+(?=\s*:))|([a-zA-Z-]+(?=\s*:))|(#[0-9a-fA-F]{3,8}|rgba?\([^)]*\)|"(?:\\.|[^"\\])*"|'(?:\\.|[^'\\])*')|(\b\d+(?:px|rem|em|%|ms|s)?\b)/g;
+
+    return escaped.replace(tokenRegex, (match, comment, atRule, cssVar, prop, val, num) => {
+      if (comment) return `<span class="syn-comment">${comment}</span>`;
+      if (atRule) return `<span class="syn-keyword">${atRule}</span>`;
+      if (cssVar) return `<span class="syn-attr">${cssVar}</span>`;
+      if (prop) return `<span class="syn-keyword">${prop}</span>`;
+      if (val) return `<span class="syn-string">${val}</span>`;
+      if (num) return `<span class="syn-num">${num}</span>`;
+      return match;
+    });
+  } else if (lang === 'JSON') {
+    const tokenRegex = /("(?:\\.|[^"\\])*"(?=\s*:))|("(?:\\.|[^"\\])*")|(\b(?:true|false|null)\b)|(\b\d+\b)/g;
+
+    return escaped.replace(tokenRegex, (match, key, str, bool, num) => {
+      if (key) return `<span class="syn-attr">${key}</span>`;
+      if (str) return `<span class="syn-string">${str}</span>`;
+      if (bool) return `<span class="syn-keyword">${bool}</span>`;
+      if (num) return `<span class="syn-num">${num}</span>`;
+      return match;
+    });
+  } else {
+    // Markdown
+    return escaped
+      .replace(/^(#+ [^\n]+)/gm, '<span class="syn-keyword">$1</span>')
+      .replace(/(`[^`]+`)/g, '<span class="syn-string">$1</span>')
+      .replace(/(\*\*[^*]+\*\*)/g, '<span class="syn-fn">$1</span>');
+  }
+}
+
+/**
+ * Opens a file as a document tab alongside Preview
+ */
+function openDocumentTab(filePath) {
+  const tabsGroup = document.getElementById('previewTabsGroup');
+  if (!tabsGroup) return;
+
+  const fileData = FILE_DATABASE[filePath] || {
+    name: filePath.split('/').pop(),
+    dir: filePath.includes('/') ? filePath.substring(0, filePath.lastIndexOf('/')) : 'coba',
+    path: filePath,
+    lang: filePath.endsWith('.jsx') ? 'React JSX' : (filePath.endsWith('.css') ? 'CSS' : (filePath.endsWith('.json') ? 'JSON' : 'JavaScript')),
+    icon: filePath.endsWith('.jsx') ? '⚛' : (filePath.endsWith('.css') ? '🎨' : (filePath.endsWith('.js') ? '📜' : '📄')),
+    code: `// File: ${filePath}\n// Synthesized module by Zenith AI\n\nexport default function Module() {\n  return <div>Module ${filePath} loaded</div>;\n}`
+  };
+
+  // Check if tab is already opened
+  let existingTab = tabsGroup.querySelector(`.doc-tab[data-file="${filePath}"]`);
+  if (!existingTab) {
+    const newTab = document.createElement('a');
+    newTab.className = 'preview-tab-link doc-tab';
+    newTab.setAttribute('href', '#');
+    newTab.setAttribute('data-file', filePath);
+    newTab.setAttribute('role', 'tab');
+    newTab.setAttribute('title', filePath);
+    newTab.innerHTML = `
+      <span class="doc-tab-icon">${fileData.icon}</span>
+      <span class="doc-tab-title">${fileData.name}</span>
+      <button type="button" class="doc-tab-close-btn" title="Close ${fileData.name}">&times;</button>
+    `;
+
+    // Click tab activates this file
+    newTab.addEventListener('click', (e) => {
+      e.preventDefault();
+      activateDocument(filePath);
+    });
+
+    // Close button
+    const closeBtn = newTab.querySelector('.doc-tab-close-btn');
+    closeBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      closeDocumentTab(filePath);
+    });
+
+    tabsGroup.appendChild(newTab);
+  }
+
+  // Activate the document tab
+  activateDocument(filePath);
+}
+
+/**
+ * Activates a document or the Live Preview tab
+ */
+function activateDocument(filePath) {
+  const tabsGroup = document.getElementById('previewTabsGroup');
+  const tabPreview = document.getElementById('tabPreview');
+  const beautyViewport = document.getElementById('beautyPreviewViewport');
+  const emptyCanvas = document.getElementById('previewCanvasEmpty');
+  const codeViewport = document.getElementById('codeEditorViewport');
+  const breadcrumb = document.getElementById('editorBreadcrumbBar');
+  const bcDirectory = document.getElementById('bcDirectory');
+  const bcFileIcon = document.getElementById('bcFileIcon');
+  const bcFileName = document.getElementById('bcFileName');
+  const bcLangPill = document.getElementById('bcLangPill');
+  const lineNumbers = document.getElementById('editorLineNumbers');
+  const codeContent = document.getElementById('editorCodeContent');
+  const statusLines = document.getElementById('editorStatusLines');
+  const statusType = document.getElementById('editorStatusType');
+  const fileTreeItems = document.querySelectorAll('.tree-item.file-item');
+
+  if (!tabsGroup) return;
+
+  if (filePath === 'preview') {
+    // Switch to Live Preview
+    currentActiveFilePath = 'preview';
+    const allTabs = tabsGroup.querySelectorAll('.preview-tab-link');
+    allTabs.forEach(t => t.classList.remove('active'));
+    if (tabPreview) tabPreview.classList.add('active');
+
+    if (codeViewport) {
+      codeViewport.style.display = 'none';
+      codeViewport.classList.remove('active');
+    }
+    if (breadcrumb) breadcrumb.style.display = 'none';
+    if (emptyCanvas) {
+      emptyCanvas.style.display = 'none';
+    }
+    if (beautyViewport) {
+      beautyViewport.style.display = 'flex';
+      beautyViewport.classList.add('active');
+    }
+    fileTreeItems.forEach(i => i.classList.remove('active'));
+    return;
+  }
+
+  // Document File Tab
+  currentActiveFilePath = filePath;
+  const fileData = FILE_DATABASE[filePath] || {
+    name: filePath.split('/').pop(),
+    dir: filePath.includes('/') ? filePath.substring(0, filePath.lastIndexOf('/')) : 'coba',
+    path: filePath,
+    lang: 'React JSX',
+    icon: '⚛',
+    code: `// ${filePath}`
+  };
+
+  // Update tabs active state
+  const allTabs = tabsGroup.querySelectorAll('.preview-tab-link');
+  allTabs.forEach(t => t.classList.remove('active'));
+  const activeTab = tabsGroup.querySelector(`.doc-tab[data-file="${filePath}"]`);
+  if (activeTab) {
+    activeTab.classList.add('active');
+    activeTab.scrollIntoView({ behavior: 'smooth', inline: 'nearest' });
+  }
+
+  // Hide live preview & empty state, show code editor viewport
+  if (beautyViewport) {
+    beautyViewport.style.display = 'none';
+    beautyViewport.classList.remove('active');
+  }
+  if (emptyCanvas) {
+    emptyCanvas.style.display = 'none';
+  }
+  if (codeViewport) {
+    codeViewport.style.display = 'flex';
+    codeViewport.classList.add('active');
+  }
+  if (breadcrumb) {
+    breadcrumb.style.display = 'flex';
+    if (bcDirectory) bcDirectory.textContent = fileData.dir;
+    if (bcFileIcon) bcFileIcon.textContent = fileData.icon;
+    if (bcFileName) bcFileName.textContent = fileData.name;
+    if (bcLangPill) bcLangPill.textContent = fileData.lang;
+  }
+
+  // Populate code and line numbers
+  const lines = fileData.code.split('\n');
+  if (lineNumbers) {
+    lineNumbers.innerHTML = lines.map((_, idx) => `<span>${idx + 1}</span>`).join('');
+  }
+  if (codeContent) {
+    codeContent.innerHTML = formatCodeWithSyntax(fileData.code, fileData.lang);
+  }
+  if (statusLines) {
+    statusLines.textContent = `${lines.length} lines`;
+  }
+  if (statusType) {
+    statusType.textContent = fileData.lang;
+  }
+
+  // Highlight corresponding file in the tree
+  fileTreeItems.forEach(item => {
+    const itemFile = item.getAttribute('data-file');
+    if (itemFile === filePath) {
+      item.classList.add('active');
+    } else {
+      item.classList.remove('active');
+    }
+  });
+}
+
+/**
+ * Closes an open document tab independently
+ */
+function closeDocumentTab(filePath) {
+  const tabsGroup = document.getElementById('previewTabsGroup');
+  if (!tabsGroup) return;
+
+  const tabToClose = tabsGroup.querySelector(`.doc-tab[data-file="${filePath}"]`);
+  if (!tabToClose) return;
+
+  const wasActive = tabToClose.classList.contains('active');
+  const prevSibling = tabToClose.previousElementSibling;
+  const nextSibling = tabToClose.nextElementSibling;
+
+  tabToClose.remove();
+
+  if (wasActive) {
+    if (nextSibling && nextSibling.classList.contains('doc-tab')) {
+      const nextFile = nextSibling.getAttribute('data-file');
+      activateDocument(nextFile);
+    } else if (prevSibling && prevSibling.classList.contains('doc-tab')) {
+      const prevFile = prevSibling.getAttribute('data-file');
+      activateDocument(prevFile);
+    } else {
+      // Return to Live Preview
+      activateDocument('preview');
+    }
+  }
+}
+
+/**
+ * Initializes Document Tabs Manager & Clipboard Copy
+ */
+function initDocumentTabsManager() {
+  const tabPreview = document.getElementById('tabPreview');
+  const btnCopy = document.getElementById('btnCopyEditorCode');
+
+  if (tabPreview) {
+    tabPreview.addEventListener('click', (e) => {
+      e.preventDefault();
+      activateDocument('preview');
+    });
+  }
+
+  // Pre-open demo file (page.jsx) as a document tab alongside Preview
+  openDocumentTab('app/page.jsx');
+
+  if (btnCopy) {
+    btnCopy.addEventListener('click', (e) => {
+      e.preventDefault();
+      if (currentActiveFilePath && FILE_DATABASE[currentActiveFilePath]) {
+        navigator.clipboard.writeText(FILE_DATABASE[currentActiveFilePath].code).then(() => {
+          showToastFeedback(`📋 Kode '${FILE_DATABASE[currentActiveFilePath].name}' disalin ke clipboard!`);
+        }).catch(() => {
+          showToastFeedback(`📋 Kode disalin ke clipboard!`);
+        });
+      }
+    });
+  }
 }
 
 /**
