@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initContextVault();
   initContextSelectorModal();
   initTabsSwitchers();
+  initTerminalExecution();
   initChatPromptActions();
   initLivePreviewActions();
   initPreview3DotsMenu();
@@ -560,6 +561,9 @@ function initProjectManagementInteractions() {
 function initTabsSwitchers() {
   const tabChat = document.getElementById('tabChat');
   const tabTerminal = document.getElementById('tabTerminal');
+  const chatViewContainer = document.getElementById('chatViewContainer');
+  const terminalViewContainer = document.getElementById('terminalViewContainer');
+  const terminalPromptInput = document.getElementById('terminalPromptInput');
 
   if (tabChat && tabTerminal) {
     tabChat.addEventListener('click', () => {
@@ -567,6 +571,15 @@ function initTabsSwitchers() {
       tabChat.setAttribute('aria-selected', 'true');
       tabTerminal.classList.remove('active');
       tabTerminal.setAttribute('aria-selected', 'false');
+
+      if (chatViewContainer) {
+        chatViewContainer.style.display = 'flex';
+        chatViewContainer.classList.add('active');
+      }
+      if (terminalViewContainer) {
+        terminalViewContainer.style.display = 'none';
+        terminalViewContainer.classList.remove('active');
+      }
     });
 
     tabTerminal.addEventListener('click', () => {
@@ -574,6 +587,18 @@ function initTabsSwitchers() {
       tabTerminal.setAttribute('aria-selected', 'true');
       tabChat.classList.remove('active');
       tabChat.setAttribute('aria-selected', 'false');
+
+      if (chatViewContainer) {
+        chatViewContainer.style.display = 'none';
+        chatViewContainer.classList.remove('active');
+      }
+      if (terminalViewContainer) {
+        terminalViewContainer.style.display = 'flex';
+        terminalViewContainer.classList.add('active');
+        if (terminalPromptInput) {
+          setTimeout(() => terminalPromptInput.focus(), 60);
+        }
+      }
     });
   }
 
@@ -586,6 +611,250 @@ function initTabsSwitchers() {
       tab.classList.add('active');
     });
   });
+}
+
+/**
+ * Handles Interactive Terminal Execution, Shortcuts, and Command Emulation
+ */
+function initTerminalExecution() {
+  const outputBody = document.getElementById('terminalOutputBody');
+  const promptInput = document.getElementById('terminalPromptInput');
+  const btnSend = document.getElementById('btnTerminalSend');
+  const btnClear = document.getElementById('btnTerminalClear');
+  const btnRestart = document.getElementById('btnTerminalRestart');
+  const pills = document.querySelectorAll('.btn-term-pill');
+
+  if (!outputBody || !promptInput) return;
+
+  const commandHistory = ['npm run dev'];
+  let historyIndex = -1;
+
+  function escapeHtml(str) {
+    return String(str)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#039;');
+  }
+
+  function scrollToBottom() {
+    outputBody.scrollTop = outputBody.scrollHeight;
+  }
+
+  function executeCommand(rawCmd) {
+    const cmd = (rawCmd || '').trim();
+    if (!cmd) return;
+
+    // Track command history
+    if (commandHistory[commandHistory.length - 1] !== cmd) {
+      commandHistory.push(cmd);
+    }
+    historyIndex = -1;
+
+    // Handle 'clear' command directly
+    if (cmd.toLowerCase() === 'clear') {
+      outputBody.innerHTML = '';
+      promptInput.value = '';
+      return;
+    }
+
+    // Build log group
+    const logGroup = document.createElement('div');
+    logGroup.className = 'term-log-group';
+
+    const cmdLine = document.createElement('div');
+    cmdLine.className = 'term-command-line';
+    cmdLine.innerHTML = `
+      <span class="term-prompt-user">zenith@coba</span><span class="term-prompt-colon">:</span><span class="term-prompt-path">~/projects/coba</span><span class="term-prompt-symbol">$</span>
+      <span class="term-cmd-text">${escapeHtml(cmd)}</span>
+    `;
+    logGroup.appendChild(cmdLine);
+
+    const outLines = document.createElement('div');
+    outLines.className = 'term-output-lines';
+
+    const normalized = cmd.toLowerCase().trim();
+
+    if (normalized.startsWith('npm run dev') || normalized === 'npm start') {
+      outLines.innerHTML = `
+        <div class="term-line info">> coba@1.0.0 dev</div>
+        <div class="term-line info">> next dev --port 3000</div>
+        <div class="term-line success">▲ Next.js 15.0.0 (Turbopack)</div>
+        <div class="term-line success">✓ Local:   http://localhost:3000</div>
+        <div class="term-line info">○ Network: http://192.168.1.104:3000</div>
+        <div class="term-line muted">Compiled / in 324ms (158 modules)</div>
+        <div class="term-line success">✓ Turbopack live reload active on active preview frame</div>
+      `;
+    } else if (normalized.startsWith('npm run build')) {
+      outLines.innerHTML = `
+        <div class="term-line info">> coba@1.0.0 build</div>
+        <div class="term-line info">> next build</div>
+        <div class="term-line info">▲ Next.js 15.0.0</div>
+        <div class="term-line success">✓ Creating an optimized production build...</div>
+        <div class="term-line success">✓ Compiled successfully in 1.4s</div>
+        <div class="term-line info">○ Generating static pages (6/6)</div>
+        <div class="term-line success">✓ Final bundle size: 84.2 kB (gzipped)</div>
+      `;
+    } else if (normalized.startsWith('npm test') || normalized.startsWith('vitest') || normalized.startsWith('jest')) {
+      outLines.innerHTML = `
+        <div class="term-line info">RUN  v2.1.2 /d/intern/zenit_redesign</div>
+        <div class="term-line success">✓ test/components/Header.test.tsx (4 tests)</div>
+        <div class="term-line success">✓ test/api/products.test.ts (6 tests)</div>
+        <div class="term-line success">✓ test/features/cart.test.ts (5 tests)</div>
+        <div class="term-line success">Test Files  3 passed (3)</div>
+        <div class="term-line success">Tests       15 passed (15)</div>
+        <div class="term-line muted">Duration    480ms (transform 120ms, setup 42ms, collect 80ms, tests 238ms)</div>
+      `;
+    } else if (normalized === 'git status') {
+      outLines.innerHTML = `
+        <div class="term-line info">On branch main</div>
+        <div class="term-line info">Your branch is up to date with 'origin/main'.</div>
+        <div class="term-line warning">Changes not staged for commit:</div>
+        <div class="term-line muted">  (use "git add &lt;file&gt;..." to update what will be committed)</div>
+        <div class="term-line error">	modified:   app/page.jsx</div>
+        <div class="term-line error">	modified:   components/Header.jsx</div>
+        <div class="term-line error">	modified:   css/workspace.css</div>
+        <div class="term-line success">Untracked files:</div>
+        <div class="term-line success">	docs/PRD-v2.md</div>
+        <div class="term-line muted">no changes added to commit (use "git add" to stage)</div>
+      `;
+    } else if (normalized === 'git log' || normalized.startsWith('git log')) {
+      outLines.innerHTML = `
+        <div class="term-line warning">commit 9c4d18e (HEAD -> main, origin/main)</div>
+        <div class="term-line muted">Author: Zenith AI &lt;ai@zenith.engine&gt;</div>
+        <div class="term-line muted">Date:   Wed Sep 9 10:18:00 2026 +0700</div>
+        <div class="term-line">    feat(terminal): implement interactive terminal view with command runner</div>
+        <div class="term-line warning">commit 8a2f7c1</div>
+        <div class="term-line muted">Date:   Wed Sep 9 09:50:22 2026 +0700</div>
+        <div class="term-line">    feat(preview): retain fixed preview tab hierarchy and breadcrumb toggle</div>
+      `;
+    } else if (normalized.includes('docker') && (normalized.includes('ps') || normalized.includes('compose'))) {
+      outLines.innerHTML = `
+        <div class="term-line info">NAME               IMAGE              COMMAND                  SERVICE      STATUS                    PORTS</div>
+        <div class="term-line success">coba-web-1         coba-web:latest    "docker-entrypoint.s…"   coba-web     Up 3 hours (healthy)      0.0.0.0:3000->3000/tcp</div>
+        <div class="term-line success">coba-postgres-1    postgres:16-alpine "docker-entrypoint.s…"   coba-db      Up 3 hours (healthy)      0.0.0.0:5432->5432/tcp</div>
+        <div class="term-line muted">coba-redis-1       redis:7-alpine     "docker-entrypoint.s…"   coba-cache   Up 3 hours                0.0.0.0:6379->6379/tcp</div>
+      `;
+    } else if (normalized.startsWith('curl')) {
+      outLines.innerHTML = `
+        <div class="term-line info">HTTP/1.1 200 OK</div>
+        <div class="term-line info">Content-Type: application/json; charset=utf-8</div>
+        <div class="term-line info">Date: Wed, 09 Sep 2026 03:19:10 GMT</div>
+        <div class="term-line json">[</div>
+        <div class="term-line json">  { "id": 1, "name": "Rose Hydra Essence Serum", "price": 42.00, "rating": 4.9, "stock": 140 },</div>
+        <div class="term-line json">  { "id": 2, "name": "Peptide Renewal Night Cream", "price": 58.00, "rating": 4.8, "stock": 95 },</div>
+        <div class="term-line json">  { "id": 3, "name": "Botanical Cleansing Gel Oil", "price": 28.00, "rating": 4.7, "stock": 210 }</div>
+        <div class="term-line json">]</div>
+      `;
+    } else if (normalized === 'help' || normalized === '--help' || normalized === '-h') {
+      outLines.innerHTML = `
+        <div class="term-line info">⚡ Zenith Workspace Interactive Shell (v2.4.0)</div>
+        <div class="term-line muted">Common developer commands:</div>
+        <div class="term-line success">  npm run dev          Start Turbopack dev server (port 3000)</div>
+        <div class="term-line success">  npm run build        Compile production build</div>
+        <div class="term-line success">  npm test             Run test suites</div>
+        <div class="term-line success">  git status           Show git working tree status</div>
+        <div class="term-line success">  git log              Show recent commits</div>
+        <div class="term-line success">  docker compose ps    Check container status</div>
+        <div class="term-line success">  curl &lt;url&gt;           Fetch JSON / HTTP API endpoints</div>
+        <div class="term-line success">  ls / dir             List project files</div>
+        <div class="term-line success">  clear                Clear terminal output</div>
+        <div class="term-line info">Any custom command or AI directive can also be entered directly.</div>
+      `;
+    } else if (normalized === 'ls' || normalized === 'dir' || normalized.startsWith('ls ') || normalized.startsWith('dir ')) {
+      outLines.innerHTML = `
+        <div class="term-line info">total 48</div>
+        <div class="term-line success">drwxr-xr-x   8 zenith staff    256 Sep  9 10:12 app/</div>
+        <div class="term-line success">drwxr-xr-x  14 zenith staff    448 Sep  9 10:10 components/</div>
+        <div class="term-line success">drwxr-xr-x   4 zenith staff    128 Sep  9 09:30 public/</div>
+        <div class="term-line"> -rw-r--r--   1 zenith staff   1420 Sep  9 09:20 package.json</div>
+        <div class="term-line"> -rw-r--r--   1 zenith staff    620 Sep  9 09:20 tailwind.config.js</div>
+        <div class="term-line"> -rw-r--r--   1 zenith staff    812 Sep  9 09:20 tsconfig.json</div>
+        <div class="term-line"> -rw-r--r--   1 zenith staff   3140 Sep  9 09:35 openapi.yaml</div>
+      `;
+    } else if (normalized === 'whoami') {
+      outLines.innerHTML = `<div class="term-line success">zenith (developer agent · session #coba-2026)</div>`;
+    } else if (normalized === 'pwd') {
+      outLines.innerHTML = `<div class="term-line success">/workspace/projects/coba</div>`;
+    } else if (normalized === 'date') {
+      outLines.innerHTML = `<div class="term-line info">${new Date().toUTCString()}</div>`;
+    } else {
+      outLines.innerHTML = `
+        <div class="term-line info">[zenith-sh] Executing in container 'coba-runtime': "${escapeHtml(cmd)}"</div>
+        <div class="term-line success">✓ Process completed with exit code 0 (elapsed 42ms)</div>
+      `;
+    }
+
+    logGroup.appendChild(outLines);
+    outputBody.appendChild(logGroup);
+
+    promptInput.value = '';
+    scrollToBottom();
+  }
+
+  // Keyboard navigation on input
+  promptInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      executeCommand(promptInput.value);
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      if (commandHistory.length > 0 && historyIndex < commandHistory.length - 1) {
+        historyIndex++;
+        promptInput.value = commandHistory[commandHistory.length - 1 - historyIndex];
+      }
+    } else if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      if (historyIndex > 0) {
+        historyIndex--;
+        promptInput.value = commandHistory[commandHistory.length - 1 - historyIndex];
+      } else if (historyIndex === 0) {
+        historyIndex = -1;
+        promptInput.value = '';
+      }
+    }
+  });
+
+  // Run button click
+  if (btnSend) {
+    btnSend.addEventListener('click', () => {
+      executeCommand(promptInput.value);
+      promptInput.focus();
+    });
+  }
+
+  // Quick suggestion pills click
+  pills.forEach(pill => {
+    pill.addEventListener('click', () => {
+      const cmd = pill.getAttribute('data-cmd') || pill.textContent.replace(/^[▶🌿🐳🌐🧹\s]+/, '').trim();
+      executeCommand(cmd);
+      promptInput.focus();
+    });
+  });
+
+  // Clear button click
+  if (btnClear) {
+    btnClear.addEventListener('click', () => {
+      outputBody.innerHTML = '';
+      promptInput.focus();
+    });
+  }
+
+  // Restart button click
+  if (btnRestart) {
+    btnRestart.addEventListener('click', () => {
+      outputBody.innerHTML = `
+        <div class="terminal-welcome-banner">
+          <div class="term-banner-brand">⚡ ZENITH WORKSPACE CLOUD ENVIRONMENT (v2.4.0-linux-x64)</div>
+          <div class="term-banner-meta">Container: <span class="term-accent">coba-runtime</span> · Shell: <span class="term-accent">bash 5.2</span> · Node: <span class="term-accent">v20.12.0</span> · Port: <span class="term-accent">3000</span></div>
+          <div class="term-banner-note">Session restarted at ${new Date().toLocaleTimeString()}. Type shell commands or AI directives below.</div>
+        </div>
+      `;
+      promptInput.value = '';
+      promptInput.focus();
+    });
+  }
 }
 
 /**
@@ -861,7 +1130,7 @@ function initPreviewWideMode() {
  * search filter, and collapse-all actions.
  */
 function initFileExplorerSidebar() {
-  const btnToggle = document.getElementById('btnToggleFileExplorer');
+  const toggleButtons = document.querySelectorAll('.btn-toggle-file-explorer');
   const sidebar = document.getElementById('fileExplorerSidebar');
   const btnClose = document.getElementById('btnCloseFileExplorer');
   const btnCollapseAll = document.getElementById('btnExplorerCollapseAll');
@@ -875,10 +1144,10 @@ function initFileExplorerSidebar() {
   function setSidebarOpen(open) {
     if (open) {
       sidebar.classList.remove('collapsed');
-      if (btnToggle) btnToggle.classList.add('active');
+      toggleButtons.forEach(btn => btn.classList.add('active'));
     } else {
       sidebar.classList.add('collapsed');
-      if (btnToggle) btnToggle.classList.remove('active');
+      toggleButtons.forEach(btn => btn.classList.remove('active'));
     }
   }
 
@@ -887,12 +1156,12 @@ function initFileExplorerSidebar() {
     setSidebarOpen(isCurrentlyCollapsed);
   }
 
-  if (btnToggle) {
-    btnToggle.addEventListener('click', (e) => {
+  toggleButtons.forEach(btn => {
+    btn.addEventListener('click', (e) => {
       e.preventDefault();
       toggleSidebar();
     });
-  }
+  });
 
   if (btnClose) {
     btnClose.addEventListener('click', (e) => {
@@ -1507,7 +1776,7 @@ function initPreviewLogDrawer() {
  * independent tab closing (X), breadcrumb trail, and copy code.
  * ==========================================================================
  */
-let currentActiveFilePath = 'preview';
+let currentActiveFilePath = null;
 
 const FILE_DATABASE = {
   'app/page.jsx': {
@@ -1808,6 +2077,76 @@ body {
   }
 }`
   },
+  'lib/api-spec/openapi.yaml': {
+    name: 'openapi.yaml',
+    dir: 'lib/api-spec',
+    path: 'lib/api-spec/openapi.yaml',
+    lang: 'YAML',
+    icon: '📜',
+    code: `openapi: 3.0.3
+info:
+  title: Zenith Coba - Rose & Petal API Spec
+  version: 1.0.0
+  description: OpenAPI REST contracts for luxury cosmetics shopping bag and product catalog.
+servers:
+  - url: http://localhost:3000/api
+    description: Local Dev Server
+paths:
+  /products:
+    get:
+      summary: Retrieve skincare formulation catalog
+      operationId: getProducts
+      parameters:
+        - name: category
+          in: query
+          required: false
+          schema:
+            type: string
+            example: HYDRATION
+      responses:
+        '200':
+          description: Successful retrieval
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Product'
+  /bag/items:
+    post:
+      summary: Add skincare item to bag
+      operationId: addToBag
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                productId:
+                  type: integer
+                  example: 1
+                quantity:
+                  type: integer
+                  default: 1
+      responses:
+        '201':
+          description: Item added successfully
+components:
+  schemas:
+    Product:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        price:
+          type: integer
+        rating:
+          type: number
+`
+  },
   'README.md': {
     name: 'README.md',
     dir: 'coba',
@@ -1880,6 +2219,12 @@ function formatCodeWithSyntax(rawCode, lang) {
       if (num) return `<span class="syn-num">${num}</span>`;
       return match;
     });
+  } else if (lang === 'YAML' || lang === 'OpenAPI YAML') {
+    return escaped
+      .replace(/(#[^\n]*)/g, '<span class="syn-comment">$1</span>')
+      .replace(/^([ \t]*[a-zA-Z0-9_-]+:)/gm, '<span class="syn-attr">$1</span>')
+      .replace(/("(?:\\.|[^"\\])*"|'(?:\\.|[^'\\])*')/g, '<span class="syn-string">$1</span>')
+      .replace(/\b(true|false|null)\b/g, '<span class="syn-keyword">$1</span>');
   } else {
     // Markdown
     return escaped
@@ -1890,18 +2235,62 @@ function formatCodeWithSyntax(rawCode, lang) {
 }
 
 /**
- * Opens a file as a document tab alongside Preview
+ * Renders dynamic breadcrumb trail based on active file path
+ * e.g. app > components > Header.jsx or lib > api-spec > openapi.yaml
+ */
+function renderBreadcrumb(filePath) {
+  const bcTrail = document.getElementById('bcTrail');
+  if (!bcTrail) return;
+
+  const fileData = FILE_DATABASE[filePath] || {
+    name: filePath.split('/').pop(),
+    lang: filePath.endsWith('.jsx') ? 'React JSX' : (filePath.endsWith('.yaml') || filePath.endsWith('.yml') ? 'YAML' : 'JavaScript'),
+    icon: filePath.endsWith('.jsx') ? '⚛' : (filePath.endsWith('.yaml') || filePath.endsWith('.yml') ? '📜' : (filePath.endsWith('.css') ? '🎨' : '📄'))
+  };
+
+  const segments = filePath.split('/');
+  const fileName = segments[segments.length - 1];
+  const dirSegments = segments.slice(0, segments.length - 1);
+
+  let html = '';
+  dirSegments.forEach((seg) => {
+    html += `<span class="bc-item bc-dir">${seg}</span>`;
+    html += `<span class="bc-sep">&gt;</span>`;
+  });
+
+  html += `
+    <span class="bc-item bc-file">
+      <span class="bc-file-icon">${fileData.icon || '📄'}</span>
+      <span class="bc-file-name">${fileName}</span>
+    </span>
+  `;
+
+  bcTrail.innerHTML = html;
+
+  const bcLangPill = document.getElementById('bcLangPill');
+  if (bcLangPill) {
+    bcLangPill.textContent = fileData.lang || 'React JSX';
+  }
+}
+
+/**
+ * Opens a file as a document tab alongside the fixed Preview tab.
  */
 function openDocumentTab(filePath) {
   const tabsGroup = document.getElementById('previewTabsGroup');
   if (!tabsGroup) return;
 
+  if (filePath === 'preview') {
+    activateDocument('preview');
+    return;
+  }
+
   const fileData = FILE_DATABASE[filePath] || {
     name: filePath.split('/').pop(),
     dir: filePath.includes('/') ? filePath.substring(0, filePath.lastIndexOf('/')) : 'coba',
     path: filePath,
-    lang: filePath.endsWith('.jsx') ? 'React JSX' : (filePath.endsWith('.css') ? 'CSS' : (filePath.endsWith('.json') ? 'JSON' : 'JavaScript')),
-    icon: filePath.endsWith('.jsx') ? '⚛' : (filePath.endsWith('.css') ? '🎨' : (filePath.endsWith('.js') ? '📜' : '📄')),
+    lang: filePath.endsWith('.jsx') ? 'React JSX' : (filePath.endsWith('.yaml') || filePath.endsWith('.yml') ? 'YAML' : (filePath.endsWith('.css') ? 'CSS' : (filePath.endsWith('.json') ? 'JSON' : 'JavaScript'))),
+    icon: filePath.endsWith('.jsx') ? '⚛' : (filePath.endsWith('.yaml') || filePath.endsWith('.yml') ? '📜' : (filePath.endsWith('.css') ? '🎨' : (filePath.endsWith('.js') ? '📜' : '📄'))),
     code: `// File: ${filePath}\n// Synthesized module by Zenith AI\n\nexport default function Module() {\n  return <div>Module ${filePath} loaded</div>;\n}`
   };
 
@@ -1942,19 +2331,18 @@ function openDocumentTab(filePath) {
 }
 
 /**
- * Activates a document or the Live Preview tab
+ * Activates a tab (either the fixed Preview tab or an open document tab).
+ * - When Preview tab is active: Toolbar is visible, breadcrumb is hidden, live preview is shown.
+ * - When a file tab is active: Toolbar is hidden, breadcrumb is visible, code editor is shown.
  */
 function activateDocument(filePath) {
   const tabsGroup = document.getElementById('previewTabsGroup');
   const tabPreview = document.getElementById('tabPreview');
+  const toolbar = document.getElementById('previewActionsToolbar');
+  const breadcrumb = document.getElementById('editorBreadcrumbBar');
   const beautyViewport = document.getElementById('beautyPreviewViewport');
   const emptyCanvas = document.getElementById('previewCanvasEmpty');
   const codeViewport = document.getElementById('codeEditorViewport');
-  const breadcrumb = document.getElementById('editorBreadcrumbBar');
-  const bcDirectory = document.getElementById('bcDirectory');
-  const bcFileIcon = document.getElementById('bcFileIcon');
-  const bcFileName = document.getElementById('bcFileName');
-  const bcLangPill = document.getElementById('bcLangPill');
   const lineNumbers = document.getElementById('editorLineNumbers');
   const codeContent = document.getElementById('editorCodeContent');
   const statusLines = document.getElementById('editorStatusLines');
@@ -1963,18 +2351,24 @@ function activateDocument(filePath) {
 
   if (!tabsGroup) return;
 
-  if (filePath === 'preview') {
-    // Switch to Live Preview
+  if (!filePath || filePath === 'preview') {
+    // === SWITCH TO LIVE PREVIEW TAB ===
     currentActiveFilePath = 'preview';
+
+    // 1. Update tabs: Preview active, document tabs inactive
     const allTabs = tabsGroup.querySelectorAll('.preview-tab-link');
     allTabs.forEach(t => t.classList.remove('active'));
     if (tabPreview) tabPreview.classList.add('active');
 
+    // 2. Toolbar is SHOWN, breadcrumb is HIDDEN
+    if (toolbar) toolbar.style.display = 'flex';
+    if (breadcrumb) breadcrumb.style.display = 'none';
+
+    // 3. Code editor is HIDDEN, Live preview is SHOWN
     if (codeViewport) {
       codeViewport.style.display = 'none';
       codeViewport.classList.remove('active');
     }
-    if (breadcrumb) breadcrumb.style.display = 'none';
     if (emptyCanvas) {
       emptyCanvas.style.display = 'none';
     }
@@ -1982,22 +2376,25 @@ function activateDocument(filePath) {
       beautyViewport.style.display = 'flex';
       beautyViewport.classList.add('active');
     }
+
+    // 4. File tree selection cleared
     fileTreeItems.forEach(i => i.classList.remove('active'));
     return;
   }
 
-  // Document File Tab
+  // === SWITCH TO DOCUMENT FILE TAB ===
   currentActiveFilePath = filePath;
+
   const fileData = FILE_DATABASE[filePath] || {
     name: filePath.split('/').pop(),
     dir: filePath.includes('/') ? filePath.substring(0, filePath.lastIndexOf('/')) : 'coba',
     path: filePath,
-    lang: 'React JSX',
-    icon: '⚛',
-    code: `// ${filePath}`
+    lang: filePath.endsWith('.jsx') ? 'React JSX' : (filePath.endsWith('.yaml') || filePath.endsWith('.yml') ? 'YAML' : (filePath.endsWith('.css') ? 'CSS' : (filePath.endsWith('.json') ? 'JSON' : 'JavaScript'))),
+    icon: filePath.endsWith('.jsx') ? '⚛' : (filePath.endsWith('.yaml') || filePath.endsWith('.yml') ? '📜' : (filePath.endsWith('.css') ? '🎨' : (filePath.endsWith('.js') ? '📜' : '📄'))),
+    code: `// File: ${filePath}\n// Synthesized module by Zenith AI\n\nexport default function Module() {\n  return <div>Module ${filePath} loaded</div>;\n}`
   };
 
-  // Update tabs active state
+  // 1. Update tabs: file tab active, Preview tab inactive
   const allTabs = tabsGroup.querySelectorAll('.preview-tab-link');
   allTabs.forEach(t => t.classList.remove('active'));
   const activeTab = tabsGroup.querySelector(`.doc-tab[data-file="${filePath}"]`);
@@ -2006,7 +2403,11 @@ function activateDocument(filePath) {
     activeTab.scrollIntoView({ behavior: 'smooth', inline: 'nearest' });
   }
 
-  // Hide live preview & empty state, show code editor viewport
+  // 2. Toolbar is HIDDEN, breadcrumb is SHOWN
+  if (toolbar) toolbar.style.display = 'none';
+  if (breadcrumb) breadcrumb.style.display = 'flex';
+
+  // 3. Live preview is HIDDEN, Code editor is SHOWN
   if (beautyViewport) {
     beautyViewport.style.display = 'none';
     beautyViewport.classList.remove('active');
@@ -2018,15 +2419,11 @@ function activateDocument(filePath) {
     codeViewport.style.display = 'flex';
     codeViewport.classList.add('active');
   }
-  if (breadcrumb) {
-    breadcrumb.style.display = 'flex';
-    if (bcDirectory) bcDirectory.textContent = fileData.dir;
-    if (bcFileIcon) bcFileIcon.textContent = fileData.icon;
-    if (bcFileName) bcFileName.textContent = fileData.name;
-    if (bcLangPill) bcLangPill.textContent = fileData.lang;
-  }
 
-  // Populate code and line numbers
+  // 4. Render dynamic breadcrumb (e.g. app > components > Header.jsx or lib > api-spec > openapi.yaml)
+  renderBreadcrumb(filePath);
+
+  // 5. Populate code and line numbers
   const lines = fileData.code.split('\n');
   if (lineNumbers) {
     lineNumbers.innerHTML = lines.map((_, idx) => `<span>${idx + 1}</span>`).join('');
@@ -2041,7 +2438,7 @@ function activateDocument(filePath) {
     statusType.textContent = fileData.lang;
   }
 
-  // Highlight corresponding file in the tree
+  // 6. Highlight corresponding file in the tree
   fileTreeItems.forEach(item => {
     const itemFile = item.getAttribute('data-file');
     if (itemFile === filePath) {
@@ -2053,7 +2450,8 @@ function activateDocument(filePath) {
 }
 
 /**
- * Closes an open document tab independently
+ * Closes an open document tab independently.
+ * If active tab is closed, activates adjacent tab or reverts to Preview tab.
  */
 function closeDocumentTab(filePath) {
   const tabsGroup = document.getElementById('previewTabsGroup');
@@ -2076,7 +2474,7 @@ function closeDocumentTab(filePath) {
       const prevFile = prevSibling.getAttribute('data-file');
       activateDocument(prevFile);
     } else {
-      // Return to Live Preview
+      // Revert to Preview tab
       activateDocument('preview');
     }
   }
