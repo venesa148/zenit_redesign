@@ -2465,15 +2465,24 @@
             </header>
 
             <!-- Sub-Navigation Tabs Bar (for PRD & structured docs) -->
-            <nav class="doc-sub-tabs-bar" id="docSubTabsBar">
-              <button type="button" class="doc-sub-tab-btn active" data-subtab="overview">Overview</button>
-              <button type="button" class="doc-sub-tab-btn" data-subtab="user-stories">User Stories</button>
-              <button type="button" class="doc-sub-tab-btn" data-subtab="requirements">Requirements</button>
-              <button type="button" class="doc-sub-tab-btn" data-subtab="decisions">Decisions</button>
-              <button type="button" class="doc-sub-tab-btn" data-subtab="open-questions">Open Questions</button>
-              <button type="button" class="doc-sub-tab-btn" data-subtab="glossary">Glossary</button>
-              <button type="button" class="doc-sub-tab-btn" data-subtab="history">History</button>
-            </nav>
+            <div class="doc-sub-tabs-bar" id="docSubTabsBar" style="padding: 0 0 16px 0; border-bottom: 1px solid #e2e8f0; display: flex; align-items: center; background-color: transparent;">
+            <div class="doc-mode-toggle" style="display: inline-flex; background-color: #f1f5f9; padding: 4px; border-radius: 8px;">
+              <button class="doc-mode-btn active" style="padding: 6px 16px; border-radius: 6px; border: none; background: #ffffff; box-shadow: 0 1px 3px rgba(0,0,0,0.1); font-size: 13px; font-weight: 600; color: #0f172a; cursor: pointer; display: flex; align-items: center; gap: 8px;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z" />
+                  <circle cx="12" cy="12" r="3" />
+                </svg>
+                Preview
+              </button>
+              <button class="doc-mode-btn" style="padding: 6px 16px; border-radius: 6px; border: none; background: transparent; font-size: 13px; font-weight: 500; color: #64748b; cursor: pointer; display: flex; align-items: center; gap: 8px;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 20h9" />
+                  <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z" />
+                </svg>
+                Edit
+              </button>
+            </div>
+          </div>
 
             <!-- ==========================================
              DOCUMENT VIEW PANELS
@@ -2481,477 +2490,283 @@
 
             <!-- PANEL 1: PRD Overview Panel -->
             <div class="doc-panel-section active" id="docPanelPrd">
-              <!-- Subtab Content: Overview -->
-              <div class="prd-subtab-pane active" id="prdSubtab-overview">
-                <div class="doc-summary-intro">
-                  <h2 class="doc-section-headline">Ringkasan</h2>
-                  <p class="doc-section-desc">Dokumen ini mendefinisikan apa yang akan dibangun, untuk siapa, dan
-                    mengapa.</p>
-                </div>
-
-                <!-- 6-Card Grid Matching Reference Image -->
-                <div class="prd-cards-grid">
-                  <!-- Card 1: Problem Statement -->
-                  <div class="prd-box-card">
-                    <div class="prd-card-header">
-                      <div class="prd-icon-box icon-purple">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none"
-                          stroke="currentColor" stroke-width="2">
-                          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
-                          <polyline points="14 2 14 8 20 8" />
-                          <line x1="16" y1="13" x2="8" y2="13" />
-                          <line x1="16" y1="17" x2="8" y2="17" />
-                        </svg>
-                      </div>
-                      <h3 class="prd-card-title">Problem Statement</h3>
-                    </div>
-                    <p class="prd-card-content">
-                      Proses distribusi PAD saat ini masih manual dan terpisah antar unit, menyebabkan data tidak
-                      akurat, pelaporan lambat, dan kontrol keuangan lemah.
-                    </p>
-                  </div>
-
-                  <!-- Card 2: Product Vision -->
-                  <div class="prd-box-card">
-                    <div class="prd-card-header">
-                      <div class="prd-icon-box icon-green">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none"
-                          stroke="currentColor" stroke-width="2">
-                          <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z" />
-                          <circle cx="12" cy="12" r="3" />
-                        </svg>
-                      </div>
-                      <h3 class="prd-card-title">Product Vision</h3>
-                    </div>
-                    <p class="prd-card-content">
-                      Membangun platform ERP terintegrasi untuk mengelola distribusi PAD secara akurat, transparan, dan
-                      real-time.
-                    </p>
-                  </div>
-
-                  <!-- Card 3: Target Users -->
-                  <div class="prd-box-card">
-                    <div class="prd-card-header">
-                      <div class="prd-icon-box icon-blue">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none"
-                          stroke="currentColor" stroke-width="2">
-                          <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
-                          <circle cx="9" cy="7" r="4" />
-                          <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
-                          <path d="M16 3.13a4 4 0 0 1 0 7.75" />
-                        </svg>
-                      </div>
-                      <h3 class="prd-card-title">Target Users</h3>
-                    </div>
-                    <p class="prd-card-content">
-                      Admin, Finance, Accounting, Sales, Warehouse, Procurement, Production.
-                    </p>
-                  </div>
-
-                  <!-- Card 4: Scope (In) -->
-                  <div class="prd-box-card">
-                    <div class="prd-card-header">
-                      <div class="prd-icon-box icon-green">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none"
-                          stroke="currentColor" stroke-width="2">
-                          <circle cx="12" cy="12" r="10" />
-                          <polyline points="16 12 12 8 8 12" />
-                          <line x1="12" x2="12" y1="16" y2="8" />
-                        </svg>
-                      </div>
-                      <h3 class="prd-card-title">Scope (In)</h3>
-                    </div>
-                    <p class="prd-card-content">
-                      Manajemen master data, sales order, distribusi, persediaan, pembelian, keuangan, akuntansi, pajak,
-                      laporan, produksi.
-                    </p>
-                  </div>
-
-                  <!-- Card 5: Scope (Out) -->
-                  <div class="prd-box-card">
-                    <div class="prd-card-header">
-                      <div class="prd-icon-box icon-amber">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none"
-                          stroke="currentColor" stroke-width="2">
-                          <rect width="18" height="18" x="3" y="3" rx="2" />
-                          <path d="m9 9 6 6" />
-                          <path d="m15 9-6 6" />
-                        </svg>
-                      </div>
-                      <h3 class="prd-card-title">Scope (Out)</h3>
-                    </div>
-                    <p class="prd-card-content">
-                      Human Resources, Payroll, CRM eksternal di luar integrasi yang direncanakan.
-                    </p>
-                  </div>
-
-                  <!-- Card 6: Success Metrics -->
-                  <div class="prd-box-card">
-                    <div class="prd-card-header">
-                      <div class="prd-icon-box icon-indigo">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none"
-                          stroke="currentColor" stroke-width="2">
-                          <path d="M3 3v18h18" />
-                          <path d="m19 9-5 5-4-4-3 3" />
-                        </svg>
-                      </div>
-                      <h3 class="prd-card-title">Success Metrics</h3>
-                    </div>
-                    <ul class="prd-card-bullets">
-                      <li>100% data transaksi terintegrasi</li>
-                      <li>Laporan keuangan real-time</li>
-                      <li>Pengurangan error input &gt; 80%</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Subtab Content: User Stories -->
-              <div class="prd-subtab-pane" id="prdSubtab-user-stories" style="display: none;">
-                <div class="doc-summary-intro">
-                  <h2 class="doc-section-headline">User Stories &amp; Acceptance Criteria</h2>
-                  <p class="doc-section-desc">Kumpulan use case dan kebutuhan operasional pengguna.</p>
-                </div>
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
-                  <div class="prd-box-card">
-                    <h3 class="prd-card-title">US-01: Master Data Management</h3>
-                    <p class="prd-card-content">Sebagai <strong>Admin</strong>, saya ingin membuat dan mengelola data
-                      master customer &amp; vendor agar transaksi dapat terpetakan dengan akurat.</p>
-                  </div>
-                  <div class="prd-box-card">
-                    <h3 class="prd-card-title">US-02: Sales Order Automation</h3>
-                    <p class="prd-card-content">Sebagai <strong>Sales Officer</strong>, saya ingin membuat pesanan
-                      penjualan secara online dan langsung meneruskannya ke gudang.</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- PANEL 2: Architecture Document Panel -->
-            <div class="doc-panel-section" id="docPanelArchitecture">
-              <div class="doc-summary-intro">
-                <h2 class="doc-section-headline">System Architecture Overview</h2>
-                <p class="doc-section-desc">Arsitektur berlapis (N-Tier) dengan Microservices, event-driven message
-                  queue, dan database cluster.</p>
-              </div>
-
-              <!-- Architecture Layer Flow Diagram -->
-              <div class="arch-diagram-flow">
-                <!-- Layer 1: Client Layer -->
-                <div class="arch-layer-row">
-                  <span class="arch-layer-title">Presentation &amp; Client Layer</span>
-                  <div class="arch-blocks-grid">
-                    <div class="arch-block-card">
-                      <span class="arch-block-name">Web Application</span>
-                      <span class="arch-block-sub">Responsive Next.js &amp; Tailwind UI</span>
-                      <span class="arch-tech-pill">Next.js 14 · SSR</span>
-                    </div>
-                    <div class="arch-block-card">
-                      <span class="arch-block-name">Mobile Companion</span>
-                      <span class="arch-block-sub">Warehouse &amp; Delivery Scanner</span>
-                      <span class="arch-tech-pill">React Native / PWA</span>
-                    </div>
-                  </div>
-                </div>
-
-                <!-- Layer 2: API Gateway -->
-                <div class="arch-layer-row">
-                  <span class="arch-layer-title">API Gateway &amp; Auth</span>
-                  <div class="arch-blocks-grid">
-                    <div class="arch-block-card">
-                      <span class="arch-block-name">Zenith API Gateway</span>
-                      <span class="arch-block-sub">Rate Limiting, JWT Verification, RBAC</span>
-                      <span class="arch-tech-pill">Kong / Envoy Proxy</span>
-                    </div>
-                  </div>
-                </div>
-
-                <!-- Layer 3: Domain Microservices -->
-                <div class="arch-layer-row">
-                  <span class="arch-layer-title">Domain Microservices</span>
-                  <div class="arch-blocks-grid">
-                    <div class="arch-block-card">
-                      <span class="arch-block-name">Order &amp; Sales Service</span>
-                      <span class="arch-block-sub">Order lifecycle &amp; workflow</span>
-                      <span class="arch-tech-pill">Go Gin / gRPC</span>
-                    </div>
-                    <div class="arch-block-card">
-                      <span class="arch-block-name">Inventory Service</span>
-                      <span class="arch-block-sub">Stock tracking &amp; barcode ledger</span>
-                      <span class="arch-tech-pill">Go / Node.js</span>
-                    </div>
-                    <div class="arch-block-card">
-                      <span class="arch-block-name">Finance &amp; Ledger</span>
-                      <span class="arch-block-sub">General ledger, invoice &amp; tax</span>
-                      <span class="arch-tech-pill">Python FastAPI</span>
-                    </div>
-                  </div>
-                </div>
-
-                <!-- Layer 4: Data & Cache Layer -->
-                <div class="arch-layer-row">
-                  <span class="arch-layer-title">Storage &amp; Telemetry</span>
-                  <div class="arch-blocks-grid">
-                    <div class="arch-block-card">
-                      <span class="arch-block-name">Primary Database</span>
-                      <span class="arch-block-sub">PostgreSQL 16 Cluster + Timescale</span>
-                      <span class="arch-tech-pill">PostgreSQL</span>
-                    </div>
-                    <div class="arch-block-card">
-                      <span class="arch-block-name">In-Memory Cache</span>
-                      <span class="arch-block-sub">Session store &amp; Hot product caching</span>
-                      <span class="arch-tech-pill">Redis v7</span>
-                    </div>
-                    <div class="arch-block-card">
-                      <span class="arch-block-name">Message Queue</span>
-                      <span class="arch-block-sub">Async events &amp; PDF invoice export</span>
-                      <span class="arch-tech-pill">RabbitMQ</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- PANEL 3: Data Model (ERD) Panel -->
-            <div class="doc-panel-section" id="docPanelErd">
-              <div class="doc-summary-intro">
-                <h2 class="doc-section-headline">Entity Relationship Schema (ERD)</h2>
-                <p class="doc-section-desc">Struktur tabel relasional untuk modul Core ERP (Customers, Orders, Products,
-                  Invoices).</p>
-              </div>
-
-              <div class="erd-schema-grid">
-                <!-- Table 1: Customers -->
-                <div class="erd-entity-card">
-                  <div class="erd-entity-header">
-                    <span class="erd-entity-name">customers</span>
-                    <span style="font-size: 0.7rem; opacity: 0.85;">TABLE</span>
-                  </div>
-                  <table class="erd-entity-table">
-                    <tbody>
-                      <tr>
-                        <td><span class="erd-field-key erd-key-pk">PK</span></td>
-                        <td class="erd-field-name">id</td>
-                        <td class="erd-field-type">UUID</td>
-                      </tr>
-                      <tr>
-                        <td></td>
-                        <td class="erd-field-name">name</td>
-                        <td class="erd-field-type">VARCHAR(120)</td>
-                      </tr>
-                      <tr>
-                        <td></td>
-                        <td class="erd-field-name">email</td>
-                        <td class="erd-field-type">VARCHAR(255)</td>
-                      </tr>
-                      <tr>
-                        <td></td>
-                        <td class="erd-field-name">tax_number</td>
-                        <td class="erd-field-type">VARCHAR(50)</td>
-                      </tr>
-                      <tr>
-                        <td></td>
-                        <td class="erd-field-name">created_at</td>
-                        <td class="erd-field-type">TIMESTAMP</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-
-                <!-- Table 2: Sales Orders -->
-                <div class="erd-entity-card">
-                  <div class="erd-entity-header">
-                    <span class="erd-entity-name">sales_orders</span>
-                    <span style="font-size: 0.7rem; opacity: 0.85;">TABLE</span>
-                  </div>
-                  <table class="erd-entity-table">
-                    <tbody>
-                      <tr>
-                        <td><span class="erd-field-key erd-key-pk">PK</span></td>
-                        <td class="erd-field-name">id</td>
-                        <td class="erd-field-type">UUID</td>
-                      </tr>
-                      <tr>
-                        <td><span class="erd-field-key erd-key-fk">FK</span></td>
-                        <td class="erd-field-name">customer_id</td>
-                        <td class="erd-field-type">UUID</td>
-                      </tr>
-                      <tr>
-                        <td></td>
-                        <td class="erd-field-name">order_number</td>
-                        <td class="erd-field-type">VARCHAR(30)</td>
-                      </tr>
-                      <tr>
-                        <td></td>
-                        <td class="erd-field-name">total_amount</td>
-                        <td class="erd-field-type">DECIMAL(15,2)</td>
-                      </tr>
-                      <tr>
-                        <td></td>
-                        <td class="erd-field-name">status</td>
-                        <td class="erd-field-type">VARCHAR(20)</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-
-                <!-- Table 3: Products -->
-                <div class="erd-entity-card">
-                  <div class="erd-entity-header">
-                    <span class="erd-entity-name">products</span>
-                    <span style="font-size: 0.7rem; opacity: 0.85;">TABLE</span>
-                  </div>
-                  <table class="erd-entity-table">
-                    <tbody>
-                      <tr>
-                        <td><span class="erd-field-key erd-key-pk">PK</span></td>
-                        <td class="erd-field-name">id</td>
-                        <td class="erd-field-type">UUID</td>
-                      </tr>
-                      <tr>
-                        <td></td>
-                        <td class="erd-field-name">sku</td>
-                        <td class="erd-field-type">VARCHAR(50)</td>
-                      </tr>
-                      <tr>
-                        <td></td>
-                        <td class="erd-field-name">name</td>
-                        <td class="erd-field-type">VARCHAR(150)</td>
-                      </tr>
-                      <tr>
-                        <td></td>
-                        <td class="erd-field-name">unit_price</td>
-                        <td class="erd-field-type">DECIMAL(12,2)</td>
-                      </tr>
-                      <tr>
-                        <td></td>
-                        <td class="erd-field-name">stock_qty</td>
-                        <td class="erd-field-type">INTEGER</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </div>
-
-            <!-- PANEL 4: Technical Design Panel -->
-            <div class="doc-panel-section" id="docPanelTechDesign">
-              <div class="doc-summary-intro">
-                <h2 class="doc-section-headline">Technical Specification &amp; Security Protocol</h2>
-                <p class="doc-section-desc">Standarisasi RESTful envelope, model autentikasi JWT + Role Based Access
-                  Control (RBAC).</p>
-              </div>
-
-              <div class="prd-cards-grid">
-                <div class="prd-box-card">
-                  <h3 class="prd-card-title" style="display: flex; align-items: center; gap: 0.5rem;">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
-                      stroke="currentColor" stroke-width="2">
-                      <rect width="18" height="11" x="3" y="11" rx="2" ry="2" />
-                      <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+            <style>
+              .outline-item:hover { background-color: #f1f5f9; }
+              .outline-item.active { color: #2563eb !important; font-weight: 600 !important; background-color: #eff6ff !important; }
+            </style>
+            <div class="prd-doc-layout" style="display: flex; height: calc(100vh - 120px); overflow: hidden; position: relative;">
+              <!-- Floating Toggle Button -->
+              <button id="btnOutlineToggle" style="position: absolute; top: 16px; left: 16px; width: 36px; height: 36px; border-radius: 50%; background-color: #f1f5f9; border: 1px solid #e2e8f0; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 10; color: #475569; display: none;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="8" y1="6" x2="21" y2="6"></line>
+                  <line x1="8" y1="12" x2="21" y2="12"></line>
+                  <line x1="8" y1="18" x2="21" y2="18"></line>
+                  <line x1="3" y1="6" x2="3.01" y2="6"></line>
+                  <line x1="3" y1="12" x2="3.01" y2="12"></line>
+                  <line x1="3" y1="18" x2="3.01" y2="18"></line>
+                </svg>
+              </button>
+              
+              <!-- Document Outline Sidebar -->
+              <div id="prdOutlineSidebar" style="width: 260px; background-color: #ffffff; border-right: 1px solid #e2e8f0; display: flex; flex-direction: column; flex-shrink: 0; transition: margin-left 0.3s ease;">
+                <div style="padding: 16px; border-bottom: 1px solid #f1f5f9; display: flex; align-items: center; justify-content: space-between;">
+                  <button id="btnOutlineClose" style="background: none; border: none; cursor: pointer; color: #475569; padding: 4px; border-radius: 4px; display: flex; align-items: center;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <line x1="19" y1="12" x2="5" y2="12"></line>
+                      <polyline points="12 19 5 12 12 5"></polyline>
                     </svg>
-                    <span>Authentication &amp; RBAC</span>
-                  </h3>
-                  <p class="prd-card-content">
-                    Setiap request wajib menyertakan Header <code>Authorization: Bearer &lt;JWT&gt;</code>. Token
-                    memiliki TTL 15 menit dengan Refresh Token rotasi di cookie HttpOnly.
-                  </p>
-                </div>
-                <div class="prd-box-card">
-                  <h3 class="prd-card-title" style="display: flex; align-items: center; gap: 0.5rem;">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
-                      stroke="currentColor" stroke-width="2">
-                      <path d="m7.5 4.27 9 5.15" />
-                      <path
-                        d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z" />
-                      <path d="m3.3 7 8.7 5 8.7-5" />
-                      <path d="M12 22V12" />
+                  </button>
+                  <span style="font-weight: 600; color: #334155; font-size: 14px;">Tab dokumen</span>
+                  <button style="background: none; border: none; cursor: pointer; color: #475569;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <line x1="12" y1="5" x2="12" y2="19"></line>
+                      <line x1="5" y1="12" x2="19" y2="12"></line>
                     </svg>
-                    <span>API Response Standard</span>
-                  </h3>
-                  <p class="prd-card-content">
-                    Format seragam:
-                    <code>{ "success": true, "data": {...}, "meta": {...}, "timestamp": 1788316800 }</code> untuk semua
-                    endpoint JSON.
-                  </p>
+                  </button>
                 </div>
-                <div class="prd-box-card">
-                  <h3 class="prd-card-title" style="display: flex; align-items: center; gap: 0.5rem;">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
-                      stroke="currentColor" stroke-width="2">
-                      <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
-                    </svg>
-                    <span>Caching Strategy</span>
-                  </h3>
-                  <p class="prd-card-content">
-                    Cache-Aside pattern di Redis dengan invalidasi otomatis saat terjadi mutasi event (Write-Through
-                    pada inventory ledger).
-                  </p>
+                <div class="outline-nav-list" style="flex: 1; overflow-y: auto; padding: 12px 8px;">
+                  <a href="#h-title" class="outline-item" style="display: flex; align-items: center; padding: 8px 12px; border-radius: 6px; background-color: #dbeafe; color: #1e3a8a; text-decoration: none; font-size: 13px; font-weight: 500; margin-bottom: 4px;">
+                    <svg style="margin-right: 8px;" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+                    <span style="flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Tab 1</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="1"></circle><circle cx="12" cy="5" r="1"></circle><circle cx="12" cy="19" r="1"></circle></svg>
+                  </a>
+                  <div style="border-left: 2px solid #e2e8f0; margin-left: 19px; padding-left: 12px; margin-top: 4px; display: flex; flex-direction: column; gap: 2px;">
+                    <a href="#h-subtitle" class="outline-item outline-link" style="padding: 6px 8px; color: #475569; text-decoration: none; font-size: 13px; border-radius: 4px; display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Phase 1 — Business & Pla...</a>
+                    <a href="#h-misi" class="outline-item outline-link" style="padding: 6px 8px; color: #475569; text-decoration: none; font-size: 13px; border-radius: 4px; display: block; margin-left: 12px;">Misi</a>
+                    <a href="#h-peran" class="outline-item outline-link" style="padding: 6px 8px; color: #475569; text-decoration: none; font-size: 13px; border-radius: 4px; display: block; margin-left: 12px;">Peran Agen</a>
+                    <a href="#h-bagiana" class="outline-item outline-link" style="padding: 6px 8px; color: #475569; text-decoration: none; font-size: 13px; border-radius: 4px; display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Bagian A: Problem & O...</a>
+                    <a href="#h-bagianb" class="outline-item outline-link" style="padding: 6px 8px; color: #475569; text-decoration: none; font-size: 13px; border-radius: 4px; display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Bagian B: Users & Stak...</a>
+                    <a href="#h-bagianc" class="outline-item outline-link" style="padding: 6px 8px; color: #475569; text-decoration: none; font-size: 13px; border-radius: 4px; display: block;">Bagian C: Scope</a>
+                    <a href="#h-bagiand" class="outline-item outline-link" style="padding: 6px 8px; color: #475569; text-decoration: none; font-size: 13px; border-radius: 4px; display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Bagian D: Functional R...</a>
+                    <a href="#h-bagiane" class="outline-item outline-link" style="padding: 6px 8px; color: #475569; text-decoration: none; font-size: 13px; border-radius: 4px; display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Bagian E: Success Metr...</a>
+                    <a href="#h-bagianf" class="outline-item outline-link" style="padding: 6px 8px; color: #475569; text-decoration: none; font-size: 13px; border-radius: 4px; display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Bagian F: Roadmap & K...</a>
+                    <a href="#h-bagiang" class="outline-item outline-link" style="padding: 6px 8px; color: #475569; text-decoration: none; font-size: 13px; border-radius: 4px; display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Bagian G: Work Breakd...</a>
+                    <a href="#h-bagianh" class="outline-item outline-link" style="padding: 6px 8px; color: #475569; text-decoration: none; font-size: 13px; border-radius: 4px; display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Bagian H: Decision Log ...</a>
+                    <a href="#h-bagiani" class="outline-item outline-link" style="padding: 6px 8px; color: #475569; text-decoration: none; font-size: 13px; border-radius: 4px; display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Bagian I: Glossary & Co...</a>
+                    <a href="#h-bagianj" class="outline-item outline-link" style="padding: 6px 8px; color: #475569; text-decoration: none; font-size: 13px; border-radius: 4px; display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Bagian J: Deferred Regi...</a>
+                    <a href="#h-exitgate" class="outline-item outline-link" style="padding: 6px 8px; color: #475569; text-decoration: none; font-size: 13px; border-radius: 4px; display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Exit Gate — Phase 1 → ...</a>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Paper Area -->
+              <div class="doc-paper-container" style="background-color: #f1f5f9; padding: 16px 0 40px 0; height: 100%; overflow-y: auto; display: flex; justify-content: center; align-items: flex-start; flex: 1; scroll-behavior: smooth;">
+                <div class="doc-paper" style="background-color: #ffffff; width: 100%; max-width: 850px; padding: 60px 80px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03); border: 1px solid #e2e8f0; border-radius: 4px; color: #334155; line-height: 1.6; font-size: 15px;">
+                  
+                  <span id="h-subtitle" style="display: block; margin-top: -80px; padding-top: 80px;"></span>
+                  <h1 style="font-size: 28px; font-weight: 800; color: #0f172a; margin-bottom: 24px; line-height: 1.3;">Phase 1 &mdash; Business &amp; Planning: Website Salon &amp; Reservasi Perawatan</h1>
+                  
+                  <p style="margin-bottom: 24px;">Tahap 1&ndash;2: Analisis Kebutuhan Bisnis (Business Analyst) &rarr; Perencanaan Produk (Product Manager). Menetapkan fitur yang dibangun dan tujuannya tanpa mencampuri keputusan teknologi (milik Phase 2).</p>
+                  
+                  <span id="h-misi" style="display: block; margin-top: -60px; padding-top: 60px;"></span>
+                  <h3 style="font-size: 18px; font-weight: 700; color: #0f172a; margin-top: 32px; margin-bottom: 12px;">Misi</h3>
+                  <p style="margin-bottom: 24px;">Mengubah ide bisnis pemilik salon menjadi PRD terstruktur dan disetujui, lengkap dengan kriteria penerimaan terukur (EARS), prioritas peta jalan, dan WBS. Setiap keraguan dijawab tuntas sebagai keputusan bernomor (SD-n) atau ditunda resmi (OQ-n); nol status "TBD".</p>
+                  
+                  <span id="h-peran" style="display: block; margin-top: -60px; padding-top: 60px;"></span>
+                  <h3 style="font-size: 18px; font-weight: 700; color: #0f172a; margin-top: 32px; margin-bottom: 12px;">Peran Agen</h3>
+                  <ul style="margin-bottom: 32px; padding-left: 24px;">
+                    <li style="margin-bottom: 8px;"><strong>business-analyst:</strong> Menggali kebutuhan, menyusun draf Bagian A&ndash;D, serta mengelola glosarium Bagian I dan daftar tunda Bagian J.</li>
+                    <li style="margin-bottom: 8px;"><strong>product-manager:</strong> Menetapkan batasan lingkup, prioritas MVP, roadmap, dan WBS (Bagian E&ndash;G), mencegah penambahan fitur liar, serta mengesahkan penundaan di Bagian J.</li>
+                  </ul>
+
+                  <hr style="border: none; border-top: 1px solid #e2e8f0; margin: 40px 0;">
+
+                  <span id="h-bagiana" style="display: block; margin-top: -60px; padding-top: 60px;"></span>
+                  <h2 style="font-size: 22px; font-weight: 700; color: #0f172a; margin-bottom: 20px;">Bagian A: Problem &amp; Objectives</h2>
+                  
+                  <h4 style="font-size: 16px; font-weight: 600; color: #1e293b; margin-bottom: 12px;">Problem Statement</h4>
+                  <p style="margin-bottom: 12px;">GlowAura Salon &amp; Spa (600&ndash;800 booking/bulan, &plusmn;1.200 pelanggan, 8 kapster, 2 kasir) mengalami kendala operasional:</p>
+                  <ol style="margin-bottom: 16px; padding-left: 24px;">
+                    <li style="margin-bottom: 6px;">Pemesanan via chat WhatsApp lambat direspons dan kerap memicu jadwal bentrok (double booking).</li>
+                    <li style="margin-bottom: 6px;">Kasir mencatat jadwal di buku fisik/spreadsheet yang rawan tercecer dan tidak sinkron.</li>
+                    <li style="margin-bottom: 6px;">Konfirmasi transfer manual uang muka (DP) membebani kasir dan rawan bukti bayar palsu.</li>
+                    <li style="margin-bottom: 6px;">Pembatalan sepihak (no-show) mencapai 18% dari total booking bulanan tanpa kompensasi biaya.</li>
+                    <li style="margin-bottom: 6px;">Catatan preferensi model rambut dan alergi pelanggan belum terdata rapi.</li>
+                  </ol>
+                  <p style="margin-bottom: 24px; font-weight: 500;">Dampaknya: kapasitas kursi terisi hanya ~65%, omzet bocor, dan kasir kehabisan waktu mengurus chat ketimbang tamu fisik.</p>
+
+                  <h4 style="font-size: 16px; font-weight: 600; color: #1e293b; margin-bottom: 12px;">Business Objectives</h4>
+                  <ul style="margin-bottom: 24px; padding-left: 24px;">
+                    <li style="margin-bottom: 8px;"><strong>O1 &mdash; Otomasi &amp; Akurasi Penjadwalan:</strong> Menghapus <em>double booking</em> hingga 0% dan memangkas waktu booking dari 25 menit menjadi &lt;10 detik via reservasi mandiri dan kunci slot otomatis.</li>
+                    <li style="margin-bottom: 8px;"><strong>O2 &mdash; Kepastian Pendapatan &amp; Efisiensi Kasir:</strong> Menekan <em>no-show</em> di bawah 3% via DP otomatis (QRIS/VA) dan menyatukan kalender kerja harian kapster-kasir.</li>
+                  </ul>
+
+                  <h4 style="font-size: 16px; font-weight: 600; color: #1e293b; margin-bottom: 12px;">Batasan Wajib (Guardrails)</h4>
+                  <ul style="margin-bottom: 32px; padding-left: 24px;">
+                    <li style="margin-bottom: 8px;"><strong>Kewenangan Manusia (Human-in-the-loop):</strong> Refund khusus, komisi kapster, dan ubah harga wajib verifikasi kasir/pemilik.</li>
+                    <li style="margin-bottom: 8px;"><strong>Proteksi Privasi (SD-15, SD-17):</strong> Nomor WhatsApp dan email pelanggan wajib disamarkan (misal: 0812****8901) pada layar kasir dan kapster.</li>
+                  </ul>
+
+                  <hr style="border: none; border-top: 1px solid #e2e8f0; margin: 40px 0;">
+
+                  <span id="h-bagianb" style="display: block; margin-top: -60px; padding-top: 60px;"></span>
+                  <h2 style="font-size: 22px; font-weight: 700; color: #0f172a; margin-bottom: 20px;">Bagian B: Users &amp; Stakeholders</h2>
+                  <h4 style="font-size: 16px; font-weight: 600; color: #1e293b; margin-bottom: 12px;">Persona Pengguna</h4>
+                  <div style="overflow-x: auto; margin-bottom: 24px;">
+                    <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 14px; border: 1px solid #e2e8f0;">
+                      <thead style="background-color: #f8fafc;">
+                        <tr>
+                          <th style="padding: 12px 16px; border: 1px solid #e2e8f0; font-weight: 600; color: #0f172a;">Persona</th>
+                          <th style="padding: 12px 16px; border: 1px solid #e2e8f0; font-weight: 600; color: #0f172a;">Deskripsi</th>
+                          <th style="padding: 12px 16px; border: 1px solid #e2e8f0; font-weight: 600; color: #0f172a;">Kebutuhan Utama</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td style="padding: 12px 16px; border: 1px solid #e2e8f0; font-weight: 600; color: #0f172a; vertical-align: top;">Pelanggan</td>
+                          <td style="padding: 12px 16px; border: 1px solid #e2e8f0; vertical-align: top;">Konsumen layanan kecantikan dan spa.</td>
+                          <td style="padding: 12px 16px; border: 1px solid #e2e8f0; vertical-align: top;">Cek katalog harga, pilih kapster, kunci jam kosong, bayar DP QRIS, dan terima reminder WhatsApp.</td>
+                        </tr>
+                        <tr>
+                          <td style="padding: 12px 16px; border: 1px solid #e2e8f0; font-weight: 600; color: #0f172a; vertical-align: top;">Kasir</td>
+                          <td style="padding: 12px 16px; border: 1px solid #e2e8f0; vertical-align: top;">Resepsionis garis depan salon.</td>
+                          <td style="padding: 12px 16px; border: 1px solid #e2e8f0; vertical-align: top;">Pantau kalender antrean, catat tamu <em>walk-in</em>, konfirmasi kehadiran, dan terima pelunasan akhir.</td>
+                        </tr>
+                        <tr>
+                          <td style="padding: 12px 16px; border: 1px solid #e2e8f0; font-weight: 600; color: #0f172a; vertical-align: top;">Pemilik (Owner)</td>
+                          <td style="padding: 12px 16px; border: 1px solid #e2e8f0; vertical-align: top;">Pengelola dan penanggung jawab bisnis.</td>
+                          <td style="padding: 12px 16px; border: 1px solid #e2e8f0; vertical-align: top;">Pantau omzet, utilisasi kapster, atur tarif layanan, dan kelola akses akun staf.</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+
+                  <span id="h-bagianc" style="display: block; margin-top: -60px; padding-top: 60px;"></span>
+                  <h2 style="font-size: 22px; font-weight: 700; color: #0f172a; margin-bottom: 20px;">Bagian C: Scope</h2>
+                  <h4 style="font-size: 16px; font-weight: 600; color: #1e293b; margin-bottom: 12px;">In Scope</h4>
+                  <ul style="margin-bottom: 24px; padding-left: 24px;">
+                    <li style="margin-bottom: 6px;"><strong>Katalog Layanan &amp; Master Staf:</strong> Manajemen menu perawatan, durasi, harga, serta shift kerja kapster (SD-1, SD-32).</li>
+                    <li style="margin-bottom: 6px;"><strong>Reservasi Mandiri:</strong> Pemilihan kapster, tanggal, dan jam kosong anti-bentrok secara langsung (SD-11, SD-12).</li>
+                    <li style="margin-bottom: 6px;"><strong>Pembayaran DP Otomatis:</strong> Penerbitan QRIS/VA instan dengan batas waktu bayar 15 menit.</li>
+                    <li style="margin-bottom: 6px;"><strong>Kalender Kasir &amp; Tamu Walk-in:</strong> Manajemen jadwal harian kasir dan registrasi tamu fisik langsung.</li>
+                    <li style="margin-bottom: 6px;"><strong>Notifikasi Otomatis:</strong> Pengingat jadwal booking via WhatsApp/Email (H-1 dan 2 jam sebelumnya).</li>
+                  </ul>
+
+                  <span id="h-bagiand" style="display: block; margin-top: -60px; padding-top: 60px;"></span>
+                  <h2 style="font-size: 22px; font-weight: 700; color: #0f172a; margin-bottom: 20px;">Bagian D: Functional Requirements (EARS)</h2>
+                  <ul style="margin-bottom: 24px; padding-left: 24px;">
+                    <li style="margin-bottom: 12px;"><strong>US-1: Katalog Perawatan (Must)</strong>
+                      <ul style="padding-left: 24px; margin-top: 8px; list-style-type: circle; color: #475569;">
+                        <li style="margin-bottom: 4px;"><em>WHEN</em> kasir memasukkan data layanan baru yang valid, <em>THE SYSTEM SHALL</em> menyimpannya dan menampilkannya di katalog pelanggan.</li>
+                      </ul>
+                    </li>
+                  </ul>
+
+                  <div style="margin-top: 40px; padding: 24px; background-color: #f1f5f9; border-radius: 8px; font-size: 14px; text-align: center; color: #64748b;">
+                    <em>[Dokumen berlanjut ke bagian E, F, G, H, I, J] - Referensi Bagian selengkapnya tersedia di arsip PDF.</em>
+                  </div>
+                </div>
+              </div>
+              <script>
+                document.addEventListener('DOMContentLoaded', () => {
+                  const outlineSidebar = document.getElementById('prdOutlineSidebar');
+                  const btnOutlineClose = document.getElementById('btnOutlineClose');
+                  const btnOutlineToggle = document.getElementById('btnOutlineToggle');
+                  const docPaperContainer = document.querySelector('.doc-paper-container');
+                  
+                  if (outlineSidebar && btnOutlineClose && btnOutlineToggle) {
+                    btnOutlineClose.addEventListener('click', () => {
+                      outlineSidebar.style.marginLeft = '-260px';
+                      setTimeout(() => { btnOutlineToggle.style.display = 'flex'; }, 300);
+                    });
+                    
+                    btnOutlineToggle.addEventListener('click', () => {
+                      btnOutlineToggle.style.display = 'none';
+                      outlineSidebar.style.marginLeft = '0';
+                    });
+                  }
+                  
+                  const outlineLinks = document.querySelectorAll('.outline-link');
+                  if (docPaperContainer && outlineLinks.length > 0) {
+                    docPaperContainer.addEventListener('scroll', () => {
+                      let currentId = '';
+                      const scrollPosition = docPaperContainer.scrollTop + 100;
+                      document.querySelectorAll('.doc-paper span[id^="h-"]').forEach(span => {
+                        if (span.offsetTop <= scrollPosition) { currentId = span.getAttribute('id'); }
+                      });
+                      if (currentId) {
+                        outlineLinks.forEach(link => {
+                          link.classList.remove('active');
+                          if (link.getAttribute('href') === '#' + currentId) { link.classList.add('active'); }
+                        });
+                      }
+                    });
+                  }
+                  
+                  outlineLinks.forEach(link => {
+                    link.addEventListener('click', (e) => {
+                      e.preventDefault();
+                      const targetId = link.getAttribute('href').substring(1);
+                      const targetEl = document.getElementById(targetId);
+                      if (targetEl && docPaperContainer) {
+                        docPaperContainer.scrollTo({ top: targetEl.offsetTop, behavior: 'smooth' });
+                        outlineLinks.forEach(l => l.classList.remove('active'));
+                        link.classList.add('active');
+                      }
+                    });
+                  });
+                });
+              </script>
+            </div>
+          </div>
+          <div class="doc-panel-section" id="docPanelArchitecture">
+            <div class="doc-paper-container" style="background-color: #f1f5f9; padding: 16px 0 40px 0; height: 100%; overflow-y: auto; display: flex; justify-content: center; align-items: flex-start; flex: 1; scroll-behavior: smooth;">
+              <div class="doc-paper" style="background-color: #ffffff; width: 100%; max-width: 850px; padding: 60px 80px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); border: 1px solid #e2e8f0; border-radius: 4px; color: #334155; line-height: 1.6; font-size: 15px;">
+                <h1 style="font-size: 28px; font-weight: 800; color: #0f172a; margin-bottom: 24px;">System Architecture</h1>
+                <p>Dokumen ini mendefinisikan arsitektur tingkat tinggi (High-Level Architecture) untuk sistem Zenith. Berisi informasi mengenai interaksi antar layanan, topologi cloud, dan pertimbangan skalabilitas.</p>
+                <h3 style="margin-top: 32px; color: #0f172a;">1. Diagram Komponen</h3>
+                <p>Sistem ini dirancang menggunakan arsitektur microservices untuk memastikan isolasi fault dan skalabilitas.</p>
+                <div style="width: 100%; height: 300px; background-color: #f8fafc; border: 2px dashed #cbd5e1; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #94a3b8; font-weight: 500; margin: 24px 0;">[ Architecture Diagram ]</div>
+              </div>
+            </div>
+          </div>
+          <div class="doc-panel-section" id="docPanelErd">
+            <div class="doc-paper-container" style="background-color: #f1f5f9; padding: 16px 0 40px 0; height: 100%; overflow-y: auto; display: flex; justify-content: center; align-items: flex-start; flex: 1; scroll-behavior: smooth;">
+              <div class="doc-paper" style="background-color: #ffffff; width: 100%; max-width: 850px; padding: 60px 80px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); border: 1px solid #e2e8f0; border-radius: 4px; color: #334155; line-height: 1.6; font-size: 15px;">
+                <h1 style="font-size: 28px; font-weight: 800; color: #0f172a; margin-bottom: 24px;">Data Model (ERD)</h1>
+                <p>Skema basis data relasional yang merinci tabel-tabel utama, foreign key, dan indeks untuk sistem.</p>
+                <h3 style="margin-top: 32px; color: #0f172a;">Tabel Pengguna (Users)</h3>
+                <p>Tabel ini menyimpan data pengguna termasuk kredensial dan preferensi.</p>
+                <table style="width: 100%; border-collapse: collapse; margin-top: 16px;">
+                  <thead style="background: #f1f5f9;">
+                    <tr><th style="padding: 12px; border: 1px solid #e2e8f0; text-align: left;">Kolom</th><th style="padding: 12px; border: 1px solid #e2e8f0; text-align: left;">Tipe</th><th style="padding: 12px; border: 1px solid #e2e8f0; text-align: left;">Deskripsi</th></tr>
+                  </thead>
+                  <tbody>
+                    <tr><td style="padding: 12px; border: 1px solid #e2e8f0;">id</td><td style="padding: 12px; border: 1px solid #e2e8f0;">UUID</td><td style="padding: 12px; border: 1px solid #e2e8f0;">Primary Key</td></tr>
+                    <tr><td style="padding: 12px; border: 1px solid #e2e8f0;">email</td><td style="padding: 12px; border: 1px solid #e2e8f0;">VARCHAR</td><td style="padding: 12px; border: 1px solid #e2e8f0;">Email pengguna (unik)</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <div class="doc-panel-section" id="docPanelTechDesign">
+            <div class="doc-paper-container" style="background-color: #f1f5f9; padding: 16px 0 40px 0; height: 100%; overflow-y: auto; display: flex; justify-content: center; align-items: flex-start; flex: 1; scroll-behavior: smooth;">
+              <div class="doc-paper" style="background-color: #ffffff; width: 100%; max-width: 850px; padding: 60px 80px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); border: 1px solid #e2e8f0; border-radius: 4px; color: #334155; line-height: 1.6; font-size: 15px;">
+                <h1 style="font-size: 28px; font-weight: 800; color: #0f172a; margin-bottom: 24px;">Technical Design (full)</h1>
+                <p>Rincian spesifikasi teknis komponen internal, algoritma yang digunakan, serta rincian endpoint API yang akan dibangun oleh tim backend.</p>
+                <h3 style="margin-top: 32px; color: #0f172a;">API Endpoints</h3>
+                <ul style="padding-left: 24px;">
+                  <li><code>GET /api/v1/users</code> - Mengambil daftar pengguna.</li>
+                  <li><code>POST /api/v1/reservations</code> - Membuat reservasi baru.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="doc-panel-section" id="docPanelUiSystem">
+            <div class="doc-paper-container" style="background-color: #f1f5f9; padding: 16px 0 40px 0; height: 100%; overflow-y: auto; display: flex; justify-content: center; align-items: flex-start; flex: 1; scroll-behavior: smooth;">
+              <div class="doc-paper" style="background-color: #ffffff; width: 100%; max-width: 850px; padding: 60px 80px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); border: 1px solid #e2e8f0; border-radius: 4px; color: #334155; line-height: 1.6; font-size: 15px;">
+                <h1 style="font-size: 28px; font-weight: 800; color: #0f172a; margin-bottom: 24px;">UI System & Design Tokens</h1>
+                <p>Panduan komponen UI, palet warna, tipografi, dan aset desain yang memastikan konsistensi visual di seluruh aplikasi.</p>
+                <h3 style="margin-top: 32px; color: #0f172a;">Palet Warna Utama</h3>
+                <div style="display: flex; gap: 16px; margin-top: 16px;">
+                  <div style="width: 80px; height: 80px; background-color: #2563eb; border-radius: 8px;"></div>
+                  <div style="width: 80px; height: 80px; background-color: #10b981; border-radius: 8px;"></div>
+                  <div style="width: 80px; height: 80px; background-color: #ef4444; border-radius: 8px;"></div>
                 </div>
               </div>
             </div>
-
-            <!-- PANEL 5: UI System Panel -->
-            <div class="doc-panel-section" id="docPanelUiSystem">
-              <div class="doc-summary-intro">
-                <h2 class="doc-section-headline">Design Tokens &amp; Color System</h2>
-                <p class="doc-section-desc">Palet warna resmi Zenith Slate-Navy, tipografi Plus Jakarta Sans, dan
-                  spesifikasi komponen.</p>
-              </div>
-
-              <div class="ui-tokens-grid">
-                <div class="ui-swatch-card">
-                  <div class="ui-swatch-color" style="background-color: #17243b;"></div>
-                  <div class="ui-swatch-info">
-                    <span class="ui-swatch-name">Zenith Slate Navy</span>
-                    <span class="ui-swatch-hex">#17243B</span>
-                  </div>
-                </div>
-
-                <div class="ui-swatch-card">
-                  <div class="ui-swatch-color" style="background-color: #2d5584;"></div>
-                  <div class="ui-swatch-info">
-                    <span class="ui-swatch-name">Calm Slate Blue</span>
-                    <span class="ui-swatch-hex">#2D5584</span>
-                  </div>
-                </div>
-
-                <div class="ui-swatch-card">
-                  <div class="ui-swatch-color" style="background-color: #487cb6;"></div>
-                  <div class="ui-swatch-info">
-                    <span class="ui-swatch-name">Accent Sky</span>
-                    <span class="ui-swatch-hex">#487CB6</span>
-                  </div>
-                </div>
-
-                <div class="ui-swatch-card">
-                  <div class="ui-swatch-color" style="background-color: #10b981;"></div>
-                  <div class="ui-swatch-info">
-                    <span class="ui-swatch-name">Success Emerald</span>
-                    <span class="ui-swatch-hex">#10B981</span>
-                  </div>
-                </div>
-
-                <div class="ui-swatch-card">
-                  <div class="ui-swatch-color" style="background-color: #f59e0b;"></div>
-                  <div class="ui-swatch-info">
-                    <span class="ui-swatch-name">Amber Warning</span>
-                    <span class="ui-swatch-hex">#F59E0B</span>
-                  </div>
-                </div>
-
-                <div class="ui-swatch-card">
-                  <div class="ui-swatch-color" style="background-color: #0f172a;"></div>
-                  <div class="ui-swatch-info">
-                    <span class="ui-swatch-name">Slate Dark</span>
-                    <span class="ui-swatch-hex">#0F172A</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- PANEL 6: README.md Panel -->
-            <div class="doc-panel-section" id="docPanelReadme">
+          </div>
+          <div class="doc-panel-section" id="docPanelReadme">
               <div class="markdown-preview-box">
                 <h2 class="doc-section-headline" style="display: flex; align-items: center; gap: 0.5rem;">
                   <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
