@@ -20,7 +20,7 @@
   <link rel="stylesheet" href="css/sidebar.css?v=3" />
   <link rel="stylesheet" href="css/dashboard.css?v=3" />
   <link rel="stylesheet" href="css/new-project.css?v=3" />
-  <link rel="stylesheet" href="css/modal.css?v=3" />
+  <link rel="stylesheet" href="css/modal.css?v=142" />
   <!-- Early Theme Mode Loader (Prevents White Flash) -->
   <script>
     (function() {
@@ -182,16 +182,7 @@
          MAIN VIEWPORT AREA (CENTER)
          ========================================== -->
     <main class="main-viewport">
-      <!-- Top Navbar with Workspace Selector -->
-      <header class="top-navbar">
-        <button type="button" class="workspace-dropdown-btn" id="workspaceDropdownBtn">
-          <span>Workspace</span>
-          <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none"
-            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="m6 9 6 6 6-6" />
-          </svg>
-        </button>
-      </header>
+
 
       <!-- Center Creation Wizard Card -->
       <div class="center-content-container">
@@ -291,50 +282,43 @@
         <!-- Inner Sidebar -->
         <aside class="modal-inner-sidebar" aria-label="Manage sections">
           <button type="button" class="modal-nav-item active" data-tab="monitoring">
-            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
-              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M3 3v18h18" />
-              <path d="m19 9-5 5-4-4-3 3" />
-            </svg>
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 3v18h18" />
+                <path d="m19 9-5 5-4-4-3 3" />
+              </svg>
             <span>Monitoring</span>
           </button>
 
           <button type="button" class="modal-nav-item" data-tab="sessions">
-            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
-              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="12" cy="12" r="10" />
-              <polyline points="12 6 12 12 16 14" />
-            </svg>
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10" />
+                <polyline points="12 6 12 12 16 14" />
+              </svg>
             <span>Sessions</span>
           </button>
 
           <button type="button" class="modal-nav-item" data-tab="people">
-            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
-              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
-              <circle cx="9" cy="7" r="4" />
-              <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
-              <path d="M16 3.13a4 4 0 0 1 0 7.75" />
-            </svg>
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+                <circle cx="9" cy="7" r="4" />
+                <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
+                <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+              </svg>
             <span>People</span>
           </button>
 
           <button type="button" class="modal-nav-item" data-tab="system">
-            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
-              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path
-                d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z" />
-              <circle cx="12" cy="12" r="3" />
-            </svg>
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z" />
+                <circle cx="12" cy="12" r="3" />
+              </svg>
             <span>System</span>
           </button>
 
           <button type="button" class="modal-nav-item" data-tab="myfiles">
-            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
-              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path
-                d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13c0 1.1.9 2 2 2Z" />
-            </svg>
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13c0 1.1.9 2 2 2Z" />
+              </svg>
             <span>My Files</span>
           </button>
         </aside>
@@ -342,185 +326,511 @@
         <!-- Content Panes -->
         <main class="modal-content-pane">
           <!-- Pane 1: Monitoring -->
-          <div class="modal-pane-section active" id="pane-monitoring">
-            <h1 class="section-main-heading">Monitoring</h1>
-            <p class="section-sub-desc">Every project on this install, across all accounts.</p>
+            <div class="modal-pane-section active" id="pane-monitoring">
+              <h1 class="section-main-heading">Monitoring</h1>
+              <p class="section-sub-desc">Every project on this install, across all accounts.</p>
 
-            <!-- Metrics Grid -->
-            <div class="manage-metrics-grid">
-              <div class="metric-stat-card">
-                <span class="metric-card-label">PROJECTS</span>
-                <div class="metric-card-value">
-                  <span>9</span>
-                  <span class="metric-value-unit">active</span>
+              <!-- Metrics Grid -->
+              <div class="manage-metrics-grid" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px;">
+                <div class="metric-stat-card" style="background: #fff; padding: 20px; border-radius: 8px; border: 1px solid #e2e8f0; box-shadow: 0 1px 2px rgba(0,0,0,0.05);">
+                  <span class="metric-card-label" style="font-size: 13px; color: #64748b; font-weight: 500; display: block; margin-bottom: 8px;">Projects</span>
+                  <div class="metric-card-value" style="font-size: 28px; font-weight: 700; color: #0f172a; margin-bottom: 4px;">13</div>
+                  <span class="metric-card-subinfo" style="font-size: 13px; color: #64748b;">13 active</span>
+                </div>
+
+                <div class="metric-stat-card" style="background: #fff; padding: 20px; border-radius: 8px; border: 1px solid #e2e8f0; box-shadow: 0 1px 2px rgba(0,0,0,0.05);">
+                  <span class="metric-card-label" style="font-size: 13px; color: #64748b; font-weight: 500; display: block; margin-bottom: 8px;">Sessions</span>
+                  <div class="metric-card-value" style="font-size: 28px; font-weight: 700; color: #0f172a; margin-bottom: 4px;">30</div>
+                  <span class="metric-card-subinfo" style="font-size: 13px; color: #64748b;">33,350 messages</span>
+                </div>
+
+                <div class="metric-stat-card" style="background: #fff; padding: 20px; border-radius: 8px; border: 1px solid #e2e8f0; box-shadow: 0 1px 2px rgba(0,0,0,0.05);">
+                  <span class="metric-card-label" style="font-size: 13px; color: #64748b; font-weight: 500; display: block; margin-bottom: 8px;">Tokens</span>
+                  <div class="metric-card-value" style="font-size: 28px; font-weight: 700; color: #0f172a; margin-bottom: 4px;">63.2M</div>
+                  <span class="metric-card-subinfo" style="font-size: 13px; color: #64748b;">93.1K in · 63.1M out</span>
+                </div>
+
+                <div class="metric-stat-card" style="background: #fff; padding: 20px; border-radius: 8px; border: 1px solid #e2e8f0; box-shadow: 0 1px 2px rgba(0,0,0,0.05);">
+                  <span class="metric-card-label" style="font-size: 13px; color: #64748b; font-weight: 500; display: block; margin-bottom: 8px;">Commits</span>
+                  <div class="metric-card-value" style="font-size: 28px; font-weight: 700; color: #0f172a; margin-bottom: 4px;">297</div>
+                  <span class="metric-card-subinfo" style="font-size: 13px; color: #64748b;">+208.6K / -18.7K</span>
                 </div>
               </div>
 
-              <div class="metric-stat-card">
-                <span class="metric-card-label">SESSIONS</span>
-                <div class="metric-card-value">
-                  <span>24</span>
+              <!-- Credits Notice -->
+              <p class="credit-notice-text" style="font-size: 13px; color: #64748b; margin-bottom: 32px;">
+                Subscription usage at 9/15/2026, 4:37:10 PM: 7.00000000000001% of the 5-hour window, 18% of the 7-day window · Opus 5
+              </p>
+
+              <!-- Token Spend Bar Chart Card -->
+              <div class="token-chart-card" style="background: #fff; padding: 24px; border-radius: 8px; border: 1px solid #e2e8f0; margin-bottom: 40px; box-shadow: 0 1px 2px rgba(0,0,0,0.05);">
+                <h3 class="chart-card-title" style="font-size: 14px; font-weight: 600; color: #0f172a; margin-bottom: 24px;">Token spend — last 30 days</h3>
+                <div class="bars-graph-container" style="display: flex; align-items: flex-end; gap: 4px; height: 120px; margin-bottom: 8px; border-bottom: 1px solid #e2e8f0;">
+                  <div class="chart-bar-item" style="height: 2%; background: #64748b; flex: 1; border-radius: 2px 2px 0 0;"></div>
+                  <div class="chart-bar-item" style="height: 3%; background: #64748b; flex: 1; border-radius: 2px 2px 0 0;"></div>
+                  <div class="chart-bar-item" style="height: 2%; background: #64748b; flex: 1; border-radius: 2px 2px 0 0;"></div>
+                  <div class="chart-bar-item" style="height: 15%; background: #64748b; flex: 1; border-radius: 2px 2px 0 0;"></div>
+                  <div class="chart-bar-item" style="height: 3%; background: #64748b; flex: 1; border-radius: 2px 2px 0 0;"></div>
+                  <div class="chart-bar-item" style="height: 2%; background: #64748b; flex: 1; border-radius: 2px 2px 0 0;"></div>
+                  <div class="chart-bar-item" style="height: 2%; background: #64748b; flex: 1; border-radius: 2px 2px 0 0;"></div>
+                  <div class="chart-bar-item" style="height: 2%; background: #64748b; flex: 1; border-radius: 2px 2px 0 0;"></div>
+                  <div class="chart-bar-item" style="height: 100%; background: #64748b; flex: 1; border-radius: 2px 2px 0 0;"></div>
+                  <div class="chart-bar-item" style="height: 12%; background: #64748b; flex: 1; border-radius: 2px 2px 0 0;"></div>
+                  <div class="chart-bar-item" style="height: 2%; background: #64748b; flex: 1; border-radius: 2px 2px 0 0;"></div>
+                  <div class="chart-bar-item" style="height: 15%; background: #64748b; flex: 1; border-radius: 2px 2px 0 0;"></div>
                 </div>
-                <span class="metric-card-subinfo">23,880 messages</span>
               </div>
 
-              <div class="metric-stat-card">
-                <span class="metric-card-label">TOKENS</span>
-                <div class="metric-card-value">
-                  <span>45.4M</span>
+              <!-- Projects Table -->
+              <div class="modal-projects-section" style="margin-bottom: 40px;">
+                <h2 class="modal-section-subtitle" style="font-size: 16px; font-weight: 600; color: #0f172a; margin-bottom: 4px;">Projects</h2>
+                <p style="font-size: 13px; color: #64748b; margin-bottom: 16px;">Delivery position, spend, and lifecycle.</p>
+                <div class="modal-mini-table-card" style="background: #fff; border: 1px solid #e2e8f0; border-radius: 8px; overflow: hidden;">
+                  <table class="modal-mini-table" style="width: 100%; border-collapse: collapse; text-align: left; font-size: 13px;">
+                    <thead style="background: #f8fafc; border-bottom: 1px solid #e2e8f0;">
+                      <tr>
+                        <th style="padding: 12px 16px; font-weight: 500; color: #64748b;">Project</th>
+                        <th style="padding: 12px 16px; font-weight: 500; color: #64748b;">Owner</th>
+                        <th style="padding: 12px 16px; font-weight: 500; color: #64748b;">Phase</th>
+                        <th style="padding: 12px 16px; font-weight: 500; color: #64748b;">Sprints</th>
+                        <th style="padding: 12px 16px; font-weight: 500; color: #64748b;">Tasks</th>
+                        <th style="padding: 12px 16px; font-weight: 500; color: #64748b; text-align: right;">Tokens</th>
+                        <th style="padding: 12px 16px; font-weight: 500; color: #64748b;">Last active</th>
+                        <th style="padding: 12px 16px;"></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr style="border-bottom: 1px solid #f1f5f9;">
+                        <td style="padding: 12px 16px; font-weight: 600; color: #0f172a;">AMCIP</td>
+                        <td style="padding: 12px 16px; color: #475569;">@jensri</td>
+                        <td style="padding: 12px 16px; color: #475569;">3 Development <span style="color:#94a3b8;">(in_progress)</span></td>
+                        <td style="padding: 12px 16px; color: #475569;">0/6</td>
+                        <td style="padding: 12px 16px; color: #475569;">415/633</td>
+                        <td style="padding: 12px 16px; color: #475569; text-align: right;">49M</td>
+                        <td style="padding: 12px 16px; color: #94a3b8;">9/15/2026, 4:37:15 PM</td>
+                        <td style="padding: 12px 16px; text-align: right; color: #94a3b8;">
+                          <span style="cursor:pointer; margin-right:8px;">🗑️</span>
+                          <span style="cursor:pointer;">❌</span>
+                        </td>
+                      </tr>
+                      <tr style="border-bottom: 1px solid #f1f5f9;">
+                        <td style="padding: 12px 16px; font-weight: 600; color: #0f172a;">ERP</td>
+                        <td style="padding: 12px 16px; color: #475569;">@angelita</td>
+                        <td style="padding: 12px 16px; color: #475569;">3 Development <span style="color:#94a3b8;">(in_progress)</span></td>
+                        <td style="padding: 12px 16px; color: #475569;">0/8</td>
+                        <td style="padding: 12px 16px; color: #475569;">43/248</td>
+                        <td style="padding: 12px 16px; color: #475569; text-align: right;">12M</td>
+                        <td style="padding: 12px 16px; color: #94a3b8;">9/13/2026, 10:53:40 PM</td>
+                        <td style="padding: 12px 16px; text-align: right; color: #94a3b8;">
+                          <span style="cursor:pointer; margin-right:8px;">🗑️</span>
+                          <span style="cursor:pointer;">❌</span>
+                        </td>
+                      </tr>
+                      <tr style="border-bottom: 1px solid #f1f5f9;">
+                        <td style="padding: 12px 16px; font-weight: 600; color: #0f172a;">zenith test</td>
+                        <td style="padding: 12px 16px; color: #475569;">@johanes</td>
+                        <td style="padding: 12px 16px; color: #94a3b8;">—</td>
+                        <td style="padding: 12px 16px; color: #475569;">0/0</td>
+                        <td style="padding: 12px 16px; color: #475569;">0/0</td>
+                        <td style="padding: 12px 16px; color: #475569; text-align: right;">196.9K</td>
+                        <td style="padding: 12px 16px; color: #94a3b8;">9/7/2026, 6:37:10 PM</td>
+                        <td style="padding: 12px 16px; text-align: right; color: #94a3b8;">
+                          <span style="cursor:pointer; margin-right:8px;">🗑️</span>
+                          <span style="cursor:pointer;">❌</span>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
                 </div>
               </div>
 
-              <div class="metric-stat-card">
-                <span class="metric-card-label">COMMITS</span>
-                <div class="metric-card-value">
-                  <span>218</span>
+              <!-- Code output Table -->
+              <div class="modal-projects-section" style="margin-bottom: 40px;">
+                <h2 class="modal-section-subtitle" style="font-size: 16px; font-weight: 600; color: #0f172a; margin-bottom: 4px;">Code output</h2>
+                <p style="font-size: 13px; color: #64748b; margin-bottom: 16px;">Commits by author. Platform-identity commits are the scaffolding the daemon writes.</p>
+                <div class="modal-mini-table-card" style="background: #fff; border: 1px solid #e2e8f0; border-radius: 8px; overflow: hidden;">
+                  <table class="modal-mini-table" style="width: 100%; border-collapse: collapse; text-align: left; font-size: 13px;">
+                    <thead style="background: #f8fafc; border-bottom: 1px solid #e2e8f0;">
+                      <tr>
+                        <th style="padding: 12px 16px; font-weight: 500; color: #64748b;">Author</th>
+                        <th style="padding: 12px 16px; font-weight: 500; color: #64748b; text-align: right;">Commits</th>
+                        <th style="padding: 12px 16px; font-weight: 500; color: #64748b; text-align: right;">Added</th>
+                        <th style="padding: 12px 16px; font-weight: 500; color: #64748b; text-align: right;">Removed</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr style="border-bottom: 1px solid #f1f5f9;">
+                        <td style="padding: 12px 16px;"><span style="color: #0f172a; font-weight: 500;">AMCIP backend-engineer</span> <span style="color:#94a3b8;">angelita@inaai.ai</span></td>
+                        <td style="padding: 12px 16px; text-align: right; color: #475569;">125</td>
+                        <td style="padding: 12px 16px; text-align: right; color: #10b981;">+131,466</td>
+                        <td style="padding: 12px 16px; text-align: right; color: #ef4444;">-13,733</td>
+                      </tr>
+                      <tr style="border-bottom: 1px solid #f1f5f9;">
+                        <td style="padding: 12px 16px;"><span style="color: #0f172a; font-weight: 500;">Agent Platform</span> <span style="color:#94a3b8;">platform@agent-platform.local</span> <span style="background: #f1f5f9; padding: 2px 6px; border-radius: 4px; font-size: 11px; margin-left: 4px;">platform</span></td>
+                        <td style="padding: 12px 16px; text-align: right; color: #475569;">99</td>
+                        <td style="padding: 12px 16px; text-align: right; color: #10b981;">+15,021</td>
+                        <td style="padding: 12px 16px; text-align: right; color: #ef4444;">-3,788</td>
+                      </tr>
+                      <tr style="border-bottom: 1px solid #f1f5f9;">
+                        <td style="padding: 12px 16px;"><span style="color: #0f172a; font-weight: 500;">angelita</span> <span style="color:#94a3b8;">angelita@inaai.ai</span></td>
+                        <td style="padding: 12px 16px; text-align: right; color: #475569;">61</td>
+                        <td style="padding: 12px 16px; text-align: right; color: #10b981;">+40,102</td>
+                        <td style="padding: 12px 16px; text-align: right; color: #ef4444;">-1,165</td>
+                      </tr>
+                      <tr>
+                        <td style="padding: 12px 16px;"><span style="color: #0f172a; font-weight: 500;">Agent Platform</span> <span style="color:#94a3b8;">scaffold@agent-platform.local</span> <span style="background: #f1f5f9; padding: 2px 6px; border-radius: 4px; font-size: 11px; margin-left: 4px;">platform</span></td>
+                        <td style="padding: 12px 16px; text-align: right; color: #475569;">12</td>
+                        <td style="padding: 12px 16px; text-align: right; color: #10b981;">+21,988</td>
+                        <td style="padding: 12px 16px; text-align: right; color: #ef4444;">-0</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              <!-- Accounts Table -->
+              <div class="modal-projects-section">
+                <h2 class="modal-section-subtitle" style="font-size: 16px; font-weight: 600; color: #0f172a; margin-bottom: 4px;">Accounts</h2>
+                <p style="font-size: 13px; color: #64748b; margin-bottom: 16px;">Members only ever see the projects they created; admins see everything.</p>
+                <div class="modal-mini-table-card" style="background: #fff; border: 1px solid #e2e8f0; border-radius: 8px; overflow: hidden;">
+                  <table class="modal-mini-table" style="width: 100%; border-collapse: collapse; text-align: left; font-size: 13px;">
+                    <thead style="background: #f8fafc; border-bottom: 1px solid #e2e8f0;">
+                      <tr>
+                        <th style="padding: 12px 16px; font-weight: 500; color: #64748b;">User</th>
+                        <th style="padding: 12px 16px; font-weight: 500; color: #64748b;">Role</th>
+                        <th style="padding: 12px 16px; font-weight: 500; color: #64748b; text-align: center;">Projects</th>
+                        <th style="padding: 12px 16px; font-weight: 500; color: #64748b; text-align: center;">Sessions</th>
+                        <th style="padding: 12px 16px; font-weight: 500; color: #64748b; text-align: right;">Tokens</th>
+                        <th style="padding: 12px 16px; font-weight: 500; color: #64748b;">Last sign-in</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr style="border-bottom: 1px solid #f1f5f9;">
+                        <td style="padding: 12px 16px; font-weight: 600; color: #0f172a;">Charlie <span style="color:#94a3b8; font-weight:400;">@charlie</span></td>
+                        <td style="padding: 12px 16px;"><span style="background: #e2e8f0; color: #475569; padding: 2px 8px; border-radius: 4px; font-size: 11px;">admin</span></td>
+                        <td style="padding: 12px 16px; text-align: center; color: #475569;">2</td>
+                        <td style="padding: 12px 16px; text-align: center; color: #475569;">4</td>
+                        <td style="padding: 12px 16px; text-align: right; color: #475569;">946.4K</td>
+                        <td style="padding: 12px 16px; color: #64748b;">9/14/2026, 11:02:02 AM</td>
+                      </tr>
+                      <tr style="border-bottom: 1px solid #f1f5f9;">
+                        <td style="padding: 12px 16px; font-weight: 600; color: #0f172a;">Johanes <span style="color:#94a3b8; font-weight:400;">@johanes</span></td>
+                        <td style="padding: 12px 16px;"><span style="background: #e2e8f0; color: #475569; padding: 2px 8px; border-radius: 4px; font-size: 11px;">admin</span></td>
+                        <td style="padding: 12px 16px; text-align: center; color: #475569;">5</td>
+                        <td style="padding: 12px 16px; text-align: center; color: #475569;">9</td>
+                        <td style="padding: 12px 16px; text-align: right; color: #475569;">890.7K</td>
+                        <td style="padding: 12px 16px; color: #64748b;">9/7/2026, 9:39:27 PM</td>
+                      </tr>
+                      <tr style="border-bottom: 1px solid #f1f5f9;">
+                        <td style="padding: 12px 16px; font-weight: 600; color: #0f172a;">Owner <span style="color:#94a3b8; font-weight:400;">@local-owner</span></td>
+                        <td style="padding: 12px 16px;"><span style="background: #f1f5f9; border: 1px solid #e2e8f0; color: #64748b; padding: 2px 8px; border-radius: 4px; font-size: 11px;">system</span></td>
+                        <td style="padding: 12px 16px; text-align: center; color: #475569;">1</td>
+                        <td style="padding: 12px 16px; text-align: center; color: #475569;">1</td>
+                        <td style="padding: 12px 16px; text-align: right; color: #475569;">10</td>
+                        <td style="padding: 12px 16px; color: #94a3b8;">—</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              <!-- Refresh Text -->
+              <p style="font-size: 12px; color: #94a3b8; margin-top: 24px;">Generated 9/15/2026, 4:38:56 PM · refreshes every 30s</p>
+
+            </div>
+            <!-- Pane 2: Sessions -->
+            <div class="modal-pane-section" id="pane-sessions">
+              <h1 class="section-main-heading">Sessions</h1>
+              <p class="section-sub-desc" style="margin-bottom: 32px;">Every Claude Code session across every project, with what it cost.</p>
+              
+              <div class="modal-projects-section" style="margin-bottom: 40px;">
+                <h2 class="modal-section-subtitle" style="font-size: 16px; font-weight: 600; color: #0f172a; margin-bottom: 4px;">Conversation archive</h2>
+                <p style="font-size: 13px; color: #64748b; margin-bottom: 16px;">Click a row to read the conversation. Sidechains are sub-agent runs.</p>
+                <div class="modal-mini-table-card" style="background: #fff; border: 1px solid #e2e8f0; border-radius: 8px; overflow: hidden;">
+                  <table class="modal-mini-table" style="width: 100%; border-collapse: collapse; text-align: left; font-size: 13px;">
+                    <thead style="background: #f8fafc; border-bottom: 1px solid #e2e8f0;">
+                      <tr>
+                        <th style="padding: 12px 16px; font-weight: 500; color: #64748b;">Session</th>
+                        <th style="padding: 12px 16px; font-weight: 500; color: #64748b;">Project</th>
+                        <th style="padding: 12px 16px; font-weight: 500; color: #64748b;">Ran by</th>
+                        <th style="padding: 12px 16px; font-weight: 500; color: #64748b;">Model</th>
+                        <th style="padding: 12px 16px; font-weight: 500; color: #64748b; text-align: right;">Messages</th>
+                        <th style="padding: 12px 16px; font-weight: 500; color: #64748b; text-align: right;">Tools</th>
+                        <th style="padding: 12px 16px; font-weight: 500; color: #64748b; text-align: right;">Tokens</th>
+                        <th style="padding: 12px 16px; font-weight: 500; color: #64748b; text-align: right;">Cache<br>read</th>
+                        <th style="padding: 12px 16px; font-weight: 500; color: #64748b;">Last active</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr style="border-bottom: 1px solid #f1f5f9; cursor: pointer;">
+                        <td style="padding: 12px 16px; color: #0f172a;">Implementasi frontend Medical Cl...</td>
+                        <td style="padding: 12px 16px;"><span style="color:#0f172a;">AMCIP</span> <span style="color: #94a3b8;">@jensri</span></td>
+                        <td style="padding: 12px 16px; color: #0f172a;">@jensri</td>
+                        <td style="padding: 12px 16px; color: #94a3b8;">claude-opus-5</td>
+                        <td style="padding: 12px 16px; text-align: right; color: #0f172a;">5,328</td>
+                        <td style="padding: 12px 16px; text-align: right; color: #0f172a;">4,189</td>
+                        <td style="padding: 12px 16px; text-align: right; color: #0f172a;">6.3M</td>
+                        <td style="padding: 12px 16px; text-align: right; color: #94a3b8;">3.4B</td>
+                        <td style="padding: 12px 16px; color: #94a3b8; line-height: 1.4;">9/15/2026, 4:57:23<br>PM</td>
+                      </tr>
+                      <tr style="border-bottom: 1px solid #f1f5f9; cursor: pointer;">
+                        <td style="padding: 12px 16px; color: #0f172a;">UI design review</td>
+                        <td style="padding: 12px 16px;"><span style="color:#0f172a;">AMCIP</span> <span style="color: #94a3b8;">@jensri</span></td>
+                        <td style="padding: 12px 16px; color: #0f172a;">@jensri</td>
+                        <td style="padding: 12px 16px; color: #94a3b8;">claude-opus-5</td>
+                        <td style="padding: 12px 16px; text-align: right; color: #0f172a;">2</td>
+                        <td style="padding: 12px 16px; text-align: right; color: #0f172a;">0</td>
+                        <td style="padding: 12px 16px; text-align: right; color: #0f172a;">1.3K</td>
+                        <td style="padding: 12px 16px; text-align: right; color: #94a3b8;">0</td>
+                        <td style="padding: 12px 16px; color: #94a3b8; line-height: 1.4;">9/14/2026, 6:59:55<br>PM</td>
+                      </tr>
+                      <tr style="border-bottom: 1px solid #f1f5f9; cursor: pointer;">
+                        <td style="padding: 12px 16px; color: #0f172a;">Backend ERP PAD Fase 3 Sprint 2</td>
+                        <td style="padding: 12px 16px;"><span style="color:#0f172a;">ERP</span> <span style="color: #94a3b8;">@angelita</span></td>
+                        <td style="padding: 12px 16px; color: #0f172a;">@angelita</td>
+                        <td style="padding: 12px 16px; color: #94a3b8;">claude-opus-<br>4-8</td>
+                        <td style="padding: 12px 16px; text-align: right; color: #0f172a;">3,024</td>
+                        <td style="padding: 12px 16px; text-align: right; color: #0f172a;">1,649</td>
+                        <td style="padding: 12px 16px; text-align: right; color: #0f172a;">6.3M</td>
+                        <td style="padding: 12px 16px; text-align: right; color: #94a3b8;">2B</td>
+                        <td style="padding: 12px 16px; color: #94a3b8; line-height: 1.4;">9/13/2026, 10:53:40<br>PM</td>
+                      </tr>
+                      <tr style="border-bottom: 1px solid #f1f5f9; cursor: pointer;">
+                        <td style="padding: 12px 16px; color: #0f172a;">extract-rules-from-emp-docs</td>
+                        <td style="padding: 12px 16px;"><span style="color:#0f172a;">AMCIP</span> <span style="color: #94a3b8;">@jensri</span></td>
+                        <td style="padding: 12px 16px; color: #0f172a;">@jensri</td>
+                        <td style="padding: 12px 16px; color: #94a3b8;">claude-opus-<br>4-8</td>
+                        <td style="padding: 12px 16px; text-align: right; color: #0f172a;">16,732</td>
+                        <td style="padding: 12px 16px; text-align: right; color: #0f172a;">9,570</td>
+                        <td style="padding: 12px 16px; text-align: right; color: #0f172a;">33.5M</td>
+                        <td style="padding: 12px 16px; text-align: right; color: #94a3b8;">11.7B</td>
+                        <td style="padding: 12px 16px; color: #94a3b8; line-height: 1.4;">9/10/2026, 5:49:20<br>AM</td>
+                      </tr>
+                      <tr style="border-bottom: 1px solid #f1f5f9; cursor: pointer;">
+                        <td style="padding: 12px 16px; color: #0f172a;">Landing page</td>
+                        <td style="padding: 12px 16px;"><span style="color:#0f172a;">zenith test</span> <span style="color: #94a3b8;">@johanes</span></td>
+                        <td style="padding: 12px 16px; color: #0f172a;">@johanes</td>
+                        <td style="padding: 12px 16px; color: #94a3b8;">claude-opus-5</td>
+                        <td style="padding: 12px 16px; text-align: right; color: #0f172a;">40</td>
+                        <td style="padding: 12px 16px; text-align: right; color: #0f172a;">31</td>
+                        <td style="padding: 12px 16px; text-align: right; color: #0f172a;">65K</td>
+                        <td style="padding: 12px 16px; text-align: right; color: #94a3b8;">3.5M</td>
+                        <td style="padding: 12px 16px; color: #94a3b8; line-height: 1.4;">9/7/2026, 6:37:10<br>PM</td>
+                      </tr>
+                      <tr style="border-bottom: 1px solid #f1f5f9; cursor: pointer;">
+                        <td style="padding: 12px 16px; color: #0f172a;">Halaman login</td>
+                        <td style="padding: 12px 16px;"><span style="color:#0f172a;">test</span> <span style="color: #94a3b8;">@johanes</span></td>
+                        <td style="padding: 12px 16px; color: #0f172a;">@johanes</td>
+                        <td style="padding: 12px 16px; color: #94a3b8;">claude-opus-5</td>
+                        <td style="padding: 12px 16px; text-align: right; color: #0f172a;">56</td>
+                        <td style="padding: 12px 16px; text-align: right; color: #0f172a;">37</td>
+                        <td style="padding: 12px 16px; text-align: right; color: #0f172a;">115.7K</td>
+                        <td style="padding: 12px 16px; text-align: right; color: #94a3b8;">5.9M</td>
+                        <td style="padding: 12px 16px; color: #94a3b8; line-height: 1.4;">9/4/2026, 11:14:18<br>AM</td>
+                      </tr>
+                      <tr style="border-bottom: 1px solid #f1f5f9; cursor: pointer;">
+                        <td style="padding: 12px 16px; color: #0f172a;">Dashboard for sales</td>
+                        <td style="padding: 12px 16px;"><span style="color:#0f172a;">zenith test</span> <span style="color: #94a3b8;">@johanes</span></td>
+                        <td style="padding: 12px 16px; color: #0f172a;">@johanes</td>
+                        <td style="padding: 12px 16px; color: #94a3b8;">claude-opus-5</td>
+                        <td style="padding: 12px 16px; text-align: right; color: #0f172a;">90</td>
+                        <td style="padding: 12px 16px; text-align: right; color: #0f172a;">80</td>
+                        <td style="padding: 12px 16px; text-align: right; color: #0f172a;">132K</td>
+                        <td style="padding: 12px 16px; text-align: right; color: #94a3b8;">11M</td>
+                        <td style="padding: 12px 16px; color: #94a3b8; line-height: 1.4;">9/3/2026, 3:26:56<br>PM</td>
+                      </tr>
+                      <tr style="border-bottom: 1px solid #f1f5f9; cursor: pointer;">
+                        <td style="padding: 12px 16px; color: #0f172a;">&lt;local-command-caveat&gt;Caveat: ...</td>
+                        <td style="padding: 12px 16px;"><span style="color:#0f172a;">MCU Reviewer</span> <span style="color: #94a3b8;">@charlie</span></td>
+                        <td style="padding: 12px 16px; color: #0f172a;">@charlie</td>
+                        <td style="padding: 12px 16px; color: #94a3b8;">claude-opus-5</td>
+                        <td style="padding: 12px 16px; text-align: right; color: #0f172a;">25</td>
+                        <td style="padding: 12px 16px; text-align: right; color: #0f172a;">19</td>
+                        <td style="padding: 12px 16px; text-align: right; color: #0f172a;">21.9K</td>
+                        <td style="padding: 12px 16px; text-align: right; color: #94a3b8;">2M</td>
+                        <td style="padding: 12px 16px; color: #94a3b8; line-height: 1.4;">9/3/2026, 11:46:13<br>AM</td>
+                      </tr>
+                      <tr style="border-bottom: 1px solid #f1f5f9; cursor: pointer;">
+                        <td style="padding: 12px 16px; color: #0f172a;">Halaman login</td>
+                        <td style="padding: 12px 16px;"><span style="color:#0f172a;">test</span> <span style="color: #94a3b8;">@johanes</span></td>
+                        <td style="padding: 12px 16px; color: #0f172a;">@johanes</td>
+                        <td style="padding: 12px 16px; color: #94a3b8;">claude-opus-<br>4-8</td>
+                        <td style="padding: 12px 16px; text-align: right; color: #0f172a;">14</td>
+                        <td style="padding: 12px 16px; text-align: right; color: #0f172a;">9</td>
+                        <td style="padding: 12px 16px; text-align: right; color: #0f172a;">8.3K</td>
+                        <td style="padding: 12px 16px; text-align: right; color: #94a3b8;">493.3K</td>
+                        <td style="padding: 12px 16px; color: #94a3b8; line-height: 1.4;">9/1/2026, 5:25:21<br>PM</td>
+                      </tr>
+                      <tr style="border-bottom: 1px solid #f1f5f9; cursor: pointer;">
+                        <td style="padding: 12px 16px; color: #0f172a;">extract-rules-from-emp-docs</td>
+                        <td style="padding: 12px 16px;"><span style="color:#0f172a;">AMCIP</span> <span style="color: #94a3b8;">@jensri</span></td>
+                        <td style="padding: 12px 16px; color: #0f172a;">@jensri</td>
+                        <td style="padding: 12px 16px; color: #94a3b8;">claude-opus-<br>4-8</td>
+                        <td style="padding: 12px 16px; text-align: right; color: #0f172a;">656</td>
+                        <td style="padding: 12px 16px; text-align: right; color: #0f172a;">336</td>
+                        <td style="padding: 12px 16px; text-align: right; color: #0f172a;">1.3M</td>
+                        <td style="padding: 12px 16px; text-align: right; color: #94a3b8;">321.8M</td>
+                        <td style="padding: 12px 16px; color: #94a3b8; line-height: 1.4;">8/31/2026, 2:22:57<br>AM</td>
+                      </tr>
+                      <tr style="cursor: pointer;">
+                        <td style="padding: 12px 16px; color: #0f172a;">Penyusunan PRD ERP Platform PA...</td>
+                        <td style="padding: 12px 16px;"><span style="color:#0f172a;">ERP</span> <span style="color: #94a3b8;">@angelita</span></td>
+                        <td style="padding: 12px 16px; color: #0f172a;">@angelita</td>
+                        <td style="padding: 12px 16px; color: #94a3b8;">claude-opus-<br>4-8</td>
+                        <td style="padding: 12px 16px; text-align: right; color: #0f172a;">2,370</td>
+                        <td style="padding: 12px 16px; text-align: right; color: #0f172a;">1,182</td>
+                        <td style="padding: 12px 16px; text-align: right; color: #0f172a;">5.7M</td>
+                        <td style="padding: 12px 16px; text-align: right; color: #94a3b8;">1.4B</td>
+                        <td style="padding: 12px 16px; color: #94a3b8; line-height: 1.4;">8/27/2026, 2:43:23<br>AM</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+            </div>
+            <!-- Pane 3: People -->
+            <div class="modal-pane-section" id="pane-people">
+              <h1 class="section-main-heading">People</h1>
+              <p class="section-sub-desc" style="margin-bottom: 32px;">Who has access, what they own, and what has been done on this install.</p>
+              
+              <!-- Accounts Section -->
+              <div class="modal-projects-section" style="margin-bottom: 40px;">
+                <h2 class="modal-section-subtitle" style="font-size: 16px; font-weight: 600; color: #0f172a; margin-bottom: 4px;">Accounts</h2>
+                <p style="font-size: 13px; color: #64748b; margin-bottom: 16px;">Roles are set when the account is seeded — <code>pnpm --filter server users:seed</code>.</p>
+                <div class="modal-mini-table-card" style="background: #fff; border: 1px solid #e2e8f0; border-radius: 8px; overflow: hidden;">
+                  <table class="modal-mini-table" style="width: 100%; border-collapse: collapse; text-align: left; font-size: 13px;">
+                    <thead style="background: #f8fafc; border-bottom: 1px solid #e2e8f0;">
+                      <tr>
+                        <th style="padding: 12px 16px; font-weight: 500; color: #64748b;">User</th>
+                        <th style="padding: 12px 16px; font-weight: 500; color: #64748b;">Role</th>
+                        <th style="padding: 12px 16px; font-weight: 500; color: #64748b;">Sees</th>
+                        <th style="padding: 12px 16px; font-weight: 500; color: #64748b; text-align: right;">Projects</th>
+                        <th style="padding: 12px 16px; font-weight: 500; color: #64748b; text-align: right;">Sessions</th>
+                        <th style="padding: 12px 16px; font-weight: 500; color: #64748b; text-align: right;">Tokens</th>
+                        <th style="padding: 12px 16px; font-weight: 500; color: #64748b;">Last sign-in</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr style="border-bottom: 1px solid #f1f5f9;">
+                        <td style="padding: 12px 16px;"><span style="color: #0f172a; font-weight: 600;">Charlie</span> <span style="color: #94a3b8;">charlie@inaai.ai</span></td>
+                        <td style="padding: 12px 16px;"><span style="background: #e2e8f0; color: #475569; padding: 2px 8px; border-radius: 4px; font-size: 12px;">admin</span></td>
+                        <td style="padding: 12px 16px; color: #64748b;">every project + monitoring</td>
+                        <td style="padding: 12px 16px; text-align: right; color: #475569;">2</td>
+                        <td style="padding: 12px 16px; text-align: right; color: #475569;">4</td>
+                        <td style="padding: 12px 16px; text-align: right; color: #475569;">946.4K</td>
+                        <td style="padding: 12px 16px; color: #94a3b8;">9/14/2026, 11:02:02 AM</td>
+                      </tr>
+                      <tr style="border-bottom: 1px solid #f1f5f9;">
+                        <td style="padding: 12px 16px;"><span style="color: #0f172a; font-weight: 600;">Johanes</span> <span style="color: #94a3b8;">johanes@inaai.ai</span></td>
+                        <td style="padding: 12px 16px;"><span style="background: #e2e8f0; color: #475569; padding: 2px 8px; border-radius: 4px; font-size: 12px;">admin</span></td>
+                        <td style="padding: 12px 16px; color: #64748b;">every project + monitoring</td>
+                        <td style="padding: 12px 16px; text-align: right; color: #475569;">5</td>
+                        <td style="padding: 12px 16px; text-align: right; color: #475569;">9</td>
+                        <td style="padding: 12px 16px; text-align: right; color: #475569;">890.7K</td>
+                        <td style="padding: 12px 16px; color: #94a3b8;">9/7/2026, 9:39:27 PM</td>
+                      </tr>
+                      <tr style="border-bottom: 1px solid #f1f5f9;">
+                        <td style="padding: 12px 16px;"><span style="color: #0f172a; font-weight: 600;">Owner</span> <span style="color: #94a3b8;">@local-owner</span></td>
+                        <td style="padding: 12px 16px;"><span style="background: #f1f5f9; border: 1px solid #e2e8f0; color: #94a3b8; padding: 2px 8px; border-radius: 4px; font-size: 12px;">system</span></td>
+                        <td style="padding: 12px 16px; color: #94a3b8;">nobody signs in as this</td>
+                        <td style="padding: 12px 16px; text-align: right; color: #475569;">1</td>
+                        <td style="padding: 12px 16px; text-align: right; color: #475569;">1</td>
+                        <td style="padding: 12px 16px; text-align: right; color: #475569;">10</td>
+                        <td style="padding: 12px 16px; color: #94a3b8;">—</td>
+                      </tr>
+                      <tr style="border-bottom: 1px solid #f1f5f9;">
+                        <td style="padding: 12px 16px;"><span style="color: #0f172a; font-weight: 600;">Angelita</span> <span style="color: #94a3b8;">angelita@inaai.ai</span></td>
+                        <td style="padding: 12px 16px;"><span style="background: #f1f5f9; border: 1px solid #e2e8f0; color: #94a3b8; padding: 2px 8px; border-radius: 4px; font-size: 12px;">member</span></td>
+                        <td style="padding: 12px 16px; color: #94a3b8;">only projects they created</td>
+                        <td style="padding: 12px 16px; text-align: right; color: #475569;">2</td>
+                        <td style="padding: 12px 16px; text-align: right; color: #475569;">6</td>
+                        <td style="padding: 12px 16px; text-align: right; color: #475569;">12.4M</td>
+                        <td style="padding: 12px 16px; color: #94a3b8;">8/28/2026, 10:10:27 AM</td>
+                      </tr>
+                      <tr>
+                        <td style="padding: 12px 16px;"><span style="color: #0f172a; font-weight: 600;">Jensri</span> <span style="color: #94a3b8;">jensri@inaai.ai</span></td>
+                        <td style="padding: 12px 16px;"><span style="background: #f1f5f9; border: 1px solid #e2e8f0; color: #94a3b8; padding: 2px 8px; border-radius: 4px; font-size: 12px;">member</span></td>
+                        <td style="padding: 12px 16px; color: #94a3b8;">only projects they created</td>
+                        <td style="padding: 12px 16px; text-align: right; color: #475569;">3</td>
+                        <td style="padding: 12px 16px; text-align: right; color: #475569;">10</td>
+                        <td style="padding: 12px 16px; text-align: right; color: #475569;">49M</td>
+                        <td style="padding: 12px 16px; color: #94a3b8;">8/29/2026, 10:43:35 PM</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              <!-- Audit log Section -->
+              <div class="modal-projects-section" style="margin-bottom: 40px;">
+                <h2 class="modal-section-subtitle" style="font-size: 16px; font-weight: 600; color: #0f172a; margin-bottom: 4px;">Audit log</h2>
+                <p style="font-size: 13px; color: #64748b; margin-bottom: 16px;">Append-only: sign-ins and every project lifecycle action, newest first.</p>
+                <div class="modal-mini-table-card" style="background: #fff; border: 1px solid #e2e8f0; border-radius: 8px; overflow: hidden;">
+                  <table class="modal-mini-table" style="width: 100%; border-collapse: collapse; text-align: left; font-size: 13px;">
+                    <thead style="background: #f8fafc; border-bottom: 1px solid #e2e8f0;">
+                      <tr>
+                        <th style="padding: 12px 16px; font-weight: 500; color: #64748b;">When</th>
+                        <th style="padding: 12px 16px; font-weight: 500; color: #64748b;">Who</th>
+                        <th style="padding: 12px 16px; font-weight: 500; color: #64748b;">Action</th>
+                        <th style="padding: 12px 16px; font-weight: 500; color: #64748b;">Target</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr style="border-bottom: 1px solid #f1f5f9;">
+                        <td style="padding: 12px 16px; color: #94a3b8;">9/15/2026, 4:59:31 PM</td>
+                        <td style="padding: 12px 16px; color: #0f172a; font-weight: 500;">@johanes</td>
+                        <td style="padding: 12px 16px;"><code style="background: #f1f5f9; padding: 2px 6px; border-radius: 4px; font-family: monospace; color: #475569; font-size: 12px;">project.unarchive</code></td>
+                        <td style="padding: 12px 16px; color: #94a3b8; font-family: monospace;">3bc18078-214d-479f-8659-e6e7da4fe2a5</td>
+                      </tr>
+                      <tr style="border-bottom: 1px solid #f1f5f9;">
+                        <td style="padding: 12px 16px; color: #94a3b8;">9/15/2026, 4:59:25 PM</td>
+                        <td style="padding: 12px 16px; color: #0f172a; font-weight: 500;">@johanes</td>
+                        <td style="padding: 12px 16px;"><code style="background: #f1f5f9; padding: 2px 6px; border-radius: 4px; font-family: monospace; color: #475569; font-size: 12px;">project.archive</code></td>
+                        <td style="padding: 12px 16px; color: #94a3b8; font-family: monospace;">3bc18078-214d-479f-8659-e6e7da4fe2a5</td>
+                      </tr>
+                      <tr style="border-bottom: 1px solid #f1f5f9;">
+                        <td style="padding: 12px 16px; color: #94a3b8;">9/14/2026, 11:02:02 AM</td>
+                        <td style="padding: 12px 16px; color: #0f172a; font-weight: 500;">@charlie</td>
+                        <td style="padding: 12px 16px;"><code style="background: #f1f5f9; padding: 2px 6px; border-radius: 4px; font-family: monospace; color: #475569; font-size: 12px;">auth.login</code></td>
+                        <td style="padding: 12px 16px; color: #94a3b8;">—</td>
+                      </tr>
+                      <tr style="border-bottom: 1px solid #f1f5f9;">
+                        <td style="padding: 12px 16px; color: #94a3b8;">9/7/2026, 9:39:27 PM</td>
+                        <td style="padding: 12px 16px; color: #0f172a; font-weight: 500;">@johanes</td>
+                        <td style="padding: 12px 16px;"><code style="background: #f1f5f9; padding: 2px 6px; border-radius: 4px; font-family: monospace; color: #475569; font-size: 12px;">auth.login</code></td>
+                        <td style="padding: 12px 16px; color: #94a3b8;">—</td>
+                      </tr>
+                      <tr style="border-bottom: 1px solid #f1f5f9;">
+                        <td style="padding: 12px 16px; color: #94a3b8;">9/4/2026, 11:13:47 AM</td>
+                        <td style="padding: 12px 16px; color: #0f172a; font-weight: 500;">@johanes</td>
+                        <td style="padding: 12px 16px;"><code style="background: #f1f5f9; padding: 2px 6px; border-radius: 4px; font-family: monospace; color: #475569; font-size: 12px;">session.delete</code></td>
+                        <td style="padding: 12px 16px; color: #94a3b8; font-family: monospace;">4dbb5ba5-c00b-4d1f-b0f2-b7c1ab763d6e</td>
+                      </tr>
+                      <tr style="border-bottom: 1px solid #f1f5f9;">
+                        <td style="padding: 12px 16px; color: #94a3b8;">9/4/2026, 11:13:42 AM</td>
+                        <td style="padding: 12px 16px; color: #0f172a; font-weight: 500;">@johanes</td>
+                        <td style="padding: 12px 16px;"><code style="background: #f1f5f9; padding: 2px 6px; border-radius: 4px; font-family: monospace; color: #475569; font-size: 12px;">session.delete</code></td>
+                        <td style="padding: 12px 16px; color: #94a3b8; font-family: monospace;">4dbb5ba5-c00b-4d1f-b0f2-b7c1ab763d6e</td>
+                      </tr>
+                      <tr style="border-bottom: 1px solid #f1f5f9;">
+                        <td style="padding: 12px 16px; color: #94a3b8;">9/3/2026, 1:31:22 PM</td>
+                        <td style="padding: 12px 16px; color: #0f172a; font-weight: 500;">@johanes</td>
+                        <td style="padding: 12px 16px;"><code style="background: #f1f5f9; padding: 2px 6px; border-radius: 4px; font-family: monospace; color: #475569; font-size: 12px;">project.create</code></td>
+                        <td style="padding: 12px 16px; color: #94a3b8;">zenith test</td>
+                      </tr>
+                      <tr style="border-bottom: 1px solid #f1f5f9;">
+                        <td style="padding: 12px 16px; color: #94a3b8;">9/3/2026, 11:40:42 AM</td>
+                        <td style="padding: 12px 16px; color: #0f172a; font-weight: 500;">@johanes</td>
+                        <td style="padding: 12px 16px;"><code style="background: #f1f5f9; padding: 2px 6px; border-radius: 4px; font-family: monospace; color: #475569; font-size: 12px;">auth.login</code></td>
+                        <td style="padding: 12px 16px; color: #94a3b8;">—</td>
+                      </tr>
+                    </tbody>
+                  </table>
                 </div>
               </div>
             </div>
-
-            <!-- Credits Notice -->
-            <p class="credit-notice-text">
-              You have used 100% of your free credits. Add payment method to continue.
-            </p>
-
-            <!-- Token Spend Bar Chart Card -->
-            <div class="token-chart-card">
-              <h3 class="chart-card-title">Token spend — last 30 days</h3>
-              <div class="bars-graph-container">
-                <div class="chart-bar-item" style="height: 25%;" title="Oct 1: 1.2M"></div>
-                <div class="chart-bar-item" style="height: 42%;" title="Oct 3: 2.1M"></div>
-                <div class="chart-bar-item" style="height: 18%;" title="Oct 6: 0.9M"></div>
-                <div class="chart-bar-item" style="height: 55%;" title="Oct 9: 2.8M"></div>
-                <div class="chart-bar-item" style="height: 48%;" title="Oct 12: 2.4M"></div>
-                <div class="chart-bar-item" style="height: 75%;" title="Oct 15: 3.8M"></div>
-                <div class="chart-bar-item" style="height: 38%;" title="Oct 18: 1.9M"></div>
-                <div class="chart-bar-item" style="height: 60%;" title="Oct 20: 3.1M"></div>
-                <div class="chart-bar-item" style="height: 28%;" title="Oct 22: 1.4M"></div>
-                <div class="chart-bar-item" style="height: 85%;" title="Oct 24: 4.4M"></div>
-                <div class="chart-bar-item peak" style="height: 98%;" title="Oct 26: 5.2M (Peak)"></div>
-                <div class="chart-bar-item" style="height: 44%;" title="Oct 27: 2.2M"></div>
-                <div class="chart-bar-item" style="height: 72%;" title="Oct 28: 3.6M"></div>
-                <div class="chart-bar-item" style="height: 58%;" title="Oct 29: 2.9M"></div>
-                <div class="chart-bar-item" style="height: 80%;" title="Oct 30: 4.1M"></div>
-              </div>
-              <div class="chart-axis-labels">
-                <span>Oct 1</span>
-                <span>Oct 30</span>
-              </div>
-            </div>
-
-            <!-- Projects Table -->
-            <div class="modal-projects-section">
-              <h2 class="modal-section-subtitle">Projects</h2>
-              <div class="modal-mini-table-card">
-                <table class="modal-mini-table">
-                  <thead>
-                    <tr>
-                      <th scope="col">Project</th>
-                      <th scope="col">Status</th>
-                      <th scope="col">Last Active</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td><strong>Zenith Redesign</strong></td>
-                      <td>
-                        <span class="status-pill-active">
-                          <span class="status-dot-green"></span>
-                          Active
-                        </span>
-                      </td>
-                      <td style="color: #64748b;">2 mins ago</td>
-                    </tr>
-                    <tr>
-                      <td><strong>Mobile App Prototype</strong></td>
-                      <td>
-                        <span class="status-pill-active">
-                          <span class="status-dot-green"></span>
-                          Active
-                        </span>
-                      </td>
-                      <td style="color: #64748b;">Yesterday</td>
-                    </tr>
-                    <tr>
-                      <td><strong>Dashboard v2</strong></td>
-                      <td>
-                        <span class="status-pill-active">
-                          <span class="status-dot-green"></span>
-                          Active
-                        </span>
-                      </td>
-                      <td style="color: #64748b;">3 days ago</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-
-          <!-- Pane 2: Sessions -->
-          <div class="modal-pane-section" id="pane-sessions">
-            <h1 class="section-main-heading">Sessions</h1>
-            <p class="section-sub-desc">Active and archived AI developer sessions.</p>
-            <div class="modal-mini-table-card">
-              <table class="modal-mini-table">
-                <thead>
-                  <tr>
-                    <th>Session ID</th>
-                    <th>Agent Mode</th>
-                    <th>Messages</th>
-                    <th>Started</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>#sess-9824</td>
-                    <td>Claude 3.7 Sonnet</td>
-                    <td>142 messages</td>
-                    <td>Today, 10:15 AM</td>
-                  </tr>
-                  <tr>
-                    <td>#sess-9810</td>
-                    <td>Autonomous Coder</td>
-                    <td>88 messages</td>
-                    <td>Yesterday</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-
-          <!-- Pane 3: People -->
-          <div class="modal-pane-section" id="pane-people">
-            <h1 class="section-main-heading">People</h1>
-            <p class="section-sub-desc">Team members and workspace roles.</p>
-            <div class="modal-mini-table-card">
-              <table class="modal-mini-table">
-                <thead>
-                  <tr>
-                    <th>Member</th>
-                    <th>Role</th>
-                    <th>Access</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td><strong>Josua (You)</strong></td>
-                    <td>Owner</td>
-                    <td>Full Admin</td>
-                  </tr>
-                  <tr>
-                    <td><strong>Engineering Team</strong></td>
-                    <td>Developer</td>
-                    <td>Read &amp; Write</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-
-          <!-- Pane 4: System -->
+            <!-- Pane 4: System -->
           <div class="modal-pane-section" id="pane-system">
             <h1 class="section-main-heading">System</h1>
             <p class="section-sub-desc">Platform telemetry, container nodes, and environment specs.</p>
@@ -541,39 +851,134 @@
           </div>
 
           <!-- Pane 5: My Files -->
-          <div class="modal-pane-section" id="pane-myfiles">
-            <h1 class="section-main-heading">My Files</h1>
-            <p class="section-sub-desc">Assets, schemas, and documents stored in this workspace.</p>
-            <div class="modal-mini-table-card">
-              <table class="modal-mini-table">
-                <thead>
-                  <tr>
-                    <th>Filename</th>
-                    <th>Size</th>
-                    <th>Uploaded</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>design_system_tokens.json</td>
-                    <td>24 KB</td>
-                    <td>Oct 28, 2023</td>
-                  </tr>
-                  <tr>
-                    <td>api_specs_v2.yaml</td>
-                    <td>110 KB</td>
-                    <td>Oct 25, 2023</td>
-                  </tr>
-                </tbody>
-              </table>
+            <div class="modal-pane-section" id="pane-myfiles">
+              
+              <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 24px;">
+                <div>
+                  <h1 class="section-main-heading">My files</h1>
+                  <p class="section-sub-desc">Notes, drafts and references that do not belong to any one project.</p>
+                </div>
+                <button type="button" style="background: #1e293b; color: white; border: none; padding: 8px 16px; border-radius: 6px; font-size: 14px; font-weight: 500; cursor: pointer; display: flex; align-items: center; gap: 8px;">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                    <polyline points="17 8 12 3 7 8"/>
+                    <line x1="12" y1="3" x2="12" y2="15"/>
+                  </svg>
+                  Upload
+                </button>
+              </div>
+
+              <div style="border: 1px dashed #cbd5e1; background: #f8fafc; padding: 16px; border-radius: 8px; color: #94a3b8; font-size: 13px; margin-bottom: 40px; line-height: 1.5;">
+                Nothing here reaches a project, or the agent, until you copy it into one. Administrators can see these files, as they can everything else on this install — so this is your own area, not a private one.
+              </div>
+
+              <div class="modal-projects-section">
+                <h2 class="modal-section-subtitle" style="font-size: 16px; font-weight: 600; color: #0f172a; margin-bottom: 4px;">Files</h2>
+                <p style="font-size: 13px; color: #64748b; margin-bottom: 16px;">Drag files onto the page, or use Upload.</p>
+                
+                <div class="modal-mini-table-card" style="background: #fff; border: 1px solid #e2e8f0; border-radius: 8px; overflow: hidden;">
+                  <table class="modal-mini-table" style="width: 100%; border-collapse: collapse; text-align: left; font-size: 13px;">
+                    <thead style="background: #f8fafc; border-bottom: 1px solid #e2e8f0;">
+                      <tr>
+                        <th style="padding: 12px 16px; font-weight: 500; color: #64748b; width: 40%;">Name</th>
+                        <th style="padding: 12px 16px; font-weight: 500; color: #64748b;">Type</th>
+                        <th style="padding: 12px 16px; font-weight: 500; color: #64748b; text-align: right;">Size</th>
+                        <th style="padding: 12px 16px; font-weight: 500; color: #64748b; text-align: right;">Uploaded</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr style="border-bottom: 1px solid #f1f5f9;">
+                        <td style="padding: 12px 16px; color: #0f172a; font-weight: 500; display: flex; align-items: center; gap: 8px;">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                            <polyline points="14 2 14 8 20 8"/>
+                          </svg>
+                          architecture_draft_v2.pdf
+                        </td>
+                        <td style="padding: 12px 16px; color: #64748b;">Document</td>
+                        <td style="padding: 12px 16px; text-align: right; color: #64748b;">1.2 MB</td>
+                        <td style="padding: 12px 16px; text-align: right; color: #94a3b8;">9/14/2026</td>
+                      </tr>
+                      <tr style="border-bottom: 1px solid #f1f5f9;">
+                        <td style="padding: 12px 16px; color: #0f172a; font-weight: 500; display: flex; align-items: center; gap: 8px;">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                            <polyline points="14 2 14 8 20 8"/>
+                            <polyline points="9 15 12 18 15 15"/>
+                            <line x1="12" y1="12" x2="12" y2="18"/>
+                          </svg>
+                          database_schema_prod.sql
+                        </td>
+                        <td style="padding: 12px 16px; color: #64748b;">SQL Source</td>
+                        <td style="padding: 12px 16px; text-align: right; color: #64748b;">45 KB</td>
+                        <td style="padding: 12px 16px; text-align: right; color: #94a3b8;">9/10/2026</td>
+                      </tr>
+                      <tr style="border-bottom: 1px solid #f1f5f9;">
+                        <td style="padding: 12px 16px; color: #0f172a; font-weight: 500; display: flex; align-items: center; gap: 8px;">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                            <polyline points="14 2 14 8 20 8"/>
+                            <line x1="16" y1="13" x2="8" y2="13"/>
+                            <line x1="16" y1="17" x2="8" y2="17"/>
+                            <polyline points="10 9 9 9 8 9"/>
+                          </svg>
+                          api_endpoints_notes.md
+                        </td>
+                        <td style="padding: 12px 16px; color: #64748b;">Markdown</td>
+                        <td style="padding: 12px 16px; text-align: right; color: #64748b;">12 KB</td>
+                        <td style="padding: 12px 16px; text-align: right; color: #94a3b8;">9/05/2026</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
             </div>
-          </div>
-        </main>
+          </main>
       </div>
   <!-- JavaScript -->
   <script src="js/sidebar.js"></script>
   <script src="js/new-project.js"></script>
   <script src="js/modal.js"></script>
+
+<!-- Feedback Modal -->
+<div id="feedbackModal" class="feedback-modal-overlay">
+  <div class="feedback-modal">
+    <div class="feedback-modal-header">
+      <h2>Report a bug or suggest an improvement</h2>
+      <button class="feedback-close-btn" id="feedbackCloseBtn">&times;</button>
+    </div>
+    <p class="feedback-modal-desc">Goes straight to the people building this. Where you are, which version you are on and any errors are attached automatically — you do not need to describe them.</p>
+    
+    <div class="feedback-type-toggles">
+      <button class="feedback-type-btn active" data-type="bug">Bug</button>
+      <button class="feedback-type-btn" data-type="improvement">Improvement</button>
+      <button class="feedback-type-btn" data-type="question">Question</button>
+    </div>
+    
+    <div class="feedback-form-group">
+      <label>Title</label>
+      <input type="text" placeholder="What happened, in one line" class="feedback-input">
+    </div>
+    
+    <div class="feedback-form-group">
+      <label>Details</label>
+      <textarea placeholder="What you expected, what happened instead. Paste a screenshot straight into this box." class="feedback-textarea"></textarea>
+    </div>
+    
+    <div class="feedback-modal-footer">
+      <div class="feedback-image-upload">
+        <button class="feedback-add-img-btn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+          Add image
+        </button>
+        <span class="feedback-upload-hint">Paste, drag, or browse &middot; up to 4</span>
+      </div>
+      <button class="feedback-send-btn">Send report</button>
+    </div>
+  </div>
+</div>
+
 </body>
 
 </html>

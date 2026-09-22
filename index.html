@@ -10,5 +10,44 @@
 </head>
 <body>
   <p>Redirecting to <a href="login.html">Zenith AI Login</a>...</p>
+
+<!-- Feedback Modal -->
+<div id="feedbackModal" class="feedback-modal-overlay">
+  <div class="feedback-modal">
+    <div class="feedback-modal-header">
+      <h2>Report a bug or suggest an improvement</h2>
+      <button class="feedback-close-btn" id="feedbackCloseBtn">&times;</button>
+    </div>
+    <p class="feedback-modal-desc">Goes straight to the people building this. Where you are, which version you are on and any errors are attached automatically — you do not need to describe them.</p>
+    
+    <div class="feedback-type-toggles">
+      <button class="feedback-type-btn active" data-type="bug">Bug</button>
+      <button class="feedback-type-btn" data-type="improvement">Improvement</button>
+      <button class="feedback-type-btn" data-type="question">Question</button>
+    </div>
+    
+    <div class="feedback-form-group">
+      <label>Title</label>
+      <input type="text" placeholder="What happened, in one line" class="feedback-input">
+    </div>
+    
+    <div class="feedback-form-group">
+      <label>Details</label>
+      <textarea placeholder="What you expected, what happened instead. Paste a screenshot straight into this box." class="feedback-textarea"></textarea>
+    </div>
+    
+    <div class="feedback-modal-footer">
+      <div class="feedback-image-upload">
+        <button class="feedback-add-img-btn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+          Add image
+        </button>
+        <span class="feedback-upload-hint">Paste, drag, or browse &middot; up to 4</span>
+      </div>
+      <button class="feedback-send-btn">Send report</button>
+    </div>
+  </div>
+</div>
+
 </body>
 </html>

@@ -41,13 +41,34 @@ function initProjectSearch() {
       }
     });
 
-    if (emptyState && tableCard) {
+    // Also filter grid view cards
+    const gridCards = document.querySelectorAll('.project-grid-card');
+    gridCards.forEach(card => {
+      const name = card.querySelector('h3')?.textContent.toLowerCase() || '';
+      const type = card.querySelector('.table-type-badge')?.textContent || '';
+      
+      const matchesSearch = name.includes(query);
+      const matchesFilter = (currentFilter === 'All' || type.toLowerCase() === currentFilter.toLowerCase());
+
+      if (matchesSearch && matchesFilter) {
+        card.style.display = 'flex';
+      } else {
+        card.style.display = 'none';
+      }
+    });
+
+    const isGridView = document.getElementById('btnGridView')?.classList.contains('active');
+    const gridView = document.getElementById('projectsGridView');
+
+    if (emptyState) {
       if (visibleCount === 0) {
         emptyState.classList.add('show');
-        tableCard.style.display = 'none';
+        if (tableCard) tableCard.style.display = 'none';
+        if (gridView) gridView.style.display = 'none';
       } else {
         emptyState.classList.remove('show');
-        tableCard.style.display = '';
+        if (tableCard && !isGridView) tableCard.style.display = '';
+        if (gridView && isGridView) gridView.style.display = 'grid';
       }
     }
   });
@@ -110,15 +131,30 @@ function initViewModeSwitcher() {
   btnListView.addEventListener('click', () => {
     btnListView.classList.add('active');
     btnGridView.classList.remove('active');
-    if (tableCard) tableCard.style.display = '';
-    if (gridView) gridView.classList.remove('active');
+    
+    // Check if there are results
+    const emptyState = document.getElementById('projectsEmptyState');
+    const hasResults = !emptyState || !emptyState.classList.contains('show');
+    
+    if (tableCard && hasResults) tableCard.style.display = '';
+    if (gridView) {
+      gridView.classList.remove('active');
+      gridView.style.display = '';
+    }
   });
 
   btnGridView.addEventListener('click', () => {
     btnGridView.classList.add('active');
     btnListView.classList.remove('active');
+    
+    const emptyState = document.getElementById('projectsEmptyState');
+    const hasResults = !emptyState || !emptyState.classList.contains('show');
+    
     if (tableCard) tableCard.style.display = 'none';
-    if (gridView) gridView.classList.add('active');
+    if (gridView) {
+      gridView.classList.add('active');
+      if (hasResults) gridView.style.display = 'grid';
+    }
   });
 }
 

@@ -21,6 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initOrcaCanvaVisualEditor();
   initAgentPopover();
   initBeautyStoreInteractions();
+  initPreviewCloseToggle();
 });
 
 /**
@@ -128,6 +129,31 @@ function initWorkspaceViewSwitcher() {
 
   applyHashView();
   window.addEventListener('hashchange', applyHashView);
+  // 6. Preview / Edit Mode Toggles
+  const btnPreviewMode = document.getElementById('btnPreviewMode');
+  const btnEditMode = document.getElementById('btnEditMode');
+  const docEditSidebar = document.getElementById('docEditSidebar');
+  const btnCloseEdit = document.getElementById('btnCloseEdit');
+
+  if (btnPreviewMode && btnEditMode && docEditSidebar) {
+    btnEditMode.addEventListener('click', () => {
+      btnEditMode.classList.add('active');
+      btnPreviewMode.classList.remove('active');
+      docEditSidebar.style.display = 'flex';
+    });
+
+    btnPreviewMode.addEventListener('click', () => {
+      btnPreviewMode.classList.add('active');
+      btnEditMode.classList.remove('active');
+      docEditSidebar.style.display = 'none';
+    });
+
+    if (btnCloseEdit) {
+      btnCloseEdit.addEventListener('click', () => {
+        btnPreviewMode.click();
+      });
+    }
+  }
 }
 
 /**
@@ -239,6 +265,31 @@ function initDeploymentDashboard() {
       showToast('Mengunduh file runtime-logs.txt...');
     });
   }
+  // 6. Preview / Edit Mode Toggles
+  const btnPreviewMode = document.getElementById('btnPreviewMode');
+  const btnEditMode = document.getElementById('btnEditMode');
+  const docEditSidebar = document.getElementById('docEditSidebar');
+  const btnCloseEdit = document.getElementById('btnCloseEdit');
+
+  if (btnPreviewMode && btnEditMode && docEditSidebar) {
+    btnEditMode.addEventListener('click', () => {
+      btnEditMode.classList.add('active');
+      btnPreviewMode.classList.remove('active');
+      docEditSidebar.style.display = 'flex';
+    });
+
+    btnPreviewMode.addEventListener('click', () => {
+      btnPreviewMode.classList.add('active');
+      btnEditMode.classList.remove('active');
+      docEditSidebar.style.display = 'none';
+    });
+
+    if (btnCloseEdit) {
+      btnCloseEdit.addEventListener('click', () => {
+        btnPreviewMode.click();
+      });
+    }
+  }
 }
 
 /**
@@ -311,6 +362,31 @@ function initDocumentsExplorer() {
           subTabsBar.style.display = 'none';
         }
       }
+
+      // Hide Edit Header and Sidebar when not in PRD/BRD
+      const docHeaderTop = document.querySelector('.doc-header-top');
+      const docEditSidebar = document.getElementById('docEditSidebar');
+      
+      if (targetId === 'docPanelPrd' || targetId === 'docPanelBRD') {
+        if (docHeaderTop) docHeaderTop.style.display = 'flex';
+      } else {
+        if (docHeaderTop) docHeaderTop.style.display = 'none';
+        if (docEditSidebar) docEditSidebar.style.display = 'none';
+        
+        // Reset preview mode buttons
+        const btnPreviewMode = document.getElementById('btnPreviewMode');
+        const btnEditMode = document.getElementById('btnEditMode');
+        if (btnPreviewMode) {
+            btnPreviewMode.classList.add('active');
+            btnPreviewMode.style.background = '#e2e8f0';
+            btnPreviewMode.style.color = 'var(--text-primary)';
+        }
+        if (btnEditMode) {
+            btnEditMode.classList.remove('active');
+            btnEditMode.style.background = 'transparent';
+            btnEditMode.style.color = 'var(--text-secondary)';
+        }
+      }
     });
   });
 
@@ -361,6 +437,31 @@ function initDocumentsExplorer() {
         setTimeout(() => { toast.style.display = 'none'; }, 2200);
       }
     });
+  }
+  // 6. Preview / Edit Mode Toggles
+  const btnPreviewMode = document.getElementById('btnPreviewMode');
+  const btnEditMode = document.getElementById('btnEditMode');
+  const docEditSidebar = document.getElementById('docEditSidebar');
+  const btnCloseEdit = document.getElementById('btnCloseEdit');
+
+  if (btnPreviewMode && btnEditMode && docEditSidebar) {
+    btnEditMode.addEventListener('click', () => {
+      btnEditMode.classList.add('active');
+      btnPreviewMode.classList.remove('active');
+      docEditSidebar.style.display = 'flex';
+    });
+
+    btnPreviewMode.addEventListener('click', () => {
+      btnPreviewMode.classList.add('active');
+      btnEditMode.classList.remove('active');
+      docEditSidebar.style.display = 'none';
+    });
+
+    if (btnCloseEdit) {
+      btnCloseEdit.addEventListener('click', () => {
+        btnPreviewMode.click();
+      });
+    }
   }
 }
 
@@ -553,6 +654,31 @@ function initProjectManagementInteractions() {
   if (btnPage2) btnPage2.addEventListener('click', () => renderPage(2));
   if (btnPrevPage) btnPrevPage.addEventListener('click', () => { if (currentPage > 1) renderPage(1); });
   if (btnNextPage) btnNextPage.addEventListener('click', () => { if (currentPage < 2) renderPage(2); });
+  // 6. Preview / Edit Mode Toggles
+  const btnPreviewMode = document.getElementById('btnPreviewMode');
+  const btnEditMode = document.getElementById('btnEditMode');
+  const docEditSidebar = document.getElementById('docEditSidebar');
+  const btnCloseEdit = document.getElementById('btnCloseEdit');
+
+  if (btnPreviewMode && btnEditMode && docEditSidebar) {
+    btnEditMode.addEventListener('click', () => {
+      btnEditMode.classList.add('active');
+      btnPreviewMode.classList.remove('active');
+      docEditSidebar.style.display = 'flex';
+    });
+
+    btnPreviewMode.addEventListener('click', () => {
+      btnPreviewMode.classList.add('active');
+      btnEditMode.classList.remove('active');
+      docEditSidebar.style.display = 'none';
+    });
+
+    if (btnCloseEdit) {
+      btnCloseEdit.addEventListener('click', () => {
+        btnPreviewMode.click();
+      });
+    }
+  }
 }
 
 /**
@@ -611,6 +737,31 @@ function initTabsSwitchers() {
       tab.classList.add('active');
     });
   });
+  // 6. Preview / Edit Mode Toggles
+  const btnPreviewMode = document.getElementById('btnPreviewMode');
+  const btnEditMode = document.getElementById('btnEditMode');
+  const docEditSidebar = document.getElementById('docEditSidebar');
+  const btnCloseEdit = document.getElementById('btnCloseEdit');
+
+  if (btnPreviewMode && btnEditMode && docEditSidebar) {
+    btnEditMode.addEventListener('click', () => {
+      btnEditMode.classList.add('active');
+      btnPreviewMode.classList.remove('active');
+      docEditSidebar.style.display = 'flex';
+    });
+
+    btnPreviewMode.addEventListener('click', () => {
+      btnPreviewMode.classList.add('active');
+      btnEditMode.classList.remove('active');
+      docEditSidebar.style.display = 'none';
+    });
+
+    if (btnCloseEdit) {
+      btnCloseEdit.addEventListener('click', () => {
+        btnPreviewMode.click();
+      });
+    }
+  }
 }
 
 /**
@@ -855,6 +1006,31 @@ function initTerminalExecution() {
       promptInput.focus();
     });
   }
+  // 6. Preview / Edit Mode Toggles
+  const btnPreviewMode = document.getElementById('btnPreviewMode');
+  const btnEditMode = document.getElementById('btnEditMode');
+  const docEditSidebar = document.getElementById('docEditSidebar');
+  const btnCloseEdit = document.getElementById('btnCloseEdit');
+
+  if (btnPreviewMode && btnEditMode && docEditSidebar) {
+    btnEditMode.addEventListener('click', () => {
+      btnEditMode.classList.add('active');
+      btnPreviewMode.classList.remove('active');
+      docEditSidebar.style.display = 'flex';
+    });
+
+    btnPreviewMode.addEventListener('click', () => {
+      btnPreviewMode.classList.add('active');
+      btnEditMode.classList.remove('active');
+      docEditSidebar.style.display = 'none';
+    });
+
+    if (btnCloseEdit) {
+      btnCloseEdit.addEventListener('click', () => {
+        btnPreviewMode.click();
+      });
+    }
+  }
 }
 
 /**
@@ -957,6 +1133,31 @@ function initChatPromptActions() {
     // Trigger Live Preview automatically
     startLivePreview();
   }
+  // 6. Preview / Edit Mode Toggles
+  const btnPreviewMode = document.getElementById('btnPreviewMode');
+  const btnEditMode = document.getElementById('btnEditMode');
+  const docEditSidebar = document.getElementById('docEditSidebar');
+  const btnCloseEdit = document.getElementById('btnCloseEdit');
+
+  if (btnPreviewMode && btnEditMode && docEditSidebar) {
+    btnEditMode.addEventListener('click', () => {
+      btnEditMode.classList.add('active');
+      btnPreviewMode.classList.remove('active');
+      docEditSidebar.style.display = 'flex';
+    });
+
+    btnPreviewMode.addEventListener('click', () => {
+      btnPreviewMode.classList.add('active');
+      btnEditMode.classList.remove('active');
+      docEditSidebar.style.display = 'none';
+    });
+
+    if (btnCloseEdit) {
+      btnCloseEdit.addEventListener('click', () => {
+        btnPreviewMode.click();
+      });
+    }
+  }
 }
 
 /**
@@ -976,6 +1177,31 @@ function startLivePreview() {
       statusBadge.style.color = '#059669';
     }
   }
+  // 6. Preview / Edit Mode Toggles
+  const btnPreviewMode = document.getElementById('btnPreviewMode');
+  const btnEditMode = document.getElementById('btnEditMode');
+  const docEditSidebar = document.getElementById('docEditSidebar');
+  const btnCloseEdit = document.getElementById('btnCloseEdit');
+
+  if (btnPreviewMode && btnEditMode && docEditSidebar) {
+    btnEditMode.addEventListener('click', () => {
+      btnEditMode.classList.add('active');
+      btnPreviewMode.classList.remove('active');
+      docEditSidebar.style.display = 'flex';
+    });
+
+    btnPreviewMode.addEventListener('click', () => {
+      btnPreviewMode.classList.add('active');
+      btnEditMode.classList.remove('active');
+      docEditSidebar.style.display = 'none';
+    });
+
+    if (btnCloseEdit) {
+      btnCloseEdit.addEventListener('click', () => {
+        btnPreviewMode.click();
+      });
+    }
+  }
 }
 
 /**
@@ -988,6 +1214,31 @@ function initLivePreviewActions() {
       startLivePreview();
       showToastFeedback('Live preview dimulai (Node watch server live)');
     });
+  }
+  // 6. Preview / Edit Mode Toggles
+  const btnPreviewMode = document.getElementById('btnPreviewMode');
+  const btnEditMode = document.getElementById('btnEditMode');
+  const docEditSidebar = document.getElementById('docEditSidebar');
+  const btnCloseEdit = document.getElementById('btnCloseEdit');
+
+  if (btnPreviewMode && btnEditMode && docEditSidebar) {
+    btnEditMode.addEventListener('click', () => {
+      btnEditMode.classList.add('active');
+      btnPreviewMode.classList.remove('active');
+      docEditSidebar.style.display = 'flex';
+    });
+
+    btnPreviewMode.addEventListener('click', () => {
+      btnPreviewMode.classList.add('active');
+      btnEditMode.classList.remove('active');
+      docEditSidebar.style.display = 'none';
+    });
+
+    if (btnCloseEdit) {
+      btnCloseEdit.addEventListener('click', () => {
+        btnPreviewMode.click();
+      });
+    }
   }
 }
 
@@ -1076,6 +1327,31 @@ function initPreview3DotsMenu() {
       }, 1600);
     });
   }
+  // 6. Preview / Edit Mode Toggles
+  const btnPreviewMode = document.getElementById('btnPreviewMode');
+  const btnEditMode = document.getElementById('btnEditMode');
+  const docEditSidebar = document.getElementById('docEditSidebar');
+  const btnCloseEdit = document.getElementById('btnCloseEdit');
+
+  if (btnPreviewMode && btnEditMode && docEditSidebar) {
+    btnEditMode.addEventListener('click', () => {
+      btnEditMode.classList.add('active');
+      btnPreviewMode.classList.remove('active');
+      docEditSidebar.style.display = 'flex';
+    });
+
+    btnPreviewMode.addEventListener('click', () => {
+      btnPreviewMode.classList.add('active');
+      btnEditMode.classList.remove('active');
+      docEditSidebar.style.display = 'none';
+    });
+
+    if (btnCloseEdit) {
+      btnCloseEdit.addEventListener('click', () => {
+        btnPreviewMode.click();
+      });
+    }
+  }
 }
 
 /**
@@ -1122,6 +1398,31 @@ function initPreviewWideMode() {
       exitWideMode();
     }
   });
+  // 6. Preview / Edit Mode Toggles
+  const btnPreviewMode = document.getElementById('btnPreviewMode');
+  const btnEditMode = document.getElementById('btnEditMode');
+  const docEditSidebar = document.getElementById('docEditSidebar');
+  const btnCloseEdit = document.getElementById('btnCloseEdit');
+
+  if (btnPreviewMode && btnEditMode && docEditSidebar) {
+    btnEditMode.addEventListener('click', () => {
+      btnEditMode.classList.add('active');
+      btnPreviewMode.classList.remove('active');
+      docEditSidebar.style.display = 'flex';
+    });
+
+    btnPreviewMode.addEventListener('click', () => {
+      btnPreviewMode.classList.add('active');
+      btnEditMode.classList.remove('active');
+      docEditSidebar.style.display = 'none';
+    });
+
+    if (btnCloseEdit) {
+      btnCloseEdit.addEventListener('click', () => {
+        btnPreviewMode.click();
+      });
+    }
+  }
 }
 
 /**
@@ -1624,6 +1925,31 @@ function initFileExplorerSidebar() {
       folderUploadInput.value = '';
     });
   }
+  // 6. Preview / Edit Mode Toggles
+  const btnPreviewMode = document.getElementById('btnPreviewMode');
+  const btnEditMode = document.getElementById('btnEditMode');
+  const docEditSidebar = document.getElementById('docEditSidebar');
+  const btnCloseEdit = document.getElementById('btnCloseEdit');
+
+  if (btnPreviewMode && btnEditMode && docEditSidebar) {
+    btnEditMode.addEventListener('click', () => {
+      btnEditMode.classList.add('active');
+      btnPreviewMode.classList.remove('active');
+      docEditSidebar.style.display = 'flex';
+    });
+
+    btnPreviewMode.addEventListener('click', () => {
+      btnPreviewMode.classList.add('active');
+      btnEditMode.classList.remove('active');
+      docEditSidebar.style.display = 'none';
+    });
+
+    if (btnCloseEdit) {
+      btnCloseEdit.addEventListener('click', () => {
+        btnPreviewMode.click();
+      });
+    }
+  }
 }
 
 /**
@@ -1766,6 +2092,31 @@ function initPreviewLogDrawer() {
       window.addEventListener('mousemove', onMouseMove);
       window.addEventListener('mouseup', onMouseUp);
     });
+  }
+  // 6. Preview / Edit Mode Toggles
+  const btnPreviewMode = document.getElementById('btnPreviewMode');
+  const btnEditMode = document.getElementById('btnEditMode');
+  const docEditSidebar = document.getElementById('docEditSidebar');
+  const btnCloseEdit = document.getElementById('btnCloseEdit');
+
+  if (btnPreviewMode && btnEditMode && docEditSidebar) {
+    btnEditMode.addEventListener('click', () => {
+      btnEditMode.classList.add('active');
+      btnPreviewMode.classList.remove('active');
+      docEditSidebar.style.display = 'flex';
+    });
+
+    btnPreviewMode.addEventListener('click', () => {
+      btnPreviewMode.classList.add('active');
+      btnEditMode.classList.remove('active');
+      docEditSidebar.style.display = 'none';
+    });
+
+    if (btnCloseEdit) {
+      btnCloseEdit.addEventListener('click', () => {
+        btnPreviewMode.click();
+      });
+    }
   }
 }
 
@@ -2017,16 +2368,91 @@ export default function BagModal({ items = [], onClose }) {
   --primary-rose: #e11d48;
   --bg-atelier: #fbfcfe;
   --font-body: 'Plus Jakarta Sans', sans-serif;
+  // 6. Preview / Edit Mode Toggles
+  const btnPreviewMode = document.getElementById('btnPreviewMode');
+  const btnEditMode = document.getElementById('btnEditMode');
+  const docEditSidebar = document.getElementById('docEditSidebar');
+  const btnCloseEdit = document.getElementById('btnCloseEdit');
+
+  if (btnPreviewMode && btnEditMode && docEditSidebar) {
+    btnEditMode.addEventListener('click', () => {
+      btnEditMode.classList.add('active');
+      btnPreviewMode.classList.remove('active');
+      docEditSidebar.style.display = 'flex';
+    });
+
+    btnPreviewMode.addEventListener('click', () => {
+      btnPreviewMode.classList.add('active');
+      btnEditMode.classList.remove('active');
+      docEditSidebar.style.display = 'none';
+    });
+
+    if (btnCloseEdit) {
+      btnCloseEdit.addEventListener('click', () => {
+        btnPreviewMode.click();
+      });
+    }
+  }
 }
 
 body {
   font-family: var(--font-body);
   background-color: var(--bg-atelier);
   color: #111827;
+  // 6. Preview / Edit Mode Toggles
+  const btnPreviewMode = document.getElementById('btnPreviewMode');
+  const btnEditMode = document.getElementById('btnEditMode');
+  const docEditSidebar = document.getElementById('docEditSidebar');
+  const btnCloseEdit = document.getElementById('btnCloseEdit');
+
+  if (btnPreviewMode && btnEditMode && docEditSidebar) {
+    btnEditMode.addEventListener('click', () => {
+      btnEditMode.classList.add('active');
+      btnPreviewMode.classList.remove('active');
+      docEditSidebar.style.display = 'flex';
+    });
+
+    btnPreviewMode.addEventListener('click', () => {
+      btnPreviewMode.classList.add('active');
+      btnEditMode.classList.remove('active');
+      docEditSidebar.style.display = 'none';
+    });
+
+    if (btnCloseEdit) {
+      btnCloseEdit.addEventListener('click', () => {
+        btnPreviewMode.click();
+      });
+    }
+  }
 }
 
 .beauty-card {
   transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease;
+  // 6. Preview / Edit Mode Toggles
+  const btnPreviewMode = document.getElementById('btnPreviewMode');
+  const btnEditMode = document.getElementById('btnEditMode');
+  const docEditSidebar = document.getElementById('docEditSidebar');
+  const btnCloseEdit = document.getElementById('btnCloseEdit');
+
+  if (btnPreviewMode && btnEditMode && docEditSidebar) {
+    btnEditMode.addEventListener('click', () => {
+      btnEditMode.classList.add('active');
+      btnPreviewMode.classList.remove('active');
+      docEditSidebar.style.display = 'flex';
+    });
+
+    btnPreviewMode.addEventListener('click', () => {
+      btnPreviewMode.classList.add('active');
+      btnEditMode.classList.remove('active');
+      docEditSidebar.style.display = 'none';
+    });
+
+    if (btnCloseEdit) {
+      btnCloseEdit.addEventListener('click', () => {
+        btnPreviewMode.click();
+      });
+    }
+  }
 }
 
 .beauty-card:hover {
@@ -2232,6 +2658,31 @@ function formatCodeWithSyntax(rawCode, lang) {
       .replace(/(`[^`]+`)/g, '<span class="syn-string">$1</span>')
       .replace(/(\*\*[^*]+\*\*)/g, '<span class="syn-fn">$1</span>');
   }
+  // 6. Preview / Edit Mode Toggles
+  const btnPreviewMode = document.getElementById('btnPreviewMode');
+  const btnEditMode = document.getElementById('btnEditMode');
+  const docEditSidebar = document.getElementById('docEditSidebar');
+  const btnCloseEdit = document.getElementById('btnCloseEdit');
+
+  if (btnPreviewMode && btnEditMode && docEditSidebar) {
+    btnEditMode.addEventListener('click', () => {
+      btnEditMode.classList.add('active');
+      btnPreviewMode.classList.remove('active');
+      docEditSidebar.style.display = 'flex';
+    });
+
+    btnPreviewMode.addEventListener('click', () => {
+      btnPreviewMode.classList.add('active');
+      btnEditMode.classList.remove('active');
+      docEditSidebar.style.display = 'none';
+    });
+
+    if (btnCloseEdit) {
+      btnCloseEdit.addEventListener('click', () => {
+        btnPreviewMode.click();
+      });
+    }
+  }
 }
 
 /**
@@ -2270,6 +2721,31 @@ function renderBreadcrumb(filePath) {
   const bcLangPill = document.getElementById('bcLangPill');
   if (bcLangPill) {
     bcLangPill.textContent = fileData.lang || 'React JSX';
+  }
+  // 6. Preview / Edit Mode Toggles
+  const btnPreviewMode = document.getElementById('btnPreviewMode');
+  const btnEditMode = document.getElementById('btnEditMode');
+  const docEditSidebar = document.getElementById('docEditSidebar');
+  const btnCloseEdit = document.getElementById('btnCloseEdit');
+
+  if (btnPreviewMode && btnEditMode && docEditSidebar) {
+    btnEditMode.addEventListener('click', () => {
+      btnEditMode.classList.add('active');
+      btnPreviewMode.classList.remove('active');
+      docEditSidebar.style.display = 'flex';
+    });
+
+    btnPreviewMode.addEventListener('click', () => {
+      btnPreviewMode.classList.add('active');
+      btnEditMode.classList.remove('active');
+      docEditSidebar.style.display = 'none';
+    });
+
+    if (btnCloseEdit) {
+      btnCloseEdit.addEventListener('click', () => {
+        btnPreviewMode.click();
+      });
+    }
   }
 }
 
@@ -2328,6 +2804,31 @@ function openDocumentTab(filePath) {
 
   // Activate the document tab
   activateDocument(filePath);
+  // 6. Preview / Edit Mode Toggles
+  const btnPreviewMode = document.getElementById('btnPreviewMode');
+  const btnEditMode = document.getElementById('btnEditMode');
+  const docEditSidebar = document.getElementById('docEditSidebar');
+  const btnCloseEdit = document.getElementById('btnCloseEdit');
+
+  if (btnPreviewMode && btnEditMode && docEditSidebar) {
+    btnEditMode.addEventListener('click', () => {
+      btnEditMode.classList.add('active');
+      btnPreviewMode.classList.remove('active');
+      docEditSidebar.style.display = 'flex';
+    });
+
+    btnPreviewMode.addEventListener('click', () => {
+      btnPreviewMode.classList.add('active');
+      btnEditMode.classList.remove('active');
+      docEditSidebar.style.display = 'none';
+    });
+
+    if (btnCloseEdit) {
+      btnCloseEdit.addEventListener('click', () => {
+        btnPreviewMode.click();
+      });
+    }
+  }
 }
 
 /**
@@ -2348,6 +2849,7 @@ function activateDocument(filePath) {
   const statusLines = document.getElementById('editorStatusLines');
   const statusType = document.getElementById('editorStatusType');
   const fileTreeItems = document.querySelectorAll('.tree-item.file-item');
+  const logDrawer = document.getElementById('previewLogDrawer');
 
   if (!tabsGroup) return;
 
@@ -2375,6 +2877,9 @@ function activateDocument(filePath) {
     if (beautyViewport) {
       beautyViewport.style.display = 'flex';
       beautyViewport.classList.add('active');
+    }
+    if (logDrawer) {
+      logDrawer.style.display = 'flex';
     }
 
     // 4. File tree selection cleared
@@ -2419,6 +2924,9 @@ function activateDocument(filePath) {
     codeViewport.style.display = 'flex';
     codeViewport.classList.add('active');
   }
+  if (logDrawer) {
+    logDrawer.style.display = 'none';
+  }
 
   // 4. Render dynamic breadcrumb (e.g. app > components > Header.jsx or lib > api-spec > openapi.yaml)
   renderBreadcrumb(filePath);
@@ -2447,6 +2955,31 @@ function activateDocument(filePath) {
       item.classList.remove('active');
     }
   });
+  // 6. Preview / Edit Mode Toggles
+  const btnPreviewMode = document.getElementById('btnPreviewMode');
+  const btnEditMode = document.getElementById('btnEditMode');
+  const docEditSidebar = document.getElementById('docEditSidebar');
+  const btnCloseEdit = document.getElementById('btnCloseEdit');
+
+  if (btnPreviewMode && btnEditMode && docEditSidebar) {
+    btnEditMode.addEventListener('click', () => {
+      btnEditMode.classList.add('active');
+      btnPreviewMode.classList.remove('active');
+      docEditSidebar.style.display = 'flex';
+    });
+
+    btnPreviewMode.addEventListener('click', () => {
+      btnPreviewMode.classList.add('active');
+      btnEditMode.classList.remove('active');
+      docEditSidebar.style.display = 'none';
+    });
+
+    if (btnCloseEdit) {
+      btnCloseEdit.addEventListener('click', () => {
+        btnPreviewMode.click();
+      });
+    }
+  }
 }
 
 /**
@@ -2476,6 +3009,31 @@ function closeDocumentTab(filePath) {
     } else {
       // Revert to Preview tab
       activateDocument('preview');
+    }
+  }
+  // 6. Preview / Edit Mode Toggles
+  const btnPreviewMode = document.getElementById('btnPreviewMode');
+  const btnEditMode = document.getElementById('btnEditMode');
+  const docEditSidebar = document.getElementById('docEditSidebar');
+  const btnCloseEdit = document.getElementById('btnCloseEdit');
+
+  if (btnPreviewMode && btnEditMode && docEditSidebar) {
+    btnEditMode.addEventListener('click', () => {
+      btnEditMode.classList.add('active');
+      btnPreviewMode.classList.remove('active');
+      docEditSidebar.style.display = 'flex';
+    });
+
+    btnPreviewMode.addEventListener('click', () => {
+      btnPreviewMode.classList.add('active');
+      btnEditMode.classList.remove('active');
+      docEditSidebar.style.display = 'none';
+    });
+
+    if (btnCloseEdit) {
+      btnCloseEdit.addEventListener('click', () => {
+        btnPreviewMode.click();
+      });
     }
   }
 }
@@ -2508,6 +3066,31 @@ function initDocumentTabsManager() {
         });
       }
     });
+  }
+  // 6. Preview / Edit Mode Toggles
+  const btnPreviewMode = document.getElementById('btnPreviewMode');
+  const btnEditMode = document.getElementById('btnEditMode');
+  const docEditSidebar = document.getElementById('docEditSidebar');
+  const btnCloseEdit = document.getElementById('btnCloseEdit');
+
+  if (btnPreviewMode && btnEditMode && docEditSidebar) {
+    btnEditMode.addEventListener('click', () => {
+      btnEditMode.classList.add('active');
+      btnPreviewMode.classList.remove('active');
+      docEditSidebar.style.display = 'flex';
+    });
+
+    btnPreviewMode.addEventListener('click', () => {
+      btnPreviewMode.classList.add('active');
+      btnEditMode.classList.remove('active');
+      docEditSidebar.style.display = 'none';
+    });
+
+    if (btnCloseEdit) {
+      btnCloseEdit.addEventListener('click', () => {
+        btnPreviewMode.click();
+      });
+    }
   }
 }
 
@@ -2739,6 +3322,31 @@ function initOrcaCanvaVisualEditor() {
 
     showToastFeedback(`🎯 Elemen '${data.name}' dilampirkan ke AI prompt!`);
   }
+  // 6. Preview / Edit Mode Toggles
+  const btnPreviewMode = document.getElementById('btnPreviewMode');
+  const btnEditMode = document.getElementById('btnEditMode');
+  const docEditSidebar = document.getElementById('docEditSidebar');
+  const btnCloseEdit = document.getElementById('btnCloseEdit');
+
+  if (btnPreviewMode && btnEditMode && docEditSidebar) {
+    btnEditMode.addEventListener('click', () => {
+      btnEditMode.classList.add('active');
+      btnPreviewMode.classList.remove('active');
+      docEditSidebar.style.display = 'flex';
+    });
+
+    btnPreviewMode.addEventListener('click', () => {
+      btnPreviewMode.classList.add('active');
+      btnEditMode.classList.remove('active');
+      docEditSidebar.style.display = 'none';
+    });
+
+    if (btnCloseEdit) {
+      btnCloseEdit.addEventListener('click', () => {
+        btnPreviewMode.click();
+      });
+    }
+  }
 }
 
 /**
@@ -2754,6 +3362,31 @@ function showToastFeedback(msg) {
     toast._timer = setTimeout(() => {
       toast.style.display = 'none';
     }, 2400);
+  }
+  // 6. Preview / Edit Mode Toggles
+  const btnPreviewMode = document.getElementById('btnPreviewMode');
+  const btnEditMode = document.getElementById('btnEditMode');
+  const docEditSidebar = document.getElementById('docEditSidebar');
+  const btnCloseEdit = document.getElementById('btnCloseEdit');
+
+  if (btnPreviewMode && btnEditMode && docEditSidebar) {
+    btnEditMode.addEventListener('click', () => {
+      btnEditMode.classList.add('active');
+      btnPreviewMode.classList.remove('active');
+      docEditSidebar.style.display = 'flex';
+    });
+
+    btnPreviewMode.addEventListener('click', () => {
+      btnPreviewMode.classList.add('active');
+      btnEditMode.classList.remove('active');
+      docEditSidebar.style.display = 'none';
+    });
+
+    if (btnCloseEdit) {
+      btnCloseEdit.addEventListener('click', () => {
+        btnPreviewMode.click();
+      });
+    }
   }
 }
 
@@ -2826,6 +3459,31 @@ function loadVaultDocs() {
   } catch (e) {
     return DEFAULT_VAULT_DOCS;
   }
+  // 6. Preview / Edit Mode Toggles
+  const btnPreviewMode = document.getElementById('btnPreviewMode');
+  const btnEditMode = document.getElementById('btnEditMode');
+  const docEditSidebar = document.getElementById('docEditSidebar');
+  const btnCloseEdit = document.getElementById('btnCloseEdit');
+
+  if (btnPreviewMode && btnEditMode && docEditSidebar) {
+    btnEditMode.addEventListener('click', () => {
+      btnEditMode.classList.add('active');
+      btnPreviewMode.classList.remove('active');
+      docEditSidebar.style.display = 'flex';
+    });
+
+    btnPreviewMode.addEventListener('click', () => {
+      btnPreviewMode.classList.add('active');
+      btnEditMode.classList.remove('active');
+      docEditSidebar.style.display = 'none';
+    });
+
+    if (btnCloseEdit) {
+      btnCloseEdit.addEventListener('click', () => {
+        btnPreviewMode.click();
+      });
+    }
+  }
 }
 
 function saveVaultDocs(docs) {
@@ -2833,6 +3491,31 @@ function saveVaultDocs(docs) {
     localStorage.setItem(VAULT_STORAGE_KEY, JSON.stringify(docs));
   } catch (e) {
     console.error('Error saving vault docs to localStorage:', e);
+  }
+  // 6. Preview / Edit Mode Toggles
+  const btnPreviewMode = document.getElementById('btnPreviewMode');
+  const btnEditMode = document.getElementById('btnEditMode');
+  const docEditSidebar = document.getElementById('docEditSidebar');
+  const btnCloseEdit = document.getElementById('btnCloseEdit');
+
+  if (btnPreviewMode && btnEditMode && docEditSidebar) {
+    btnEditMode.addEventListener('click', () => {
+      btnEditMode.classList.add('active');
+      btnPreviewMode.classList.remove('active');
+      docEditSidebar.style.display = 'flex';
+    });
+
+    btnPreviewMode.addEventListener('click', () => {
+      btnPreviewMode.classList.add('active');
+      btnEditMode.classList.remove('active');
+      docEditSidebar.style.display = 'none';
+    });
+
+    if (btnCloseEdit) {
+      btnCloseEdit.addEventListener('click', () => {
+        btnPreviewMode.click();
+      });
+    }
   }
 }
 
@@ -3171,6 +3854,31 @@ function initContextVault() {
 
   // Initial render
   renderTable();
+  // 6. Preview / Edit Mode Toggles
+  const btnPreviewMode = document.getElementById('btnPreviewMode');
+  const btnEditMode = document.getElementById('btnEditMode');
+  const docEditSidebar = document.getElementById('docEditSidebar');
+  const btnCloseEdit = document.getElementById('btnCloseEdit');
+
+  if (btnPreviewMode && btnEditMode && docEditSidebar) {
+    btnEditMode.addEventListener('click', () => {
+      btnEditMode.classList.add('active');
+      btnPreviewMode.classList.remove('active');
+      docEditSidebar.style.display = 'flex';
+    });
+
+    btnPreviewMode.addEventListener('click', () => {
+      btnPreviewMode.classList.add('active');
+      btnEditMode.classList.remove('active');
+      docEditSidebar.style.display = 'none';
+    });
+
+    if (btnCloseEdit) {
+      btnCloseEdit.addEventListener('click', () => {
+        btnPreviewMode.click();
+      });
+    }
+  }
 }
 
 /**
@@ -3318,6 +4026,31 @@ function initContextSelectorModal() {
   // Sync on startup with first 2 docs as active sample
   activeSelectedDocIds = ['doc-prd-1', 'doc-schema-2'];
   syncAttachedContextChips();
+  // 6. Preview / Edit Mode Toggles
+  const btnPreviewMode = document.getElementById('btnPreviewMode');
+  const btnEditMode = document.getElementById('btnEditMode');
+  const docEditSidebar = document.getElementById('docEditSidebar');
+  const btnCloseEdit = document.getElementById('btnCloseEdit');
+
+  if (btnPreviewMode && btnEditMode && docEditSidebar) {
+    btnEditMode.addEventListener('click', () => {
+      btnEditMode.classList.add('active');
+      btnPreviewMode.classList.remove('active');
+      docEditSidebar.style.display = 'flex';
+    });
+
+    btnPreviewMode.addEventListener('click', () => {
+      btnPreviewMode.classList.add('active');
+      btnEditMode.classList.remove('active');
+      docEditSidebar.style.display = 'none';
+    });
+
+    if (btnCloseEdit) {
+      btnCloseEdit.addEventListener('click', () => {
+        btnPreviewMode.click();
+      });
+    }
+  }
 }
 
 /**
@@ -3373,6 +4106,31 @@ function syncAttachedContextChips() {
   if (statActiveDocs) {
     statActiveDocs.textContent = `${selectedDocs.length} Selected`;
   }
+  // 6. Preview / Edit Mode Toggles
+  const btnPreviewMode = document.getElementById('btnPreviewMode');
+  const btnEditMode = document.getElementById('btnEditMode');
+  const docEditSidebar = document.getElementById('docEditSidebar');
+  const btnCloseEdit = document.getElementById('btnCloseEdit');
+
+  if (btnPreviewMode && btnEditMode && docEditSidebar) {
+    btnEditMode.addEventListener('click', () => {
+      btnEditMode.classList.add('active');
+      btnPreviewMode.classList.remove('active');
+      docEditSidebar.style.display = 'flex';
+    });
+
+    btnPreviewMode.addEventListener('click', () => {
+      btnPreviewMode.classList.add('active');
+      btnEditMode.classList.remove('active');
+      docEditSidebar.style.display = 'none';
+    });
+
+    if (btnCloseEdit) {
+      btnCloseEdit.addEventListener('click', () => {
+        btnPreviewMode.click();
+      });
+    }
+  }
 }
 
 /**
@@ -3403,6 +4161,31 @@ function initBeautyStoreInteractions() {
       }
     });
   });
+  // 6. Preview / Edit Mode Toggles
+  const btnPreviewMode = document.getElementById('btnPreviewMode');
+  const btnEditMode = document.getElementById('btnEditMode');
+  const docEditSidebar = document.getElementById('docEditSidebar');
+  const btnCloseEdit = document.getElementById('btnCloseEdit');
+
+  if (btnPreviewMode && btnEditMode && docEditSidebar) {
+    btnEditMode.addEventListener('click', () => {
+      btnEditMode.classList.add('active');
+      btnPreviewMode.classList.remove('active');
+      docEditSidebar.style.display = 'flex';
+    });
+
+    btnPreviewMode.addEventListener('click', () => {
+      btnPreviewMode.classList.add('active');
+      btnEditMode.classList.remove('active');
+      docEditSidebar.style.display = 'none';
+    });
+
+    if (btnCloseEdit) {
+      btnCloseEdit.addEventListener('click', () => {
+        btnPreviewMode.click();
+      });
+    }
+  }
 }
 
 /**
@@ -3455,4 +4238,79 @@ function initAgentPopover() {
       item.appendChild(checkSpan);
     });
   });
+  // 6. Preview / Edit Mode Toggles
+  const btnPreviewMode = document.getElementById('btnPreviewMode');
+  const btnEditMode = document.getElementById('btnEditMode');
+  const docEditSidebar = document.getElementById('docEditSidebar');
+  const btnCloseEdit = document.getElementById('btnCloseEdit');
+
+  if (btnPreviewMode && btnEditMode && docEditSidebar) {
+    btnEditMode.addEventListener('click', () => {
+      btnEditMode.classList.add('active');
+      btnPreviewMode.classList.remove('active');
+      docEditSidebar.style.display = 'flex';
+    });
+
+    btnPreviewMode.addEventListener('click', () => {
+      btnPreviewMode.classList.add('active');
+      btnEditMode.classList.remove('active');
+      docEditSidebar.style.display = 'none';
+    });
+
+    if (btnCloseEdit) {
+      btnCloseEdit.addEventListener('click', () => {
+        btnPreviewMode.click();
+      });
+    }
+  }
 }
+
+/**
+ * Handles collapsing and expanding the right Preview Pane.
+ */
+function initPreviewCloseToggle() {
+  const btnClosePreview = document.getElementById('btnClosePreview');
+  const btnOpenPreview = document.getElementById('btnOpenPreview');
+  const previewPane = document.getElementById('workspacePreviewPane');
+  const collapsedBar = document.getElementById('previewCollapsedBar');
+
+  if (btnClosePreview && previewPane && collapsedBar) {
+    btnClosePreview.addEventListener('click', () => {
+      previewPane.classList.add('collapsed');
+      collapsedBar.style.display = 'flex';
+    });
+  }
+
+  if (btnOpenPreview && previewPane && collapsedBar) {
+    btnOpenPreview.addEventListener('click', () => {
+      previewPane.classList.remove('collapsed');
+      collapsedBar.style.display = 'none';
+    });
+  }
+  // 6. Preview / Edit Mode Toggles
+  const btnPreviewMode = document.getElementById('btnPreviewMode');
+  const btnEditMode = document.getElementById('btnEditMode');
+  const docEditSidebar = document.getElementById('docEditSidebar');
+  const btnCloseEdit = document.getElementById('btnCloseEdit');
+
+  if (btnPreviewMode && btnEditMode && docEditSidebar) {
+    btnEditMode.addEventListener('click', () => {
+      btnEditMode.classList.add('active');
+      btnPreviewMode.classList.remove('active');
+      docEditSidebar.style.display = 'flex';
+    });
+
+    btnPreviewMode.addEventListener('click', () => {
+      btnPreviewMode.classList.add('active');
+      btnEditMode.classList.remove('active');
+      docEditSidebar.style.display = 'none';
+    });
+
+    if (btnCloseEdit) {
+      btnCloseEdit.addEventListener('click', () => {
+        btnPreviewMode.click();
+      });
+    }
+  }
+}
+

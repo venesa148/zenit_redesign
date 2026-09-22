@@ -30,7 +30,7 @@
 /* Modal Window Container (Nearly Full-screen Wide) */
 .zenith-modal-window {
   width: 100%;
-  max-width: 1100px;
+  max-width: 1600px; /* Diperlebar sesuai permintaan */
   height: 90vh;
   max-height: 820px;
   background-color: #ffffff;

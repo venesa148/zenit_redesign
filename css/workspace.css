@@ -273,6 +273,31 @@
   padding: 0.25rem 0.65rem;
 }
 
+.sec-recent-chat-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.sec-recent-chat-item {
+  display: block;
+  font-size: 0.825rem;
+  color: #475569;
+  text-decoration: none;
+  padding: 0.45rem 0.65rem;
+  border-radius: var(--radius-md);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: all var(--transition-fast);
+}
+
+.sec-recent-chat-item:hover,
+.sec-recent-chat-item.active {
+  background-color: #f1f5f9;
+  color: #0f172a;
+}
+
 /* Secondary collapse toggle bar button */
 .toggle-sec-sidebar-btn {
   position: absolute;
@@ -2578,12 +2603,14 @@
 .editor-main-canvas {
   flex: 1;
   display: flex;
-  overflow-y: auto;
-  overflow-x: hidden;
+  overflow: auto;
   background-color: #ffffff;
 }
 
 .editor-line-numbers {
+  position: sticky;
+  left: 0;
+  z-index: 10;
   width: 48px;
   min-width: 48px;
   padding: 1rem 0;
@@ -2607,7 +2634,7 @@
 .editor-code-area {
   flex: 1;
   padding: 1rem 1.25rem;
-  overflow-x: auto;
+  overflow: visible;
   font-size: 0.825rem;
   line-height: 1.65;
   background-color: #ffffff;

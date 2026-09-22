@@ -904,9 +904,11 @@
                     </svg>
                     <span>Terminal</span>
                   </button>
-                  <button type="button" class="btn-mode-pill" id="btnDesignTabYaml"
+                </div>
+                <div class="design-header-actions">
+                  <button type="button" class="btn-mode-pill icon-only" id="btnDesignTabYaml"
                     title="View & edit YAML specification file">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none"
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
                       stroke="currentColor" stroke-width="2">
                       <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
                       <polyline points="14 2 14 8 20 8"></polyline>
@@ -914,7 +916,6 @@
                       <line x1="16" y1="17" x2="8" y2="17"></line>
                       <polyline points="10 9 9 9 8 9"></polyline>
                     </svg>
-                    <span>YAML</span>
                   </button>
                 </div>
               </div>
@@ -1436,7 +1437,7 @@
                    ======================================== -->
               <div class="agent-simulations-container" id="agentSimulationsContainer" style="display: none;">
                 <!-- VIEW A: List of Scenarios (Run Simulation) -->
-                <div class="sim-view-list" id="simViewList">
+                <div class="sim-view-list" id="simViewList" style="display: none;">
                   <!-- Top bar of Run Simulation -->
                   <div class="sim-list-header">
                     <div class="sim-list-header-title">
@@ -1629,9 +1630,9 @@
                 </div>
 
                 <!-- VIEW B: Scenario Detail & Interactive Execution -->
-                <div class="sim-view-detail" id="simViewDetail" style="display: none;">
+                <div class="sim-view-detail" id="simViewDetail" style="display: block;">
                   <!-- Top Navigation Header -->
-                  <div class="sim-detail-nav-bar">
+                  <div class="sim-detail-nav-bar" style="display: none;">
                     <button type="button" class="btn-sim-back" id="btnSimBackToList">
                       <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
                         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -1651,7 +1652,7 @@
                   </div>
 
                   <!-- Scenario Header Card -->
-                  <div class="sim-scenario-header-card">
+                  <div class="sim-scenario-header-card" style="display: none;">
                     <div class="sim-scenario-header-icon icon-purple">
                       <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none"
                         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -1690,7 +1691,7 @@
                   <!-- Two-Column Simulation Detail Layout -->
                   <div class="sim-detail-grid">
                     <!-- LEFT PANE: Setup & Configuration -->
-                    <div class="sim-detail-left-pane">
+                    <div class="sim-detail-left-pane" style="display: none;">
                       <!-- Stepper Bar -->
                       <div class="sim-stepper-bar">
                         <div class="sim-step-item active" id="simStep1">
@@ -1853,7 +1854,7 @@
                     <!-- RIGHT PANE: Placeholder vs. Simulated Chat Stream -->
                     <div class="sim-detail-right-pane">
                       <!-- STATE 1: Initial State (Before clicking 'Run Simulation') -->
-                      <div class="sim-right-pane-initial" id="simRightPaneInitial">
+                      <div class="sim-right-pane-initial" id="simRightPaneInitial" style="display: none;">
                         <div class="sim-concept-box">
                           <div class="sim-concept-badge">Persona · Conversation · Verdict</div>
                           <h3 class="sim-concept-title">Simulations Execution</h3>
@@ -1890,7 +1891,7 @@
                       </div>
 
                       <!-- STATE 2: Active Simulation (Appears only after clicking 'Run Simulation') -->
-                      <div class="sim-right-pane-running" id="simRightPaneRunning" style="display: none;">
+                      <div class="sim-right-pane-running" id="simRightPaneRunning" style="display: block;">
                         <!-- Top Progress Banner -->
                         <div class="sim-running-progress-card">
                           <div class="sim-progress-avatar-wrap">
@@ -4954,6 +4955,45 @@
   <script src="js/sidebar.js"></script>
   <script src="js/modal.js"></script>
   <script src="js/agent-studio.js?v=40"></script>
+
+<!-- Feedback Modal -->
+<div id="feedbackModal" class="feedback-modal-overlay">
+  <div class="feedback-modal">
+    <div class="feedback-modal-header">
+      <h2>Report a bug or suggest an improvement</h2>
+      <button class="feedback-close-btn" id="feedbackCloseBtn">&times;</button>
+    </div>
+    <p class="feedback-modal-desc">Goes straight to the people building this. Where you are, which version you are on and any errors are attached automatically — you do not need to describe them.</p>
+    
+    <div class="feedback-type-toggles">
+      <button class="feedback-type-btn active" data-type="bug">Bug</button>
+      <button class="feedback-type-btn" data-type="improvement">Improvement</button>
+      <button class="feedback-type-btn" data-type="question">Question</button>
+    </div>
+    
+    <div class="feedback-form-group">
+      <label>Title</label>
+      <input type="text" placeholder="What happened, in one line" class="feedback-input">
+    </div>
+    
+    <div class="feedback-form-group">
+      <label>Details</label>
+      <textarea placeholder="What you expected, what happened instead. Paste a screenshot straight into this box." class="feedback-textarea"></textarea>
+    </div>
+    
+    <div class="feedback-modal-footer">
+      <div class="feedback-image-upload">
+        <button class="feedback-add-img-btn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+          Add image
+        </button>
+        <span class="feedback-upload-hint">Paste, drag, or browse &middot; up to 4</span>
+      </div>
+      <button class="feedback-send-btn">Send report</button>
+    </div>
+  </div>
+</div>
+
 </body>
 
 </html>

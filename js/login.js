@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initPasswordToggle();
   initFormSubmit();
   initCardInteractions();
+  initTermsModal();
 });
 
 /**
@@ -102,5 +103,43 @@ function initCardInteractions() {
       console.log('Selected Agent Studio');
     });
   }
+}
+
+/**
+ * Handles Terms Modal interactions
+ */
+function initTermsModal() {
+  const termsLink = document.getElementById('termsLink');
+  const termsModal = document.getElementById('termsModal');
+  const termsCloseBtn = document.getElementById('termsCloseBtn');
+  const termsAcceptBtn = document.getElementById('termsAcceptBtn');
+
+  if (!termsLink || !termsModal) return;
+
+  // Open modal
+  termsLink.addEventListener('click', (e) => {
+    e.preventDefault();
+    termsModal.classList.add('active');
+  });
+
+  // Close handlers
+  const closeModal = () => termsModal.classList.remove('active');
+
+  if (termsCloseBtn) termsCloseBtn.addEventListener('click', closeModal);
+  if (termsAcceptBtn) termsAcceptBtn.addEventListener('click', closeModal);
+
+  // Close when clicking overlay (outside the modal)
+  termsModal.addEventListener('click', (e) => {
+    if (e.target === termsModal) {
+      closeModal();
+    }
+  });
+
+  // Close on Escape key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && termsModal.classList.contains('active')) {
+      closeModal();
+    }
+  });
 }
 

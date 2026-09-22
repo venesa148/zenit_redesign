@@ -104,13 +104,8 @@
             <span>Sign In</span>
           </button>
 
-          <!-- Divider -->
-          <div class="auth-divider">
-            <span class="divider-text">or continue with</span>
-          </div>
-
           <!-- Social Buttons -->
-          <div class="social-buttons-grid">
+          <!-- <div class="social-buttons-grid">
             <button type="button" class="btn-social" id="btnGoogle">
               <svg class="social-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <path
@@ -135,14 +130,14 @@
               </svg>
               <span>GitHub</span>
             </button>
-          </div>
+          </div> -->
         </form>
       </div>
 
       <!-- Bottom Auth Footer -->
-      <footer class="auth-footer">
+      <!-- <footer class="auth-footer">
         <p>Don't have an account? <a href="#signup" id="signUpLink">Sign Up</a></p>
-      </footer>
+      </footer> -->
     </section>
 
     <!-- RIGHT PANEL: Hero Showcase Card -->
@@ -250,8 +245,30 @@
     </section>
   </main>
 
+  <!-- Terms Modal -->
+  <div id="termsModal" class="terms-modal-overlay">
+    <div class="terms-modal">
+      <div class="terms-modal-header">
+        <h2>Terms &amp; Privacy</h2>
+        <button class="terms-close-btn" id="termsCloseBtn">&times;</button>
+      </div>
+      <div class="terms-modal-content">
+        <h3>1. Terms of Service</h3>
+        <p>By using Zenith AI, you agree to our terms of service and acceptable use policy. You are responsible for all activity under your account.</p>
+        <h3>2. Privacy Policy</h3>
+        <p>We collect essential data to improve your experience. Your data is encrypted and securely stored. We do not sell your personal data to third parties.</p>
+        <h3>3. Usage Rules</h3>
+        <p>You agree not to misuse the platform or attempt to gain unauthorized access to our systems.</p>
+      </div>
+      <div class="terms-modal-footer">
+        <button class="terms-accept-btn" id="termsAcceptBtn">I Understand</button>
+      </div>
+    </div>
+  </div>
+
   <!-- JavaScript -->
   <script src="js/login.js"></script>
+
 </body>
 
 </html>

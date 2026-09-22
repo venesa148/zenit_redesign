@@ -573,3 +573,91 @@
     padding: 2rem 1.5rem;
   }
 }
+
+/* --------------------------------------------------------------------------
+   TERMS & PRIVACY MODAL
+   -------------------------------------------------------------------------- */
+.terms-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.4);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 10000;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+.terms-modal-overlay.active {
+  display: flex;
+  opacity: 1;
+}
+.terms-modal {
+  background: var(--bg-surface);
+  width: 520px;
+  max-width: 90%;
+  border-radius: var(--radius-lg, 12px);
+  padding: 24px;
+  box-shadow: var(--shadow-xl, 0 20px 25px -5px rgba(0,0,0,0.15));
+  color: var(--text-secondary);
+  border: 1px solid var(--border-subtle);
+}
+.terms-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 16px;
+}
+.terms-modal-header h2 {
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin: 0;
+  color: var(--text-primary);
+}
+.terms-close-btn {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: var(--text-muted);
+  line-height: 1;
+  padding: 0;
+}
+.terms-modal-content {
+  max-height: 60vh;
+  overflow-y: auto;
+  font-size: 0.875rem;
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+.terms-modal-content h3 {
+  font-size: 0.95rem;
+  color: var(--text-primary);
+  margin: 12px 0 6px 0;
+}
+.terms-modal-content p {
+  margin-bottom: 12px;
+}
+.terms-modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  border-top: 1px solid var(--border-subtle);
+  padding-top: 16px;
+}
+.terms-accept-btn {
+  padding: 8px 16px;
+  background: var(--zenith-primary);
+  color: var(--text-white);
+  border: none;
+  border-radius: 6px;
+  font-size: 0.875rem;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background var(--transition-fast);
+}
+.terms-accept-btn:hover {
+  background: var(--zenith-primary-hover);
+}

@@ -22,7 +22,7 @@
   <link rel="stylesheet" href="css/project-management.css?v=3" />
   <link rel="stylesheet" href="css/documents.css?v=3" />
   <link rel="stylesheet" href="css/deployment.css?v=3" />
-  <link rel="stylesheet" href="css/modal.css?v=142" />
+  <link rel="stylesheet" href="css/modal.css?v=3" />
   <!-- Early Theme Mode Loader (Prevents White Flash) -->
   <script>
     (function () {
@@ -256,12 +256,9 @@
 
         <!-- Recent Chats -->
         <div class="sec-section-title">RECENT CHATS</div>
-        <div class="sec-recent-chat-list">
-          <a href="#" class="sec-recent-chat-item active">Feature: Dark mode</a>
-          <a href="#" class="sec-recent-chat-item">Fix: Login bug</a>
-          <a href="#" class="sec-recent-chat-item">PRD Setup</a>
-          <a href="#" class="sec-recent-chat-item">Design System Revamp</a>
-        </div>
+        <p class="empty-recent-chats">
+          No chats yet. Send a message to start one.
+        </p>
       </aside>
 
       <!-- Re-open expand tab when secondary sidebar is collapsed -->
@@ -450,15 +447,17 @@
 
               <h2 class="chat-hero-headline">What do you want to build?</h2>
               <p class="chat-hero-desc">
-                Tell me the idea in a sentence or two - I'ii start phase 1 as the business analyst and ask a few
-                questions before drafting anything. Your Claude session, your subscription.
+                Describe your feature or product concept — Zenith simultaneously assumes Business Analyst, Developer,
+                and
+                PM roles to draft PRDs, synthesize full-stack code, and orchestrate sprint milestones.
               </p>
 
               <!-- Suggestion Pills -->
               <div class="suggestion-pills-row">
-                <button type="button" class="btn-suggestion-pill">Create a task manager</button>
-                <button type="button" class="btn-suggestion-pill">Build a landing page</button>
-                <button type="button" class="btn-suggestion-pill">Dashboard for sales</button>
+                <button type="button" class="btn-suggestion-pill">📊 [BA] Generate PRD for SaaS billing</button>
+                <button type="button" class="btn-suggestion-pill">💻 [Dev] Synthesize React dashboard</button>
+                <button type="button" class="btn-suggestion-pill">📋 [PM] Plan 2-week sprint backlog</button>
+                <button type="button" class="btn-suggestion-pill">🎨 [UI] Create glassmorphism theme</button>
               </div>
             </div>
 
@@ -1628,13 +1627,20 @@
                   </svg>
                   <div class="pm-donut-center-text">28%</div>
                 </div>
+
                 <!-- Stats Breakdown -->
                 <div class="pm-overall-stats">
                   <div class="pm-stat-row">
                     <span><strong>2</strong> / 7 phases approved</span>
                   </div>
                   <div class="pm-stat-row">
-                    <span><strong>15</strong> / 30 sprint tasks done</span>
+                    <span><strong>43</strong> / 248 sprint tasks done</span>
+                  </div>
+                  <div class="pm-stat-row">
+                    <span><strong>12</strong> backlog items</span>
+                  </div>
+                  <div class="pm-stat-row">
+                    <span><strong>5</strong> open defects</span>
                   </div>
                 </div>
               </div>
@@ -1644,8 +1650,7 @@
             <div class="pm-card pm-card-sdlc">
               <div class="pm-sdlc-header">
                 <h2 class="pm-card-title">7-Phase SDLC Progress</h2>
-                <button type="button" class="btn-view-phase-details" id="btnViewPhaseDetails"
-                  onclick="document.getElementById('phaseDetailsModal').classList.add('active')">
+                <button type="button" class="btn-view-phase-details" id="btnViewPhaseDetails" onclick="document.getElementById('phaseDetailsModal').classList.add('active')">
                   <span>View Phase Details</span>
                   <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none"
                     stroke="currentColor" stroke-width="2.5">
@@ -1794,6 +1799,7 @@
               <div class="pm-timeline-title-area">
                 <h2 class="pm-card-title">Project Timeline</h2>
                 <span class="pm-timeline-sub">
+                  <span>no dates — even sequence</span>
                   <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
                     stroke="currentColor" stroke-width="2">
                     <circle cx="12" cy="12" r="10" />
@@ -1804,6 +1810,19 @@
               </div>
 
               <div class="pm-timeline-controls">
+                <button type="button" class="btn-timeline-tool" id="btnViewByTasks">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2">
+                    <line x1="8" y1="6" x2="21" y2="6" />
+                    <line x1="8" y1="12" x2="21" y2="12" />
+                    <line x1="8" y1="18" x2="21" y2="18" />
+                    <line x1="3" y1="6" x2="3.01" y2="6" />
+                    <line x1="3" y1="12" x2="3.01" y2="12" />
+                    <line x1="3" y1="18" x2="3.01" y2="18" />
+                  </svg>
+                  <span>View by Tasks</span>
+                </button>
+
                 <div class="timeline-zoom-pill">
                   <button type="button" class="btn-zoom-step" id="btnZoomOut" title="Zoom out">−</button>
                   <span class="zoom-pct-display" id="zoomLevelDisplay">100%</span>
@@ -1823,64 +1842,141 @@
             </div>
 
             <!-- Gantt Table / Matrix -->
-            <div id="ganttFullscreenContainer" class="pm-gantt-scrollable"
-              style="transition: all 0.3s ease; background: white; z-index: 100;">
-              <button id="ganttCloseFullscreenBtn"
-                style="display: none; position: fixed; top: 30px; right: 30px; width: 36px; height: 36px; border-radius: 50%; background: #f1f5f9; border: 1px solid #cbd5e1; cursor: pointer; z-index: 200; align-items: center; justify-content: center;">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#475569" stroke-width="2"
-                  stroke-linecap="round" stroke-linejoin="round">
-                  <line x1="18" y1="6" x2="6" y2="18"></line>
-                  <line x1="6" y1="6" x2="18" y2="18"></line>
-                </svg>
-              </button>
+            <div class="pm-gantt-scrollable" id="ganttScrollable">
               <table class="pm-gantt-table">
                 <thead>
-                  <tr style="background: #f8fafc;">
-                    <th class="col-phase-label"
-                      style="min-width: 280px; border-bottom: 2px solid #e2e8f0; position: sticky; left: 0; background: #f8fafc; z-index: 10;">
-                      Sprint / Task</th>
-                    <!-- Jan 2027 -->
-                    <th class="col-month" colspan="6"
-                      style="text-align: center; border-left: 1px solid #e2e8f0; font-weight: 600; color: #1e293b; padding: 8px;">
-                      Januari 2027</th>
-                    <!-- Feb 2027 -->
-                    <th class="col-month" colspan="6"
-                      style="text-align: center; border-left: 1px solid #e2e8f0; font-weight: 600; color: #1e293b; padding: 8px;">
-                      Februari 2027</th>
-                    <!-- Mar 2027 -->
-                    <th class="col-month" colspan="6"
-                      style="text-align: center; border-left: 1px solid #e2e8f0; font-weight: 600; color: #1e293b; padding: 8px;">
-                      Maret 2027</th>
-                  </tr>
-                  <tr style="font-size: 11px; color: #64748b; background: #f1f5f9;">
-                    <th
-                      style="position: sticky; left: 0; background: #f1f5f9; z-index: 10; border-bottom: 1px solid #e2e8f0;">
-                    </th>
-                    <!-- Jan Days -->
-                    <th style="padding: 4px; text-align: center; border-left: 1px solid #e2e8f0;">1-5</th>
-                    <th style="padding: 4px; text-align: center; border-left: 1px solid #e2e8f0;">6-10</th>
-                    <th style="padding: 4px; text-align: center; border-left: 1px solid #e2e8f0;">11-15</th>
-                    <th style="padding: 4px; text-align: center; border-left: 1px solid #e2e8f0;">16-20</th>
-                    <th style="padding: 4px; text-align: center; border-left: 1px solid #e2e8f0;">21-25</th>
-                    <th style="padding: 4px; text-align: center; border-left: 1px solid #e2e8f0;">26-31</th>
-                    <!-- Feb Days -->
-                    <th style="padding: 4px; text-align: center; border-left: 1px solid #cbd5e1;">1-5</th>
-                    <th style="padding: 4px; text-align: center; border-left: 1px solid #e2e8f0;">6-10</th>
-                    <th style="padding: 4px; text-align: center; border-left: 1px solid #e2e8f0;">11-15</th>
-                    <th style="padding: 4px; text-align: center; border-left: 1px solid #e2e8f0;">16-20</th>
-                    <th style="padding: 4px; text-align: center; border-left: 1px solid #e2e8f0;">21-25</th>
-                    <th style="padding: 4px; text-align: center; border-left: 1px solid #e2e8f0;">26-28</th>
-                    <!-- Mar Days -->
-                    <th style="padding: 4px; text-align: center; border-left: 1px solid #cbd5e1;">1-5</th>
-                    <th style="padding: 4px; text-align: center; border-left: 1px solid #e2e8f0;">6-10</th>
-                    <th style="padding: 4px; text-align: center; border-left: 1px solid #e2e8f0;">11-15</th>
-                    <th style="padding: 4px; text-align: center; border-left: 1px solid #e2e8f0;">16-20</th>
-                    <th style="padding: 4px; text-align: center; border-left: 1px solid #e2e8f0;">21-25</th>
-                    <th style="padding: 4px; text-align: center; border-left: 1px solid #e2e8f0;">26-31</th>
+                  <tr>
+                    <th class="col-phase-label">Phase / Sprint</th>
+                    <th class="col-week">W1</th>
+                    <th class="col-week">W2</th>
+                    <th class="col-week">W3</th>
+                    <th class="col-week">W4</th>
+                    <th class="col-week">W5</th>
+                    <th class="col-week">W6</th>
+                    <th class="col-week">W7</th>
+                    <th class="col-week">W8</th>
+                    <th class="col-week">W9</th>
+                    <th class="col-week">W10</th>
+                    <th class="col-week">W11</th>
+                    <th class="col-week">W12+</th>
                   </tr>
                 </thead>
-                <tbody id="ganttTbody">
-                  <!-- JS Rendered -->
+                <tbody>
+                  <!-- Row S0 -->
+                  <tr>
+                    <td class="col-phase-label" title="S0 Solution Blueprint (W1 -> W2) - *tanpa pembangunan fitur*">
+                      S0 Solution Blueprint (W1 &rarr; W2) - *tanpa pembangunan fitur*
+                    </td>
+                    <td colspan="12" style="padding: 0; text-align: left;">
+                      <div class="gantt-bar-cell-container">
+                        <!-- Bar from W1 to W2 (starts at 0%, spans ~16.6%) -->
+                        <div class="gantt-bar gantt-bar-green" style="left: 0%; width: 16.6%;"
+                          title="S0: W1 - W2 (Completed)">
+                          <span class="gantt-bar-check">&#10003;</span>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <!-- Row S1 -->
+                  <tr>
+                    <td class="col-phase-label" title="S1 Foundations">
+                      S1 Foundations
+                    </td>
+                    <td colspan="12" style="padding: 0; text-align: left;">
+                      <div class="gantt-bar-cell-container">
+                        <!-- Bar from W2 to W3 (starts at 8.33%, spans ~16.6%) -->
+                        <div class="gantt-bar gantt-bar-blue" style="left: 8.33%; width: 16.6%;"
+                          title="S1: W2 - W3 (Completed)">
+                          <span class="gantt-bar-check">&#10003;</span>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <!-- Row S2 -->
+                  <tr>
+                    <td class="col-phase-label" title="S2 Integrasi, Customer & Sales Order">
+                      S2 Integrasi, Customer &amp; Sales Order
+                    </td>
+                    <td colspan="12" style="padding: 0; text-align: left;">
+                      <div class="gantt-bar-cell-container">
+                        <!-- Bar from W3 to W6 (starts at 16.6%, spans ~33.3%) -->
+                        <div class="gantt-bar gantt-bar-purple" style="left: 16.6%; width: 33.3%;"
+                          title="S2: W3 - W6 (In Progress)"></div>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <!-- Row S3 -->
+                  <tr>
+                    <td class="col-phase-label" title="S3 Distribusi, Gudang & Pembelian">
+                      S3 Distribusi, Gudang &amp; Pembelian
+                    </td>
+                    <td colspan="12" style="padding: 0; text-align: left;">
+                      <div class="gantt-bar-cell-container">
+                        <!-- Bar from W6 to W8 (starts at 41.6%, spans ~25%) -->
+                        <div class="gantt-bar gantt-bar-amber" style="left: 41.6%; width: 25%;" title="S3: W6 - W8">
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <!-- Row S4 -->
+                  <tr>
+                    <td class="col-phase-label" title="S4 Finance & Accounting">
+                      S4 Finance &amp; Accounting
+                    </td>
+                    <td colspan="12" style="padding: 0; text-align: left;">
+                      <div class="gantt-bar-cell-container">
+                        <!-- Bar from W8 to W9 (starts at 58.3%, spans ~16.6%) -->
+                        <div class="gantt-bar gantt-bar-orange" style="left: 58.3%; width: 16.6%;" title="S4: W8 - W9">
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <!-- Row S5 -->
+                  <tr>
+                    <td class="col-phase-label" title="S5 Peralihan ke Sistem Asli, Pajak, Laporan & Jalur Produksi">
+                      S5 Peralihan ke Sistem Asli, Pajak, Laporan &amp; Jalur Produksi
+                    </td>
+                    <td colspan="12" style="padding: 0; text-align: left;">
+                      <div class="gantt-bar-cell-container">
+                        <!-- Bar from W9 to W11 (starts at 66.6%, spans ~25%) -->
+                        <div class="gantt-bar gantt-bar-red" style="left: 66.6%; width: 25%;" title="S5: W9 - W11">
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <!-- Row S6 -->
+                  <tr>
+                    <td class="col-phase-label" title="S6 User Enablement & Adopsi">
+                      S6 User Enablement &amp; Adopsi
+                    </td>
+                    <td colspan="12" style="padding: 0; text-align: left;">
+                      <div class="gantt-bar-cell-container">
+                        <!-- Bar from W11 to W12 (starts at 83.3%, spans ~16.6%) -->
+                        <div class="gantt-bar gantt-bar-teal" style="left: 83.3%; width: 16.6%;" title="S6: W11 - W12">
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <!-- Row S7 -->
+                  <tr>
+                    <td class="col-phase-label" title="S7 Stabilisasi, Observability Lanjutan & Handover">
+                      S7 Stabilisasi, Observability Lanjutan &amp; Handover
+                    </td>
+                    <td colspan="12" style="padding: 0; text-align: left;">
+                      <div class="gantt-bar-cell-container">
+                        <!-- Bar from W12 to W12+ (starts at 91.6%, spans ~8.4%) -->
+                        <div class="gantt-bar gantt-bar-slate" style="left: 91.6%; width: 8.4%;" title="S7: W12 - W12+">
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
                 </tbody>
               </table>
             </div>
@@ -1888,316 +1984,85 @@
 
           <!-- Bottom Row: Phase Details Overview -->
           <div class="pm-phases-list">
-            <div class="pm-tasks-header"
-              style="margin-bottom: 1.5rem; display: flex; justify-content: space-between; align-items: center;">
-              <div class="pm-tasks-title-group" style="display: flex; align-items: baseline; gap: 12px;">
-                <h2 class="pm-card-title" style="margin: 0; font-size: 20px; color: #1e293b;">Sprint Overview</h2>
-                <span class="sprint-sub-name" style="color: #64748b; font-size: 14px; font-weight: 500;">(3 / 6
-                  Selesai)</span>
+            <div class="pm-tasks-header" style="margin-bottom: 1.5rem; justify-content: space-between;">
+              <div class="pm-tasks-title-group">
+                <h2 class="pm-card-title">Sprint Overview</h2>
+                <span class="sprint-sub-name">(2 / 7 Approved)</span>
               </div>
+              <!-- <div class="pm-phase-tabs" style="display: flex; gap: 0.5rem; background: #f1f5f9; padding: 4px; border-radius: var(--radius-md);">
+                <button type="button" class="btn-phase-tab" style="border: none; background: transparent; padding: 4px 12px; font-size: 0.8rem; font-weight: 600; color: #64748b; cursor: pointer; border-radius: var(--radius-sm);">Sprints</button>
+                <button type="button" class="btn-phase-tab active" style="border: none; background: #ffffff; padding: 4px 12px; font-size: 0.8rem; font-weight: 700; color: #0f172a; cursor: pointer; border-radius: var(--radius-sm); box-shadow: var(--shadow-sm);">Phases</button>
+              </div> -->
             </div>
 
-            <div id="sprintOverviewRoot" style="display: flex; flex-direction: column; gap: 24px;">
-              <!-- JS Rendered Sprints -->
+            <!-- Phase S0 -->
+            <div class="phase-detail-card">
+              <div class="phase-header">
+                <div class="phase-title-group">
+                  <div class="phase-badge">0</div>
+                  <h3 class="phase-name">Foundations</h3>
+                </div>
+                <div class="phase-meta-group">
+                  <span class="phase-dates">2026-08-03 &rarr; 2026-08-14</span>
+                  <span class="phase-ratio">3/6</span>
+                  <button type="button" class="btn-view-phase-detail" onclick="window.initPhaseDetailModal && window.initPhaseDetailModal()">View Details &gt;</button>
+                </div>
+              </div>
+              <div class="phase-progress-bar">
+                <div class="phase-progress-fill" style="width: 50%;"></div>
+              </div>
+              <ul class="phase-task-list">
+                <li class="phase-task-item"><span class="task-dot dot-done"></span>Scaffold app from the primary stack
+                </li>
+                <li class="phase-task-item"><span class="task-dot dot-done"></span>Wire lint, format, typecheck and
+                  tests into one `verify` command</li>
+                <li class="phase-task-item"><span class="task-dot dot-done"></span>Set up database, migrations and a
+                  seed script</li>
+                <li class="phase-task-item"><span class="task-dot dot-progress"></span>Stand up CI: install &rarr;
+                  verify &rarr; build on every push <span class="task-badge-inline in-progress">in progress</span></li>
+                <li class="phase-task-item"><span class="task-dot dot-todo"></span>Deploy a hello-world build to staging
+                </li>
+                <li class="phase-task-item"><span class="task-dot dot-todo"></span>Adopt the locked UI system (tokens,
+                  app shell, nav)</li>
+              </ul>
             </div>
+
+            <!-- Phase S1 -->
+            <div class="phase-detail-card">
+              <div class="phase-header">
+                <div class="phase-title-group">
+                  <div class="phase-badge">1</div>
+                  <h3 class="phase-name">Identity &amp; Access</h3>
+                </div>
+                <div class="phase-meta-group">
+                  <span class="phase-dates">2026-08-17 &rarr; 2026-08-28</span>
+                  <span class="phase-ratio">0/6</span>
+                  <button type="button" class="btn-view-phase-detail" onclick="window.initPhaseDetailModal && window.initPhaseDetailModal()">View Details &gt;</button>
+                </div>
+              </div>
+              <div class="phase-progress-bar">
+                <div class="phase-progress-fill" style="width: 0%;"></div>
+              </div>
+              <ul class="phase-task-list">
+                <li class="phase-task-item"><span class="task-dot dot-progress"></span>Data model: users, roles,
+                  permissions, organisation <span class="task-badge-inline in-progress">in progress</span></li>
+                <li class="phase-task-item"><span class="task-dot dot-todo"></span>Sign-in / sign-out and session
+                  handling</li>
+                <li class="phase-task-item"><span class="task-dot dot-todo"></span>Role-based authorisation enforced
+                  server-side</li>
+                <li class="phase-task-item"><span class="task-dot dot-todo"></span>Admin screen: manage users and role
+                  assignment</li>
+                <li class="phase-task-item"><span class="task-dot dot-blocked"></span>SSO integration with the corporate
+                  directory <span class="task-badge-inline blocked">blocked</span></li>
+                <li class="phase-task-item"><span class="task-dot dot-todo"></span>Tests: authz matrix &mdash; each role
+                  against each protected route</li>
+              </ul>
+            </div>
+
           </div>
+        </div>
+      </div>
 
-          <script>
-            const sprintData = [
-              {
-                id: 1,
-                title: "Foundations",
-                desc: "Keamanan dasar & bukti awal pembayaran digital",
-                status: "Selesai",
-                completed: 5,
-                total: 5,
-                start: 0,
-                duration: 3,
-                tasks: [
-                  { text: "Kerangka dasar website salon dibuat (tampilan pelanggan & dasbor admin) dan disiapkan lingkungan server lokal yang terisolasi.", tag: "Frontend & Backend", start: 0, duration: 1 },
-                  { text: "Database dirancang dengan keamanan ketat — pelanggan hanya bisa melihat riwayat reservasinya sendiri, catatan kasir dan omzet salon terkunci rapat.", tag: "Backend", start: 0, duration: 1 },
-                  { text: "Akses login diamankan: pembatasan percobaan kata sandi staf, verifikasi nomor kontak untuk pelanggan, dan sesi otomatis keluar saat tidak aktif.", tag: "Backend", start: 1, duration: 1 },
-                  { text: "Tampilan visual dasar (halaman masuk, menu navigasi, kartu layanan perawatan, tombol booking) dibuat dengan tema warna salon yang bersih dan elegan.", tag: "Frontend", start: 1, duration: 1 },
-                  { text: "Uji coba integrasi pembayaran digital (QRIS) berhasil membuktikan bahwa sistem dapat menerima konfirmasi pembayaran lunas secara otomatis tanpa perlu cek rekening manual.", tag: "Backend", start: 2, duration: 1 }
-                ]
-              },
-              {
-                id: 2,
-                title: "Manajemen layanan, master kapster, reservasi jadwal & jejak transaksi",
-                desc: "",
-                status: "Selesai",
-                completed: 5,
-                total: 5,
-                start: 3,
-                duration: 4,
-                tasks: [
-                  { text: "Fitur kelola menu perawatan dan data kapster — admin bisa menambah, mengubah harga/durasi, serta mengatur jadwal kerja staf.", tag: "Backend", start: 3, duration: 2 },
-                  { text: "Alur reservasi mandiri oleh pelanggan — bisa pilih jenis perawatan, pilih kapster favorit, dan tentukan jam kedatangan.", tag: "Frontend & Backend", start: 4, duration: 2 },
-                  { text: "Sistem penguncian slot jadwal otomatis — mencegah dua pelanggan memesan kapster yang sama di jam yang bersamaan.", tag: "Backend", start: 5, duration: 1 },
-                  { text: "Manajemen akun kasir dan pelanggan — pengaturan profil, riwayat kunjungan, dan pembaruan data kontak.", tag: "Frontend & Backend", start: 5, duration: 2 },
-                  { text: "Jejak transaksi terekam otomatis — setiap pemesanan baru, pembatalan jadwal, atau pengubahan harga tercatat permanen tanpa bisa dimanipulasi.", tag: "Backend", start: 6, duration: 1 }
-                ]
-              },
-              {
-                id: 3,
-                title: "Integrasi pembayaran nyata, notifikasi otomatis, proteksi data & jalur uji coba",
-                desc: "",
-                status: "Selesai",
-                completed: 5,
-                total: 5,
-                start: 7,
-                duration: 4,
-                tasks: [
-                  { text: "Integrasi pembayaran QRIS dan transfer bank langsung — pelanggan menerima kode bayar instan saat reservasi selesai dibuat.", tag: "Backend", start: 7, duration: 2 },
-                  { text: "Notifikasi otomatis via WhatsApp dan Email — pengingat jadwal dan bukti bayar terkirim langsung ke pelanggan serta kasir.", tag: "Backend", start: 8, duration: 1 },
-                  { text: "Perlindungan privasi pelanggan — nomor telepon dan riwayat transaksi disamarkan pada tampilan umum kasir untuk menjaga kerahasiaan data.", tag: "Backend", start: 8, duration: 1 },
-                  { text: "Sistem pembatalan otomatis — slot jam otomatis dilepas kembali jika pelanggan tidak menyelesaikan pembayaran dalam batas waktu 15 menit.", tag: "Backend", start: 9, duration: 1 },
-                  { text: "Layar kasir diperbarui otomatis — status reservasi berubah menjadi 'Lunas' secara seketika tanpa perlu memuat ulang halaman.", tag: "Frontend & Backend", start: 10, duration: 1 }
-                ]
-              },
-              {
-                id: 4,
-                title: "Dasbor kasir, laporan omzet, riwayat pelanggan & persiapan rilis",
-                desc: "",
-                status: "Belum Tuntas",
-                completed: 0,
-                total: 5,
-                start: 11,
-                duration: 3,
-                tasks: [
-                  { text: "Dasbor kasir dan admin selesai penuh — kalender antrean harian, aksi konfirmasi kedatangan, dan penanganan pelanggan yang hadir langsung (walk-in).", tag: "Frontend & Backend", start: 11, duration: 2 },
-                  { text: "Rekap pendapatan dan performa salon — grafik omzet harian/bulanan, komisi kapster, serta daftar layanan yang paling laris.", tag: "Backend", start: 12, duration: 1 },
-                  { text: "Profil riwayat pelanggan terpadu — admin dan kasir bisa melihat catatan preferensi gaya rambut, riwayat perawatan terdahulu, dan total kunjungan.", tag: "Frontend & Backend", start: 12, duration: 1 },
-                  { text: "Portal mandiri pelanggan lengkap — bisa memantau status pesanan, mengubah jadwal (reschedule) sesuai batas waktu, dan mengunduh struk digital.", tag: "Frontend & Backend", start: 13, duration: 1 },
-                  { text: "Penyiapan jalur rilis resmi — konfigurasi server produksi dikunci dan pengujian otomatis dipasang agar website siap diluncurkan tanpa galat.", tag: "DevOps", start: 13, duration: 1 }
-                ]
-              },
-              {
-                id: 5,
-                title: "Uji coba sistem menyeluruh, ketahanan & keamanan data salon",
-                desc: "",
-                status: "Belum Tuntas",
-                completed: 0,
-                total: 5,
-                start: 14,
-                duration: 2,
-                tasks: [
-                  { text: "Pengujian beban dan kecepatan sistem — simulasi puluhan pelanggan memesan jadwal dan memindai QRIS secara serentak di jam sibuk tanpa ada sistem yang macet.", tag: "QA", start: 14, duration: 1 },
-                  { text: "Audit keamanan data dan hak akses — memastikan data pribadi pelanggan (nomor WhatsApp, riwayat transaksi) terlindungi dan staf tidak bisa melihat menu keuangan rahasia pemilik.", tag: "Security", start: 14, duration: 1 },
-                  { text: "Uji coba pencegahan jadwal bentrok ekstrem — verifikasi otomatis bahwa dua orang yang mengklik slot kapster yang sama di detik yang persis sama tidak akan menimbulkan reservasi ganda.", tag: "QA", start: 15, duration: 1 },
-                  { text: "Simulasi pemulihan data cadangan (backup & restore) — membuktikan data kasir dan jadwal yang hilang bisa dipulihkan utuh dalam hitungan menit jika server utama mengalami kendala.", tag: "DevOps", start: 15, duration: 1 },
-                  { text: "Penyiapan paket data uji coba dan panduan skenario pemesanan untuk sesi uji coba nyata bersama staf salon.", tag: "Business", start: 15, duration: 1 }
-                ]
-              },
-              {
-                id: 6,
-                title: "Uji coba langsung (UAT), pelatihan staf, perbaikan akhir & serah terima",
-                desc: "",
-                status: "Belum Tuntas",
-                completed: 0,
-                total: 5,
-                start: 16,
-                duration: 2,
-                tasks: [
-                  { text: "Uji coba nyata (User Acceptance Testing) bersama pemilik salon, kasir, dan kapster — mencoba alur reservasi, pembayaran QRIS, hingga cetak struk dari sudut pandang pemakai asli.", tag: "UAT", start: 16, duration: 1 },
-                  { text: "Penanganan dan perbaikan temuan akhir — merapikan tombol yang membingungkan atau kendala tampilan yang dilaporkan staf saat sesi uji coba.", tag: "Frontend & Backend", start: 16, duration: 1 },
-                  { text: "Penyusunan buku panduan penggunaan aplikasi — panduan ringkas cara kasir mengatur kalender jadwal, membatalkan pesanan, dan membaca rekap omzet harian.", tag: "Doc", start: 17, duration: 1 },
-                  { text: "Pelatihan operasional staf salon — sesi pengenalan sistem agar kasir dan kapster terbiasa mengelola antrean tanpa kendala di hari peluncuran.", tag: "Training", start: 17, duration: 1 },
-                  { text: "Serah terima resmi proyek — penandatanganan berita acara, penyerahan akses akun utama kepada pemilik salon, dan persiapan masuk ke operasional harian.", tag: "Business", start: 17, duration: 1 }
-                ]
-              }
-            ];
-
-            function renderSprints() {
-              const root = document.getElementById('sprintOverviewRoot');
-              if (!root) return;
-
-              let html = '';
-              sprintData.forEach(sprint => {
-                const isCompleted = sprint.status === "Selesai";
-                const bgHeader = isCompleted ? '#f0fdf4' : '#f8fafc';
-                const circleBg = isCompleted ? '#10b981' : '#fcd34d';
-                const textStatus = isCompleted ? 'Selesai' : 'Belum Selesai';
-                const statusColor = isCompleted ? '#059669' : '#d97706';
-                const iconPath = isCompleted ?
-                  '<path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>' :
-                  '<circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" fill="none"/><polyline points="12 6 12 12 16 14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>';
-
-                let tasksHtml = '';
-                sprint.tasks.forEach((task, tIdx) => {
-                  const taskChecked = tIdx < sprint.completed;
-                  tasksHtml += `
-                    <div style="display: flex; align-items: flex-start; gap: 16px; padding: 12px 16px; border-top: 1px solid #f1f5f9; background: white;">
-                      <div style="padding-top: 2px;">
-                        <input type="checkbox" disabled ${taskChecked ? 'checked' : ''} style="width: 16px; height: 16px; accent-color: #10b981;">
-                      </div>
-                      <div style="flex: 1; font-size: 14px; color: #475569; line-height: 1.5;">
-                        ${task.text}
-                      </div>
-                      <div style="font-size: 12px; color: #94a3b8; background: #f8fafc; padding: 4px 8px; border-radius: 4px; border: 1px solid #e2e8f0; white-space: nowrap;">
-                        ${task.tag}
-                      </div>
-                    </div>
-                  `;
-                });
-
-                html += `
-                  <div style="border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden; background: white; box-shadow: 0 1px 2px rgba(0,0,0,0.05);">
-                    <div style="padding: 16px 20px; background: ${bgHeader}; display: flex; justify-content: space-between; align-items: center; cursor: pointer;" onclick="this.nextElementSibling.style.display = this.nextElementSibling.style.display === 'none' ? 'block' : 'none'">
-                      <div style="display: flex; align-items: center; gap: 16px;">
-                        <div style="width: 32px; height: 32px; border-radius: 50%; background: ${circleBg}; color: white; display: flex; justify-content: center; align-items: center; font-weight: bold; font-size: 14px;">
-                          ${sprint.id}
-                        </div>
-                        <div>
-                          <div style="font-weight: 600; color: #1e293b; font-size: 16px;">${sprint.title}</div>
-                          ${sprint.desc ? `<div style="font-size: 13px; color: #64748b; margin-top: 2px;">${sprint.desc}</div>` : ''}
-                        </div>
-                      </div>
-                      <div style="display: flex; align-items: center; gap: 24px;">
-                        <div style="display: flex; align-items: center; gap: 6px; color: ${statusColor}; font-weight: 500; font-size: 13px; background: white; padding: 4px 10px; border-radius: 12px; border: 1px solid rgba(0,0,0,0.05);">
-                          <svg width="14" height="14" viewBox="0 0 24 24">${iconPath}</svg>
-                          ${textStatus}
-                        </div>
-                        <div style="display: flex; align-items: center; gap: 8px; width: 140px;">
-                          <span style="font-size: 13px; color: #64748b; font-weight: 500;">${sprint.completed}/${sprint.total}</span>
-                          <div style="flex: 1; height: 4px; background: #e2e8f0; border-radius: 2px; overflow: hidden;">
-                            <div style="height: 100%; background: #10b981; width: ${(sprint.completed / sprint.total) * 100}%;"></div>
-                          </div>
-                        </div>
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="transform: rotate(90deg);"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                      </div>
-                    </div>
-                    <div style="display: block;">
-                      ${tasksHtml}
-                    </div>
-                  </div>
-                `;
-              });
-              root.innerHTML = html;
-            }
-
-            function renderGantt() {
-              const tbody = document.getElementById('ganttTbody');
-              if (!tbody) return;
-
-              let html = '';
-              const totalCols = 18; // 6 cols per month * 3 months
-
-              sprintData.forEach((sprint, sIdx) => {
-                const sColor = sprint.status === 'Selesai' ? '#10b981' : '#3b82f6';
-
-                // Sprint Row
-                html += `
-                  <tr style="cursor: pointer; background: white;" onclick="toggleGanttSprint('sprint-child-${sIdx}')">
-                    <td class="col-phase-label" style="position: sticky; left: 0; background: white; z-index: 5; font-weight: 600; color: #1e293b; padding: 12px 16px; border-bottom: 1px solid #f1f5f9;">
-                      <span style="display:inline-block; margin-right: 8px;">+</span> S${sprint.id}: ${sprint.title.substring(0, 25)}...
-                    </td>
-                `;
-                for (let i = 0; i < totalCols; i++) {
-                  if (i === sprint.start) {
-                    html += `<td colspan="${sprint.duration}" style="padding: 0 4px; border-bottom: 1px solid #f1f5f9; border-left: 1px solid #f1f5f9;"><div style="height: 12px; background: ${sColor}; border-radius: 6px; opacity: 0.8;"></div></td>`;
-                    i += sprint.duration - 1;
-                  } else {
-                    html += `<td style="border-bottom: 1px solid #f1f5f9; border-left: 1px solid #f1f5f9;"></td>`;
-                  }
-                }
-                html += `</tr>`;
-
-                // Task Rows
-                sprint.tasks.forEach((task, tIdx) => {
-                  const tColor = tIdx < sprint.completed ? '#10b981' : '#cbd5e1';
-                  html += `
-                    <tr class="sprint-child-${sIdx}" style="display: none; background: #fafafa;">
-                      <td class="col-phase-label" style="position: sticky; left: 0; background: #fafafa; z-index: 5; padding: 8px 16px 8px 32px; font-size: 12px; color: #475569; border-bottom: 1px solid #f1f5f9;">
-                        - ${task.text.substring(0, 35)}...
-                      </td>
-                  `;
-                  for (let i = 0; i < totalCols; i++) {
-                    if (i === task.start) {
-                      html += `<td colspan="${task.duration}" style="padding: 0 4px; border-bottom: 1px solid #f1f5f9; border-left: 1px solid #f1f5f9;"><div style="height: 8px; background: ${tColor}; border-radius: 4px;"></div></td>`;
-                      i += task.duration - 1;
-                    } else {
-                      html += `<td style="border-bottom: 1px solid #f1f5f9; border-left: 1px solid #f1f5f9;"></td>`;
-                    }
-                  }
-                  html += `</tr>`;
-                });
-              });
-
-              tbody.innerHTML = html;
-            }
-
-            function toggleGanttSprint(className) {
-              const rows = document.querySelectorAll('.' + className);
-              rows.forEach(row => {
-                row.style.display = row.style.display === 'none' ? 'table-row' : 'none';
-              });
-            }
-
-            // Fullscreen logic
-            const btnFullscreen = document.getElementById('btnTimelineExpand');
-            const btnCloseFullscreen = document.getElementById('ganttCloseFullscreenBtn');
-
-            function toggleGanttFullscreen() {
-              const container = document.getElementById('ganttFullscreenContainer');
-              if (container) {
-                if (container.classList.contains('fullscreen')) {
-                  container.classList.remove('fullscreen');
-                  container.style.position = 'relative';
-                  container.style.width = '100%';
-                  container.style.height = 'auto';
-                  container.style.top = 'auto';
-                  container.style.left = 'auto';
-                  container.style.padding = '0';
-                  container.style.boxShadow = 'none';
-                  if (btnCloseFullscreen) btnCloseFullscreen.style.display = 'none';
-
-                  // Collapse all child tasks when exiting fullscreen
-                  const tbody = document.getElementById('ganttTbody');
-                  if (tbody) {
-                    const childRows = tbody.querySelectorAll('tr[class^="sprint-child-"]');
-                    childRows.forEach(row => {
-                      row.style.display = 'none';
-                    });
-                  }
-                } else {
-                  container.classList.add('fullscreen');
-                  container.style.position = 'fixed';
-                  container.style.top = '20px';
-                  container.style.left = '20px';
-                  container.style.width = 'calc(100% - 40px)';
-                  container.style.height = 'calc(100vh - 40px)';
-                  container.style.padding = '20px';
-                  container.style.borderRadius = '12px';
-                  container.style.boxShadow = '0 10px 25px rgba(0,0,0,0.2)';
-                  if (btnCloseFullscreen) {
-                    btnCloseFullscreen.style.display = 'flex';
-                  }
-
-                  // Expand all child tasks when entering fullscreen
-                  const tbody = document.getElementById('ganttTbody');
-                  if (tbody) {
-                    const childRows = tbody.querySelectorAll('tr[class^="sprint-child-"]');
-                    childRows.forEach(row => {
-                      row.style.display = 'table-row';
-                    });
-                  }
-                }
-              }
-            }
-
-            if (btnFullscreen) {
-              btnFullscreen.addEventListener('click', toggleGanttFullscreen);
-            }
-            if (btnCloseFullscreen) {
-              btnCloseFullscreen.addEventListener('click', toggleGanttFullscreen);
-            }
-
-            renderSprints();
-            renderGantt();
-          </script>
-</div>
-</div>
       <!-- ----------------------------------------
        VIEW 3: DOCUMENTS (EXPLORER & READER)
        ---------------------------------------- -->
@@ -4190,367 +4055,280 @@ Loading document content...
       </div>
     </div>
 
-          <!-- JavaScript -->
-          <script src="js/sidebar.js"></script>
-          <script src="js/workspace.js?v=13"></script>
-          <script src="js/modal.js"></script>
-          <!-- ==========================================
+    <!-- JavaScript -->
+    <script src="js/sidebar.js"></script>
+    <script src="js/workspace.js?v=12"></script>
+    <script src="js/modal.js"></script>
+  <!-- ==========================================
        PHASE DETAILS MODAL
        ========================================== -->
-          <div class="zenith-modal-backdrop" id="phaseDetailsModal">
-            <div class="zenith-modal-window phase-modal-window">
-              <div class="modal-header-bar">
-                <div class="modal-header-left">
-                  <div class="phase-modal-icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
-                      stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                      <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                      <polyline points="14 2 14 8 20 8"></polyline>
-                      <path d="M9 15l2 2 4-4"></path>
-                    </svg>
-                  </div>
-                  <h2 class="modal-header-title">Phase Overview</h2>
-                </div>
-                <button type="button" class="modal-close-btn" id="btnClosePhaseModal"
-                  onclick="document.getElementById('phaseDetailsModal').classList.remove('active')">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
-                    stroke="currentColor" stroke-width="2.5">
-                    <line x1="18" y1="6" x2="6" y2="18"></line>
-                    <line x1="6" y1="6" x2="18" y2="18"></line>
-                  </svg>
-                </button>
-              </div>
-
-              <div class="modal-body-layout phase-modal-body">
-                <!-- Sidebar -->
-                <div class="modal-inner-sidebar phase-modal-sidebar">
-                  <button type="button" class="modal-nav-item active phase-nav-item" data-phase="1">
-                    <span class="phase-nav-number"
-                      style="background-color: #10b981; color: white; border: none;">1</span>
-                    <div class="phase-nav-text">
-                      <span class="phase-nav-title">Perencanaan & Kebutuhan</span>
-                      <span class="phase-nav-meta" style="color: #10b981;">9/9 Selesai</span>
-                    </div>
-                  </button>
-                  <button type="button" class="modal-nav-item phase-nav-item" data-phase="2">
-                    <span class="phase-nav-number"
-                      style="background-color: #10b981; color: white; border: none;">2</span>
-                    <div class="phase-nav-text">
-                      <span class="phase-nav-title">Desain & Cetak Biru</span>
-                      <span class="phase-nav-meta" style="color: #10b981;">15/15 Selesai</span>
-                    </div>
-                  </button>
-                  <button type="button" class="modal-nav-item phase-nav-item" data-phase="3">
-                    <span class="phase-nav-number"
-                      style="background-color: #f59e0b; color: white; border: none;">3</span>
-                    <div class="phase-nav-text">
-                      <span class="phase-nav-title">Pembuatan Kode</span>
-                      <span class="phase-nav-meta" style="color: #f59e0b;">0/11 Sedang Berjalan</span>
-                    </div>
-                  </button>
-                  <button type="button" class="modal-nav-item phase-nav-item" data-phase="4">
-                    <span class="phase-nav-number">4</span>
-                    <div class="phase-nav-text">
-                      <span class="phase-nav-title">Uji Kelayakan</span>
-                      <span class="phase-nav-meta">0/9 Menunggu</span>
-                    </div>
-                  </button>
-                  <button type="button" class="modal-nav-item phase-nav-item" data-phase="5">
-                    <span class="phase-nav-number">5</span>
-                    <div class="phase-nav-text">
-                      <span class="phase-nav-title">Peluncuran Resmi</span>
-                      <span class="phase-nav-meta">0/9 Menunggu</span>
-                    </div>
-                  </button>
-                  <button type="button" class="modal-nav-item phase-nav-item" data-phase="6">
-                    <span class="phase-nav-number">6</span>
-                    <div class="phase-nav-text">
-                      <span class="phase-nav-title">Operasional & Perawatan</span>
-                      <span class="phase-nav-meta">0/7 Menunggu</span>
-                    </div>
-                  </button>
-                  <button type="button" class="modal-nav-item phase-nav-item" data-phase="7">
-                    <span class="phase-nav-number">7</span>
-                    <div class="phase-nav-text">
-                      <span class="phase-nav-title">Evaluasi & Pengembangan</span>
-                      <span class="phase-nav-meta">0/6 Menunggu</span>
-                    </div>
-                  </button>
-                </div>
-
-                <!-- Content (Rendered by JS) -->
-                <div class="modal-content-pane phase-modal-content" id="phaseContentRoot">
-                </div>
-              </div>
-            </div>
+  <div class="zenith-modal-backdrop active" id="phaseDetailsModal">
+    <div class="zenith-modal-window phase-modal-window">
+      <div class="modal-header-bar">
+        <div class="modal-header-left">
+          <div class="phase-modal-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8c-1.1 0-1.99.9-1.99 2L6 20a2 2 0 0 0 2 2z"></path><path d="M14 2v4a2 2 0 0 0 2 2h4"></path><polyline points="14 13 18 17 22 13"></polyline></svg>
           </div>
+          <h2 class="modal-header-title">Phase Overview: Gates & Checklist</h2>
+        </div>
+        <button type="button" class="modal-close-btn" id="btnClosePhaseModal" onclick="document.getElementById('phaseDetailsModal').classList.remove('active')">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
 
-          <script>
+      <div class="modal-body-layout phase-modal-body">
+        <!-- Sidebar -->
+        <div class="modal-inner-sidebar phase-modal-sidebar">
+          <button type="button" class="modal-nav-item active phase-nav-item" data-phase="1">
+            <span class="phase-nav-number">1</span>
+            <div class="phase-nav-text">
+              <span class="phase-nav-title">Business & Planning</span>
+              <span class="phase-nav-meta">0/9 Gates Cleared</span>
+            </div>
+          </button>
+          <button type="button" class="modal-nav-item phase-nav-item" data-phase="2">
+            <span class="phase-nav-number">2</span>
+            <div class="phase-nav-text">
+              <span class="phase-nav-title">Design</span>
+              <span class="phase-nav-meta">0/15 Gates Cleared</span>
+            </div>
+          </button>
+          <button type="button" class="modal-nav-item phase-nav-item" data-phase="3">
+            <span class="phase-nav-number">3</span>
+            <div class="phase-nav-text">
+              <span class="phase-nav-title">Development</span>
+              <span class="phase-nav-meta">0/11 Gates Cleared</span>
+            </div>
+          </button>
+          <button type="button" class="modal-nav-item phase-nav-item" data-phase="4">
+            <span class="phase-nav-number">4</span>
+            <div class="phase-nav-text">
+              <span class="phase-nav-title">Validation & Acceptance</span>
+              <span class="phase-nav-meta">0/9 Gates Cleared</span>
+            </div>
+          </button>
+          <button type="button" class="modal-nav-item phase-nav-item" data-phase="5">
+            <span class="phase-nav-number">5</span>
+            <div class="phase-nav-text">
+              <span class="phase-nav-title">Release</span>
+              <span class="phase-nav-meta">0/9 Gates Cleared</span>
+            </div>
+          </button>
+          <button type="button" class="modal-nav-item phase-nav-item" data-phase="6">
+            <span class="phase-nav-number">6</span>
+            <div class="phase-nav-text">
+              <span class="phase-nav-title">Operations</span>
+              <span class="phase-nav-meta">0/7 Gates Cleared</span>
+            </div>
+          </button>
+          <button type="button" class="modal-nav-item phase-nav-item" data-phase="7">
+            <span class="phase-nav-number">7</span>
+            <div class="phase-nav-text">
+              <span class="phase-nav-title">Continuous Improvement</span>
+              <span class="phase-nav-meta">0/6 Gates Cleared</span>
+            </div>
+          </button>
+        </div>
 
-            const phaseData = [
-              {
-                id: 1,
-                title: "Phase 1: Perencanaan & Kebutuhan Bisnis",
-                owner: "Business Analyst",
-                status: "Disetujui Penuh",
-                gates: 9,
-                completed: 9,
-                items: [
-                  "Alur Pengguna Jelas: Skenario pesan perawatan, pilih kapster, kunci jam, hingga bayar QRIS disepakati dari sudut pandang pemakai.",
-                  "Aturan Operasional Pasti: Kebijakan uang muka (DP), batas pembatalan, dan denda terlambat sudah diputuskan sejak awal.",
-                  "Kesepakatan Tercatat Rapi: Seluruh keputusan bersama pemilik salon, kasir, dan kapster didokumentasikan lengkap beserta alasannya.",
-                  "Kamus Istilah Baku: Definisi istilah kerja diseragamkan (seperti kapster, slot waktu, dan no-show) agar tim tidak salah paham.",
-                  "Fitur Utama Terkunci: Rilis awal difokuskan pada pemesanan, katalog layanan, bayar QRIS, dan kalender kasir; fitur promo/poin ditunda.",
-                  "Jadwal 8 Minggu Disepakati: Waktu pengerjaan ditetapkan tuntas dalam 2 bulan, mencakup pengumpulan foto layanan dan data uji coba.",
-                  "Fokus Aturan Bisnis: Kebutuhan murni mengatur proses kerja salon tanpa membatasi pilihan teknis pemrograman.",
-                  "Lolos Verifikasi Akhir: Rencana kerja disetujui pemeriksa independen tanpa ada persyaratan yang menggantung.",
-                  "Izin Masuk Phase 2 Terbuka: Seluruh syarat terpenuhi, tim resmi lanjut ke tahap perancangan desain layar dan skema database."
-                ]
-              },
-              {
-                id: 2,
-                title: "Phase 2: Desain & Cetak Biru Sistem",
-                owner: "Software Architect",
-                status: "Disetujui Penuh",
-                gates: 15,
-                completed: 15,
-                items: [
-                  "Arsitektur & Skema Selaras: 5 modul utama (akun, layanan, booking, bayar, notifikasi) terhubung rapi ke 12 tabel database tanpa risiko konflik data.",
-                  "Cakupan Kebutuhan 100%: Seluruh fitur wajib Phase 1 terpetakan lengkap ke rancangan antarmuka dan struktur data.",
-                  "Isolasi Privasi Pelanggan: Akses data dikunci ketat; pelanggan hanya dapat melihat reservasi dan bukti bayar miliknya sendiri.",
-                  "Pemisahan Hak Akses Tiga Peran: Kewenangan dibatasi tegas antara Pelanggan (pesan & bayar), Kasir (kelola jadwal), dan Pemilik (akses laporan keuangan).",
-                  "Integrasi Pihak Ketiga Resmi: Layanan pembayaran otomatis QRIS dan gateway notifikasi WhatsApp disepakati untuk digunakan.",
-                  "Struktur Sistem Efisien: Aplikasi dirancang monolitik dan ringan guna menghemat biaya server serta mempermudah pemeliharaan berkala.",
-                  "Lingkungan Pengujian Siap: Tempat simulasi pengembangan dan pengecekan kode otomatis disiapkan sebelum pemasangan ke server asli.",
-                  "Keamanan Transaksi Terjamin: Mekanisme anti-kecurangan diterapkan untuk mencegah bukti transfer palsu dan penimbunan slot booking.",
-                  "Target Kinerja Terukur: Waktu muat halaman dipatok di bawah 1,5 detik di ponsel dan stabil menampung 50 pemesanan serentak.",
-                  "Konsep Desain Disetujui: Pemilik salon menetapkan tema visual elegan dari opsi alternatif yang diajukan.",
-                  "Standar UI & Palet Dikunci: Tema warna pink pastel lembut, tipografi jelas, dan ukuran tombol ramah sentuhan layar resmi dibakukan.",
-                  "Jadwal 6 Sprint Disahkan: Waktu 8 minggu dibagi tuntas: pembuatan fitur inti (S1–S4), uji ketahanan (S5), dan gladi bersih operasional (S6).",
-                  "Aturan Sistem Pasti: Logika pembatalan otomatis (hangus bila tak dibayar dalam 15 menit) dan penguncian jadwal tuntas disepakati.",
-                  "Lolos Verifikasi Ahli Independen: Cetak biru divalidasi aman dari celah jadwal ganda (double booking) oleh perancang sistem independen.",
-                  "Izin Masuk Phase 3 Terbuka: Seluruh 15 syarat teknis terpenuhi; tim resmi melangkah ke tahap pembuatan kode program (Development)."
-                ]
-              },
-              {
-                id: 3,
-                title: "Phase 3: Pembuatan Kode Program ",
-                owner: "Frontend & Backend Engineer",
-                status: "Sedang Berjalan",
-                gates: 11,
-                completed: 0,
-                items: [
-                  "Tugas S1–S4 Tuntas 100%: Seluruh daftar fitur utama selesai dikerjakan atau resmi ditunda atas izin pemilik salon.",
-                  "Bukti Fitur Berfungsi Nyata: Setiap putaran kerja wajib menunjukkan fungsi yang benar-benar hidup saat dicoba di layar.",
-                  "Lolos Tes Manual Bebas Eror: Semua fitur dapat dijalankan lancar tanpa adanya kerusakan sistem yang macet atau fatal.",
-                  "Persetujuan Kode Antar-Tim (Code Review): Setiap baris kode baru wajib dicek dan disetujui programmer lain sebelum digabungkan.",
-                  "Pengecekan Otomatis Hijau: Mesin penguji otomatis menyatakan kode bebas salah ketik, bebas galat, dan aman dirakit.",
-                  "Label Pembagian Tugas Rapi: Setiap pekerjaan terdata jelas tanggung jawabnya, apakah bagian tampilan (Frontend) atau mesin (Backend).",
-                  "Dokumentasi Sesuai Hasil: Catatan teknis cara kerja sistem selalu disinkronkan persis dengan kode yang sudah jadi.",
-                  "Server Percobaan Aktif Lancar: Website versi latihan berjalan stabil di komputer tim sehingga perubahan langsung terlihat seketika.",
-                  "Semua Ketidakpastian Tuntas Diputuskan: Tidak ada fitur yang dikira-kira; seluruh detail teknis langsung diputuskan dan dicatat resmi.",
-                  "Disiplin Mengikuti Desain Phase 2: Proses koding taat pada aturan alur dan warna yang sudah disahkan, tanpa melenceng.",
-                  "Kunci Menuju Phase 4 Terbuka: Seluruh 11 kriteria wajib hijau penuh sebelum sistem melangkah ke tahap pengujian menyeluruh."
-                ]
-              },
-              {
-                id: 4,
-                title: "Phase 4: Uji Kelayakan & Penerimaan ",
-                owner: "Pengguna Langsung / Tim Medis",
-                status: "Menunggu Giliran",
-                gates: 9,
-                completed: 0,
-                items: [
-                  "Hasil Uji Manual Terekam Nyata: Setiap putaran pengerjaan dicoba langsung oleh manusia dengan catatan hasil berstatus lulus.",
-                  "Fitur Utama Lolos Uji 100%: Seluruh fitur penting (booking, bayar QRIS, kalender kasir) terbukti berfungsi normal lewat bukti uji coba.",
-                  "Pengecekan Anti-Rusak (Regression): Fitur yang sudah selesai diuji ulang agar penambahan kode baru tidak merusak fungsi lama.",
-                  "Target Kecepatan Terpenuhi: Waktu buka halaman diukur pasti dengan batas waktu di bawah 1,5 detik di ponsel.",
-                  "Audit Keamanan Ketat: Sistem terbukti aman dari kebocoran nomor kontak pelanggan dan manipulasi status pembayaran.",
-                  "Semua Masalah (Bug) Tuntas: Kendala teknis yang ditemukan saat pengujian selesai diperbaiki atau resmi ditunda atas izin pemilik salon.",
-                  "Laporan Evaluasi Rapi: Seluruh catatan hasil uji sistem dan riwayat perbaikan masalah tercatat lengkap di dokumen resmi.",
-                  "Gladi Bersih Staf Salon (UAT): Pemilik salon, kasir, dan kapster mencoba langsung alur kerja harian dan resmi menandatangani persetujuan.",
-                  "Kunci Menuju Phase 5 Terbuka: Seluruh 9 syarat pengujian wajib terpenuhi sebelum tombol peluncuran resmi ditekan."
-                ]
-              },
-              {
-                id: 5,
-                title: "Phase 5: Peluncuran Resmi ",
-                owner: "Release Manager",
-                status: "Menunggu Giliran",
-                gates: 9,
-                completed: 0,
-                items: [
-                  "Label Versi & Catatan Jelas: Nomor rilis website ditetapkan resmi (misal: Versi 1.0.0) beserta daftar fitur dan perbaikan terkini.",
-                  "Lolos Pasang di Server Latihan: Sistem terpasang dan berjalan mulus di server simulasi (staging) tanpa adanya galat.",
-                  "Latihan Darurat Mundur (Rollback): Prosedur darurat terbukti siap mengembalikan sistem ke versi lama jika peluncuran terkendala.",
-                  "Titik Cadangan Data Aman: Salinan data (backup) terakhir dipastikan tersimpan aman sebelum proses migrasi dijalankan.",
-                  "Alarm Pemantau Siap Siaga: Sensor otomatis aktif untuk memberi peringatan jika website mendadak lambat atau tidak bisa dibuka.",
-                  "Riwayat Pemasangan Terekam Rapi: Semua catatan proses pemasangan sistem ke server tersimpan lengkap dan tertata.",
-                  "Pemeriksaan Kesiapan Akhir Sah: Daftar cek keamanan dan kelaikan server tuntas diverifikasi sebelum tombol rilis ditekan.",
-                  "Tes Transaksi Kilat Usai Rilis: Pengecekan kilat dan tes pembayaran riil sekali langsung di domain resmi salon untuk memastikan fungsi normal.",
-                  "Izin Masuk Phase 6 Terbuka: Seluruh 9 syarat peluncuran berstatus hijau, pengelolaan resmi dialihkan ke tahap operasional harian."
-                ]
-              },
-              {
-                id: 6,
-                title: "Phase 6: Operasional & Perawatan Harian",
-                owner: "Tim Keandalan Sistem (SRE)",
-                status: "Menunggu Giliran",
-                gates: 7,
-                completed: 0,
-                items: [
-                  "Radar Pemantau & Alarm 24 Jam: Sensor otomatis mengawasi kecepatan, beban pengunjung, sisa memori, serta langsung mengirim peringatan jika website macet.",
-                  "Catatan Riwayat Gangguan Rapi: Setiap kendala teknis (seperti halaman booking sempat melambat) dicatat penyebab utama dan solusinya.",
-                  "Evaluasi Insiden Fatal Tuntas: Laporan resmi dibuat jika terjadi gangguan besar (website mati atau koneksi QRIS terputus) agar masalah tidak terulang.",
-                  "Simulasi Sedot Data Cadangan (Restore Backup): Pemulihan data cadangan dipraktikkan langsung untuk memastikan data booking dan kas salon aman dari risiko hilang.",
-                  "Servis Rutin & Tambalan Keamanan: Jadwal perawatan berkala dijalankan tepat waktu dan pembaruan sistem keamanan selalu terpasang.",
-                  "Rekap Performa Siap Saji: Laporan bulanan untuk pemilik salon memuat persentase website aktif (uptime), rekap masalah, dan rincian biaya server.",
-                  "Izin Masuk Phase 7 Terbuka: Seluruh 7 syarat operasional terpenuhi stabil sebagai dasar melangkah ke evaluasi dan pengembangan fitur berikutnya."
-                ]
-              },
-              {
-                id: 7,
-                title: "Phase 7: Evaluasi & Pengembangan Berkelanjutan",
-                owner: "Engineering Manager",
-                status: "Menunggu Giliran",
-                gates: 6,
-                completed: 0,
-                items: [
-                  "Laporan Rapat Evaluasi Lengkap: Catatan evaluasi berkala disusun untuk meninjau hal yang berjalan lancar dan kendala teknis selama sebulan pemakaian.",
-                  "Tiap Saran Perbaikan Berpemilik: Setiap usulan perbaikan (seperti memperjelas tombol bayar atau simplifikasi jadwal) dicatat dan diberi penanggung jawab.",
-                  "Pembaruan Pedoman Kerja Tim: Pola kerja yang menghambat proses diperbarui agar pengembangan fitur selanjutnya berjalan lebih cepat.",
-                  "Dokumentasi & Memori Teknis Diperbarui: Panduan teknis dan solusi masalah dicatat agar kesalahan serupa tidak terulang di masa mendatang.",
-                  "Rencana Fitur Lanjutan atau Serah Terima Tuntas: Menyiapkan daftar fitur baru (sistem poin dan voucer diskon), atau menyelesaikan masa pendampingan serta serah terima kunci sistem.",
-                  "Siklus Proyek Resmi Ditutup: Seluruh 6 syarat terpenuhi, versi saat ini resmi ditutup dengan stabil dan siap masuk ke siklus pengembangan baru."
-                ]
-              }
-            ];
+        <!-- Content (Rendered by JS) -->
+        <div class="modal-content-pane phase-modal-content" id="phaseContentRoot">
+        </div>
+      </div>
+    </div>
+  </div>
 
-            function renderPhase(id) {
-              const phase = phaseData.find(p => p.id === id);
-              if (!phase) return;
-
-              // Update active state on sidebar
-              document.querySelectorAll('.phase-nav-item').forEach(el => {
-                el.classList.toggle('active', parseInt(el.getAttribute('data-phase')) === id);
-              });
-
-              const root = document.getElementById('phaseContentRoot');
-
-              let statusColor = "#64748b"; // default
-              let statusBg = "rgba(226, 232, 240, 0.6)"; // default
-              let indicatorColor = "#94a3b8";
-
-              if (phase.status.includes("Disetujui")) {
-                statusColor = "#059669";
-                statusBg = "rgba(16, 185, 129, 0.1)";
-                indicatorColor = "#10b981"; // green
-              } else if (phase.status.includes("Sedang Berjalan")) {
-                statusColor = "#d97706";
-                statusBg = "rgba(245, 158, 11, 0.1)";
-                indicatorColor = "#f59e0b"; // yellow
-              }
-
-              let itemsHtml = phase.items.map((item, index) => {
-                let isChecked = index < phase.completed;
-                let checkIcon = isChecked ? 'checked' : '';
-                let checkBoxStyle = isChecked ? `background-color: #10b981; border-color: #10b981;` : `border-color: #cbd5e1;`;
-                return `
-        <label class="gate-item" style="display: flex; align-items: center; gap: 16px; padding: 16px 20px; border: 1px solid var(--border-color, #e2e8f0); border-radius: 8px; background: #ffffff; cursor: default; transition: all 0.2s ease;">
-          <input type="checkbox" class="gate-checkbox" disabled ${checkIcon} style="width: 18px; height: 18px; border-radius: 4px; border: 2px solid #cbd5e1; flex-shrink: 0; appearance: none; ${checkBoxStyle} background-image: ${isChecked ? 'url(\'data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22white%22 stroke-width=%223%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22%3E%3Cpolyline points=%2220 6 9 17 4 12%22%3E%3C/polyline%3E%3C/svg%3E\')' : 'none'}; background-size: 80%; background-position: center; background-repeat: no-repeat;" />
-          <span class="gate-text" style="font-size: 15px; color: var(--text-primary, #1e293b); font-weight: 400; line-height: 1.5;">${item}</span>
+  <script>
+    const phaseData = [
+      {
+        id: 1,
+        title: "Business & Planning",
+        owner: "business-analyst",
+        status: "Pending",
+        gates: 9,
+        items: [
+          "Every §D story has EARS/GWT acceptance criteria, testable and tech-free",
+          "<strong>Fully decided:</strong> zero <code>[NEEDS CLARIFICATION]</code> / \"TBD\" / \"Pending\" anywhere in this doc — every unknown is resolved (§H) or registered (§J). The gate-guard hook enforces this mechanically.",
+          "§H decision log reflects every interview decision; no duplicate or dangling SD-n",
+          "§I glossary defines every term §A–§G use; controlled vocabularies enumerated in full",
+          "Scope: in/out lists complete; MVP cut line drawn <em>(skippable in quick mode)</em>",
+          "Roadmap + WBS present and consistent with scope <em>(skippable in quick mode)</em>",
+          "Constitution Check passed (no §1–§7 conflicts)",
+          "Reviewed by product-manager agent (not the drafting author)",
+          "Every item above genuinely met — the owning agent approves and advances (agent-owned gate, constitution §2)"
+        ]
+      },
+      {
+        id: 2,
+        title: "Design",
+        owner: "software-architect",
+        status: "Pending",
+        gates: 15,
+        items: [
+          "Architecture, schema, API, and sequence diagrams complete and consistent with each other",
+          "Every PRD must-story is covered by design elements (traceability table filled)",
+          "RLS policies defined for all tables; public endpoint surface enumerated",
+          "Permission matrix, event catalog, and notification matrix present — filled or explicitly \"N/A (DD-n)\"",
+          "Stack follows constitution §8 primary; commons stack was announced and only hard-constraint deviations recorded as DD-n (never a technology menu)",
+          "Architecture shape locked as DD-n (modular monolith default, or microservices with Gate A/B + five must-haves)",
+          "§E documents dual Docker modes (dev hot-reload compose vs staging/prod image-run) and the Jenkins job map",
+          "Threat model reviewed by security-architect <em>(Security Team hook — never skippable)</em>",
+          "Test strategy defined with measurable performance targets",
+          "<strong>UI/UX: 2–4 distinct template directions were presented in Preview and the user selected & locked one</strong> <em>(human choice — never skippable)</em>",
+          "Design system captured in <code>docs/design/ui-system.md</code> (tokens, components, do/don'ts) and referenced for development",
+          "<code>docs/sprints.md</code> written and <strong>user-confirmed</strong>: tasks cite <code>US-n</code>/<code>DD-n</code>, every task tagged <code>(FE)</code>/<code>(BE)</code>/<code>(FE+BE)</code>, every sprint has verifiable exit criteria",
+          "<strong>Fully decided:</strong> zero <code>[NEEDS CLARIFICATION]</code> / \"TBD\" / \"Pending\" in this doc — new unknowns were resolved as DD-n or routed to the Phase-1 §J registry",
+          "Architecture Review hook: independent architect agent reviewed §A–§E <em>(skippable in quick mode)</em>",
+          "Every item above genuinely met — the owning agent approves and advances"
+        ]
+      },
+      {
+        id: 3,
+        title: "Development",
+        owner: "frontend-engineer + backend-engineer",
+        status: "Pending",
+        gates: 11,
+        items: [
+          "Every sprint in <code>docs/sprints.md</code> complete: all tasks <code>[x]</code>, or explicitly moved to <code>docs/backlog.md</code> with the user's consent",
+          "Every sprint's <code>Exit:</code> criteria verified with real evidence (output cited in the Review log)",
+          "Every sprint's <code>Validation:</code> line reads <code>passed</code> (Phase 4 manual round); no open blocking <code>DEF-n</code>",
+          "Review log complete: every merged change has a non-author <em>approve</em> row",
+          "Containerized quality gates green (typecheck · lint · tests · build); Jenkins <strong>verify</strong> green if CI is connected",
+          "Traceability intact: every must-<code>US-n</code> maps to done tasks; every task cites <code>US-n</code>/<code>DD-n</code>/<code>BL-n</code>/<code>DEF-n</code> and carries an <code>(FE)</code>/<code>(BE)</code>/<code>(FE+BE)</code> tag",
+          "Docs in sync: phase docs match built behavior (tech-lead spot-check)",
+          "<code>dev</code> environment runs the integrated build via hot-reload compose (design §E)",
+          "<strong>Fully decided:</strong> zero <code>[NEEDS CLARIFICATION]</code>/TBD/Pending — unknowns resolved (DD-n) or registered (§J)",
+          "Constitution Check passed",
+          "Every item above genuinely met — the owning agents approve and advance"
+        ]
+      },
+      {
+        id: 4,
+        title: "Validation & Acceptance",
+        owner: "human",
+        status: "Pending",
+        gates: 9,
+        items: [
+          "Every sprint has a recorded manual validation round with the human's own results; every <code>Validation:</code> line reads <code>passed</code>",
+          "100% of must-story criteria covered by executed, passing checks",
+          "Regression: previously-validated sprints re-checked after later changes",
+          "Performance targets met (numbers recorded) <em>(skippable in quick mode)</em>",
+          "Security battery executed; zero open critical/high defects <strong>(never skippable)</strong>",
+          "All open defects triaged: fixed, or explicitly waived by approver with rationale",
+          "Test reports + defect log complete in this doc",
+          "UAT executed with acceptance evidence recorded (never skippable)",
+          "Every item above genuinely met — the owning agent approves and advances"
+        ]
+      },
+      {
+        id: 5,
+        title: "Release",
+        owner: "release-manager",
+        status: "Pending",
+        gates: 9,
+        items: [
+          "Version tagged; release notes complete and traceable (US-n / DEF-n)",
+          "Staging deploy green + smoke evidence attached",
+          "Rollback rehearsed on staging with recorded result <strong>(never skippable)</strong>",
+          "Migrations reversible; restore point confirmed",
+          "Monitoring & alerts verified receiving staging/production data",
+          "Deployment logs recorded for every environment",
+          "Production-deploy readiness verified and recorded (never skippable)",
+          "Production smoke checks passed post-deploy",
+          "Every item above genuinely met — the owning agent approves and advances"
+        ]
+      },
+      {
+        id: 6,
+        title: "Operations",
+        owner: "sre",
+        status: "Pending",
+        gates: 7,
+        items: [
+          "Monitoring live: golden-signals table complete, alerts tested end-to-end",
+          "All incidents this cycle logged with root cause + follow-ups routed",
+          "All SEV-1/2 post-incident reviews written",
+          "Backup restore verified within the cycle",
+          "Maintenance log current; no overdue critical patches",
+          "Ops summary (uptime, incident count, alert noise, cost) prepared for retro",
+          "Every item above genuinely met — the owning agent approves and advances"
+        ]
+      },
+      {
+        id: 7,
+        title: "Continuous Improvement",
+        owner: "engineering-manager",
+        status: "Pending",
+        gates: 6,
+        items: [
+          "Retro report complete with evidence-cited findings",
+          "Every <code>IMP-n</code> routed (constitution / template / backlog / runbook / memory) with owner",
+          "Constitution amendment proposals submitted where warranted",
+          "Platform memory + <code>AGENTS.md</code>/<code>CLAUDE.md</code> updated",
+          "Next-cycle backlog seeded (or closure: handover + closure report complete, hypercare dated)",
+          "Every item above genuinely met — the owning agent approves and advances"
+        ]
+      }
+    ];
+  
+    function renderPhase(id) {
+      const phase = phaseData.find(p => p.id === id);
+      if (!phase) return;
+  
+      // Update active state on sidebar
+      document.querySelectorAll('.phase-nav-item').forEach(el => {
+        el.classList.toggle('active', parseInt(el.getAttribute('data-phase')) === id);
+      });
+  
+      const root = document.getElementById('phaseContentRoot');
+      
+      let itemsHtml = phase.items.map(item => `
+        <label class="gate-item">
+          <input type="checkbox" class="gate-checkbox" disabled />
+          <span class="gate-text">${item}</span>
         </label>
-      `}).join('');
-
-              root.innerHTML = `
-        <div class="phase-content-header" style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 32px; border-bottom: 1px solid var(--border-color, #e2e8f0); padding-bottom: 24px; position: relative;">
-          <!-- Progress Indicator Top Right/Left -->
-          <div style="position: absolute; top: 0; right: 0; width: 12px; height: 12px; border-radius: 50%; background-color: ${indicatorColor};"></div>
-          
-          <div style="padding-right: 20px;">
-            <h3 class="section-main-heading" style="font-size: 32px; margin-bottom: 16px; font-weight: 700;">${phase.title}</h3>
-            <div style="display: flex; align-items: center; gap: 12px; color: var(--text-secondary, #64748b); font-size: 15px;">
-              Role: 
-              <span style="display: inline-flex; align-items: center; gap: 6px; padding: 4px 12px; background: rgba(0,0,0,0.04); border-radius: 16px; border: 1px solid rgba(0,0,0,0.08); font-weight: 500; color: var(--text-primary, #1e293b);">
-                ${phase.owner}
-              </span>
-              <span style="padding: 4px 12px; background: ${statusBg}; color: ${statusColor}; border-radius: 16px; font-weight: 500;">
-                ${phase.status}
-              </span>
-            </div>
+      `).join('');
+  
+      root.innerHTML = `
+        <div class="phase-content-header">
+          <div>
+            <h3 class="section-main-heading">${phase.id}. ${phase.title}</h3>
+            <p class="section-sub-desc phase-owner-desc">
+              Owner: <span class="owner-pill"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg> ${phase.owner}</span>
+              <span class="phase-status-pill pending">${phase.status}</span>
+            </p>
           </div>
-          <div style="text-align: right;">
-            <div style="font-size: 42px; font-weight: 700; color: var(--text-primary, #1e293b); line-height: 1;">${phase.completed}<span style="font-size: 20px; color: var(--text-secondary, #64748b); font-weight: 600;">/${phase.gates}</span></div>
-            <div style="font-size: 12px; font-weight: 700; color: var(--text-secondary, #64748b); letter-spacing: 0.5px; margin-top: 8px; text-transform: uppercase;">TASK PROGRESS COUNT</div>
+          <div class="phase-progress-box">
+            <div class="progress-big">0<span class="progress-small">/${phase.gates}</span></div>
+            <div class="progress-label">Gates cleared</div>
           </div>
         </div>
         
-        <div class="phase-gates-list" style="display: flex; flex-direction: column; gap: 12px; margin-bottom: 32px;">
+        <div class="phase-gates-list">
           ${itemsHtml}
         </div>
+        
+        <div class="phase-action-bar">
+          <button class="btn-modal-dark-cta phase-advance-btn" disabled>
+            Advance Phase
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+          </button>
+          <p class="phase-action-note">Only the owner agent (<strong>${phase.owner}</strong>) can advance this phase after clearing all gates.</p>
+        </div>
       `;
-            }
-
-            // Add click listeners
-            document.querySelectorAll('.phase-nav-item').forEach(el => {
-              el.addEventListener('click', () => {
-                renderPhase(parseInt(el.getAttribute('data-phase')));
-              });
-            });
-
-            // Initial render
-            if (document.getElementById('phaseContentRoot')) {
-              renderPhase(1);
-            }
-          </script>
-
-          <!-- Feedback Modal -->
-          <div id="feedbackModal" class="feedback-modal-overlay">
-            <div class="feedback-modal">
-              <div class="feedback-modal-header">
-                <h2>Report a bug or suggest an improvement</h2>
-                <button class="feedback-close-btn" id="feedbackCloseBtn">&times;</button>
-              </div>
-              <p class="feedback-modal-desc">Goes straight to the people building this. Where you are, which version you
-                are
-                on and any errors are attached automatically — you do not need to describe them.</p>
-
-              <div class="feedback-type-toggles">
-                <button class="feedback-type-btn active" data-type="bug">Bug</button>
-                <button class="feedback-type-btn" data-type="improvement">Improvement</button>
-                <button class="feedback-type-btn" data-type="question">Question</button>
-              </div>
-
-              <div class="feedback-form-group">
-                <label>Title</label>
-                <input type="text" placeholder="What happened, in one line" class="feedback-input">
-              </div>
-
-              <div class="feedback-form-group">
-                <label>Details</label>
-                <textarea
-                  placeholder="What you expected, what happened instead. Paste a screenshot straight into this box."
-                  class="feedback-textarea"></textarea>
-              </div>
-
-              <div class="feedback-modal-footer">
-                <div class="feedback-image-upload">
-                  <button class="feedback-add-img-btn">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                      stroke-linecap="round" stroke-linejoin="round">
-                      <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
-                      <circle cx="8.5" cy="8.5" r="1.5" />
-                      <polyline points="21 15 16 10 5 21" />
-                    </svg>
-                    Add image
-                  </button>
-                  <span class="feedback-upload-hint">Paste, drag, or browse &middot; up to 4</span>
-                </div>
-                <button class="feedback-send-btn">Send report</button>
-              </div>
-            </div>
-          </div>
-
+    }
+  
+    // Add click listeners
+    document.querySelectorAll('.phase-nav-item').forEach(el => {
+      el.addEventListener('click', () => {
+        renderPhase(parseInt(el.getAttribute('data-phase')));
+      });
+    });
+  
+    // Initial render
+    if (document.getElementById('phaseContentRoot')) {
+      renderPhase(1);
+    }
+  </script>
 </body>
 
 </html>

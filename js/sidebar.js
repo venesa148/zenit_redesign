@@ -207,3 +207,49 @@ function initThemeManager() {
   });
 }
 
+
+
+// Feedback modal logic
+document.addEventListener('DOMContentLoaded', () => {
+  const feedbackLinks = document.querySelectorAll('#feedbackLink, .global-sb-feedback-link');
+  const modal = document.getElementById('feedbackModal');
+  if (!modal) return;
+  
+  const closeBtn = document.getElementById('feedbackCloseBtn');
+  const typeBtns = document.querySelectorAll('.feedback-type-btn');
+  const sendBtn = document.querySelector('.feedback-send-btn');
+  
+  feedbackLinks.forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      modal.classList.add('active');
+    });
+  });
+  
+  if (closeBtn) {
+    closeBtn.addEventListener('click', () => {
+      modal.classList.remove('active');
+    });
+  }
+  
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) {
+      modal.classList.remove('active');
+    }
+  });
+  
+  typeBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      typeBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+    });
+  });
+  
+  if (sendBtn) {
+    sendBtn.addEventListener('click', () => {
+      // Ideally send data
+      alert('Feedback sent! Thank you.');
+      modal.classList.remove('active');
+    });
+  }
+});

@@ -835,3 +835,9 @@
 [data-theme="dark"] .api-endpoint-desc {
   color: #94a3b8;
 }
+
+
+/* Fix for docPanelPrd flex overflow bug while allowing it to be hidden */
+#docPanelPrd.active {
+  display: block !important;
+}
