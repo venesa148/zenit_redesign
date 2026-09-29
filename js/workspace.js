@@ -6,6 +6,8 @@ document.addEventListener('DOMContentLoaded', () => {
   initWorkspaceViewSwitcher();
   initProjectManagementInteractions();
   initDocumentsExplorer();
+  initArchitectureInteractions();
+  initErdInteractions();
   initDeploymentDashboard();
   initContextVault();
   initContextSelectorModal();
@@ -41,6 +43,12 @@ function initWorkspaceViewSwitcher() {
   const secNavItems = document.querySelectorAll('.sec-nav-item');
 
   function switchView(targetView) {
+    if (typeof window.closeArchitectureModal === 'function') {
+      window.closeArchitectureModal();
+    }
+    if (typeof window.closeErdModal === 'function') {
+      window.closeErdModal();
+    }
     secNavItems.forEach(item => item.classList.remove('active'));
     if (buildView) buildView.classList.remove('active');
     if (pmView) pmView.classList.remove('active');
@@ -114,8 +122,14 @@ function initWorkspaceViewSwitcher() {
   // Handle URL Hash on Initial Load & Hash changes
   function applyHashView() {
     const hash = window.location.hash;
-    if (hash === '#document') {
+    if (hash === '#document' || hash.startsWith('#doc-')) {
       switchView('document');
+      if (hash.startsWith('#doc-')) {
+        const targetNav = document.querySelector(`.doc-nav-item[href="${hash}"]`);
+        if (targetNav) {
+          targetNav.click();
+        }
+      }
     } else if (hash === '#deployment') {
       switchView('deployment');
     } else if (hash === '#context-vault') {
@@ -302,8 +316,11 @@ function initDocumentsExplorer() {
   const activeBadge = document.getElementById('docActiveBadge');
   const activeMeta = document.getElementById('docActiveMeta');
   const subTabsBar = document.getElementById('docSubTabsBar');
-  const subTabBtns = document.querySelectorAll('.doc-sub-tab-btn');
+  const techSubTabsBar = document.getElementById('techSubTabsBar');
+  const subTabBtns = document.querySelectorAll('#docSubTabsBar .doc-sub-tab-btn');
+  const techTabBtns = document.querySelectorAll('#techSubTabsBar .doc-sub-tab-btn');
   const prdSubPanes = document.querySelectorAll('.prd-subtab-pane');
+  const techSubPanes = document.querySelectorAll('.tech-subtab-pane');
   const categoryHeaders = document.querySelectorAll('.doc-category-header');
   const downloadBtn = document.getElementById('btnDownloadDoc');
   const viewFullBtn = document.getElementById('btnViewFullDoc');
@@ -325,12 +342,19 @@ function initDocumentsExplorer() {
   docItems.forEach(item => {
     item.addEventListener('click', (e) => {
       e.preventDefault();
+      if (typeof window.closeArchitectureModal === 'function') {
+        window.closeArchitectureModal();
+      }
+      if (typeof window.closeErdModal === 'function') {
+        window.closeErdModal();
+      }
+      document.querySelectorAll('.doc-tree-leaf').forEach(leaf => leaf.classList.remove('active'));
       docItems.forEach(i => i.classList.remove('active'));
       item.classList.add('active');
 
       const targetId = item.getAttribute('data-doc-target');
       const title = item.getAttribute('data-doc-title') || 'Document';
-      const badge = item.getAttribute('data-doc-badge') || 'Approved';
+      const badge = item.getAttribute('data-doc-badge');
       const phase = item.getAttribute('data-doc-phase') || 'Phase 1';
       const agent = item.getAttribute('data-doc-agent') || 'Agent';
       const date = item.getAttribute('data-doc-date') || 'Today';
@@ -338,8 +362,15 @@ function initDocumentsExplorer() {
       // Update Header Text
       if (activeTitle) activeTitle.textContent = title;
       if (activeBadge) {
-        activeBadge.textContent = badge;
-        activeBadge.className = badge === 'Approved' ? 'badge-doc-status-approved' : (badge === 'Live' ? 'badge-doc-status-live' : 'badge-doc-status-draft');
+        const hideBadge = !badge || badge === 'none' || badge === '' || badge === 'false' ||
+          targetId === 'docPanelTechDesign' || targetId === 'docPanelUiSystem' || targetId === 'docPanelReadme';
+        if (hideBadge) {
+          activeBadge.style.display = 'none';
+        } else {
+          activeBadge.style.display = 'inline-flex';
+          activeBadge.textContent = badge;
+          activeBadge.className = badge === 'Approved' ? 'badge-doc-status-approved' : (badge === 'Live' ? 'badge-doc-status-live' : 'badge-doc-status-draft');
+        }
       }
       if (activeMeta) {
         activeMeta.innerHTML = `<span>${phase}</span> · <span>Dibuat oleh ${agent}</span> · <span>Terakhir diupdate ${date}</span>`;
@@ -354,7 +385,7 @@ function initDocumentsExplorer() {
         }
       }
 
-      // Toggle Sub-Tabs Bar (Show for PRD, hide or adapt for others)
+      // Toggle Sub-Tabs Bar (Show for PRD, show for Tech Design, hide for others)
       if (subTabsBar) {
         if (targetId === 'docPanelPrd') {
           subTabsBar.style.display = 'flex';
@@ -362,15 +393,22 @@ function initDocumentsExplorer() {
           subTabsBar.style.display = 'none';
         }
       }
+      if (techSubTabsBar) {
+        if (targetId === 'docPanelTechDesign') {
+          techSubTabsBar.style.display = 'flex';
+        } else {
+          techSubTabsBar.style.display = 'none';
+        }
+      }
 
-      // Hide Edit Header and Sidebar when not in PRD/BRD
+      // Show top header for document reader panels (PRD, BRD, Architecture, ERD, Tech Design, UI System, README, etc.)
       const docHeaderTop = document.querySelector('.doc-header-top');
       const docEditSidebar = document.getElementById('docEditSidebar');
       
-      if (targetId === 'docPanelPrd' || targetId === 'docPanelBRD') {
-        if (docHeaderTop) docHeaderTop.style.display = 'flex';
-      } else {
-        if (docHeaderTop) docHeaderTop.style.display = 'none';
+      if (docHeaderTop) {
+        docHeaderTop.style.display = 'flex';
+      }
+      if (targetId !== 'docPanelPrd' && targetId !== 'docPanelBRD') {
         if (docEditSidebar) docEditSidebar.style.display = 'none';
         
         // Reset preview mode buttons
@@ -412,6 +450,27 @@ function initDocumentsExplorer() {
     });
   });
 
+  // 3b. Sub-Tab Switching within Technical Design
+  techTabBtns.forEach(tab => {
+    tab.addEventListener('click', () => {
+      techTabBtns.forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+
+      const subtabKey = tab.getAttribute('data-techsubtab') || tab.getAttribute('data-subtab');
+      techSubPanes.forEach(pane => {
+        pane.style.display = 'none';
+      });
+
+      const activePane = document.getElementById(`techSubtab-${subtabKey}`);
+      if (activePane) {
+        activePane.style.display = 'block';
+      } else {
+        const overviewPane = document.getElementById('techSubtab-overview');
+        if (overviewPane) overviewPane.style.display = 'block';
+      }
+    });
+  });
+
   // 4. Download & View Full Feedback
   if (downloadBtn) {
     downloadBtn.addEventListener('click', () => {
@@ -428,6 +487,22 @@ function initDocumentsExplorer() {
 
   if (viewFullBtn) {
     viewFullBtn.addEventListener('click', () => {
+      const activeArchPanel = document.getElementById('docPanelArchitecture');
+      if (activeArchPanel && activeArchPanel.classList.contains('active')) {
+        if (typeof window.openArchitectureModal === 'function') {
+          window.openArchitectureModal();
+          return;
+        }
+      }
+
+      const activeErdPanel = document.getElementById('docPanelErd');
+      if (activeErdPanel && activeErdPanel.classList.contains('active')) {
+        if (typeof window.openErdModal === 'function') {
+          window.openErdModal();
+          return;
+        }
+      }
+
       const currentDoc = activeTitle ? activeTitle.textContent : 'Document';
       const toast = document.getElementById('beautyToast');
       const toastText = document.getElementById('beautyToastText');
@@ -4312,5 +4387,458 @@ function initPreviewCloseToggle() {
       });
     }
   }
+}
+
+/**
+ * Interactive System Architecture & Sequence Flow Pan/Zoom Canvas & Modal
+ */
+function initArchitectureInteractions() {
+  if (window.__archInteractionsInitialized) return;
+  window.__archInteractionsInitialized = true;
+
+  // 1. Sidebar Architecture Tree Toggle
+  const archTreeRoot = document.getElementById('archTreeRoot');
+  const archTreeHeader = document.getElementById('archTreeHeader');
+
+  if (archTreeHeader && archTreeRoot) {
+    archTreeHeader.addEventListener('click', () => {
+      archTreeRoot.classList.toggle('open');
+    });
+  }
+
+  // 2. Leaf Navigation Items
+  const leafSysArch = document.getElementById('leafSysArch');
+  const leafSeqFlow = document.getElementById('leafSeqFlow');
+  const diagramSysArch = document.getElementById('archDiagramSysArch');
+  const diagramSeqFlow = document.getElementById('archDiagramSeqFlow');
+
+  const activeTitle = document.getElementById('docActiveTitle');
+  const activeBadge = document.getElementById('docActiveBadge');
+  const activeMeta = document.getElementById('docActiveMeta');
+
+  let currentMode = 'sys-arch';
+
+  function switchArchitectureDiagram(mode) {
+    currentMode = mode;
+    // Update leaf active state
+    document.querySelectorAll('.doc-tree-leaf').forEach(leaf => leaf.classList.remove('active'));
+    document.querySelectorAll('.doc-nav-item').forEach(item => {
+      if (item !== leafSysArch && item !== leafSeqFlow) {
+        item.classList.remove('active');
+      }
+    });
+
+    // Show doc panel
+    document.querySelectorAll('.doc-panel-section').forEach(p => p.classList.remove('active'));
+    const panel = document.getElementById('docPanelArchitecture');
+    if (panel) panel.classList.add('active');
+
+    const docHeaderTop = document.querySelector('.doc-header-top');
+    if (docHeaderTop) docHeaderTop.style.display = 'flex';
+    const subTabsBar = document.getElementById('docSubTabsBar');
+    if (subTabsBar) subTabsBar.style.display = 'none';
+    const docEditSidebar = document.getElementById('docEditSidebar');
+    if (docEditSidebar) docEditSidebar.style.display = 'none';
+
+    if (mode === 'sys-arch') {
+      if (leafSysArch) leafSysArch.classList.add('active');
+      if (diagramSysArch) diagramSysArch.style.display = 'block';
+      if (diagramSeqFlow) diagramSeqFlow.style.display = 'none';
+
+      if (activeTitle) activeTitle.textContent = 'System Architecture';
+      if (activeBadge) {
+        activeBadge.style.display = 'inline-flex';
+        activeBadge.textContent = 'Approved';
+        activeBadge.className = 'badge-doc-status-approved';
+      }
+      if (activeMeta) {
+        activeMeta.innerHTML = '<span>Phase 1</span> · <span>Dibuat oleh Business Analyst Agent</span> · <span>Terakhir diupdate 1 Sep 2026 14:32</span>';
+      }
+    } else {
+      if (leafSeqFlow) leafSeqFlow.classList.add('active');
+      if (diagramSeqFlow) diagramSeqFlow.style.display = 'block';
+      if (diagramSysArch) diagramSysArch.style.display = 'none';
+
+      if (activeTitle) activeTitle.textContent = 'Sequence & Data Flow';
+      if (activeBadge) {
+        activeBadge.style.display = 'inline-flex';
+        activeBadge.textContent = 'Approved';
+        activeBadge.className = 'badge-doc-status-approved';
+      }
+      if (activeMeta) {
+        activeMeta.innerHTML = '<span>Phase 2</span> · <span>Dibuat oleh Solutions Architect Agent</span> · <span>Terakhir diupdate 28 Aug 2026 11:30</span>';
+      }
+    }
+
+    if (pzMain) pzMain.reset();
+  }
+
+  if (leafSysArch) {
+    leafSysArch.addEventListener('click', (e) => {
+      e.preventDefault();
+      switchArchitectureDiagram('sys-arch');
+    });
+  }
+
+  if (leafSeqFlow) {
+    leafSeqFlow.addEventListener('click', (e) => {
+      e.preventDefault();
+      switchArchitectureDiagram('seq-flow');
+    });
+  }
+
+  // 3. Pan & Zoom Canvas Controller Factory
+  function createPanZoom(opts) {
+    const {
+      viewportEl,
+      surfaceEl,
+      zoomLabelEl,
+      statusLabelEl,
+      btnZoomIn,
+      btnZoomOut,
+      btnReset
+    } = opts;
+
+    if (!viewportEl || !surfaceEl) return null;
+
+    let scale = 1;
+    let panX = 0;
+    let panY = 0;
+    let isDragging = false;
+    let startX = 0;
+    let startY = 0;
+
+    function applyTransform() {
+      surfaceEl.style.transform = `translate(${panX}px, ${panY}px) scale(${scale})`;
+      const pct = Math.round(scale * 100);
+      if (zoomLabelEl) zoomLabelEl.textContent = `${pct}%`;
+      if (statusLabelEl) statusLabelEl.textContent = `Drag to pan · ${pct}%`;
+    }
+
+    function setZoom(newScale) {
+      scale = Math.min(Math.max(newScale, 0.4), 2.8);
+      applyTransform();
+    }
+
+    viewportEl.addEventListener('mousedown', (e) => {
+      if (e.button !== 0) return;
+      isDragging = true;
+      startX = e.clientX - panX;
+      startY = e.clientY - panY;
+      viewportEl.classList.add('is-dragging');
+    });
+
+    window.addEventListener('mousemove', (e) => {
+      if (!isDragging) return;
+      panX = e.clientX - startX;
+      panY = e.clientY - startY;
+      applyTransform();
+    });
+
+    window.addEventListener('mouseup', () => {
+      if (isDragging) {
+        isDragging = false;
+        viewportEl.classList.remove('is-dragging');
+      }
+    });
+
+    viewportEl.addEventListener('wheel', (e) => {
+      e.preventDefault();
+      const delta = e.deltaY < 0 ? 0.08 : -0.08;
+      setZoom(scale + delta);
+    }, { passive: false });
+
+    if (btnZoomIn) {
+      btnZoomIn.addEventListener('click', () => setZoom(scale + 0.15));
+    }
+    if (btnZoomOut) {
+      btnZoomOut.addEventListener('click', () => setZoom(scale - 0.15));
+    }
+    if (btnReset) {
+      btnReset.addEventListener('click', () => {
+        scale = 1;
+        panX = 0;
+        panY = 0;
+        applyTransform();
+      });
+    }
+
+    return {
+      reset: () => {
+        scale = 1;
+        panX = 0;
+        panY = 0;
+        applyTransform();
+      },
+      setZoom,
+      getScale: () => scale
+    };
+  }
+
+  // Initialize main architecture canvas
+  const pzMain = createPanZoom({
+    viewportEl: document.getElementById('archCanvasViewport'),
+    surfaceEl: document.getElementById('archCanvasSurface'),
+    zoomLabelEl: document.getElementById('archZoomValue'),
+    statusLabelEl: document.getElementById('archStatusText'),
+    btnZoomIn: document.getElementById('archBtnZoomIn'),
+    btnZoomOut: document.getElementById('archBtnZoomOut'),
+    btnReset: document.getElementById('archBtnReset')
+  });
+
+  // 4. Fullscreen Modal Logic
+  const modalEl = document.getElementById('archFullscreenModal');
+  const modalTitleEl = document.getElementById('archModalTitle');
+  const modalSurfaceEl = document.getElementById('archModalSurface');
+  const modalViewportEl = document.getElementById('archModalViewport');
+  const btnCloseModal = document.getElementById('btnArchModalClose');
+
+  const pzModal = createPanZoom({
+    viewportEl: modalViewportEl,
+    surfaceEl: modalSurfaceEl,
+    zoomLabelEl: document.getElementById('modalZoomValue'),
+    statusLabelEl: null,
+    btnZoomIn: document.getElementById('modalBtnZoomIn'),
+    btnZoomOut: document.getElementById('modalBtnZoomOut'),
+    btnReset: document.getElementById('modalBtnReset')
+  });
+
+  function openFullscreenModal() {
+    if (!modalEl || !modalSurfaceEl) return;
+    
+    // Only open if currently inside the Architecture panel
+    const archPanel = document.getElementById('docPanelArchitecture');
+    if (!archPanel || !archPanel.classList.contains('active')) {
+      return;
+    }
+
+    let sourceSvg = null;
+    if (currentMode === 'seq-flow') {
+      if (diagramSeqFlow) sourceSvg = diagramSeqFlow.querySelector('svg');
+      if (modalTitleEl) modalTitleEl.textContent = 'Sequence & Data Flow — Full View';
+    } else {
+      if (diagramSysArch) sourceSvg = diagramSysArch.querySelector('svg');
+      if (modalTitleEl) modalTitleEl.textContent = 'System Architecture — Full View';
+    }
+
+    if (sourceSvg) {
+      modalSurfaceEl.innerHTML = sourceSvg.outerHTML;
+    }
+
+    modalEl.style.display = 'flex';
+    modalEl.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    if (pzModal) pzModal.reset();
+  }
+
+  function closeFullscreenModal() {
+    if (modalEl) {
+      modalEl.classList.remove('open');
+      modalEl.style.display = 'none';
+      document.body.style.overflow = '';
+    }
+  }
+
+  window.closeArchitectureModal = closeFullscreenModal;
+  window.openArchitectureModal = openFullscreenModal;
+
+  const btnExpand = document.getElementById('archBtnExpand');
+  if (btnExpand) {
+    btnExpand.addEventListener('click', openFullscreenModal);
+  }
+  if (btnCloseModal) {
+    btnCloseModal.addEventListener('click', closeFullscreenModal);
+  }
+  if (modalEl) {
+    modalEl.addEventListener('click', (e) => {
+      if (e.target === modalEl) {
+        closeFullscreenModal();
+      }
+    });
+  }
+
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && modalEl && modalEl.classList.contains('open')) {
+      closeFullscreenModal();
+    }
+  });
+}
+
+/**
+ * Interactive Data Model (ERD) Pan/Zoom Canvas & Dedicated Fullscreen Modal
+ */
+function initErdInteractions() {
+  if (window.__erdInteractionsInitialized) return;
+  window.__erdInteractionsInitialized = true;
+
+  // 1. Pan & Zoom Canvas Controller Factory
+  function createPanZoom(opts) {
+    const {
+      viewportEl,
+      surfaceEl,
+      zoomLabelEl,
+      statusLabelEl,
+      btnZoomIn,
+      btnZoomOut,
+      btnReset
+    } = opts;
+
+    if (!viewportEl || !surfaceEl) return null;
+
+    let scale = 1;
+    let panX = 0;
+    let panY = 0;
+    let isDragging = false;
+    let startX = 0;
+    let startY = 0;
+
+    function applyTransform() {
+      surfaceEl.style.transform = `translate(${panX}px, ${panY}px) scale(${scale})`;
+      const pct = Math.round(scale * 100);
+      if (zoomLabelEl) zoomLabelEl.textContent = `${pct}%`;
+      if (statusLabelEl) statusLabelEl.textContent = `Drag to pan · ${pct}%`;
+    }
+
+    function setZoom(newScale) {
+      scale = Math.min(Math.max(newScale, 0.4), 2.8);
+      applyTransform();
+    }
+
+    viewportEl.addEventListener('mousedown', (e) => {
+      if (e.button !== 0) return;
+      isDragging = true;
+      startX = e.clientX - panX;
+      startY = e.clientY - panY;
+      viewportEl.classList.add('is-dragging');
+    });
+
+    window.addEventListener('mousemove', (e) => {
+      if (!isDragging) return;
+      panX = e.clientX - startX;
+      panY = e.clientY - startY;
+      applyTransform();
+    });
+
+    window.addEventListener('mouseup', () => {
+      if (isDragging) {
+        isDragging = false;
+        viewportEl.classList.remove('is-dragging');
+      }
+    });
+
+    viewportEl.addEventListener('wheel', (e) => {
+      e.preventDefault();
+      const delta = e.deltaY < 0 ? 0.08 : -0.08;
+      setZoom(scale + delta);
+    }, { passive: false });
+
+    if (btnZoomIn) {
+      btnZoomIn.addEventListener('click', () => setZoom(scale + 0.15));
+    }
+    if (btnZoomOut) {
+      btnZoomOut.addEventListener('click', () => setZoom(scale - 0.15));
+    }
+    if (btnReset) {
+      btnReset.addEventListener('click', () => {
+        scale = 1;
+        panX = 0;
+        panY = 0;
+        applyTransform();
+      });
+    }
+
+    return {
+      reset: () => {
+        scale = 1;
+        panX = 0;
+        panY = 0;
+        applyTransform();
+      },
+      setZoom,
+      getScale: () => scale
+    };
+  }
+
+  // 2. Initialize main ERD canvas
+  const pzErdMain = createPanZoom({
+    viewportEl: document.getElementById('erdCanvasViewport'),
+    surfaceEl: document.getElementById('erdCanvasSurface'),
+    zoomLabelEl: document.getElementById('erdZoomValue'),
+    statusLabelEl: document.getElementById('erdStatusText'),
+    btnZoomIn: document.getElementById('erdBtnZoomIn'),
+    btnZoomOut: document.getElementById('erdBtnZoomOut'),
+    btnReset: document.getElementById('erdBtnReset')
+  });
+
+  // 3. ERD Fullscreen Modal Logic
+  const modalEl = document.getElementById('erdFullscreenModal');
+  const modalSurfaceEl = document.getElementById('erdModalSurface');
+  const modalViewportEl = document.getElementById('erdModalViewport');
+  const btnCloseModal = document.getElementById('btnErdModalClose');
+  const diagramContainer = document.getElementById('erdDiagramContainer');
+
+  const pzErdModal = createPanZoom({
+    viewportEl: modalViewportEl,
+    surfaceEl: modalSurfaceEl,
+    zoomLabelEl: document.getElementById('erdModalZoomValue'),
+    statusLabelEl: null,
+    btnZoomIn: document.getElementById('erdModalBtnZoomIn'),
+    btnZoomOut: document.getElementById('erdModalBtnZoomOut'),
+    btnReset: document.getElementById('erdModalBtnReset')
+  });
+
+  function openErdModal() {
+    if (!modalEl || !modalSurfaceEl) return;
+    
+    // Only open if currently inside the ERD panel
+    const erdPanel = document.getElementById('docPanelErd');
+    if (!erdPanel || !erdPanel.classList.contains('active')) {
+      return;
+    }
+
+    if (diagramContainer) {
+      const sourceSvg = diagramContainer.querySelector('svg');
+      if (sourceSvg) {
+        modalSurfaceEl.innerHTML = sourceSvg.outerHTML;
+      }
+    }
+
+    modalEl.style.display = 'flex';
+    modalEl.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    if (pzErdModal) pzErdModal.reset();
+  }
+
+  function closeErdModal() {
+    if (modalEl) {
+      modalEl.classList.remove('open');
+      modalEl.style.display = 'none';
+      document.body.style.overflow = '';
+    }
+  }
+
+  window.closeErdModal = closeErdModal;
+  window.openErdModal = openErdModal;
+
+  const btnExpand = document.getElementById('erdBtnExpand');
+  if (btnExpand) {
+    btnExpand.addEventListener('click', openErdModal);
+  }
+  if (btnCloseModal) {
+    btnCloseModal.addEventListener('click', closeErdModal);
+  }
+  if (modalEl) {
+    modalEl.addEventListener('click', (e) => {
+      if (e.target === modalEl) {
+        closeErdModal();
+      }
+    });
+  }
+
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && modalEl && modalEl.classList.contains('open')) {
+      closeErdModal();
+    }
+  });
 }
 

@@ -83,3 +83,15 @@ img, svg {
   -webkit-backdrop-filter: blur(16px);
   border: 1px solid var(--hero-card-border);
 }
+
+/* Architecture & ERD Modal Safe Fallback */
+.arch-fullscreen-modal,
+.erd-fullscreen-modal {
+  display: none !important;
+}
+.arch-fullscreen-modal.open,
+.erd-fullscreen-modal.open {
+  display: flex !important;
+}
+
+

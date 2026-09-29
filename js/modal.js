@@ -4,6 +4,7 @@
 
 document.addEventListener('DOMContentLoaded', () => {
   initManageModal();
+  initAgentStudioModal();
 });
 
 /**
@@ -89,4 +90,95 @@ function initManageModal() {
     });
   });
 }
+
+/**
+ * Agent Studio Pop-up Modal Controller (workspace_f6e.html modal)
+ */
+function initAgentStudioModal() {
+  const modalBackdrop = document.getElementById('agentStudioModalBackdrop');
+  const closeBtn = document.getElementById('btnAgentStudioClose');
+  const openBtns = document.querySelectorAll('#navAgentStudio, #iconNavAgentStudio, #btnOpenAgentStudioModalFromPopover');
+  const innerNavItems = document.querySelectorAll('#agentStudioModalBackdrop .modal-inner-sidebar .modal-nav-item');
+  const contentPanes = document.querySelectorAll('#agentStudioModalBackdrop .modal-pane-section');
+
+  if (!modalBackdrop) return;
+
+  function openModal(defaultTab = 'agents') {
+    modalBackdrop.classList.add('active');
+    document.body.style.overflow = 'hidden';
+
+    if (defaultTab) {
+      innerNavItems.forEach(i => {
+        if (i.getAttribute('data-tab') === defaultTab) {
+          i.classList.add('active');
+        } else {
+          i.classList.remove('active');
+        }
+      });
+      contentPanes.forEach(pane => {
+        if (pane.id === `agent-pane-${defaultTab}`) {
+          pane.classList.add('active');
+        } else {
+          pane.classList.remove('active');
+        }
+      });
+    }
+  }
+
+  function closeModal() {
+    modalBackdrop.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  window.openAgentStudioModal = openModal;
+
+  // Trigger open from nav items
+  openBtns.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      const href = btn.getAttribute('href');
+      if (!href || href === '#agent-studio' || href === '#') {
+        e.preventDefault();
+        openModal();
+      }
+    });
+  });
+
+  // Close on X button
+  if (closeBtn) {
+    closeBtn.addEventListener('click', closeModal);
+  }
+
+  // Close on outside backdrop click
+  modalBackdrop.addEventListener('click', (e) => {
+    if (e.target === modalBackdrop) {
+      closeModal();
+    }
+  });
+
+  // Close on ESC key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && modalBackdrop.classList.contains('active')) {
+      closeModal();
+    }
+  });
+
+  // Switching Inner Agent Studio Sidebar Tabs (Agents, Tools, Deployments, Recent, Workflows)
+  innerNavItems.forEach(item => {
+    item.addEventListener('click', () => {
+      const targetTab = item.getAttribute('data-tab');
+
+      innerNavItems.forEach(i => i.classList.remove('active'));
+      item.classList.add('active');
+
+      contentPanes.forEach(pane => {
+        if (pane.id === `agent-pane-${targetTab}`) {
+          pane.classList.add('active');
+        } else {
+          pane.classList.remove('active');
+        }
+      });
+    });
+  });
+}
+
 
