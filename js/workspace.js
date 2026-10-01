@@ -385,20 +385,12 @@ function initDocumentsExplorer() {
         }
       }
 
-      // Toggle Sub-Tabs Bar (Show for PRD, show for Tech Design, hide for others)
+      // Toggle Sub-Tabs Bar (Hidden for PRD & Tech Design because they use modern Tab Dokumen outline sidebar)
       if (subTabsBar) {
-        if (targetId === 'docPanelPrd') {
-          subTabsBar.style.display = 'flex';
-        } else {
-          subTabsBar.style.display = 'none';
-        }
+        subTabsBar.style.display = 'none';
       }
       if (techSubTabsBar) {
-        if (targetId === 'docPanelTechDesign') {
-          techSubTabsBar.style.display = 'flex';
-        } else {
-          techSubTabsBar.style.display = 'none';
-        }
+        techSubTabsBar.style.display = 'none';
       }
 
       // Show top header for document reader panels (PRD, BRD, Architecture, ERD, Tech Design, UI System, README, etc.)
@@ -428,7 +420,7 @@ function initDocumentsExplorer() {
     });
   });
 
-  // 3. Sub-Tab Switching within PRD
+  // 3. Sub-Tab Switching within PRD (Fallback)
   subTabBtns.forEach(tab => {
     tab.addEventListener('click', () => {
       subTabBtns.forEach(t => t.classList.remove('active'));
@@ -443,30 +435,37 @@ function initDocumentsExplorer() {
       if (activePane) {
         activePane.style.display = 'block';
       } else {
-        // Fallback for subtabs without separate panels
         const overviewPane = document.getElementById('prdSubtab-overview');
         if (overviewPane) overviewPane.style.display = 'block';
       }
     });
   });
 
-  // 3b. Sub-Tab Switching within Technical Design
+  // 3b. Sub-Tab Switching within Technical Design (Scrolls to section in paper)
   techTabBtns.forEach(tab => {
     tab.addEventListener('click', () => {
       techTabBtns.forEach(t => t.classList.remove('active'));
       tab.classList.add('active');
 
       const subtabKey = tab.getAttribute('data-techsubtab') || tab.getAttribute('data-subtab');
-      techSubPanes.forEach(pane => {
-        pane.style.display = 'none';
-      });
-
-      const activePane = document.getElementById(`techSubtab-${subtabKey}`);
-      if (activePane) {
-        activePane.style.display = 'block';
-      } else {
-        const overviewPane = document.getElementById('techSubtab-overview');
-        if (overviewPane) overviewPane.style.display = 'block';
+      const sectionMap = {
+        'overview': 'tech-h-misi',
+        'decisions': 'tech-h-decisions',
+        'architecture': 'tech-h-architecture',
+        'database': 'tech-h-database',
+        'api': 'tech-h-architecture',
+        'sequence': 'tech-h-architecture',
+        'security': 'tech-h-security',
+        'ui': 'tech-h-uiux',
+        'sprint': 'tech-h-misi'
+      };
+      const paperContainer = document.getElementById('techDocPaperContainer');
+      const targetId = sectionMap[subtabKey];
+      if (targetId && paperContainer) {
+        const targetEl = document.getElementById(targetId);
+        if (targetEl) {
+          paperContainer.scrollTo({ top: targetEl.offsetTop, behavior: 'smooth' });
+        }
       }
     });
   });

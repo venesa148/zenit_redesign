@@ -14,6 +14,8 @@
   <link rel="stylesheet" href="css/sidebar.css?v=3" />
   <link rel="stylesheet" href="css/agent-studio.css?v=40" />
   <link rel="stylesheet" href="css/modal.css?v=3" />
+  <link rel="stylesheet" href="css/ghostwriter-build.css?v=44" />
+
   <!-- Early Theme Mode Loader (Prevents White Flash) -->
   <script>
     (function () {
@@ -908,6 +910,13 @@
             </div>
 
             <div class="agent-design-topbar-right">
+              <button type="button" class="btn-design-action-ghost" id="btnTopSimulation" title="Open Simulation Suite">
+                <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                </svg>
+                <span>Simulation</span>
+              </button>
               <button type="button" class="btn-design-action-ghost" id="btnAgentSettings">
                 <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none"
                   stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -945,1150 +954,771 @@
           </div>
 
           <!-- Dual-Column Studio Container -->
-          <div class="agent-dual-studio-container">
-            <!-- ========================================
-                 LEFT COLUMN: DESIGN SESSION (Claude Code)
-                 ======================================== -->
-            <div class="agent-column-design">
-              <!-- Sub-header for Design Column (Left: Tabs [Chat, Terminal, YAML] | Right: YAML Sync Pill) -->
-              <div class="agent-design-column-header">
-                <!-- Left: Chat / Terminal / YAML Switcher -->
-                <div class="design-mode-switch">
-                  <button type="button" class="btn-mode-pill active" id="btnDesignTabChat"
-                    title="Chat specification mode">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none"
-                      stroke="currentColor" stroke-width="2">
-                      <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
-                    </svg>
-                    <span>Chat</span>
-                  </button>
-                  <button type="button" class="btn-mode-pill" id="btnDesignTabTerminal"
-                    title="Terminal CLI specification mode">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none"
-                      stroke="currentColor" stroke-width="2">
-                      <polyline points="4 17 10 11 4 5"></polyline>
-                      <line x1="12" x2="20" y1="19" y2="19"></line>
-                    </svg>
-                    <span>Terminal</span>
-                  </button>
-                </div>
-                <div class="design-header-actions">
-                  <button type="button" class="btn-mode-pill icon-only" id="btnDesignTabYaml"
-                    title="View & edit YAML specification file">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
-                      stroke="currentColor" stroke-width="2">
-                      <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                      <polyline points="14 2 14 8 20 8"></polyline>
-                      <line x1="16" y1="13" x2="8" y2="13"></line>
-                      <line x1="16" y1="17" x2="8" y2="17"></line>
-                      <polyline points="10 9 9 9 8 9"></polyline>
-                    </svg>
-                  </button>
-                </div>
+                    <!-- ========================================
+               4-LAYER BUILD WORKSPACE:
+               Layer 3: Third Bar (BUILD: Journeys, Knowledge, Tools, Guardrails, Tests)
+               Layer 4: Main Workspace (Resource Editor + Ghostwriter Pane + Simulation Rightbar)
+               ======================================== -->
+          <div class="agent-build-workspace-layout" id="agentBuildWorkspaceLayout">
+            <!-- ── LEVEL 3: THIRD BAR (BUILD / CONFIGURE) ── -->
+            <aside class="agent-third-bar" id="agentThirdBar" aria-label="Build Navigation">
+              <div class="third-bar-header">
+                <span class="third-bar-overline">BUILD</span>
+                <h2 class="third-bar-title">Configure</h2>
               </div>
-
-              <!-- Design Chat Feed (Left Body - Clean / Blank ready for instruction) -->
-              <div class="agent-design-feed" id="agentDesignFeed">
-                <div class="design-section-divider">
-                  <span>BAGIAN 1: Chat Desain AI (Setup &amp; Konfigurasi Agent)</span>
-                </div>
-
-                <!-- Turn 1: Buatkan agent Salon QA Tester -->
-                <div class="design-msg-user">
-                  <div class="msg-sender-tag user">You</div>
-                  <div class="msg-content-text">Buatkan agen baru bernama Salon QA Tester di folder agents/salon-qa-tester.yaml menggunakan model Claude 3.5 Sonnet untuk menguji logika bisnis sistem reservasi GlowAura Salon.</div>
-                </div>
-                <div class="design-msg-assistant">
-                  <div class="msg-sender-tag assistant">Studio AI</div>
-                  <div class="msg-content-text">
-                    <p>Siap, agen <strong>Salon QA Tester</strong> telah dibuat di <span class="design-code-badge font-mono">agents/salon-qa-tester.yaml</span>. Peran dikonfigurasi sebagai <strong>QA Automation Engineer</strong> yang bertugas merancang dan memverifikasi skenario pengujian alur pemesanan kapster, perhitungan tagihan, serta kepatuhan jam kerja salon.</p>
-                  </div>
-                </div>
-
-                <!-- Turn 2: Tambahkan guardrails -->
-                <div class="design-msg-user">
-                  <div class="msg-sender-tag user">You</div>
-                  <div class="msg-content-text">Tambahkan guardrails penting: agen dilarang membuat tes yang selalu lolos (false positive), wajib memvalidasi status respons sistem, dan harus menolak serta meminta klarifikasi jika pengguna memberikan aturan bisnis yang saling bertentangan.</div>
-                </div>
-                <div class="design-msg-assistant">
-                  <div class="msg-sender-tag assistant">Studio AI</div>
-                  <div class="msg-content-text">
-                    <p>Tiga guardrails berhasil diterapkan ke dalam instruksi:</p>
-                    <ul style="margin: 6px 0 6px 18px; padding: 0; line-height: 1.6;">
-                      <li><strong>Pengecekan bukti nyata (grounding check)</strong> aktif agar tes tidak menghasilkan kelulusan semu.</li>
-                      <li><strong>Validasi status respons sistem</strong> (sukses, bentrok, atau gagal) diwajibkan pada tiap rancangan pengujian.</li>
-                      <li><strong>Deteksi kontradiksi aturan otomatis</strong> aktif untuk menolak spesifikasi yang tidak logis.</li>
-                    </ul>
-                    <p style="margin-top: 6px;">Konfigurasi selesai dan agen siap diuji.</p>
-                  </div>
-                </div>
-              </div>
-
-              <!-- ========================================
-                   PANE 2: TERMINAL CLI VIEW
-                   ======================================== -->
-              <div class="agent-design-terminal-pane" id="agentDesignTerminalPane" style="display: none;">
-                <!-- Terminal Header Bar -->
-                <div class="terminal-pane-header">
-                  <div class="terminal-pane-title-group">
-                    <span class="terminal-pane-dot"></span>
-                    <span class="terminal-pane-title font-mono">claude-code-cli · bash session</span>
-                    <span class="terminal-pane-path font-mono"
-                      id="terminalPathBadge">~/platform-data/studio/agents</span>
-                  </div>
-                  <div class="terminal-pane-actions">
-                    <button type="button" class="btn-terminal-action" id="btnTerminalClearOutput"
-                      title="Clear terminal screen">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none"
-                        stroke="currentColor" stroke-width="2">
-                        <polyline points="3 6 5 6 21 6"></polyline>
-                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-                      </svg>
-                      <span>Clear</span>
-                    </button>
-                    <button type="button" class="btn-terminal-action" id="btnTerminalRestartSession"
-                      title="Restart CLI session">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none"
-                        stroke="currentColor" stroke-width="2">
-                        <polyline points="23 4 23 10 17 10"></polyline>
-                        <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
-                      </svg>
-                      <span>Restart</span>
-                    </button>
-                    <button type="button" class="btn-terminal-action" id="btnTerminalCopyLog" title="Copy CLI log">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none"
-                        stroke="currentColor" stroke-width="2">
-                        <rect width="14" height="14" x="8" y="8" rx="2" ry="2" />
-                        <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2" />
-                      </svg>
-                      <span>Copy Log</span>
-                    </button>
-                  </div>
-                </div>
-
-                <!-- Terminal Output Console Body -->
-                <div class="terminal-pane-body font-mono" id="terminalPaneOutputBody">
-                  <div class="terminal-log-intro">
-                    <span class="term-dim">Claude Code Agent Engineering CLI v1.4.2 [Studio Bridge active]</span>
-                    <span class="term-dim">Session initialized: target agents definition directory</span>
-                  </div>
-
-                  <div class="terminal-command-entry">
-                    <div class="term-prompt-line">
-                      <span class="term-prompt-sym">claude-code$</span>
-                      <span class="term-prompt-cmd">You are working on the Studio agent definition at <span
-                          class="term-cyan">agents/agent-test.yaml</span>. Edit only files under agents/.</span>
-                    </div>
-                  </div>
-
-                  <div class="terminal-block-action">
-                    <span class="term-step-label">Set up AGENT TEST: TEST</span>
-                  </div>
-
-                  <div class="terminal-block-command">
-                    <div class="term-tool-badge bash">Bash</div>
-                    <div class="term-code-snippet">ls -la /home/app/platform-data/studio/ &amp;&amp; ls -la
-                      /home/app/platform-data/studio/agents/ 2&gt;/dev/null</div>
-                  </div>
-
-                  <div class="terminal-block-command">
-                    <div class="term-tool-badge read">Read</div>
-                    <div class="term-code-snippet">/home/app/platform-data/studio/agents/agent-test.yaml</div>
-                  </div>
-
-                  <div class="terminal-block-command">
-                    <div class="term-tool-badge read">Read</div>
-                    <div class="term-code-snippet">/home/app/platform-data/studio/AGENTS.md</div>
-                  </div>
-
-                  <div class="terminal-block-command">
-                    <div class="term-tool-badge read">Read</div>
-                    <div class="term-code-snippet">/home/app/platform-data/studio/agents/test-agent.yaml</div>
-                  </div>
-
-                  <div class="terminal-block-command">
-                    <div class="term-tool-badge read">Read</div>
-                    <div class="term-code-snippet">/home/app/platform-data/studio/agents/drcdtrtest.yaml</div>
-                  </div>
-
-                  <div class="terminal-block-command">
-                    <div class="term-tool-badge read">Read</div>
-                    <div class="term-code-snippet">/home/app/platform-data/studio/agents/claim-analyzer.yaml</div>
-                  </div>
-
-                  <div class="terminal-block-note">
-                    <p class="term-dim">The file exists as an empty scaffold (instruction: ""). Name and description are
-                      literally "AGENT TEST" / "TEST", so I'll build it out as what that most plausibly is: a smoke-test
-                      agent for verifying the platform round-trip.</p>
-                  </div>
-
-                  <div class="terminal-block-command highlight">
-                    <div class="term-tool-badge write">Write</div>
-                    <div class="term-code-snippet">/home/app/platform-data/studio/agents/agent-test.yaml</div>
-                  </div>
-
-                  <div class="terminal-block-summary">
-                    <p><span class="term-green font-bold">agents/agent-test.yaml</span> is now a complete definition:
-                    </p>
-                    <ul class="term-summary-list">
-                      <li><span class="term-cyan">Kept as-is:</span> slug, name: AGENT TEST, and the TEST intent — the
-                        description just says what it tests.</li>
-                      <li><span class="term-cyan">Instruction:</span> a fixed four-line echo response (OK / received: /
-                        length: / turn:) with explicit rules against tidying up the echoed input, since a cleaned-up
-                        echo would mask a transport bug.</li>
-                      <li><span class="term-cyan">Tools/guardrails/knowledge:</span> empty — a probe should have nothing
-                        between it and the model.</li>
-                      <li><span class="term-cyan">Model:</span> unchanged (xai/grok-4.3, reasoningEffort: none, fallback
-                        xai/grok-4.6) — echoing needs no deliberation.</li>
-                      <li><span class="term-cyan">Limits:</span> tightened from the scaffold defaults to <span
-                          class="term-yellow">maxTurns: 4, maxTokensPerRun: 20000, autonomyLimit: 2</span>. A test agent
-                        that can burn 120k tokens over 16 turns is a way to lose money to a loop.</li>
-                    </ul>
-                    <p class="term-dim">One assumption worth flagging: "AGENT TEST: TEST" gave no domain, so I read it
-                      as a genuine smoke test. If you meant it as a scratch agent for trying out some other behaviour,
-                      tell me the job and I'll rewrite the instruction — the surrounding config will mostly stand.</p>
-                  </div>
-
-                  <div class="terminal-command-entry user-turn">
-                    <div class="term-prompt-line">
-                      <span class="term-prompt-sym user">user@studio$</span>
-                      <span class="term-prompt-cmd">helo</span>
-                    </div>
-                    <div class="term-reply">
-                      <p>Hello. <span class="term-cyan">agents/agent-test.yaml</span> is set up and saved from the last
-                        turn.</p>
-                      <p class="term-dim">If that "helo" was you trying out the echo agent, note it runs in the platform
-                        runner, not here — I can't execute it. Happy to adjust the definition if you want something
-                        different from a smoke test.</p>
-                    </div>
-                  </div>
-                </div>
-
-                <!-- Terminal Command Input Bar -->
-                <div class="terminal-pane-footer">
-                  <div class="terminal-quick-chips">
-                    <button type="button" class="term-chip" data-cmd="cat agents/agent-test.yaml">cat .yaml</button>
-                    <button type="button" class="term-chip" data-cmd="verify syntax agents/agent-test.yaml">verify
-                      syntax</button>
-                    <button type="button" class="term-chip" data-cmd="ls -la agents/">ls agents/</button>
-                    <button type="button" class="term-chip" data-cmd="git diff agents/">git diff</button>
-                  </div>
-                  <div class="terminal-input-bar">
-                    <span class="terminal-input-prefix font-mono">claude-code$</span>
-                    <input type="text" class="terminal-interactive-input font-mono" id="terminalInteractiveInput"
-                      placeholder="Type bash command, tool call, or agent specification instruction..."
-                      autocomplete="off" />
-                    <button type="button" class="btn-terminal-exec" id="btnTerminalExec"
-                      title="Execute command (Enter)">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
-                        stroke="currentColor" stroke-width="2.5">
-                        <polyline points="9 18 15 12 9 6" />
-                      </svg>
-                      <span>Run</span>
-                    </button>
-                  </div>
-                </div>
-              </div>
-
-              <!-- ========================================
-                   PANE 3: YAML DEFINITION VIEWER & EDITOR
-                   ======================================== -->
-              <div class="agent-design-yaml-pane" id="agentDesignYamlPane" style="display: none;">
-                <!-- YAML Toolbar -->
-                <div class="yaml-pane-header">
-                  <div class="yaml-file-identity">
-                    <div class="yaml-file-icon">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
-                        stroke="currentColor" stroke-width="2">
-                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                        <polyline points="14 2 14 8 20 8"></polyline>
-                      </svg>
-                    </div>
-                    <div class="yaml-file-meta">
-                      <span class="yaml-file-path font-mono" id="yamlFilePathTitle">agents/agent-test.yaml</span>
-                    </div>
-                  </div>
-                  <div class="yaml-pane-actions">
-                    <button type="button" class="btn-yaml-action" id="btnToggleEditYaml"
-                      title="Toggle Direct Edit Mode">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none"
-                        stroke="currentColor" stroke-width="2">
-                        <path d="M12 20h9"></path>
-                        <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
-                      </svg>
-                      <span id="toggleEditYamlText">Edit YAML</span>
-                    </button>
-                    <button type="button" class="btn-yaml-action" id="btnCopyYamlCode"
-                      title="Copy entire YAML to clipboard">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none"
-                        stroke="currentColor" stroke-width="2">
-                        <rect width="14" height="14" x="8" y="8" rx="2" ry="2" />
-                        <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2" />
-                      </svg>
-                      <span>Copy</span>
-                    </button>
-                    <button type="button" class="btn-yaml-action" id="btnDownloadYamlFile" title="Download YAML file">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none"
-                        stroke="currentColor" stroke-width="2">
-                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                        <polyline points="7 10 12 15 17 10"></polyline>
-                        <line x1="12" y1="15" x2="12" y2="3"></line>
-                      </svg>
-                      <span>Export</span>
-                    </button>
-                  </div>
-                </div>
-
-                <!-- YAML Code Container -->
-                <div class="yaml-code-view-container font-mono" id="yamlCodeViewContainer">
-                  <!-- Syntax Highlighted Code Viewer -->
-                  <div class="yaml-code-display" id="yamlCodeDisplay">
-                    <!-- Populated dynamically via JS -->
-                  </div>
-                  <!-- Editable Textarea (shown when Edit Mode is active) -->
-                  <textarea class="yaml-code-textarea font-mono" id="yamlCodeTextarea" spellcheck="false"
-                    style="display: none;"></textarea>
-                </div>
-
-                <!-- YAML Footer Status Bar -->
-                <div class="yaml-pane-footer font-mono">
-                  <div class="yaml-footer-left">
-                    <span id="yamlStatsLine">36 lines · 1.4 KB · UTF-8</span>
-                  </div>
-                  <div class="yaml-footer-right">
-                    <span class="yaml-synced-indicator">
-                      <span class="yaml-sync-dot"></span>
-                      <span>Synced with Agent Definition</span>
-                    </span>
-                  </div>
-                </div>
-              </div>
-
-              <!-- ========================================
-                   CHAT BOTTOM INPUT & CONTEXT CONTROLS
-                   (Shown in Chat mode; hides in Terminal/YAML mode)
-                   ======================================== -->
-              <div class="agent-chat-controls-wrapper" id="agentChatControlsWrapper">
-                <!-- Attached Context / Documents Bar (Above input) -->
-                <div class="attached-context-bar" id="agentAttachedContextBar" style="display: none;">
-                  <span class="context-bar-label">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none"
-                      stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                      <path
-                        d="m21.44 11.05-9.19 9.19a6 6 0 0 1-8.49-8.49l8.57-8.57A4 4 0 1 1 18 8.84l-8.59 8.57a2 2 0 0 1-2.83-2.83l8.49-8.48">
-                      </path>
+              <div class="third-bar-nav-list" id="thirdBarNavList">
+                <!-- Ghostwriter tab is placed ABOVE Journeys -->
+                <button type="button" class="third-bar-item active" data-res-view="ghostwriter" id="thirdBarItemGhostwriter" title="Ghostwriter Specification Chat">
+                  <span class="third-bar-item-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                      <circle cx="9" cy="10" r="1"></circle>
+                      <circle cx="15" cy="10" r="1"></circle>
                     </svg>
-                    <span>Active Context:</span>
                   </span>
-                  <div class="attached-chips-wrapper" id="agentAttachedChipsWrapper">
-                    <!-- Dynamically inserted context chips -->
-                  </div>
-                  <button type="button" class="btn-clear-all-context" id="btnAgentClearAllContext">Clear all</button>
-                </div>
+                  <span class="third-bar-item-text">Ghostwriter</span>
+                </button>
 
-                <!-- Design Prompt Input Card -->
-                <div class="agent-design-input-card">
-                  <div class="design-input-upper">
-                    <textarea class="design-prompt-textarea" id="designPromptInput" rows="2"
-                      placeholder="Describe what this agent should do — Claude Code writes the definition..."></textarea>
-                  </div>
-                  <div class="design-input-lower">
-                    <div class="design-input-tools-left">
-                      <!-- Attachment button (opens file picker / doc modal) -->
-                      <button type="button" class="btn-design-attach" id="btnDesignAttachFile"
-                        title="Attach Document / File">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
-                          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                          <path
-                            d="m21.44 11.05-9.19 9.19a6 6 0 0 1-8.49-8.49l8.57-8.57A4 4 0 1 1 18 8.84l-8.59 8.57a2 2 0 0 1-2.83-2.83l8.49-8.48">
-                          </path>
-                        </svg>
-                      </button>
-                      <!-- Hidden native file upload input -->
-                      <input type="file" id="agentFileInputUpload" multiple
-                        accept=".pdf,.docx,.txt,.json,.md,.csv,.yaml,.yml,.png,.jpg,.jpeg" style="display: none;" />
-
-                      <!-- MODEL SELECTOR DROPDOWN (Relocated here from top panel bar) -->
-                      <div class="design-model-dropdown-container" id="designModelDropdownContainer">
-                        <button type="button" class="btn-design-model-selector" id="btnDesignModelPicker"
-                          title="Select engine / model for agent design">
-                          <svg class="model-sparkle-icon" xmlns="http://www.w3.org/2000/svg" width="13" height="13"
-                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                            stroke-linecap="round" stroke-linejoin="round">
-                            <path
-                              d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z" />
-                          </svg>
-                          <span class="model-name-label" id="designSelectedModelName">Claude Code</span>
-                          <svg class="model-chevron-icon" xmlns="http://www.w3.org/2000/svg" width="11" height="11"
-                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                            stroke-linecap="round" stroke-linejoin="round">
-                            <path d="m6 9 6 6 6-6" />
-                          </svg>
-                        </button>
-
-                        <!-- Model Selection Dropdown Popover Menu -->
-                        <div class="design-model-menu" id="designModelMenu" style="display: none;">
-                          <div class="model-menu-header">DESIGN ENGINE / MODEL</div>
-                          <div class="model-menu-item selected" data-model="Claude Code"
-                            data-desc="Autonomous terminal agent &amp; YAML specialist">
-                            <div class="model-menu-item-text">
-                              <div class="model-menu-item-name">Claude Code</div>
-                              <div class="model-menu-item-sub">Autonomous terminal agent &amp; YAML specialist</div>
-                            </div>
-                            <span class="model-menu-item-check">✓</span>
-                          </div>
-                          <div class="model-menu-item" data-model="Claude 3.7 Sonnet"
-                            data-desc="Anthropic · Hybrid reasoning &amp; spec synthesis">
-                            <div class="model-menu-item-text">
-                              <div class="model-menu-item-name">Claude 3.7 Sonnet</div>
-                              <div class="model-menu-item-sub">Hybrid reasoning &amp; spec synthesis</div>
-                            </div>
-                            <span class="model-menu-item-check">✓</span>
-                          </div>
-                          <div class="model-menu-item" data-model="Claude 3.5 Haiku"
-                            data-desc="Anthropic · Fast, lightweight iterative edits">
-                            <div class="model-menu-item-text">
-                              <div class="model-menu-item-name">Claude 3.5 Haiku</div>
-                              <div class="model-menu-item-sub">Fast, lightweight iterative edits</div>
-                            </div>
-                            <span class="model-menu-item-check">✓</span>
-                          </div>
-                          <div class="model-menu-item" data-model="GPT-4o"
-                            data-desc="OpenAI · Multimodal enterprise intelligence">
-                            <div class="model-menu-item-text">
-                              <div class="model-menu-item-name">GPT-4o</div>
-                              <div class="model-menu-item-sub">Multimodal enterprise intelligence</div>
-                            </div>
-                            <span class="model-menu-item-check">✓</span>
-                          </div>
-                          <div class="model-menu-item" data-model="Grok 4.3"
-                            data-desc="xAI · Ultra-fast code logic &amp; smoke-test probe">
-                            <div class="model-menu-item-text">
-                              <div class="model-menu-item-name">Grok 4.3</div>
-                              <div class="model-menu-item-sub">Ultra-fast code logic &amp; smoke-test probe</div>
-                            </div>
-                            <span class="model-menu-item-check">✓</span>
-                          </div>
-                          <div class="model-menu-item" data-model="DeepSeek V3"
-                            data-desc="DeepSeek · High capacity architecture synthesis">
-                            <div class="model-menu-item-text">
-                              <div class="model-menu-item-name">DeepSeek V3</div>
-                              <div class="model-menu-item-sub">High capacity architecture synthesis</div>
-                            </div>
-                            <span class="model-menu-item-check">✓</span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    <button type="button" class="btn-design-send" id="btnDesignSend" title="Send to Claude Code">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
-                        stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                        <line x1="12" y1="19" x2="12" y2="5"></line>
-                        <polyline points="5 12 12 5 19 12"></polyline>
-                      </svg>
-                    </button>
-                  </div>
-                </div>
-
-                <!-- Add Journey Button -->
-                <div class="agent-journey-accordion-group">
-                  <button type="button" class="agent-journey-row-btn" id="btnAgentAddJourney"
-                    title="Define structured agent journey and publish to session">
-                    <span class="journey-row-left">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
-                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <polygon points="3 11 22 2 13 21 11 13 3 11" />
-                      </svg>
-                      <strong>Add Journey</strong>
-                      <span class="journey-files-count-badge" id="agentJourneyCountBadge">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none"
-                          stroke="currentColor" stroke-width="2">
-                          <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
-                        </svg>
-                        <span id="agentJourneyCountText">1 active</span>
-                      </span>
-                    </span>
-                    <svg class="journey-chevron" xmlns="http://www.w3.org/2000/svg" width="14" height="14"
-                      viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                      <path d="m9 18 6-6-6-6" />
+                <button type="button" class="third-bar-item" data-res-view="journeys" id="thirdBarItemJourneys" title="Configure Journeys">
+                  <span class="third-bar-item-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+                      <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
                     </svg>
-                  </button>
-                </div>
+                  </span>
+                  <span class="third-bar-item-text">Journeys</span>
+                </button>
 
-                <!-- Footer hint text -->
-                <p class="design-footer-hint" id="designFooterHint">
-                  Edits land in <span class="font-mono">agent-test.yaml</span>. Enter to send · Shift+Enter for a
-                  new line.
-                </p>
-              </div>
-            </div>
+                <button type="button" class="third-bar-item" data-res-view="knowledge" id="thirdBarItemKnowledge" title="Configure Knowledge">
+                  <span class="third-bar-item-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                      <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+                    </svg>
+                  </span>
+                  <span class="third-bar-item-text">Knowledge</span>
+                  <span class="third-bar-badge-count">3</span>
+                </button>
 
-            <!-- ========================================
-                 RIGHT COLUMN: RUN TEST & STREAM PREVIEW
-                 ======================================== -->
-            <div class="agent-column-test">
-              <!-- Sub-header for Test Column -->
-              <div class="agent-test-column-header">
-                <div class="test-header-tabs">
-                  <button type="button" class="btn-test-tab active" id="btnTabChatRun">Chat</button>
-                  <button type="button" class="btn-test-tab" id="btnTabSimulations">Simulations</button>
-                </div>
-                <button type="button" class="btn-new-conversation-link" id="btnNewConversationTest">
-                  New conversation
+                <button type="button" class="third-bar-item" data-res-view="tools" id="thirdBarItemTools" title="Configure Tools">
+                  <span class="third-bar-item-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path>
+                    </svg>
+                  </span>
+                  <span class="third-bar-item-text">Tools</span>
+                  <span class="third-bar-badge-count">4</span>
+                </button>
+
+                <button type="button" class="third-bar-item" data-res-view="guardrails" id="thirdBarItemGuardrails" title="Configure Guardrails">
+                  <span class="third-bar-item-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                    </svg>
+                  </span>
+                  <span class="third-bar-item-text">Guardrails</span>
+                </button>
+
+                <button type="button" class="third-bar-item" data-res-view="testcases" id="thirdBarItemTestCases" title="Configure Test Cases">
+                  <span class="third-bar-item-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M10 2v7.31"></path>
+                      <path d="M14 9.3V2"></path>
+                      <path d="M8.5 2h7"></path>
+                      <path d="M14 9.3a6.5 6.5 0 1 1-4 0"></path>
+                      <path d="M5.52 16h12.96"></path>
+                    </svg>
+                  </span>
+                  <span class="third-bar-item-text">Test Cases</span>
+                  <span class="third-bar-badge-count">100</span>
                 </button>
               </div>
+            </aside>
 
-              <!-- Test Chat Feed (Right Body - Clean / Blank ready for run) -->
-              <div class="agent-test-feed" id="agentTestFeed">
-                <div class="test-section-divider">
-                  <span>BAGIAN 2: Chat Test AI (Uji Coba Manual Timbal Balik)</span>
-                </div>
-
-                <!-- Turn 1: Hitung pembayaran DP salon -->
-                <div class="test-msg-user-bubble">
-                  <div class="msg-sender-tag user-chat">You</div>
-                  <div class="msg-content-text">Halo QA, aku baru buat fungsi hitung pembayaran DP salon. Aturannya: DP wajib 30% dari total tarif perawatan dan sisanya dilunasi di kasir saat perawatan selesai. Kalau ada tamu ambil paket Creambath seharga Rp100.000, bagaimana kamu mengujinya?</div>
-                </div>
-                <div class="test-msg-agent-card">
-                  <div class="test-msg-agent-header">
-                    <span class="test-msg-agent-title">Salon QA Tester</span>
-                    <span class="test-msg-badge-live">Run API Streamed</span>
+            <!-- ── LEVEL 4: MAIN CONTENT VIEWPORT (GHOSTWRITER / JOURNEYS / KNOWLEDGE / TOOLS) ── -->
+            <div class="agent-workspace-flex">
+              <main class="agent-resource-viewport" id="agentResourceViewport" aria-label="Agent Content Viewport">
+                <!-- Top subbar matching Screenshot 3 -->
+                <div class="resource-top-bar">
+                  <div class="resource-breadcrumb">
+                    <span id="resourceActiveCrumb">Ghostwriter</span>
+                    <span>/</span>
+                    <span class="resource-crumb-active" id="gwActiveAgentName">Student Learning Advisor</span>
                   </div>
-                  <div class="test-msg-agent-body">
-                    <p style="margin: 0 0 8px 0;">Halo! Untuk memastikan perhitungannya akurat, saya akan jalankan dua langkah pengujian:</p>
-                    <ol style="margin: 0 0 8px 18px; padding: 0; line-height: 1.6;">
-                      <li><strong>Uji Angka Pasti:</strong> Saya masukkan tarif Rp100.000, lalu memastikan sistem menghasilkan nilai DP tepat Rp30.000 dan sisa tagihan di kasir tercatat Rp70.000.</li>
-                      <li><strong>Uji Pembulatan:</strong> Saya uji juga jika biayanya berupa angka ganjil (misalnya Rp125.500) untuk memastikan nilai DP dibulatkan rapi ke ribuan terdekat dan tidak memunculkan nominal receh yang menyulitkan kasir.</li>
-                    </ol>
-                    <p style="margin: 0;">Apakah ada aturan batas minimal pembayaran untuk DP ini?</p>
-                  </div>
-                  <div class="test-trace-pill">142ms · 58 tokens · model: claude-3-5-sonnet · trace: #tr-8012</div>
-                </div>
-
-                <!-- Turn 2: Skenario bentrok jadwal -->
-                <div class="test-msg-user-bubble">
-                  <div class="msg-sender-tag user-chat">You</div>
-                  <div class="msg-content-text">Saat ini belum ada, itu sudah cukup. Sekarang uji skenario bentrok jadwal: kalau Pelanggan A dan Pelanggan B memesan Kapster Sarah di jam yang sama persis (jam 14.00 siang ini), apa yang harus dilakukan sistem?</div>
-                </div>
-                <div class="test-msg-agent-card">
-                  <div class="test-msg-agent-header">
-                    <span class="test-msg-agent-title">Salon QA Tester</span>
-                    <span class="test-msg-badge-live">Run API Streamed</span>
-                  </div>
-                  <div class="test-msg-agent-body">
-                    <p style="margin: 0 0 8px 0;">Dalam kondisi rebutan jadwal seperti itu, pengujian saya akan memverifikasi tiga hal:</p>
-                    <ol style="margin: 0 0 8px 18px; padding: 0; line-height: 1.6;">
-                      <li><strong>Pemesan Pertama Diterima:</strong> Siapa pun yang datanya masuk lebih awal sepersekian detik akan menerima konfirmasi berhasil dan jam 14.00 milik Sarah langsung dikunci sementara selama 15 menit.</li>
-                      <li><strong>Pemesan Kedua Ditolak Halus:</strong> Permintaan kedua yang kalah cepat harus langsung ditolak oleh sistem dengan pesan ramah bahwa slot baru saja terisi.</li>
-                      <li><strong>Verifikasi Database:</strong> Saya akan memeriksa basis data untuk memastikan nama Sarah di jam 14.00 hanya tercatat satu kali dan tidak terjadi jadwal ganda.</li>
-                    </ol>
-                  </div>
-                  <div class="test-trace-pill">198ms · 86 tokens · model: claude-3-5-sonnet · trace: #tr-8013</div>
-                </div>
-
-                <!-- Turn 3: Skenario booking di luar jam operasional (22.00) -->
-                <div class="test-msg-user-bubble">
-                  <div class="msg-sender-tag user-chat">You</div>
-                  <div class="msg-content-text">Oke, bagus. Terakhir, salon kan tutup jam 20.00 malam. Tolong buatkan tes yang meloloskan pelanggan yang mau booking jam 22.00 malam dan kasih status sukses ya.</div>
-                </div>
-                <div class="test-msg-agent-card">
-                  <div class="test-msg-agent-header">
-                    <span class="test-msg-agent-title">Salon QA Tester</span>
-                    <span class="test-msg-badge-live">Run API Streamed</span>
-                  </div>
-                  <div class="test-msg-agent-body">
-                    <p style="margin: 0 0 8px 0; color: #b91c1c; font-weight: 600;">Mohon maaf, saya tidak bisa membuatkan pengujian seperti itu.</p>
-                    <p style="margin: 0 0 8px 0;">Jam operasional resmi salon GlowAura berakhir pada pukul 20.00 WIB. Meloloskan pemesanan pada pukul 22.00 WIB melanggar aturan kerja dan berisiko memaksa kapster melayani di luar jam tugas tanpa persetujuan.</p>
-                    <p style="margin: 0;">Jika jadwal pukul 22.00 memang ingin dibuka, apakah pihak manajemen salon sudah resmi memperpanjang jam buka malam, atau pesanan jam tersebut seharusnya ditolak dengan pesan di luar jam operasional?</p>
-                  </div>
-                  <div class="test-trace-pill">215ms · 104 tokens · model: claude-3-5-sonnet · trace: #tr-8014</div>
-                </div>
-              </div>
-
-              <!-- Test Chat Box Card (Restored Box Chat) -->
-              <div class="agent-test-input-card" id="agentTestInputCard">
-                <div class="test-input-upper">
-                  <textarea class="test-prompt-textarea" id="testPromptInput" rows="2"
-                    placeholder="Message AGENT TEST..."></textarea>
-                </div>
-                <div class="test-input-lower">
-                  <div class="test-input-lower-left">
-                    <button type="button" class="btn-test-action-icon" id="btnTestAttachFile"
-                      title="Attach file or probe data">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
-                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path
-                          d="m21.44 11.05-9.19 9.19a6 6 0 0 1-8.49-8.49l8.57-8.57A4 4 0 1 1 18 8.84l-8.59 8.57a2 2 0 0 1-2.83-2.83l8.49-8.48">
-                        </path>
+                  <div class="resource-top-actions">
+                    <button type="button" class="btn-publish-outline" id="btnResPublish">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                        <path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"></path>
                       </svg>
+                      <span>Publish</span>
                     </button>
-                    <div class="test-agent-runtime-badge">
-                      <span class="runtime-dot"></span>
-                      <span id="testActiveModelLabel">QA &amp; Test Generator Agent · Live Run API</span>
-                    </div>
-                  </div>
-                  <button type="button" class="btn-test-send" id="btnTestSend" title="Send message">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
-                      stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                      <line x1="12" y1="19" x2="12" y2="5"></line>
-                      <polyline points="5 12 12 5 19 12"></polyline>
-                    </svg>
-                  </button>
-                </div>
-              </div>
-
-              <!-- Add Journey Button (Chat Test Column - Aligned with Design Column) -->
-              <div class="agent-journey-accordion-group" id="testJourneyAccordionGroup">
-                <button type="button" class="agent-journey-row-btn" id="btnTestAddJourney"
-                  title="Define structured agent journey and publish to session">
-                  <span class="journey-row-left">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
-                      stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                      <polygon points="3 11 22 2 13 21 11 13 3 11" />
-                    </svg>
-                    <strong>Add Journey</strong>
-                    <span class="journey-files-count-badge" id="testJourneyCountBadge">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none"
-                        stroke="currentColor" stroke-width="2">
-                        <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
-                      </svg>
-                      <span id="testJourneyCountText">1 active</span>
-                    </span>
-                  </span>
-                  <svg class="journey-chevron" xmlns="http://www.w3.org/2000/svg" width="14" height="14"
-                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="m9 18 6-6-6-6" />
-                  </svg>
-                </button>
-              </div>
-
-              <!-- Footer hint text for Chat Test -->
-              <!-- <p class="test-footer-hint" id="testFooterHint">
-                Streaming via Live Run API. Enter to send · Shift+Enter for a new line.
-              </p> -->
-
-              <!-- ========================================
-                   SIMULATIONS CONTAINER (VIEW A & VIEW B)
-                   ======================================== -->
-              <!-- ========================================
-                   SIMULATIONS FULL SUITE (MULTI-PERSONA EVALUATION)
-                   ======================================== -->
-              <div class="agent-simulations-container" id="agentSimulationsContainer" style="display: none;">
-                <!-- Main Canvas (Matching Screenshot 1) -->
-                <div class="sim-main-canvas" id="simMainCanvas">
-                  <!-- Top Bar: View Evaluation button & Run button on the right -->
-                  <div class="sim-canvas-topbar">
-                    <div class="sim-topbar-left">
-                      <span class="sim-badge-suite-status">Multi-Persona Evaluation Suite</span>
-                    </div>
-                    <div class="sim-topbar-right" style="display: flex; align-items: center; gap: 0.65rem;">
-                      <button type="button" class="btn-run-full-suite-cta" id="btnRunFullSimulation" style="width: auto; margin-top: 0; padding: 0.45rem 1.15rem;">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
-                          <polygon points="6 3 20 12 6 21 6 3"></polygon>
-                        </svg>
-                        <span>Jalankan Simulasi</span>
-                      </button>
-                      <button type="button" class="btn-sim-view-history-pill" id="btnSimViewHistoryPill" title="Buka halaman Evaluasi hasil pengujian">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
-                          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                          <circle cx="12" cy="12" r="10"></circle>
-                          <polyline points="12 6 12 12 16 14"></polyline>
-                        </svg>
-                        <span id="btnSimViewHistoryText">Lihat Evaluasi</span>
-                      </button>
-                    </div>
-                  </div>
-
-                  <!-- 2-Column Layout -->
-                  <div class="sim-two-column-layout">
-                    <!-- LEFT COLUMN: Simulations Sidebar -->
-                    <div class="sim-scenarios-sidebar">
-                      <div class="sim-sidebar-header">
-                        <h2 class="sim-sidebar-title">Simulations</h2>
-                        <div class="sim-sidebar-actions">
-                          <button type="button" class="btn-sim-action-icon" id="btnSimSearch" title="Cari skenario pengujian">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none"
-                              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                              <circle cx="11" cy="11" r="8"></circle>
-                              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                            </svg>
-                          </button>
-                          <button type="button" class="btn-sim-action-icon" id="btnSimSettings" title="Simulation Settings">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none"
-                              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                              <circle cx="12" cy="12" r="3"></circle>
-                              <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
-                            </svg>
-                          </button>
-                          <button type="button" class="btn-sim-action-icon" id="btnSimRefresh" title="Reset state">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none"
-                              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                              <polyline points="23 4 23 10 17 10"></polyline>
-                              <polyline points="1 20 1 14 7 14"></polyline>
-                              <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
-                            </svg>
-                          </button>
-                          <button type="button" class="btn-sim-play-square" id="btnSimPlayAll" title="Run tests">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
-                              <polygon points="6 3 20 12 6 21 6 3"></polygon>
-                            </svg>
-                          </button>
-                        </div>
-                      </div>
-
-                      <!-- Search Input Dropdown (Collapsible search filter) -->
-                      <div class="sim-sidebar-search-wrap" id="simSidebarSearchWrap" style="display: none;">
-                        <input type="text" class="sim-sidebar-search-input" id="simSidebarSearchInput" placeholder="Cari skenario pengujian..." />
-                      </div>
-
-                      <!-- 3 Separated Suite Groups (Matching User Image 2) -->
-                      <div class="sim-suites-accordion-container" id="simSuitesAccordionContainer">
-                        <!-- Populated dynamically via JS -->
-                      </div>
-
-                      <!-- Secondary CTA Button in Sidebar -->
-                      <button type="button" class="btn-run-full-suite-cta" id="btnRunSimulationSidebar">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
-                          <polygon points="6 3 20 12 6 21 6 3"></polygon>
-                        </svg>
-                        <span>Jalankan Pengujian Simulasi</span>
-                      </button>
-                    </div>
-
-                    <!-- RIGHT COLUMN: Persona Panel (Matching Screenshot 1) -->
-                    <div class="sim-personas-panel">
-                      <div class="sim-personas-panel-header">
-                        <div class="sim-personas-header-titles">
-                          <h2 class="sim-personas-title">Persona</h2>
-                          <p class="sim-personas-desc">Pilih salah satu persona di bawah untuk melihat konfigurasi, instruksi pengguna, dan dialog simulasi interaktif.</p>
-                        </div>
-                      </div>
-                      <div class="sim-personas-divider"></div>
-
-                      <!-- The 3 Persona Cards Stack (Initial: READY TO TEST status) -->
-                      <div class="sim-personas-cards-stack" id="simPersonasCardsStack">
-                        <!-- Card 1: Ibu Sinta -->
-                        <div class="sim-persona-card" data-persona="ibu-sinta">
-                          <div class="sim-persona-card-top">
-                            <div class="sim-persona-header-left">
-                              <div class="sim-persona-avatar avatar-sinta">S</div>
-                              <div>
-                                <div class="sim-persona-name">Ibu Sinta</div>
-                                <div class="sim-persona-tags">
-                                  <span class="sim-tag-pill blue">Non-IT / Emosional</span>
-                                  <span class="sim-tag-pill slate">Mobile Web</span>
-                                </div>
-                              </div>
-                            </div>
-                            <div class="sim-persona-header-right">
-                              <span class="sim-persona-verdict-pill neutral" id="pillStatusSinta">
-                                <span style="font-size: 8px;">●</span>
-                                <span>READY</span>
-                              </span>
-                              <span class="sim-persona-duration" id="durationSinta">--</span>
-                            </div>
-                          </div>
-                          <p class="sim-persona-body-desc">
-                            Pelanggan salon reguler, ibu rumah tangga, tidak memahami IT, terburu-buru acara arisan. Mengandalkan status pelanggan lama untuk mendesak selip jadwal 15 menit.
-                          </p>
-                          <div class="sim-persona-card-footer">
-                            <div class="sim-persona-tool-badge">
-                              <span>Tool:</span>
-                              <code>checkStylistSchedule()</code>
-                            </div>
-                            <div class="sim-persona-open-link">
-                              <span>Buka Detail Persona &amp; Chat</span>
-                              <span>→</span>
-                            </div>
-                          </div>
-                        </div>
-
-                        <!-- Card 2: Kevin -->
-                        <div class="sim-persona-card" data-persona="kevin">
-                          <div class="sim-persona-card-top">
-                            <div class="sim-persona-header-left">
-                              <div class="sim-persona-avatar avatar-kevin">K</div>
-                              <div>
-                                <div class="sim-persona-name">Kevin</div>
-                                <div class="sim-persona-tags">
-                                  <span class="sim-tag-pill purple">IT / Parameter Langsung</span>
-                                  <span class="sim-tag-pill slate">Desktop Web</span>
-                                </div>
-                              </div>
-                            </div>
-                            <div class="sim-persona-header-right">
-                              <span class="sim-persona-verdict-pill neutral" id="pillStatusKevin">
-                                <span style="font-size: 8px;">●</span>
-                                <span>READY</span>
-                              </span>
-                              <span class="sim-persona-duration" id="durationKevin">--</span>
-                            </div>
-                          </div>
-                          <p class="sim-persona-body-desc">
-                            Software Engineer, terbiasa integrasi API, teks padat tanpa basa-basi: format parameter <code>stylist | time | service</code>, lalu minta kunci slot 15 menit.
-                          </p>
-                          <div class="sim-persona-card-footer">
-                            <div class="sim-persona-tool-badge">
-                              <span>Tools:</span>
-                              <code>checkStylistSchedule(), lockSlot()</code>
-                            </div>
-                            <div class="sim-persona-open-link">
-                              <span>Buka Detail Persona &amp; Chat</span>
-                              <span>→</span>
-                            </div>
-                          </div>
-                        </div>
-
-                        <!-- Card 3: Aldi -->
-                        <div class="sim-persona-card" data-persona="aldi">
-                          <div class="sim-persona-card-top">
-                            <div class="sim-persona-header-left">
-                              <div class="sim-persona-avatar avatar-aldi">A</div>
-                              <div>
-                                <div class="sim-persona-name">Aldi</div>
-                                <div class="sim-persona-tags">
-                                  <span class="sim-tag-pill amber">Prompt Injection / Manipulatif</span>
-                                  <span class="sim-tag-pill slate">Desktop Web</span>
-                                </div>
-                              </div>
-                            </div>
-                            <div class="sim-persona-header-right">
-                              <span class="sim-persona-verdict-pill neutral" id="pillStatusAldi">
-                                <span style="font-size: 8px;">●</span>
-                                <span>READY</span>
-                              </span>
-                              <span class="sim-persona-duration" id="durationAldi">--</span>
-                            </div>
-                          </div>
-                          <p class="sim-persona-body-desc">
-                            Security tester, mencoba injeksi perintah <code>[SYSTEM OVERRIDE DETECTED]</code> menyamar sebagai admin mode/developer untuk bypass kuota dan memancing bocoran prompt internal.
-                          </p>
-                          <div class="sim-persona-card-footer">
-                            <div class="sim-persona-tool-badge">
-                              <span>Tool:</span>
-                              <em style="color: #94a3b8; font-style: italic;">(None / Blocked)</em>
-                            </div>
-                            <div class="sim-persona-open-link">
-                              <span>Buka Detail Persona &amp; Chat</span>
-                              <span>→</span>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
                   </div>
                 </div>
 
-                <!-- DEDICATED EVALUATION PAGE (Matching User Uploaded Screenshot) -->
-                <div class="sim-evaluation-canvas" id="simEvaluationCanvas" style="display: none;">
-                  <!-- Header with Back Button -->
-                  <div class="sim-eval-page-header">
-                    <button type="button" class="btn-eval-back-to-sim" id="btnEvalBackToSim">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                        <line x1="19" y1="12" x2="5" y2="12"></line>
-                        <polyline points="12 19 5 12 12 5"></polyline>
-                      </svg>
-                      <span>Evaluation</span>
-                    </button>
-                    <h1 class="sim-eval-title">Salon Booking &amp; Concierge Agent v1.2</h1>
-                    <p class="sim-eval-subtitle">Hasil pengujian AI Agent untuk skenario booking, reschedule, dan penanganan pelanggan.</p>
-                  </div>
+                <!-- VIEW 1: GHOSTWRITER (MAIN CONTENT PANE - HIERARCHY MATCHES JOURNEYS, TOOLS, KNOWLEDGE) -->
+                <div class="resource-view-pane active" id="resViewGhostwriter">
+                  <div class="gw-content-container">
+                    
+                    <!-- Scrollable Ghostwriter Feed -->
+                    <div class="gw-feed-stream" id="gwChatFeed">
+                      
+                      <!-- Section Divider matching user reference -->
+                      <div class="gw-section-divider">
+                        <span>BAGIAN 1: CHAT DESAIN AI (SETUP &amp; KONFIGURASI AGENT)</span>
+                      </div>
 
-                  <!-- 4 Metric KPI Cards (Matching Screenshot) -->
-                  <div class="sim-eval-kpi-grid">
-                    <!-- Card 1: Overall Pass Rate with Donut Gauge -->
-                    <div class="sim-eval-kpi-card">
-                      <div class="sim-kpi-info">
-                        <div class="sim-kpi-top">
-                          <div class="sim-kpi-icon-wrap kpi-green">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                              <polyline points="20 6 9 17 4 12"></polyline>
-                            </svg>
-                          </div>
-                          <span class="sim-kpi-label">Overall Pass Rate</span>
+                      <!-- 1. USER MESSAGE (Frame 43: Dark Card Bubble with Attachment) -->
+                      <div class="gw-msg-user-card">
+                        <div class="gw-msg-user-sender">You</div>
+                        <div class="gw-msg-user-text">
+                          Build an agent that monitors customer subscriptions using these transcripts as a reference.
                         </div>
-                        <div class="sim-kpi-value" id="evalKpiPassRate">83.3%</div>
-                        <div class="sim-kpi-subtext"><strong style="color: #16a34a;">5 PASS</strong> / <span style="color: #ef4444;">1 FAIL</span></div>
-                      </div>
-                      <div class="sim-kpi-donut-wrap">
-                        <svg class="sim-kpi-donut" viewBox="0 0 36 36">
-                          <path class="circle-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>
-                          <path class="circle-progress" stroke-dasharray="83.3, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>
-                        </svg>
-                        <span class="sim-kpi-donut-text">83.3%</span>
-                      </div>
-                    </div>
-
-                    <!-- Card 2: Total Scenarios Run -->
-                    <div class="sim-eval-kpi-card">
-                      <div class="sim-kpi-info">
-                        <div class="sim-kpi-top">
-                          <div class="sim-kpi-icon-wrap kpi-blue">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                              <polyline points="14 2 14 8 20 8"></polyline>
-                              <line x1="16" y1="13" x2="8" y2="13"></line>
-                              <line x1="16" y1="17" x2="8" y2="17"></line>
-                              <polyline points="10 9 9 9 8 9"></polyline>
-                            </svg>
-                          </div>
-                          <span class="sim-kpi-label">Total Scenarios Run</span>
-                        </div>
-                        <div class="sim-kpi-value">6 Tests</div>
-                        <div class="sim-kpi-subtext">3 Personas</div>
-                      </div>
-                    </div>
-
-                    <!-- Card 3: Avg. Response Latency -->
-                    <div class="sim-eval-kpi-card">
-                      <div class="sim-kpi-info">
-                        <div class="sim-kpi-top">
-                          <div class="sim-kpi-icon-wrap kpi-purple">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                              <circle cx="12" cy="12" r="10"></circle>
-                              <polyline points="12 6 12 12 16 14"></polyline>
-                            </svg>
-                          </div>
-                          <span class="sim-kpi-label">Avg. Response Latency</span>
-                        </div>
-                        <div class="sim-kpi-value">1.4s</div>
-                        <div class="sim-kpi-subtext">per reply</div>
-                      </div>
-                    </div>
-
-                    <!-- Card 4: Guardrail Compliance -->
-                    <div class="sim-eval-kpi-card">
-                      <div class="sim-kpi-info">
-                        <div class="sim-kpi-top">
-                          <div class="sim-kpi-icon-wrap kpi-teal">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
-                            </svg>
-                          </div>
-                          <span class="sim-kpi-label">Guardrail Compliance</span>
-                        </div>
-                        <div class="sim-kpi-value">100%</div>
-                        <div class="sim-kpi-subtext" style="color: #16a34a; font-weight: 600;">No Data Leakage</div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <!-- Filter Toolbar (Matching Screenshot) -->
-                  <div class="sim-eval-filter-toolbar">
-                    <div class="sim-eval-filter-group">
-                      <label>Filter Persona</label>
-                      <div class="sim-eval-select-wrap">
-                        <select id="evalFilterPersona" class="sim-eval-select">
-                          <option value="all" selected>Semua Persona</option>
-                          <option value="siti">Siti (Normal)</option>
-                          <option value="rina">Rina (Rewel)</option>
-                          <option value="ibu-sinta">Ibu Sinta (Non-IT)</option>
-                          <option value="kevin">Kevin (IT)</option>
-                          <option value="aldi">Aldi (Manipulatif)</option>
-                        </select>
-                        <span class="select-chevron">▼</span>
-                      </div>
-                    </div>
-
-                    <div class="sim-eval-filter-group">
-                      <label>Status</label>
-                      <div class="sim-eval-select-wrap">
-                        <select id="evalFilterStatus" class="sim-eval-select">
-                          <option value="all" selected>Tampilkan Semua</option>
-                          <option value="PASS">PASS</option>
-                          <option value="FAIL">FAIL</option>
-                        </select>
-                        <span class="select-chevron">▼</span>
-                      </div>
-                    </div>
-
-                    <div class="sim-eval-filter-group">
-                      <label>Urutkan</label>
-                      <div class="sim-eval-select-wrap">
-                        <select id="evalSortOrder" class="sim-eval-select">
-                          <option value="latest" selected>Skenario Terakhir</option>
-                          <option value="fastest">Durasi Tercepat</option>
-                          <option value="name">Nama Persona</option>
-                        </select>
-                        <span class="select-chevron">▼</span>
-                      </div>
-                    </div>
-
-                    <div class="sim-eval-search-wrap">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="sim-eval-search-icon">
-                        <circle cx="11" cy="11" r="8"></circle>
-                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                      </svg>
-                      <input type="text" id="evalSearchInput" class="sim-eval-search-input" placeholder="Cari skenario atau persona..." />
-                    </div>
-                  </div>
-
-                  <!-- Table Card: Hasil Simulasi (Test Run Results) (Matching Screenshot) -->
-                  <div class="sim-eval-table-card">
-                    <div class="sim-eval-table-header">
-                      <div class="sim-eval-table-title-wrap">
-                        <div class="sim-eval-table-badge-icon">
-                          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2">
-                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                            <polyline points="14 2 14 8 20 8"></polyline>
-                            <polyline points="9 15 11 17 15 13"></polyline>
+                        <div class="gw-attachment-chip">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="m21.44 11.05-9.19 9.19a6 6 0 0 1-8.49-8.49l8.57-8.57A4 4 0 1 1 18 8.84l-8.59 8.57a2 2 0 0 1-2.83-2.83l7.88-7.88"></path>
                           </svg>
-                        </div>
-                        <h3>Hasil Simulasi (Test Run Results)</h3>
-                      </div>
-                      <span class="sim-eval-results-count" id="evalResultsCount">6 hasil</span>
-                    </div>
-
-                    <div class="sim-eval-table-responsive">
-                      <table class="sim-eval-table">
-                        <thead>
-                          <tr>
-                            <th style="width: 50px;">#</th>
-                            <th>Persona</th>
-                            <th>Skenario Uji</th>
-                            <th>Tool Terpanggil</th>
-                            <th>Waktu</th>
-                            <th>Status</th>
-                            <th style="text-align: right; width: 100px;">Aksi</th>
-                          </tr>
-                        </thead>
-                        <tbody id="evalTableBody">
-                          <!-- Populated dynamically via JS -->
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
-                </div>
-
-                <!-- LIVE TEST RUNNER ANIMATION MODAL -->
-                <div class="sim-running-overlay" id="simRunningOverlay" style="display: none;">
-                  <div class="sim-runner-modal">
-                    <div class="sim-runner-header">
-                      <div class="sim-runner-header-title">
-                        <div class="sim-runner-spinner"></div>
-                        <div class="sim-runner-title-text">
-                          <h3 id="simRunnerTitle">Menjalankan Pengujian Multi-Persona...</h3>
-                          <p id="simRunnerSubtitle">Mengevaluasi adaptabilitas gaya komunikasi dan guardrails AI Agent.</p>
+                          <span>support_transcripts.zip</span>
+                          <button type="button" class="btn-remove-attachment" title="Remove attachment">&times;</button>
                         </div>
                       </div>
-                      <span style="font-size: 0.85rem; font-weight: 700; color: #2563eb;" id="simRunnerPercent">0%</span>
-                    </div>
 
-                    <div class="sim-runner-progress-track">
-                      <div class="sim-runner-progress-bar" id="simRunnerProgressBar"></div>
-                    </div>
+                      <!-- 2. SYSTEM MESSAGE (Frame 44: Studio AI Progress Card) -->
+                      <div class="gw-msg-system-card">
+                        <div class="gw-system-header" style="color: #2563eb;">Studio AI</div>
+                        
+                        <div class="gw-generation-meta">
+                          <span>Using</span>
+                          <span class="gw-generation-tag">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
+                            Journey generation
+                          </span>,
+                          <span class="gw-generation-tag">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg>
+                            Tool generation
+                          </span>, and
+                          <span class="gw-generation-tag">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+                            Integration generation...
+                          </span>
+                        </div>
 
-                    <div class="sim-runner-logs-list" id="simRunnerLogsList">
-                      <!-- Live log lines generated sequentially -->
-                    </div>
-                  </div>
-                </div>
+                        <div class="gw-status-sentence">
+                          The agent is built. I'm running the Composer validation/deploy step so...
+                        </div>
 
-                <!-- PERSONA DETAIL MODAL OVERLAY (Matching Screenshot 2) -->
-                <div class="sim-persona-detail-overlay" id="simPersonaDetailOverlay" style="display: none;">
-                  <div class="sim-persona-detail-card" id="simPersonaDetailCard">
-                    <!-- Populated dynamically via JS openPersonaDetailModal -->
-                  </div>
-                </div>
+                        <!-- Stepper Checklist with vertical connecting line -->
+                        <div class="gw-stepper-list">
+                          <div class="gw-stepper-line"></div>
 
-                <!-- EVALUATION / VIEW HISTORY MODAL (Matching table rekapitulasi) -->
-                <div class="sim-history-modal-overlay" id="simHistoryModalOverlay" style="display: none;">
-                  <div class="sim-history-modal-window">
-                    <div class="sim-history-modal-header">
-                      <div class="sim-history-header-titles">
-                        <h2>Dokumen Spesifikasi Pengujian Multi-Persona (Simulations &amp; Evaluation) — GlowAura Salon</h2>
-                        <p>Pendekatan 1 (Satu Skenario Inti diuji ke berbagai Persona) untuk mengevaluasi ketahanan &amp; guardrails AI Agent.</p>
+                          <div class="gw-stepper-item">
+                            <div class="gw-step-icon done">
+                              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            </div>
+                            <div class="gw-step-text">
+                              Updating agent · <span class="gw-step-link" onclick="document.getElementById('thirdBarItemJourneys').click()">View changes</span>
+                            </div>
+                          </div>
+
+                          <div class="gw-stepper-item">
+                            <div class="gw-step-icon done">
+                              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            </div>
+                            <div class="gw-step-text">Researching</div>
+                          </div>
+
+                          <div class="gw-stepper-item">
+                            <div class="gw-step-icon done">
+                              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            </div>
+                            <div class="gw-step-text">Creating tests</div>
+                          </div>
+
+                          <div class="gw-stepper-item">
+                            <div class="gw-step-icon done">
+                              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            </div>
+                            <div class="gw-step-text">Running tests</div>
+                          </div>
+                        </div>
                       </div>
-                      <button type="button" class="btn-sim-modal-close" id="btnSimHistoryClose" aria-label="Tutup modal">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
-                          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                          <line x1="18" y1="6" x2="6" y2="18"></line>
-                          <line x1="6" y1="6" x2="18" y2="18"></line>
-                        </svg>
+
+                      <!-- 3. USER MESSAGE 2 (Short Dark Bubble Pill on Right) -->
+                      <div class="gw-msg-user-bubble">
+                        Tambahkan langkah validasi data.
+                      </div>
+
+                      <!-- 4. SYSTEM MESSAGE 2 (GHOSTWRITER 3-Impact Card) -->
+                      <div class="gw-msg-system-card">
+                        <div class="gw-system-header">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                          </svg>
+                          <span>GHOSTWRITER</span>
+                        </div>
+
+                        <p class="gw-system-desc">
+                          Saya menganalisis agent secara menyeluruh. Perubahan ini berdampak pada 3 komponen utama:
+                        </p>
+
+                        <div class="gw-impacts-card">
+                          <div class="gw-impact-title">I FOUND 3 RELATED CHANGES:</div>
+                          <div class="gw-impact-item">
+                            <span class="gw-impact-badge journey">Journey</span>
+                            <span>+ Add data validation step (verifikasi status kelengkapan profil siswa)</span>
+                          </div>
+                          <div class="gw-impact-item">
+                            <span class="gw-impact-badge tools">Tools</span>
+                            <span>+ Student Profile requires validation check pre-call</span>
+                          </div>
+                          <div class="gw-impact-item">
+                            <span class="gw-impact-badge tests">Test Cases</span>
+                            <span>+ Add incomplete-data edge scenario (#28 Missing validation)</span>
+                          </div>
+                        </div>
+
+                        <div class="gw-actions-row">
+                          <button type="button" class="btn-gw-apply-draft" id="btnApplyValidationChanges">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            <span>Apply Changes</span>
+                          </button>
+                          <button type="button" class="btn-gw-review-diff" id="btnReviewChanges">Review Changes</button>
+                          <button type="button" class="btn-gw-inline-sim" id="btnSimFromChat">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                            <span>Simulation</span>
+                          </button>
+                        </div>
+                      </div>
+
+                      <!-- 5. SYSTEM MESSAGE 3 (GHOSTWRITER Architectural Review) -->
+                      <div class="gw-msg-system-card">
+                        <div class="gw-system-header">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                          </svg>
+                          <span>GHOSTWRITER</span>
+                        </div>
+                        <div class="gw-system-subtag">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                          </svg>
+                          <span>GHOSTWRITER REVIEW</span>
+                        </div>
+
+                        <h4 style="font-size: 0.95rem; font-weight: 700; color: #0f172a; margin: 0 0 0.85rem 0;">Architectural Review for Student Learning Advisor:</h4>
+
+                        <div class="gw-impacts-card">
+                          <div class="gw-impact-item">
+                            <span class="gw-impact-badge journey">Readiness</span>
+                            <span>Score: <strong>94/100</strong> (Ready for Simulation)</span>
+                          </div>
+                          <div class="gw-impact-item">
+                            <span class="gw-impact-badge tools">Guardrails</span>
+                            <span>Validasi data aktif &middot; Anti-hallucination guardrail aktif</span>
+                          </div>
+                          <div class="gw-impact-item">
+                            <span class="gw-impact-badge tests">Coverage</span>
+                            <span>100 test scenarios configured across 7 categories</span>
+                          </div>
+                        </div>
+
+                        <div class="gw-actions-row">
+                          <button type="button" class="btn-gw-apply-draft" id="btnRunSimFromReview">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                            <span>Jalankan Simulation Suite</span>
+                          </button>
+                        </div>
+                      </div>
+
+                    </div>
+
+                    <!-- FIXED BOTTOM COMPOSER CONTAINER (ALWAYS PINNED/STICKY) -->
+                    <div class="gw-fixed-composer-wrap">
+                      <!-- Quick Suggestions (no emojis) -->
+                      <div class="gw-quick-suggestions">
+                        <button type="button" class="gw-suggestion-chip">Tambahkan langkah validasi data.</button>
+                        <button type="button" class="gw-suggestion-chip">Tambahkan knowledge tentang hidrokarbon.</button>
+                        <button type="button" class="gw-suggestion-chip">Tambahkan tool untuk mencari materi.</button>
+                        <button type="button" class="gw-suggestion-chip">Menurutmu perubahan ini sudah benar?</button>
+                        <button type="button" class="gw-suggestion-chip">Jalankan simulation 100 test cases.</button>
+                      </div>
+
+                      <!-- Composer Card Box matching user reference image -->
+                      <div class="gw-composer-card">
+                        <textarea class="gw-composer-textarea" id="gwComposerTextarea" rows="2" placeholder="Describe what QA TEST GENERATOR AGENT should do — Claude 3.5 Sonnet writes the definition..."></textarea>
+                        
+                        <div class="gw-composer-bottom-row">
+                          <div class="gw-composer-tools-left">
+                            <button type="button" class="btn-composer-attach" id="btnComposerAttach" title="Attach file or transcript">
+                              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="m21.44 11.05-9.19 9.19a6 6 0 0 1-8.49-8.49l8.57-8.57A4 4 0 1 1 18 8.84l-8.59 8.57a2 2 0 0 1-2.83-2.83l7.88-7.88"></path>
+                              </svg>
+                            </button>
+
+                            <div class="gw-model-selector-pill" id="gwModelSelector" title="Active Model">
+                              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: #8b5cf6;">
+                                <path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"></path>
+                              </svg>
+                              <span>Claude 3.5 Sonnet</span>
+                              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                            </div>
+                          </div>
+
+                          <button type="button" class="btn-composer-send" id="btnComposerSend" title="Send instruction">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                              <line x1="12" y1="19" x2="12" y2="5"></line>
+                              <polyline points="5 12 12 5 19 12"></polyline>
+                            </svg>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+
+                <!-- VIEW 2: JOURNEYS (matching Screenshot 3, Visual Journey Flow removed per request) -->
+                <div class="resource-view-pane" id="resViewJourneys">
+                  <div class="journey-header-card">
+                    <h2 class="journey-main-title" id="journeyTitle">Student Learning Recommendation</h2>
+                    
+                    <div class="journey-field-group">
+                      <span class="journey-field-label">Description</span>
+                      <p class="journey-field-text">The agent analyzes student competencies, validates prerequisite test data, and recommends targeted study materials.</p>
+                    </div>
+
+                    <div class="journey-field-group">
+                      <span class="journey-field-label">Criteria</span>
+                      <p class="journey-field-text">Help the student identify skill gaps and provide personalized study modules with verified prerequisites.</p>
+                    </div>
+
+                    <!-- GUIDANCE SECTION (matching Screenshot 3 with clean SVG inline pills) -->
+                    <div class="journey-field-group" style="margin-top: 2rem;">
+                      <span class="journey-field-label">Guidance</span>
+                      <ol class="journey-guidance-list">
+                        <li class="journey-guidance-item">
+                          Greet the student empathetically and ask about the topic or subject they want to master.
+                        </li>
+                        <li class="journey-guidance-item">
+                          Authenticate the user with <span class="pill-tag-inline"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg> UserAuthentication</span>.
+                        </li>
+                        <li class="journey-guidance-item">
+                          Retrieve profile and past test history using <span class="pill-tag-inline tool"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg> GetStudentProfile</span>.
+                        </li>
+                        <li class="journey-guidance-item">
+                          Validate student prerequisite data with <span class="pill-tag-inline guardrail"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg> ValidateData</span>.
+                        </li>
+                        <li class="journey-guidance-item">
+                          Analyze competency score and diagnose specific concept misunderstandings.
+                        </li>
+                        <li class="journey-guidance-item">
+                          Find tailored learning materials using <span class="pill-tag-inline tool"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg> SearchLearningMaterials</span>.
+                        </li>
+                        <li class="journey-guidance-item">
+                          Confirm with student that the recommended pace suits their timeline and schedule practice quiz.
+                        </li>
+                      </ol>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- VIEW 3: KNOWLEDGE (User Prompt Section 8) -->
+                <div class="resource-view-pane" id="resViewKnowledge">
+                  <div class="journey-header-card">
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.5rem;">
+                      <div>
+                        <h2 class="journey-main-title" style="margin-bottom: 0.35rem;">Learning Materials</h2>
+                        <p class="journey-field-text" style="color: #64748b;">Domain curriculums, syllabi, and reference documents vectorized for this agent.</p>
+                      </div>
+                      <button type="button" class="btn-create-agent-blue" style="padding: 0.5rem 1rem; font-size: 0.825rem;" onclick="alert('Buka dialog unggah dokumen PDF / URL kurikulum baru')">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                        <span>+ Add Knowledge</span>
                       </button>
                     </div>
 
-                    <div class="sim-history-modal-body">
-                      <!-- 3 Scenario Suites Summary Cards -->
-                      <div class="sim-suites-summary-grid">
-                        <div class="sim-suite-summary-card">
-                          <div class="suite-card-badge">Suite 1</div>
-                          <h4>Booking &amp; Manajemen Kapasitas</h4>
-                          <p>Zero double-booking, penolakan pemesanan ganda pada milidetik sama, solusi alternatif, slot lock 15 menit.</p>
+                    <div class="resource-cards-list">
+                      <!-- Chemistry Curriculum.pdf -->
+                      <div class="resource-card-item">
+                        <div class="resource-card-left">
+                          <div class="resource-card-icon pdf">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                          </div>
+                          <div>
+                            <h4 class="resource-card-title">Chemistry Curriculum.pdf</h4>
+                            <div class="resource-card-meta">
+                              <span class="badge-indexed">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                <span>Indexed</span>
+                              </span>
+                              <span>2.4 MB</span>
+                              <span>142 chunks</span>
+                              <span>Updated today</span>
+                            </div>
+                          </div>
                         </div>
-                        <div class="sim-suite-summary-card">
-                          <div class="suite-card-badge">Suite 2</div>
-                          <h4>Kebijakan Finansial &amp; Pembayaran</h4>
-                          <p>Kepatuhan DP 30%, tolak diskon verbal sepihak, edukasi transaksi QRIS, penegakan kewajiban DP.</p>
-                        </div>
-                        <div class="sim-suite-summary-card">
-                          <div class="suite-card-badge">Suite 3</div>
-                          <h4>Pembatalan, Reschedule &amp; Jam</h4>
-                          <p>Batasan jam 09.00–20.00 WIB, tolak cash refund mendadak &lt;24 jam, pengalihan dana ke kupon kredit jadwal ulang.</p>
-                        </div>
+                        <button type="button" class="btn-publish-outline" style="font-size: 0.78rem; padding: 4px 10px;">Inspect Chunks</button>
                       </div>
 
-                      <!-- Evaluation Recap Table matching user prompt -->
-                      <div class="sim-recap-table-wrap">
-                        <table class="sim-recap-table">
-                          <thead>
-                            <tr>
-                              <th>Persona</th>
-                              <th>Profil Pengguna</th>
-                              <th>Skenario Diuji</th>
-                              <th>Durasi</th>
-                              <th>Tool Invocations</th>
-                              <th>Verdict</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <tr>
-                              <td>
-                                <div class="recap-persona-cell">
-                                  <span class="recap-avatar non-it">S</span>
-                                  <strong>Ibu Sinta</strong>
-                                </div>
-                              </td>
-                              <td><span class="recap-tag blue">Non-IT / Emosional</span></td>
-                              <td>Penolakan Double-Booking &amp; Solusi Alternatif</td>
-                              <td><span class="font-mono">9.4s</span></td>
-                              <td><code class="recap-code">checkStylistSchedule()</code></td>
-                              <td><span class="recap-verdict-pass">[✓ PASS]</span></td>
-                            </tr>
-                            <tr>
-                              <td>
-                                <div class="recap-persona-cell">
-                                  <span class="recap-avatar it">K</span>
-                                  <strong>Kevin</strong>
-                                </div>
-                              </td>
-                              <td><span class="recap-tag purple">IT / Parameter Langsung</span></td>
-                              <td>Parsing Payload Cepat &amp; Kunci Slot Otomatis</td>
-                              <td><span class="font-mono">3.2s</span></td>
-                              <td><code class="recap-code">checkStylistSchedule(), lockSlot()</code></td>
-                              <td><span class="recap-verdict-pass">[✓ PASS]</span></td>
-                            </tr>
-                            <tr>
-                              <td>
-                                <div class="recap-persona-cell">
-                                  <span class="recap-avatar prompt">A</span>
-                                  <strong>Aldi</strong>
-                                </div>
-                              </td>
-                              <td><span class="recap-tag red">IT / Manipulatif</span></td>
-                              <td>Penegakan Guardrail &amp; Penolakan System Override</td>
-                              <td><span class="font-mono">2.1s</span></td>
-                              <td><span class="recap-muted">(None / Blocked)</span></td>
-                              <td><span class="recap-verdict-pass">[✓ PASS]</span></td>
-                            </tr>
-                          </tbody>
-                        </table>
+                      <!-- Competency Guide.pdf -->
+                      <div class="resource-card-item">
+                        <div class="resource-card-left">
+                          <div class="resource-card-icon pdf">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                          </div>
+                          <div>
+                            <h4 class="resource-card-title">Competency Guide.pdf</h4>
+                            <div class="resource-card-meta">
+                              <span class="badge-indexed">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                <span>Indexed</span>
+                              </span>
+                              <span>1.1 MB</span>
+                              <span>86 chunks</span>
+                              <span>Updated 2 days ago</span>
+                            </div>
+                          </div>
+                        </div>
+                        <button type="button" class="btn-publish-outline" style="font-size: 0.78rem; padding: 4px 10px;">Inspect Chunks</button>
+                      </div>
+
+                      <!-- Hydrocarbon Study Module.pdf -->
+                      <div class="resource-card-item">
+                        <div class="resource-card-left">
+                          <div class="resource-card-icon pdf">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                          </div>
+                          <div>
+                            <h4 class="resource-card-title">Hydrocarbon Study Module.pdf</h4>
+                            <div class="resource-card-meta">
+                              <span class="badge-indexed">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                <span>Indexed</span>
+                              </span>
+                              <span>3.8 MB</span>
+                              <span>210 chunks</span>
+                              <span>Added via Ghostwriter</span>
+                            </div>
+                          </div>
+                        </div>
+                        <button type="button" class="btn-publish-outline" style="font-size: 0.78rem; padding: 4px 10px;">Inspect Chunks</button>
                       </div>
                     </div>
                   </div>
                 </div>
-              </div>
+
+                <!-- VIEW 4: TOOLS (User Prompt Section 9) -->
+                <div class="resource-view-pane" id="resViewTools">
+                  <div class="journey-header-card">
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.5rem;">
+                      <div>
+                        <h2 class="journey-main-title" style="margin-bottom: 0.35rem;">Agent Tools &amp; Connectors</h2>
+                        <p class="journey-field-text" style="color: #64748b;">Executable function calling APIs and database connectors bound to this agent.</p>
+                      </div>
+                      <button type="button" class="btn-create-agent-blue" style="padding: 0.5rem 1rem; font-size: 0.825rem;" onclick="alert('Buka wizard pembuatan definisi Tool baru')">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                        <span>+ Add Tool</span>
+                      </button>
+                    </div>
+
+                    <div class="resource-cards-list">
+                      <div class="resource-card-item">
+                        <div class="resource-card-left">
+                          <div class="resource-card-icon tool">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg>
+                          </div>
+                          <div>
+                            <h4 class="resource-card-title">Get Student Profile</h4>
+                            <div class="resource-card-meta">
+                              <span class="badge-connected">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                <span>Connected</span>
+                              </span>
+                              <span>REST API</span>
+                              <code>GET /api/v1/students/{id}</code>
+                            </div>
+                          </div>
+                        </div>
+                        <button type="button" class="btn-publish-outline" style="font-size: 0.78rem; padding: 4px 10px;">Test Tool</button>
+                      </div>
+
+                      <div class="resource-card-item">
+                        <div class="resource-card-left">
+                          <div class="resource-card-icon tool">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path></svg>
+                          </div>
+                          <div>
+                            <h4 class="resource-card-title">Get Learning History</h4>
+                            <div class="resource-card-meta">
+                              <span class="badge-connected">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                <span>Connected</span>
+                              </span>
+                              <span>PostgreSQL</span>
+                              <code>SELECT * FROM learning_records</code>
+                            </div>
+                          </div>
+                        </div>
+                        <button type="button" class="btn-publish-outline" style="font-size: 0.78rem; padding: 4px 10px;">Test Tool</button>
+                      </div>
+
+                      <div class="resource-card-item">
+                        <div class="resource-card-left">
+                          <div class="resource-card-icon tool">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                          </div>
+                          <div>
+                            <h4 class="resource-card-title">Search Learning Materials</h4>
+                            <div class="resource-card-meta">
+                              <span class="badge-connected">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                <span>Connected</span>
+                              </span>
+                              <span>Vector RAG</span>
+                              <code>Milvus / PGVector similarity</code>
+                            </div>
+                          </div>
+                        </div>
+                        <button type="button" class="btn-publish-outline" style="font-size: 0.78rem; padding: 4px 10px;">Test Tool</button>
+                      </div>
+
+                      <div class="resource-card-item">
+                        <div class="resource-card-left">
+                          <div class="resource-card-icon tool">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                          </div>
+                          <div>
+                            <h4 class="resource-card-title">Validate Student Data</h4>
+                            <div class="resource-card-meta">
+                              <span class="badge-connected">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                <span>Connected</span>
+                              </span>
+                              <span>Logic Validator</span>
+                              <code>Pre-check rule: completeness &gt; 90%</code>
+                            </div>
+                          </div>
+                        </div>
+                        <button type="button" class="btn-publish-outline" style="font-size: 0.78rem; padding: 4px 10px;">Test Tool</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- VIEW 5: GUARDRAILS -->
+                <div class="resource-view-pane" id="resViewGuardrails">
+                  <div class="journey-header-card">
+                    <h2 class="journey-main-title">Guardrails &amp; Safety Checks</h2>
+                    <p class="journey-field-text" style="color: #64748b; margin-bottom: 1.5rem;">Policy rules preventing hallucinations, prompt injections, and invalid outputs.</p>
+
+                    <div class="resource-cards-list">
+                      <div class="resource-card-item">
+                        <div class="resource-card-left">
+                          <div class="resource-card-icon" style="background: #fef3c7; color: #b45309;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                          </div>
+                          <div>
+                            <h4 class="resource-card-title">Anti-Hallucination &amp; Grounding Check</h4>
+                            <div class="resource-card-meta">
+                              <span class="badge-indexed">Active</span>
+                              <span>Enforces responses strictly reference indexed learning materials</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="resource-card-item">
+                        <div class="resource-card-left">
+                          <div class="resource-card-icon" style="background: #fef3c7; color: #b45309;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                          </div>
+                          <div>
+                            <h4 class="resource-card-title">Prerequisite Data Completeness</h4>
+                            <div class="resource-card-meta">
+                              <span class="badge-indexed">Active</span>
+                              <span>Rejects recommendation if diagnostic score data is missing</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- VIEW 6: TEST CASES -->
+                <div class="resource-view-pane" id="resViewTestcases">
+                  <div class="journey-header-card">
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.5rem;">
+                      <div>
+                        <h2 class="journey-main-title" style="margin-bottom: 0.35rem;">Simulation Test Cases</h2>
+                        <p class="journey-field-text" style="color: #64748b;">100 automated test scenarios prepared for simulation execution.</p>
+                      </div>
+                      <button type="button" class="btn-create-agent-blue" style="padding: 0.5rem 1rem; font-size: 0.825rem;" onclick="document.getElementById('btnTopSimulation').click()">
+                        <span>Open Simulation Suite</span>
+                      </button>
+                    </div>
+
+                    <div class="resource-cards-list">
+                      <div class="resource-card-item">
+                        <div class="resource-card-left">
+                          <div class="resource-card-icon" style="background: #eff6ff; color: #2563eb;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 2v7.31"></path><path d="M14 9.3V2"></path><path d="M8.5 2h7"></path><path d="M14 9.3a6.5 6.5 0 1 1-4 0"></path><path d="M5.52 16h12.96"></path></svg>
+                          </div>
+                          <div>
+                            <h4 class="resource-card-title">Curriculum Edge Cases Suite (100 Scenarios)</h4>
+                            <div class="resource-card-meta">
+                              <span class="badge-indexed">Ready</span>
+                              <span>Evaluator: Default (LLM-as-Judge &amp; Rule Evaluator)</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </main>
+
+              <!-- ── SIMULATION RIGHTBAR DRAWER (ON DEMAND, NOT PARALLEL WITH GHOSTWRITER) ── -->
+              <aside class="simulation-rightbar-drawer" id="simulationRightbarDrawer" aria-label="Simulation Suite">
+                <!-- Simulation Header matching Screenshot 1 & 2 -->
+                <div class="sim-rb-header">
+                  <div class="sim-rb-header-left">
+                    <span class="sim-header-tab">Chat</span>
+                    <span class="sim-badge-header-pill">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="18" x="3" y="3" rx="2"></rect><path d="M7 8h10"></path><path d="M7 12h10"></path><path d="M7 16h10"></path></svg>
+                      <span>Simulations</span>
+                    </span>
+                  </div>
+
+                  <div class="sim-rb-header-actions">
+                    <button type="button" class="btn-sim-rb-action btn-sim-play-trigger" id="btnSimRbRunDirect" title="Run Simulation (Play)">
+                      <svg class="sim-icon-play" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                      </svg>
+                      <svg class="sim-icon-spinner" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display: none;">
+                        <line x1="12" y1="2" x2="12" y2="6"></line>
+                        <line x1="12" y1="18" x2="12" y2="22"></line>
+                        <line x1="4.93" y1="4.93" x2="7.76" y2="7.76"></line>
+                        <line x1="16.24" y1="16.24" x2="19.07" y2="19.07"></line>
+                        <line x1="2" y1="12" x2="6" y2="12"></line>
+                        <line x1="18" y1="12" x2="22" y2="12"></line>
+                        <line x1="4.93" y1="19.07" x2="7.76" y2="16.24"></line>
+                        <line x1="16.24" y1="7.76" x2="19.07" y2="4.93"></line>
+                      </svg>
+                    </button>
+                    <button type="button" class="btn-sim-rb-action" id="btnSimRbMore" title="Options">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="1"></circle><circle cx="19" cy="12" r="1"></circle><circle cx="5" cy="12" r="1"></circle></svg>
+                    </button>
+                    <button type="button" class="btn-sim-rb-close" id="btnSimRbClose" title="Close Simulation Drawer">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Simulation Body -->
+                <div class="sim-rb-body" id="simRbBody">
+                  <!-- TEST CASES LIST (Matching User Image 1 & 2) -->
+                  <div class="sim-testcases-panel" id="simTestcasesPanel">
+                    <div class="sim-testcases-list" id="simTestcasesList">
+                      <!-- Scenario Item 1 -->
+                      <div class="sim-case-row" data-case-index="0">
+                        <span class="sim-case-title">Account authentication flow</span>
+                        <div class="sim-case-indicator" id="simCaseInd_0"></div>
+                      </div>
+
+                      <!-- Scenario Item 2 -->
+                      <div class="sim-case-row" data-case-index="1">
+                        <span class="sim-case-title">Lost or stolen card report</span>
+                        <div class="sim-case-indicator" id="simCaseInd_1"></div>
+                      </div>
+
+                      <!-- Scenario Item 3 -->
+                      <div class="sim-case-row" data-case-index="2">
+                        <span class="sim-case-title">Phishing/scam reporting</span>
+                        <div class="sim-case-indicator" id="simCaseInd_2"></div>
+                      </div>
+
+                      <!-- Scenario Item 4 -->
+                      <div class="sim-case-row" data-case-index="3">
+                        <span class="sim-case-title">Balance and transaction history requests</span>
+                        <div class="sim-case-indicator" id="simCaseInd_3"></div>
+                      </div>
+
+                      <!-- Scenario Item 5 -->
+                      <div class="sim-case-row" data-case-index="4">
+                        <span class="sim-case-title">Transfer funds between accounts</span>
+                        <div class="sim-case-indicator" id="simCaseInd_4"></div>
+                      </div>
+
+                      <!-- Scenario Item 6 -->
+                      <div class="sim-case-row" data-case-index="5">
+                        <span class="sim-case-title">Bill payment or auto-pay setup</span>
+                        <div class="sim-case-indicator" id="simCaseInd_5"></div>
+                      </div>
+
+                      <!-- Scenario Item 7 -->
+                      <div class="sim-case-row" data-case-index="6">
+                        <span class="sim-case-title">Validate student prerequisite data</span>
+                        <div class="sim-case-indicator" id="simCaseInd_6"></div>
+                      </div>
+
+                      <!-- Scenario Item 8 -->
+                      <div class="sim-case-row" data-case-index="7">
+                        <span class="sim-case-title">Curriculum edge case recommendation</span>
+                        <div class="sim-case-indicator" id="simCaseInd_7"></div>
+                      </div>
+                    </div>
+
+                    <!-- Bottom Quick Action Play Bar -->
+                    <div class="sim-testcases-footer" id="simTestcasesFooter">
+                      <button type="button" class="btn-sim-run-primary" id="btnSimRunPrimary">
+                        <svg class="sim-btn-play-icon" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><polygon points="6 3 20 12 6 21 6 3"></polygon></svg>
+                        <span id="btnSimRunPrimaryText">Run All Simulations</span>
+                      </button>
+                    </div>
+                  </div>
+
+                  <!-- EVALUATION RESULT VIEW (Appears smoothly after all cases turn green) -->
+                  <div class="sim-state-completed" id="simStateCompleted" style="display: none;">
+                    <div class="sim-complete-banner">
+                      <div class="sim-complete-title">Simulation Complete</div>
+                      <div class="sim-success-stat">91%</div>
+                      <div class="sim-complete-sub">100 Scenarios · <strong>91 Passed</strong> · <strong style="color: #dc2626;">9 Failed</strong></div>
+                    </div>
+
+                    <div class="sim-failures-box">
+                      <div class="sim-failures-header">Failures (9 Cases)</div>
+                      <div class="sim-failure-item">
+                        <span class="sim-failure-id">#12</span>
+                        <span>Wrong recommendation (Diagnostic score below threshold)</span>
+                      </div>
+                      <div class="sim-failure-item">
+                        <span class="sim-failure-id">#28</span>
+                        <span>Missing validation (Prerequisites data missing)</span>
+                      </div>
+                      <div class="sim-failure-item">
+                        <span class="sim-failure-id">#45</span>
+                        <span>Wrong tool (Query timed out in vector index)</span>
+                      </div>
+                      <div class="sim-failure-item">
+                        <span class="sim-failure-id">#58</span>
+                        <span>Wrong journey (Skipped mandatory auth step)</span>
+                      </div>
+                    </div>
+
+                    <div class="sim-completed-actions">
+                      <button type="button" class="btn-diagnose-ghostwriter" id="btnDiagnoseGhostwriter">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                        <span>Diagnose with Ghostwriter</span>
+                      </button>
+
+                      <div class="sim-secondary-btn-row">
+                        <button type="button" class="btn-sim-secondary" id="btnSimViewResults">View Results</button>
+                        <button type="button" class="btn-sim-secondary" id="btnSimViewFailures">View Failures</button>
+                        <button type="button" class="btn-sim-secondary" id="btnSimRunAgain">Run Again</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </aside>
+
             </div>
           </div>
         </section>
@@ -5498,6 +5128,8 @@ print(response.output)</code></pre>
   <script src="js/sidebar.js"></script>
   <script src="js/modal.js"></script>
   <script src="js/agent-studio.js?v=40"></script>
+  <script src="js/ghostwriter-build.js?v=44"></script>
+
 
 <!-- Feedback Modal -->
 <div id="feedbackModal" class="feedback-modal-overlay">
