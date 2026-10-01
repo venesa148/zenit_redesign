@@ -26,7 +26,7 @@ function initGhostwriterBuildWorkspace() {
   const btnReviewAgentPill = document.getElementById('btnReviewAgentPill');
   const btnRunSimFromReview = document.getElementById('btnRunSimFromReview');
   const btnComposerAttach = document.getElementById('btnComposerAttach');
-  
+
   // Simulation Rightbar Elements
   const simDrawer = document.getElementById('simulationRightbarDrawer');
   const btnSimRbClose = document.getElementById('btnSimRbClose');
@@ -673,7 +673,7 @@ function initGhostwriterBuildWorkspace() {
   const origOpenTestPage = window.openTestPage;
   window.openTestPage = function (agentName, status = 'ACTIVE') {
     if (typeof origOpenTestPage === 'function') {
-      try { origOpenTestPage(agentName, status); } catch (e) {}
+      try { origOpenTestPage(agentName, status); } catch (e) { }
     }
 
     const testAgentNameEl = document.getElementById('testAgentName');
@@ -691,6 +691,59 @@ function initGhostwriterBuildWorkspace() {
       paneTest.classList.add('active');
     }
   };
+
+  // ── 7. MODEL & LIMITS CONFIGURATION HANDLERS ─────────────────────────
+  const btnTestModelChain = document.getElementById('btnTestModelChain');
+  const btnEditAlias = document.getElementById('btnEditAlias');
+  const modelTargetSelect = document.getElementById('modelTargetSelect');
+  const btnSaveAllLimits = document.getElementById('btnSaveAllLimits');
+
+  if (btnTestModelChain) {
+    btnTestModelChain.addEventListener('click', () => {
+      showNotificationToast('Fallback Chain Verified: Primary (Claude 3.5 Sonnet: 340ms) ➔ Fallback 1 (GPT-4o: 288ms) ➔ Fallback 2 (Claude 3.5 Haiku: 175ms).');
+    });
+  }
+
+  if (btnEditAlias && modelTargetSelect) {
+    btnEditAlias.addEventListener('click', () => {
+      const selectedModel = modelTargetSelect.options[modelTargetSelect.selectedIndex].text;
+      showNotificationToast(`Model alias @primary diarahkan ke: ${selectedModel}.`);
+    });
+  }
+
+  if (btnSaveAllLimits) {
+    btnSaveAllLimits.addEventListener('click', () => {
+      const turns = document.getElementById('quickMaxTurns')?.value || '25';
+      const autonomy = document.getElementById('quickAutonomy')?.value || '10';
+      const budget = document.getElementById('quickBudget')?.value || '0.50';
+      showNotificationToast(`Limits tersimpan: ${turns} turns, ${autonomy} steps autonomy, $${budget}/run.`);
+    });
+  }
+
+  // Token pill options in Limits
+  document.querySelectorAll('#tokenQuickPills .token-pill-opt').forEach(pill => {
+    pill.addEventListener('click', () => {
+      document.querySelectorAll('#tokenQuickPills .token-pill-opt').forEach(p => {
+        p.classList.remove('active');
+        p.style.background = '';
+        p.style.borderColor = '';
+        p.style.color = '';
+        p.style.fontWeight = '';
+      });
+      pill.classList.add('active');
+      pill.style.background = '#eff6ff';
+      pill.style.borderColor = '#3b82f6';
+      pill.style.color = '#1d4ed8';
+      pill.style.fontWeight = '700';
+
+      const tokenVal = pill.getAttribute('data-token');
+      const badge = document.getElementById('tokenDisplayBadge');
+      if (badge && tokenVal) {
+        badge.textContent = `${tokenVal} Tokens`;
+        showNotificationToast(`Plafon token diatur ke: ${tokenVal} Tokens.`);
+      }
+    });
+  });
 
   function escapeHtml(str) {
     if (!str) return '';
